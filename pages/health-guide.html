@@ -1,0 +1,3790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <link rel="icon" href="/assets/stethoscope.png" type="image/x-icon" />
+  <title>BreedLy | Dog Health Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      background: #fff9f2;
+      color: #333;
+    }
+
+.health-header {
+      background: linear-gradient(135deg, #ffe4c4, #ffccb3);
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
+      position: relative;
+}
+
+.health-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.puppy-left-img {
+  width: 160px;
+  height: auto;
+  transform: scaleX(-1); /* optional: flip to face text */
+}
+
+.health-text {
+  text-align: center;
+}
+
+.health-text h1 {
+  font-size: 2.8rem;
+  color: #4e148c;
+  margin-bottom: 10px;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.health-text p {
+  font-size: 1.15rem;
+  color: #5a4c4c;
+  font-weight: 500;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Optional paw background */
+.health-header::after {
+  content: "";
+  position: absolute;
+  background: url('/assets/paws.svg') no-repeat center;
+  opacity: 0.03;
+  background-size: contain;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+    .slogan {
+  animation: fadeInUp 1.2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+    .health-section {
+      max-width: 1100px;
+      margin: 0px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+.health-card {
+  position: relative;
+  border-radius: 20px 20px 20px 0;
+  box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
+}
+.health-card::after {
+  content: "🐾";
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 1.2rem;
+  opacity: 0.3;
+}
+
+    .health-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .health-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .health-card h3 {
+      font-size: 1.2rem;
+      color: #ff7a00;
+      margin: 10px 0;
+    }
+
+    .health-card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .health-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .breed-health-search {
+      text-align: center;
+      padding: 40px 20px;
+      background: #fffaf3;
+    }
+
+    #breedSearch {
+      padding: 12px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: 2px solid #ff9f4d;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+.breed-result-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Peeking Puppy Image */
+.puppy-top {
+  width: 190px;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Result Box */
+.health-result-box {
+  background: #f9f6ec;
+  border-radius: 20px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  margin-top: 40px; /* gives space for the puppy image above */
+}
+
+
+/* Add soft paw icon watermark */
+.health-result-box::before {
+  content: "🐾";
+  position: absolute;
+  font-size: 4rem;
+  opacity: 0.06;
+  top: 10px;
+  right: 20px;
+  transform: rotate(-10deg);
+}
+
+/* Breed name */
+.health-result-box h3 {
+  font-size: 2rem;
+  color: #4e148c;
+  margin-bottom: 10px;
+}
+
+/* Subheadings */
+.health-result-box h4 {
+  font-size: 1.3rem;
+  color: #ff7a00;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-bottom: 2px dashed #ffe1c4;
+  padding-bottom: 4px;
+}
+
+/* Paragraphs */
+.health-result-box p {
+  font-size: 1rem;
+  color: #5a4c4c;
+  margin: 8px 0;
+}
+
+/* Lists */
+.health-result-box ul {
+  padding-left: 1.2rem;
+}
+
+.health-result-box li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+/* Tags like Nature traits */
+.health-result-box p strong + span,
+.health-result-box .tags {
+  display: inline-block;
+  background: #ffe7c4;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 4px 4px 4px 0;
+  font-size: 0.85rem;
+  color: #4e2a1e;
+  font-weight: 500;
+}
+
+/* Breed image */
+.health-result-box img {
+  border-radius: 16px;
+  max-width: 100%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  margin: 20px 0;
+}
+
+/* Blockquote */
+.health-result-box blockquote {
+  margin-top: 30px;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #6d4c41;
+  background: #fff4ea;
+  padding: 15px 20px;
+  border-left: 5px solid #ff9f4d;
+  border-radius: 10px;
+}
+
+    #backButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ff9f4d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#backButton:hover {
+  background: #ff7a00;
+}
+.cute img{
+  width: 200px;
+}
+@media screen and (max-width: 768px) {
+  .health-header-content {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .puppy-left-img {
+    width: 120px;
+  }
+
+  .health-text h1 {
+    font-size: 2rem;
+  }
+
+  .health-text p {
+    font-size: 1rem;
+  }
+
+  .health-section {
+    grid-template-columns: 1fr; /* single column on smaller screens */
+    padding: 20px 10px;
+    gap: 20px;
+  }
+
+  .health-card {
+    padding: 16px;
+  }
+
+  .health-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .health-card p {
+    font-size: 0.9rem;
+  }
+
+  .breed-health-search {
+    padding: 20px 10px;
+  }
+
+  #breedSearch {
+    width: 90%;
+    font-size: 0.95rem;
+  }
+
+  .puppy-top {
+    width: 140px;
+    top: -20px;
+  }
+
+  .health-result-box {
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  .health-result-box h3 {
+    font-size: 1.6rem;
+  }
+
+  .health-result-box h4 {
+    font-size: 1.1rem;
+  }
+
+  .health-result-box p,
+  .health-result-box li {
+    font-size: 0.95rem;
+  }
+
+  blockquote {
+    font-size: 1rem;
+  }
+
+  #backButton {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .cute img {
+    width: 140px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .health-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .health-text p {
+    font-size: 0.9rem;
+  }
+
+  .health-result-box h3 {
+    font-size: 1.4rem;
+  }
+
+  .health-result-box h4 {
+    font-size: 1rem;
+  }
+
+  .health-result-box p,
+  .health-result-box li {
+    font-size: 0.85rem;
+  }
+
+  .health-card .icon {
+    font-size: 1.8rem;
+  }
+
+  .health-card h3 {
+    font-size: 1rem;
+  }
+
+  .health-card p {
+    font-size: 0.85rem;
+  }
+
+  blockquote {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  #breedSearch {
+    max-width: 250px;
+    font-size: 0.9rem;
+  }
+
+  .puppy-top {
+    width: 110px;
+    top: -15px;
+  }
+
+  .cute img {
+    width: 110px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<header class="health-header">
+  <div class="health-header-content">
+    <img src="/assets/puppy.png" alt="Smiling Puppy" class="puppy-left-img" />
+    <div class="health-text">
+      <h1>🩺 Dog Health Guide</h1>
+      <p>Because every wag deserves a little more care 💛</p>
+    </div>
+  </div>
+</header>
+
+
+ <section class="breed-health-search">
+  <h2>❤️Keep Your Dog Healthy</h2>
+  <input type="text" id="breedSearch" placeholder="Type a breed name..." oninput="searchBreed()" />
+ <div class="breed-result-wrapper">
+  <img src="/assets/download-removebg-preview.png" alt="Peeking Puppies" class="puppy-top" />
+  <div id="breedResult" class="health-result-box">
+    <p>🐕 “Woof! Type here for healthy doggy tips!”</p>
+  </div>
+</div>
+
+
+  <button id="backButton" onclick="clearBreed()" style="display: none;">🔙 Back</button>
+</section>
+
+
+<section class="health-section">
+  <div class="health-card">
+    <div class="icon">🩺</div>
+    <h3>Common Health Issues</h3>
+    <p>All dogs can face health issues like joint problems, skin allergies, obesity, ear infections, or dental disease. Knowing your breed’s risks helps you stay prepared.</p>
+  </div>
+
+  <div class="health-card">
+    <div class="icon">💉</div>
+    <h3>Preventive Care</h3>
+    <p>Keep up with core vaccinations, regular deworming, flea & tick protection, and annual vet checks. Preventive care keeps your dog safe and healthy long-term.</p>
+  </div>
+
+  <div class="health-card">
+    <div class="icon">🍽️</div>
+    <h3>Diet</h3>
+    <p>Feed balanced, breed-appropriate meals. Provide fresh water daily and choose healthy treats. Portion control prevents obesity and keeps your dog in top shape.</p>
+  </div>
+
+  <div class="health-card">
+    <div class="icon">🏃‍♂️</div>
+    <h3>Exercise</h3>
+    <p>Regular walks, playtime, and activities help maintain a healthy weight and burn off energy. Match exercise to your dog’s age, size, and breed needs.</p>
+  </div>
+
+  <div class="health-card">
+    <div class="icon">🧼</div>
+    <h3>Grooming</h3>
+    <p>Brush your dog’s coat regularly, bathe as needed, clean ears, clip nails, and care for their teeth. Good grooming supports skin, coat, and overall health.</p>
+  </div>
+
+  <div class="health-card">
+    <div class="icon">❤️</div>
+    <h3>Wellbeing Tips</h3>
+    <p>Give your dog daily love, play, and training. Socialize them, watch for behavior changes, and always provide a safe, caring home — a healthy dog is a happy dog!</p>
+  </div>
+</section>
+
+
+<footer class="footer-note">
+  <p>BreedLy © 2025 — For Every Tail Wag and Happy Bark 🐾</p>
+  <p style="font-size: 1.1rem;">🐕 Built with Love for Every Pup</p>
+</footer>
+
+
+  <script>
+const breedHealthData = {
+  "Golden Retriever": {
+    image: "/assets/Dogs/Golden Retriever.webp",
+    lifespan: "10–12 years",
+    weight: "25–35 kg",
+    nature: ["Friendly", "Intelligent", "Family-oriented", "Active", "Obedient"],
+    common_health_issues: [
+      {
+        issue: "Hip & Elbow Dysplasia",
+        description: "Joint malformation causing pain or arthritis.",
+        tip: "Adopt from certified breeders; manage weight."
+      },
+      {
+        issue: "Obesity",
+        description: "Very common due to love for food.",
+        tip: "Strict portion control, daily exercise."
+      },
+      {
+        issue: "Skin Allergies & Hot Spots",
+        description: "Sensitive skin; can develop infections.",
+        tip: "Regular grooming, flea control, balanced diet."
+      },
+      {
+        issue: "Ear Infections",
+        description: "Floppy ears trap moisture.",
+        tip: "Clean ears weekly."
+      },
+      {
+        issue: "Heart Diseases",
+        description: "Risk of Subvalvular Aortic Stenosis (SAS).",
+        tip: "Annual vet checks."
+      },
+      {
+        issue: "Cancer",
+        description: "Lymphoma & Hemangiosarcoma are common.",
+        tip: "Early detection with routine check-ups."
+      }
+    ],
+    preventive_care: {
+      vaccinations: ["Rabies", "DHPP", "Lepto (optional)", "Kennel Cough (optional)"],
+      deworming: {
+        puppies: "Every 2–4 weeks until 6 months",
+        adults: "Every 3 months"
+      },
+      tick_flea_control: "Monthly spot-ons or vet-approved tablets",
+      spay_neuter: "Helps prevent certain cancers, unwanted litters",
+      annual_vet_checks: ["Hips", "Heart", "Cancer screening"]
+    },
+    diet: {
+      protein: "22–28%",
+      fat: "10–15%",
+      carbs: "30–50%",
+      fiber: "3–5%",
+      good_foods: ["Chicken", "Fish", "Eggs", "Paneer", "Rice", "Oats", "Sweet Potato", "Carrots", "Pumpkin"],
+      treats: "Healthy treats like carrot sticks, apple slices, boiled eggs",
+      hydration: "Always provide clean fresh water"
+    },
+    exercise: {
+      daily_walks: "45–90 minutes daily",
+      play: ["Swimming", "Fetching", "Off-leash play in safe areas"],
+      training: "Obedience and mental games"
+    },
+    grooming: {
+      brushing: "3–4 times a week",
+      bathing: "Every 4–6 weeks",
+      ear_cleaning: "Weekly",
+      nail_clipping: "Monthly",
+      dental_care: "Brush teeth or give dental chews"
+    },
+    wellbeing_tips: [
+      "Buy from reputable breeders with clearances.",
+      "Never skip annual vet checks.",
+      "Watch for lumps or appetite changes.",
+      "Keep weight in check.",
+      "Give lots of training, play, and affection."
+    ],
+    golden_rule: "A happy, healthy Golden Retriever needs your time, balanced diet, vet care, daily exercise, and cuddles!"
+  },
+  "Labrador Retriever": {
+    image: "/assets/Dogs/Labrador Retriever.jpg",
+    lifespan: "10–12 years",
+    weight: "25–36 kg",
+    nature: ["Intelligent", "Loyal", "Protective", "Active", "Trainable"],
+    common_health_issues: [
+      {
+        issue: "Hip & Elbow Dysplasia",
+        description: "Joint malformation causing arthritis.",
+        tip: "Healthy diet, regular vet checks, buy from good breeders."
+      },
+      {
+        issue: "Obesity",
+        description: "Labs overeat easily — prone to weight gain.",
+        tip: "Measure food, limit treats, daily walks."
+      },
+      {
+        issue: "Ear Infections",
+        description: "Floppy ears trap moisture, common for swimmers.",
+        tip: "Dry ears after swimming, clean regularly."
+      },
+      {
+        issue: "Progressive Retinal Atrophy (PRA)",
+        description: "Inherited eye disease.",
+        tip: "Get puppies from health-tested parents."
+      },
+      {
+        issue: "Bloat",
+        description: "Deep chest means risk of gastric torsion.",
+        tip: "Feed 2–3 small meals, avoid heavy exercise right after meals."
+      }
+    ],
+    preventive_care: {
+      vaccinations: ["Rabies", "DHPP", "Lepto (optional)"],
+      deworming: {
+        puppies: "Every 2–4 weeks until 6 months",
+        adults: "Every 3 months"
+      },
+      tick_flea_control: "Monthly treatment",
+      spay_neuter: "Helps prevent unwanted litters, some cancers",
+      annual_vet_checks: ["Hips & elbows", "Eyes", "Weight check"]
+    },
+    diet: {
+      protein: "22–26%",
+      fat: "10–15%",
+      carbs: "30–50%",
+      fiber: "3–5%",
+      good_foods: ["Chicken", "Fish", "Eggs", "Rice", "Sweet Potato", "Carrots"],
+      treats: "Low-fat healthy treats, veggie sticks",
+      hydration: "Always provide fresh water"
+    },
+    exercise: {
+      daily_walks: "60–90 minutes daily",
+      play: ["Swimming", "Fetch", "Running"],
+      training: "Obedience games, retrieving tasks"
+    },
+    grooming: {
+      brushing: "1–2 times a week",
+      bathing: "Every 1–2 months",
+      ear_cleaning: "Weekly",
+      nail_clipping: "Monthly",
+      dental_care: "Brush teeth or dental chews"
+    },
+    wellbeing_tips: [
+      "Keep weight healthy — Labs love to eat.",
+      "Daily walks and swims keep them fit.",
+      "Regular ear cleaning is a must.",
+      "Always supervise around food — Labs counter-surf!"
+    ],
+    golden_rule: "A healthy Labrador needs portion control, daily swimming or fetching, regular vet checks, and your love!"
+  },
+  "German Shepherd": {
+    image: "/assets/Dogs/German Shepherd.jpg",
+    
+      lifespan: "9–13 years",
+      weight: "30–40 kg",
+      nature: ["Intelligent", "Loyal", "Protective", "Active", "Trainable"],
+      common_health_issues: [
+        {
+          issue: "Hip & Elbow Dysplasia",
+          description: "Major risk for this breed.",
+          tip: "Adopt from screened breeders; manage weight."
+        },
+        {
+          issue: "Degenerative Myelopathy (DM)",
+          description: "Progressive spinal disease in seniors.",
+          tip: "Watch for dragging paws, weak hind legs."
+        },
+        {
+          issue: "Bloat",
+          description: "Life-threatening stomach twist.",
+          tip: "Feed small meals, avoid heavy play after eating."
+        },
+        {
+          issue: "Skin Allergies",
+          description: "Sensitive skin; parasites can cause issues.",
+          tip: "Regular parasite control, balanced diet."
+        },
+        {
+          issue: "Ear Infections",
+          description: "Less common, but possible.",
+          tip: "Clean as needed."
+        },
+        {
+          issue: "Pancreatic Issues (EPI)",
+          description: "Can cause weight loss, diarrhea.",
+          tip: "Vet check for unexplained weight loss."
+        }
+      ],
+      preventive_care: {
+        vaccinations: ["Rabies", "DHPP", "Lepto (optional)", "Kennel Cough (optional)"],
+        deworming: {
+          puppies: "Every 2–4 weeks until 6 months",
+          adults: "Every 3 months"
+        },
+        tick_flea_control: "Monthly spot-ons or vet-approved tablets",
+        spay_neuter: "Controls unwanted litters, lowers some risks",
+        annual_vet_checks: ["Hips", "Spine", "Pancreas"]
+      },
+      diet: {
+        protein: "22–30%",
+        fat: "12–18%",
+        carbs: "30–50%",
+        fiber: "3–5%",
+        good_foods: ["Chicken", "Mutton", "Fish", "Eggs", "Rice", "Oats", "Sweet Potato", "Pumpkin", "Carrots"],
+        treats: "Healthy treats: boiled eggs, carrots, cucumber",
+        hydration: "Always provide clean fresh water"
+      },
+      exercise: {
+        daily_walks: "1–2 hours daily",
+        play: ["Fetch", "Advanced obedience", "Agility tasks"],
+        training: "Obedience and protection training"
+      },
+      grooming: {
+        brushing: "2–4 times a week",
+        bathing: "Every 4–6 weeks",
+        ear_cleaning: "As needed",
+        nail_clipping: "Monthly",
+        dental_care: "Brush teeth or dental chews"
+      },
+      wellbeing_tips: [
+        "Choose ethical breeders with hip/elbow certificates.",
+        "Daily exercise is crucial.",
+        "Keep mentally stimulated with tasks.",
+        "Healthy weight extends life.",
+        "Regular vet checks, especially for aging dogs."
+      ],
+      golden_rule: "A German Shepherd needs a job, good food, daily training, exercise, and your respect — they’ll give you their whole heart."
+
+  },
+      "Beagle":{
+      image: "/assets/Dogs/Beagle.jpg",
+      "lifespan": "12–15 years",
+      "weight": "8–14 kg",
+      "nature": ["Curious", "Merry", "Playful", "Gentle", "Scent-driven"],
+      "common_health_issues": [
+        {
+          "issue": "Obesity",
+          "description": "Love food, gain weight easily.",
+          "tip": "Strict portion control, daily exercise."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Long ears trap moisture.",
+          "tip": "Clean ears weekly."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid hormone; causes weight gain.",
+          "tip": "Annual vet checks for thyroid levels."
+        },
+        {
+          "issue": "Intervertebral Disc Disease (IVDD)",
+          "description": "Spine issues due to build.",
+          "tip": "Limit jumping from high places."
+        },
+        {
+          "issue": "Epilepsy",
+          "description": "Prone to seizures.",
+          "tip": "Seek vet help for unusual shaking."
+        },
+        {
+          "issue": "Cherry Eye",
+          "description": "Red bump in third eyelid.",
+          "tip": "Needs minor surgery if occurs."
+        },
+        {
+          "issue": "Ticks & Fleas",
+          "description": "Active sniffers in grass.",
+          "tip": "Use good flea/tick control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Lepto (optional)", "Kennel Cough (optional)"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly spot-ons or vet-approved tablets",
+        "spay_neuter": "Controls roaming and some cancers",
+        "annual_vet_checks": ["Thyroid", "Weight", "Ears"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "8–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Oats", "Veggies", "Pumpkin", "Green Beans"],
+        "treats": "Tiny healthy treats: boiled eggs, carrot sticks",
+        "hydration": "Always provide clean fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes daily",
+        "play": ["Fetch", "Scent games", "Puzzle feeders"],
+        "training": "Positive reinforcement; consistent commands"
+      },
+      "grooming": {
+        "brushing": "1–2 times a week",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush or give dental chews"
+      },
+      "wellbeing_tips": [
+        "Beagles escape easily — secure gates.",
+        "Keep weight in check.",
+        "Daily sniff walks for mental health.",
+        "Vet visits yearly; more for seniors.",
+        "Prevent boredom with toys and games."
+      ],
+      "golden_rule": "A Beagle needs adventure, portion control, sniff time, and a loving pack — they’ll keep your home cheerful!"
+    },
+    
+      "Shih Tzu":{
+       image: "/assets/Dogs/Shih Tzu.jpg",
+      "lifespan": "12–16 years",
+      "weight": "5–8 kg",
+      "nature": ["Affectionate", "Playful", "Alert", "Friendly", "Lap dog"],
+      "common_health_issues": [
+        {
+          "issue": "Brachycephalic Breathing Issues",
+          "description": "Flat face causes mild airway obstruction.",
+          "tip": "Keep cool, avoid stress in heat."
+        },
+        {
+          "issue": "Eye Problems",
+          "description": "Big eyes prone to injuries & ulcers.",
+          "tip": "Wipe eyes daily, visit vet if red or watery."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Hairy ear canals trap moisture.",
+          "tip": "Clean ears weekly, keep hair trimmed."
+        },
+        {
+          "issue": "Dental Issues",
+          "description": "Crowded teeth, prone to tartar.",
+          "tip": "Brush teeth or use dental chews."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Sensitive skin, matting if not groomed.",
+          "tip": "Regular brushing, mild shampoo, flea control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Lepto (optional)", "Kennel Cough (optional)"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly vet-approved spot-ons",
+        "spay_neuter": "Helps prevent unwanted litters",
+        "annual_vet_checks": ["Teeth", "Eyes", "Ears"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "8–12%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Sweet Potato", "Pumpkin", "Carrots"],
+        "treats": "Small healthy treats: carrot sticks, boiled egg bits",
+        "hydration": "Always provide clean water"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor play", "Gentle fetch", "Puzzle toys"],
+        "training": "Positive, gentle commands"
+      },
+      "grooming": {
+        "brushing": "Daily brushing to avoid tangles",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth or use dental treats"
+      },
+      "wellbeing_tips": [
+        "Keep coat trimmed if unable to brush daily.",
+        "Wipe eyes daily to prevent tear stains.",
+        "Never overheat; avoid long walks in midday sun.",
+        "Monitor weight and teeth."
+      ],
+      "golden_rule": "A Shih Tzu needs daily brushing, gentle play, clean eyes, and your lap — they love being spoiled!"
+    },
+
+    "Lhasa Apso":{
+      image: "/assets/Dogs/Lhasa Apso.jpg",
+      "lifespan": "12–15 years",
+      "weight": "5–8 kg",
+      "nature": ["Confident", "Lively", "Alert", "Independent", "Protective"],
+      "common_health_issues": [
+        {
+          "issue": "Eye Problems",
+          "description": "Prone to dry eye, ulcers.",
+          "tip": "Wipe daily, vet checks yearly."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Coat mats easily, can trap dirt.",
+          "tip": "Regular brushing and bathing."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Joint issues in some lines.",
+          "tip": "Keep weight healthy, moderate exercise."
+        },
+        {
+          "issue": "Patellar Luxation",
+          "description": "Kneecap dislocation common in small dogs.",
+          "tip": "Watch for limping; vet check if needed."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Long hair can trap moisture.",
+          "tip": "Clean ears, trim hair around ears."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Lepto (optional)", "Kennel Cough (optional)"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly treatment",
+        "spay_neuter": "Recommended to avoid accidental litters",
+        "annual_vet_checks": ["Eyes", "Joints", "Ears"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "8–12%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Oats", "Carrots", "Pumpkin"],
+        "treats": "Small treats like boiled veggies or egg bits",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor play", "Training games"],
+        "training": "Positive and patient"
+      },
+      "grooming": {
+        "brushing": "Daily for long coats",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Trim hair if daily brushing is not possible.",
+        "Socialize early — they can be protective.",
+        "Keep ears dry and clean.",
+        "Monitor knees for limping."
+      ],
+      "golden_rule": "A Lhasa Apso loves a clean coat, moderate play, watchful guarding, and lots of loyalty."
+    },
+
+    "Pomeranian":{
+      image: "/assets/Dogs/Pomeranian.jpg",
+      "lifespan": "12–16 years",
+      "weight": "2–4 kg",
+      "nature": ["Lively", "Curious", "Confident", "Affectionate", "Alert"],
+      "common_health_issues": [
+        {
+          "issue": "Dental Problems",
+          "description": "Tiny mouths crowd teeth.",
+          "tip": "Brush teeth regularly."
+        },
+        {
+          "issue": "Collapsed Trachea",
+          "description": "Small dogs often get this.",
+          "tip": "Use a harness instead of a collar."
+        },
+        {
+          "issue": "Luxating Patella",
+          "description": "Knee joint dislocation.",
+          "tip": "Monitor for limping, vet checks."
+        },
+        {
+          "issue": "Hypoglycemia (Puppies)",
+          "description": "Low sugar if they don’t eat enough.",
+          "tip": "Feed small meals frequently."
+        },
+        {
+          "issue": "Coat Matting",
+          "description": "Fluffy coat tangles easily.",
+          "tip": "Daily brushing."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Kennel Cough (optional)"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly treatment",
+        "spay_neuter": "Recommended for health & temperament",
+        "annual_vet_checks": ["Teeth", "Joints", "Trachea"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Sweet Potato", "Carrots"],
+        "treats": "Tiny healthy treats like carrot bits",
+        "hydration": "Always provide clean water"
+      },
+      "exercise": {
+        "daily_walks": "15–20 minutes daily",
+        "play": ["Indoor fetch", "Small games"],
+        "training": "Short sessions, positive tone"
+      },
+      "grooming": {
+        "brushing": "Daily",
+        "bathing": "Every 3–4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Use harness, not collar, for walks.",
+        "Brush coat daily to prevent tangles.",
+        "Feed small meals to avoid sugar drops.",
+        "Keep tiny toys — they love to play."
+      ],
+      "golden_rule": "A Pomeranian stays healthy with daily brushing, gentle play, careful handling, and lots of snuggles."
+    },
+
+       "Indian Spitz":{
+        image: "/assets/Dogs/Indian Spitz.jpg",
+      "lifespan": "12–15 years",
+      "weight": "5–10 kg",
+      "nature": ["Playful", "Alert", "Friendly", "Loyal", "Adaptable"],
+      "common_health_issues": [
+        {
+          "issue": "Skin Allergies",
+          "description": "Coat needs regular care; fleas cause issues.",
+          "tip": "Groom regularly, use vet flea control."
+        },
+        {
+          "issue": "Dental Problems",
+          "description": "Small breed prone to tartar.",
+          "tip": "Brush teeth regularly."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Can gain weight if overfed.",
+          "tip": "Portion control, daily walks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly treatment",
+        "spay_neuter": "Helps avoid stray litters",
+        "annual_vet_checks": ["Teeth", "Skin", "Weight"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "8–12%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Carrots", "Pumpkin"],
+        "treats": "Small treats: carrot sticks, boiled eggs",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "30–45 minutes daily",
+        "play": ["Indoor games", "Basic fetch"],
+        "training": "Easy to train with rewards"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Regular grooming prevents matting.",
+        "Keep weight in check.",
+        "Daily play and human interaction keeps them happy."
+      ],
+      "golden_rule": "An Indian Spitz needs daily play, moderate walks, regular brushing, and family time."
+    },
+
+     "Dachshund":{
+      image: "/assets/Dogs/Beagle.jpg",
+      "lifespan": "12–16 years",
+      "weight": "7–12 kg",
+      "nature": ["Brave", "Curious", "Playful", "Loyal", "Alert"],
+      "common_health_issues": [
+        {
+          "issue": "Intervertebral Disc Disease (IVDD)",
+          "description": "Long back prone to slipped discs.",
+          "tip": "No jumping off furniture; lift gently."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Extra weight stresses spine.",
+          "tip": "Strict portion control, regular walks."
+        },
+        {
+          "issue": "Dental Problems",
+          "description": "Small mouths crowd teeth.",
+          "tip": "Brush teeth or use dental chews."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended to control unwanted litters",
+        "annual_vet_checks": ["Spine", "Teeth", "Weight"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Small treats: boiled eggs, veggies",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "30–45 minutes daily",
+        "play": ["Fetch", "Indoor games"],
+        "training": "Positive commands, keep them busy"
+      },
+      "grooming": {
+        "brushing": "1–2 times a week",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Avoid letting them jump off beds/sofas.",
+        "Use ramps or steps if needed.",
+        "Keep weight ideal for a healthy spine."
+      ],
+      "golden_rule": "A Dachshund needs careful handling, daily walks, portion control, and lots of family time."
+    },
+    
+      "Cocker Spaniel":{
+        image: "/assets/Dogs/Cocker Spaniel.jpg",
+      "lifespan": "12–15 years",
+      "weight": "12–16 kg",
+      "nature": ["Gentle", "Affectionate", "Playful", "Sensitive", "Friendly"],
+      "common_health_issues": [
+        {
+          "issue": "Ear Infections",
+          "description": "Long floppy ears trap moisture and wax.",
+          "tip": "Clean ears weekly, keep them dry."
+        },
+        {
+          "issue": "Eye Problems",
+          "description": "Prone to cataracts and dry eye.",
+          "tip": "Wipe eyes gently, vet checks if cloudy or red."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Prone to itchy skin and hot spots.",
+          "tip": "Regular grooming, balanced diet, parasite control."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Can develop joint problems.",
+          "tip": "Keep weight healthy, moderate daily walks."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Food lovers; can gain weight easily.",
+          "tip": "Portion control, daily play and walks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Kennel Cough"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Helps manage health and temperament",
+        "annual_vet_checks": ["Ears", "Eyes", "Hips"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Oats", "Pumpkin", "Carrots"],
+        "treats": "Healthy treats: carrot sticks, cucumber, boiled egg bits",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes daily",
+        "play": ["Fetch", "Tug toys", "Indoor games"],
+        "training": "Positive, gentle commands"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week (daily for long coats)",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Dry ears after baths to prevent infections.",
+        "Monitor weight to prevent joint strain.",
+        "Daily gentle brushing keeps coat healthy."
+      ],
+      "golden_rule": "A Cocker Spaniel stays healthy with clean ears, regular grooming, moderate walks, and your gentle care."
+    },
+
+     "Boxer":{
+      image: "/assets/Dogs/Boxer.jpg",
+      "lifespan": "10–12 years",
+      "weight": "25–32 kg",
+      "nature": ["Energetic", "Playful", "Loyal", "Protective", "Sociable"],
+      "common_health_issues": [
+        {
+          "issue": "Heart Disease",
+          "description": "Prone to Boxer Cardiomyopathy.",
+          "tip": "Annual heart checks, avoid overexertion."
+        },
+        {
+          "issue": "Cancer",
+          "description": "Higher risk of tumors as they age.",
+          "tip": "Check for lumps, regular vet check-ups."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Joint issues common in larger breeds.",
+          "tip": "Healthy weight, regular low-impact exercise."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Can occur due to deep chest.",
+          "tip": "Feed smaller meals, no rough play after eating."
+        },
+        {
+          "issue": "Allergies",
+          "description": "Can have skin allergies.",
+          "tip": "Good diet, flea control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP", "Lepto (optional)"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for health & temperament",
+        "annual_vet_checks": ["Heart", "Hips", "Cancer screening"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Oats", "Pumpkin", "Carrots"],
+        "treats": "Healthy treats: boiled veggies, egg bits",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes daily",
+        "play": ["Fetch", "Agility training"],
+        "training": "Positive reinforcement, obedience"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Check heart health yearly.",
+        "Avoid overfeeding; monitor lumps.",
+        "Keep active with games."
+      ],
+      "golden_rule": "A Boxer thrives on play, exercise, regular vet checks, and being part of the family pack."
+    },
+
+      "Doberman Pinscher":{
+        image: "/assets/Dogs/Doberman Pinscher.jpg",
+      "lifespan": "10–13 years",
+      "weight": "30–40 kg",
+      "nature": ["Loyal", "Alert", "Intelligent", "Protective", "Energetic"],
+      "common_health_issues": [
+        {
+          "issue": "Dilated Cardiomyopathy",
+          "description": "Heart condition common in Dobermans.",
+          "tip": "Annual heart screening is essential."
+        },
+        {
+          "issue": "Von Willebrand's Disease",
+          "description": "Blood clotting disorder.",
+          "tip": "Check before surgeries or injuries."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Joint issues.",
+          "tip": "Keep weight healthy, controlled exercise."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Can gain weight, lose fur.",
+          "tip": "Vet tests if signs appear."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep-chested breed risk.",
+          "tip": "Feed small meals, avoid heavy play after feeding."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Helps control unwanted litters",
+        "annual_vet_checks": ["Heart", "Blood tests", "Hips"]
+      },
+      "diet": {
+        "protein": "22–30%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Lean meat bits, boiled egg",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "1–2 hours daily",
+        "play": ["Obedience training", "Agility work"],
+        "training": "Consistent, firm but positive"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Annual heart checks are vital.",
+        "Keep lean to protect joints.",
+        "Strong bond and daily training needed."
+      ],
+      "golden_rule": "A Doberman needs proper training, exercise, health checks, and a confident leader — they’ll guard your family with devotion."
+    },
+
+    "Rottweiler":{
+      image: "/assets/Dogs/Rottweiler.jpg",
+      "lifespan": "9–12 years",
+      "weight": "40–50 kg",
+      "nature": ["Confident", "Loyal", "Protective", "Calm", "Powerful"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Large breed joint issues.",
+          "tip": "Breeder health checks, maintain weight."
+        },
+        {
+          "issue": "Heart Problems",
+          "description": "Risk of Aortic Stenosis.",
+          "tip": "Annual heart checks recommended."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Prone if under-exercised.",
+          "tip": "Proper diet and exercise."
+        },
+        {
+          "issue": "Cancer",
+          "description": "Risk increases with age.",
+          "tip": "Check lumps, routine vet visits."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep-chested breed risk.",
+          "tip": "Feed smaller meals, avoid exercise after eating."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Helps control litters",
+        "annual_vet_checks": ["Hips", "Heart", "Cancer checks"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Lean meat bits, egg pieces",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "1–2 hours daily",
+        "play": ["Fetch", "Obedience work"],
+        "training": "Firm, consistent, positive"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Buy from certified breeders.",
+        "Train early, socialize well.",
+        "Keep lean to protect joints."
+      ],
+      "golden_rule": "A Rottweiler needs good leadership, training, proper food, and exercise — they give lifelong loyalty and protection."
+    },
+
+      "Great Dane":{
+        image: "/assets/Dogs/Great Dane.jpg",
+      "lifespan": "7–10 years",
+      "weight": "50–80 kg",
+      "nature": ["Gentle Giant", "Affectionate", "Calm", "Friendly", "Protective"],
+      "common_health_issues": [
+        {
+          "issue": "Bloat",
+          "description": "High risk due to deep chest.",
+          "tip": "Feed small meals, avoid exercise after meals."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Joint issues common in giant breeds.",
+          "tip": "Adopt from health-checked breeders, keep lean."
+        },
+        {
+          "issue": "Heart Disease",
+          "description": "Risk of Dilated Cardiomyopathy.",
+          "tip": "Annual heart check-ups."
+        },
+        {
+          "issue": "Bone Cancer (Osteosarcoma)",
+          "description": "Higher risk in giant breeds.",
+          "tip": "Watch for unexplained limping, swelling."
+        },
+        {
+          "issue": "Shorter Lifespan",
+          "description": "Gentle giants live shorter lives.",
+          "tip": "Good food, vet care can help longevity."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Helps avoid accidental litters",
+        "annual_vet_checks": ["Heart", "Joints", "Cancer checks"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Lean meat, boiled eggs",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes daily (moderate, not high impact)",
+        "play": ["Gentle fetch", "Obedience work"],
+        "training": "Firm but gentle"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "No rough play as puppies — protect joints.",
+        "Use elevated food bowls to help digestion.",
+        "Soft bedding supports big joints."
+      ],
+      "golden_rule": "A Great Dane needs space, gentle care, heart checks, and lots of love — they’re true gentle giants."
+      },
+      
+      "Saint Bernard":{
+        image: "/assets/Dogs/Saint Bernard.jpg",
+      "lifespan": "8–10 years",
+      "weight": "60–80 kg",
+      "nature": ["Gentle", "Calm", "Patient", "Friendly", "Protective"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Common in large breeds.",
+          "tip": "Get puppies from health-checked lines, keep weight healthy."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest increases risk.",
+          "tip": "Feed small meals, avoid exercise right after eating."
+        },
+        {
+          "issue": "Eye Problems",
+          "description": "Entropion and ectropion are common.",
+          "tip": "Monitor eyes, consult vet for irritation."
+        },
+        {
+          "issue": "Heart Disease",
+          "description": "Some lines prone to heart issues.",
+          "tip": "Annual vet checks recommended."
+        },
+        {
+          "issue": "Heat Sensitivity",
+          "description": "Cannot tolerate hot weather.",
+          "tip": "Provide shade, cool areas, limit exercise in heat."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended to avoid unwanted litters",
+        "annual_vet_checks": ["Joints", "Heart", "Eyes"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Lean meat bits, boiled egg",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes gentle walks",
+        "play": ["Gentle fetch", "Basic obedience"],
+        "training": "Calm, patient commands"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Provide cool shady spots.",
+        "Prevent jumping to protect joints.",
+        "Gentle daily walks are enough."
+      ],
+      "golden_rule": "A Saint Bernard loves gentle care, cool rest, and family time — treat them kindly and they’ll be your gentle giant."
+    },
+   "Siberian Husky":{
+      image: "/assets/Dogs/Siberian Husky.jpg",
+      "lifespan": "12–15 years",
+      "weight": "16–27 kg",
+      "nature": ["Energetic", "Playful", "Friendly", "Independent", "Vocal"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Moderate risk in active breeds.",
+          "tip": "Keep lean, provide proper exercise."
+        },
+        {
+          "issue": "Eye Problems",
+          "description": "Prone to cataracts and progressive retinal atrophy.",
+          "tip": "Annual vet eye exams."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid can cause weight gain, fur loss.",
+          "tip": "Vet tests if signs show up."
+        },
+        {
+          "issue": "Escaping",
+          "description": "Famous escape artists.",
+          "tip": "High fences, secure gates."
+        },
+        {
+          "issue": "Heat Sensitivity",
+          "description": "Not suited for hot climates.",
+          "tip": "Walk early mornings or evenings, shade and water always."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended to avoid litters",
+        "annual_vet_checks": ["Eyes", "Hips", "Thyroid"]
+      },
+      "diet": {
+        "protein": "24–30%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin", "Sweet Potato"],
+        "treats": "Frozen fruits, lean meats",
+        "hydration": "Fresh water at all times"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes minimum",
+        "play": ["Running", "Agility work", "Tug toys"],
+        "training": "Firm, positive, consistent"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week, daily in shedding season",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Provide plenty of exercise and mental games.",
+        "Never shave their coat — it protects them.",
+        "Escape-proof your yard!"
+      ],
+      "golden_rule": "A Husky needs adventure, exercise, secure fences, and your time — a bored Husky is a destructive Husky!"
+    },
+
+      "Alaskan Malamute":{
+          image: "/assets/Dogs/Alaskan Malamute.jpg",
+      "lifespan": "10–14 years",
+      "weight": "34–45 kg",
+      "nature": ["Strong", "Friendly", "Playful", "Independent", "Loyal"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large working breed risk.",
+          "tip": "Healthy weight, avoid overfeeding."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Common in Malamutes.",
+          "tip": "Annual vet tests."
+        },
+        {
+          "issue": "Inherited Polyneuropathy",
+          "description": "Affects nerves, causes weakness.",
+          "tip": "Ethical breeders screen for this."
+        },
+        {
+          "issue": "Heat Stress",
+          "description": "Built for cold — struggles in heat.",
+          "tip": "Exercise in cool times, shade and water always."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep-chested risk.",
+          "tip": "Small meals, avoid rough play after eating."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for health",
+        "annual_vet_checks": ["Hips", "Thyroid", "Nerves"]
+      },
+      "diet": {
+        "protein": "24–30%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Fish", "Chicken", "Eggs", "Rice", "Sweet Potato"],
+        "treats": "Frozen treats, boiled eggs",
+        "hydration": "Plenty of water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes daily",
+        "play": ["Pulling games", "Hiking", "Obedience work"],
+        "training": "Consistent, patient, firm"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week, daily in shedding season",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Don’t overexert in hot weather.",
+        "Never shave coat; it protects them.",
+        "Good for active families with space."
+      ],
+      "golden_rule": "An Alaskan Malamute needs room, cool shade, long walks, and plenty of love — a true arctic companion."
+    },
+
+      "French Bulldog":{
+       image: "/assets/Dogs/French Bulldog.jpg",
+      "lifespan": "10–12 years",
+      "weight": "8–14 kg",
+      "nature": ["Affectionate", "Playful", "Adaptable", "Charming", "Quiet"],
+      "common_health_issues": [
+        {
+          "issue": "Brachycephalic Syndrome",
+          "description": "Flat face causes breathing issues.",
+          "tip": "Keep cool, avoid overexertion."
+        },
+        {
+          "issue": "Skin Folds",
+          "description": "Wrinkles trap dirt and moisture.",
+          "tip": "Wipe folds daily."
+        },
+        {
+          "issue": "Spinal Problems",
+          "description": "Some lines have back issues.",
+          "tip": "No jumping from heights."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Bat ears trap debris.",
+          "tip": "Clean ears weekly."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Easily gain weight.",
+          "tip": "Measure food, daily gentle exercise."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Strongly recommended",
+        "annual_vet_checks": ["Breathing", "Skin", "Spine"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Carrots", "Pumpkin"],
+        "treats": "Small healthy treats, cucumber",
+        "hydration": "Plenty of clean water"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor play", "Short gentle games"],
+        "training": "Positive, short sessions"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Never overheat.",
+        "Clean skin folds daily.",
+        "No high jumps — protect back."
+      ],
+      "golden_rule": "A French Bulldog stays healthy with clean folds, gentle play, measured meals, and cool comfort."
+    },
+
+       "English Bulldog":{
+          image: "/assets/Dogs/English Bulldog.jpg",
+      "lifespan": "8–10 years",
+      "weight": "18–25 kg",
+      "nature": ["Gentle", "Friendly", "Calm", "Affectionate", "Stubborn"],
+      "common_health_issues": [
+        {
+          "issue": "Brachycephalic Breathing Issues",
+          "description": "Flat face causes restricted airflow.",
+          "tip": "Keep cool, avoid rough play in heat."
+        },
+        {
+          "issue": "Skin Fold Infections",
+          "description": "Wrinkles can get infected.",
+          "tip": "Clean folds daily, dry well."
+        },
+        {
+          "issue": "Joint Problems",
+          "description": "Prone to hip dysplasia.",
+          "tip": "Monitor weight, moderate activity."
+        },
+        {
+          "issue": "Heart Problems",
+          "description": "Can develop heart conditions.",
+          "tip": "Annual vet checks."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Gain weight easily.",
+          "tip": "Strict portion control, short walks daily."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Strongly recommended",
+        "annual_vet_checks": ["Heart", "Breathing", "Skin"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Healthy veggie snacks",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor games", "Gentle tug toys"],
+        "training": "Short, positive sessions"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Cool resting spots in summer.",
+        "Clean skin folds every day.",
+        "Gentle walks — no overexertion."
+      ],
+      "golden_rule": "An English Bulldog needs cool naps, clean wrinkles, gentle walks, and your love — they’re big couch potatoes with big hearts."
+    
+},
+   "Bullmastiff":{
+    image: "/assets/Dogs/Bullmastiff.jpg",
+      "lifespan": "7–10 years",
+      "weight": "45–60 kg",
+      "nature": ["Loyal", "Protective", "Calm", "Gentle", "Courageous"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Common in large breeds.",
+          "tip": "Get from health-tested lines, maintain lean weight."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest, high risk.",
+          "tip": "Feed smaller meals, rest after eating."
+        },
+        {
+          "issue": "Heart Disease",
+          "description": "Risk of subaortic stenosis.",
+          "tip": "Annual vet heart checks."
+        },
+        {
+          "issue": "Cancer",
+          "description": "Some lines prone to tumors.",
+          "tip": "Check lumps, vet exams yearly."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Prone if under-exercised.",
+          "tip": "Daily gentle walks, portion control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Heart", "Joints", "Cancer screening"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin", "Carrots"],
+        "treats": "Lean meat, egg bits",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes daily",
+        "play": ["Short gentle play", "Basic obedience"],
+        "training": "Firm but gentle"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Avoid rough play; protect joints.",
+        "Feed measured meals to prevent bloat.",
+        "Socialize early for balanced temperament."
+      ],
+      "golden_rule": "A Bullmastiff needs love, calm leadership, good food, and gentle daily walks — they’re big-hearted guardians."
+    },
+     "Pit Bull Terrier":{
+      image: "/assets/Dogs/Pit Bull Terrier.jpg",
+      "lifespan": "12–16 years",
+      "weight": "15–30 kg",
+      "nature": ["Energetic", "Loyal", "Affectionate", "Strong", "Playful"],
+      "common_health_issues": [
+        {
+          "issue": "Skin Allergies",
+          "description": "Prone to itchy skin and hotspots.",
+          "tip": "Good diet, flea control, vet checks."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Possible in active breeds.",
+          "tip": "Healthy weight, daily moderate exercise."
+        },
+        {
+          "issue": "Knee Problems (ACL)",
+          "description": "Active dogs can injure knees.",
+          "tip": "Avoid jumping from heights."
+        },
+        {
+          "issue": "Heart Disease",
+          "description": "Risk in some lines.",
+          "tip": "Annual vet check-ups."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Love food and treats.",
+          "tip": "Control portions, regular play."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Highly recommended",
+        "annual_vet_checks": ["Heart", "Hips", "Skin"]
+      },
+      "diet": {
+        "protein": "24–30%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Sweet Potato", "Carrots"],
+        "treats": "Lean meat, carrot sticks",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes daily",
+        "play": ["Fetch", "Tug toys", "Obedience"],
+        "training": "Firm, positive, consistent"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Early training and socialization.",
+        "Plenty of play to burn energy.",
+        "Good diet helps skin health."
+      ],
+      "golden_rule": "A Pit Bull Terrier thrives on play, training, and love — a happy, loyal companion when raised responsibly."
+    },
+
+       "American Bully":{
+        image: "/assets/Dogs/American Bully.jpg",
+      "lifespan": "10–13 years",
+      "weight": "30–55 kg (varies by size class)",
+      "nature": ["Gentle", "Confident", "Loyal", "Sociable", "Playful"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Risk due to stocky build.",
+          "tip": "Healthy weight, no overfeeding."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Can be sensitive to food or fleas.",
+          "tip": "Balanced diet, parasite control."
+        },
+        {
+          "issue": "Heart Problems",
+          "description": "Some lines prone.",
+          "tip": "Annual vet checks."
+        },
+        {
+          "issue": "Elbow Dysplasia",
+          "description": "Possible due to muscular build.",
+          "tip": "Avoid excess jumping in pups."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Stocky dogs gain weight fast.",
+          "tip": "Measure food, daily walks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for family pets",
+        "annual_vet_checks": ["Heart", "Joints", "Skin"]
+      },
+      "diet": {
+        "protein": "24–30%",
+        "fat": "12–18%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Sweet Potato", "Pumpkin"],
+        "treats": "Lean meat, healthy chews",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes daily",
+        "play": ["Tug games", "Basic obedience", "Short runs"],
+        "training": "Positive reinforcement"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Train gently but firmly.",
+        "Prevent weight gain with walks.",
+        "Monitor joints as they age."
+      ],
+      "golden_rule": "An American Bully loves family time, healthy food, and calm daily walks — sweet giants when raised right."
+    },
+
+       "Maltese":{
+        image: "/assets/Dogs/Maltese.jpg",
+      "lifespan": "12–15 years",
+      "weight": "3–4 kg",
+      "nature": ["Gentle", "Affectionate", "Playful", "Alert", "Friendly"],
+      "common_health_issues": [
+        {
+          "issue": "Dental Problems",
+          "description": "Prone to tartar and gum issues.",
+          "tip": "Brush teeth daily."
+        },
+        {
+          "issue": "Tear Stains",
+          "description": "Frequent watery eyes.",
+          "tip": "Wipe eyes daily with a soft cloth."
+        },
+        {
+          "issue": "Luxating Patella",
+          "description": "Kneecap dislocation is common.",
+          "tip": "No high jumps, watch for limping."
+        },
+        {
+          "issue": "Hypoglycemia",
+          "description": "Low blood sugar in puppies.",
+          "tip": "Feed small frequent meals."
+        },
+        {
+          "issue": "Collapsed Trachea",
+          "description": "Small breeds are prone.",
+          "tip": "Use harness instead of collar."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Teeth", "Knees", "Eyes"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Tiny boiled veggies",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor games", "Fetch with small toys"],
+        "training": "Gentle, positive"
+      },
+      "grooming": {
+        "brushing": "Daily",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth daily"
+      },
+      "wellbeing_tips": [
+        "Groom daily to avoid tangles.",
+        "Use harness, not collar.",
+        "Small meals prevent sugar dips."
+      ],
+      "golden_rule": "A Maltese needs daily brushing, gentle play, small meals, and your lap — tiny but mighty companions."
+    },
+      "Chihuahua":{
+        image: "/assets/Dogs/Chihuahua.jpg",
+      "lifespan": "12–16 years",
+      "weight": "1.5–3 kg",
+      "nature": ["Alert", "Devoted", "Lively", "Bold", "Affectionate"],
+      "common_health_issues": [
+        {
+          "issue": "Dental Problems",
+          "description": "Small mouths, crowded teeth.",
+          "tip": "Brush daily, vet dental cleanings."
+        },
+        {
+          "issue": "Luxating Patella",
+          "description": "Common knee issue.",
+          "tip": "Avoid jumping, steps."
+        },
+        {
+          "issue": "Collapsed Trachea",
+          "description": "Frequent in tiny breeds.",
+          "tip": "Use harness, not collar."
+        },
+        {
+          "issue": "Hypoglycemia",
+          "description": "Puppies can have sugar drops.",
+          "tip": "Small, frequent meals."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Easy to overfeed.",
+          "tip": "Tiny portions, daily short walks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Teeth", "Knees", "Trachea"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Tiny bits of boiled egg",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "15–20 minutes daily",
+        "play": ["Indoor games", "Small fetch"],
+        "training": "Positive, gentle"
+      },
+      "grooming": {
+        "brushing": "Weekly (daily for long hair)",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth daily"
+      },
+      "wellbeing_tips": [
+        "Keep warm — tiny dogs chill easily.",
+        "Never drop from heights.",
+        "Small meals prevent sugar dips."
+      ],
+      "golden_rule": "A Chihuahua is tiny in size but big in attitude — protect them gently, feed carefully, and enjoy their bold love."
+    },
+  
+       "Yorkshire Terrier":{
+         image: "/assets/Dogs/Yorkshire Terrier.jpg",
+      "lifespan": "12–16 years",
+      "weight": "2–3 kg",
+      "nature": ["Energetic", "Affectionate", "Bold", "Lively", "Intelligent"],
+      "common_health_issues": [
+        {
+          "issue": "Dental Problems",
+          "description": "Small mouths, tartar builds up easily.",
+          "tip": "Brush teeth daily."
+        },
+        {
+          "issue": "Luxating Patella",
+          "description": "Prone to kneecap slipping.",
+          "tip": "No high jumps, watch for limping."
+        },
+        {
+          "issue": "Collapsed Trachea",
+          "description": "Frequent in tiny breeds.",
+          "tip": "Use harness instead of collar."
+        },
+        {
+          "issue": "Hypoglycemia",
+          "description": "Low blood sugar in small puppies.",
+          "tip": "Small, frequent meals."
+        },
+        {
+          "issue": "Portosystemic Shunt",
+          "description": "Liver condition in some lines.",
+          "tip": "Check with vet if poor growth or vomiting."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Teeth", "Knees", "Liver function"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Tiny bits of boiled veggies",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "20–30 minutes daily",
+        "play": ["Indoor games", "Small fetch"],
+        "training": "Positive, gentle"
+      },
+      "grooming": {
+        "brushing": "Daily (long hair)",
+        "bathing": "Every 3–4 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth daily"
+      },
+      "wellbeing_tips": [
+        "Keep warm in cold weather.",
+        "Avoid jumps from furniture.",
+        "Tiny, frequent meals for pups."
+      ],
+      "golden_rule": "A Yorkie needs daily brushing, gentle play, and careful care — tiny but with a big heart."
+    },
+
+     "Miniature Pinscher":{
+       image: "/assets/Dogs/Miniature Pinscher.jpg",
+      "lifespan": "12–15 years",
+      "weight": "4–6 kg",
+      "nature": ["Confident", "Energetic", "Curious", "Alert", "Fearless"],
+      "common_health_issues": [
+        {
+          "issue": "Luxating Patella",
+          "description": "Common knee issue.",
+          "tip": "Limit jumping from heights."
+        },
+        {
+          "issue": "Legg-Calvé-Perthes Disease",
+          "description": "Hip joint issue in toy breeds.",
+          "tip": "Watch for limping, vet care early."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "May develop low thyroid.",
+          "tip": "Annual checks if signs appear."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Small dog, easy to overfeed.",
+          "tip": "Strict portion control, daily walks."
+        },
+        {
+          "issue": "Dental Issues",
+          "description": "Small teeth prone to tartar.",
+          "tip": "Brush daily."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Teeth", "Knees", "Thyroid"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Tiny healthy chews",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "30–45 minutes daily",
+        "play": ["Fetch", "Indoor games"],
+        "training": "Positive, firm"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush daily"
+      },
+      "wellbeing_tips": [
+        "Keep warm — small dogs feel cold.",
+        "Don’t let them jump off furniture.",
+        "Supervise outdoor play — they’re escape artists!"
+      ],
+      "golden_rule": "A Min Pin is tiny but bold — firm training, daily walks, and love make them thrive."
+    },
+
+       "Poodle":{
+         image: "/assets/Dogs/Poodle.jpg",
+      "lifespan": "12–15 years",
+      "weight": "4–30 kg (Toy, Miniature, Standard sizes)",
+      "nature": ["Intelligent", "Active", "Friendly", "Trainable", "Alert"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Risk in larger Standards.",
+          "tip": "Healthy weight, exercise regularly."
+        },
+        {
+          "issue": "Eye Issues",
+          "description": "Prone to cataracts, PRA.",
+          "tip": "Annual eye checks."
+        },
+        {
+          "issue": "Addison’s Disease",
+          "description": "Autoimmune issue more common in Poodles.",
+          "tip": "Watch for weakness, vet care needed."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Hair in ears traps moisture.",
+          "tip": "Clean ears regularly."
+        },
+        {
+          "issue": "Dental Issues (Toy & Mini)",
+          "description": "Small teeth need care.",
+          "tip": "Brush daily."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Eyes", "Hips", "Ears"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Carrots"],
+        "treats": "Lean meat bits",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes (Toy less)",
+        "play": ["Fetch", "Obedience games"],
+        "training": "Positive, fun, regular"
+      },
+      "grooming": {
+        "brushing": "Daily for curls",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Daily for Toys & Minis"
+      },
+      "wellbeing_tips": [
+        "Regular haircuts for coat health.",
+        "Clean ears well to avoid infections.",
+        "Daily walks keep them happy."
+      ],
+      "golden_rule": "A Poodle loves smart play, clean curls, and positive training — they shine with your time."
+    },
+
+     "Dalmatian":{
+       image: "/assets/Dogs/Dalmatian.jpg",
+      "lifespan": "11–13 years",
+      "weight": "20–30 kg",
+      "nature": ["Energetic", "Playful", "Friendly", "Intelligent", "Strong-willed"],
+      "common_health_issues": [
+        {
+          "issue": "Deafness",
+          "description": "Common in the breed.",
+          "tip": "Puppies should be hearing tested."
+        },
+        {
+          "issue": "Urinary Stones",
+          "description": "Prone to urate stones.",
+          "tip": "Low purine diet, lots of water."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Sensitive skin.",
+          "tip": "Balanced diet, flea control."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Risk in active dogs.",
+          "tip": "Healthy weight, exercise."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Love food.",
+          "tip": "Watch treats, daily exercise."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Hearing", "Urine check", "Hips"]
+      },
+      "diet": {
+        "protein": "22–26% (low purine)",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Rice", "Vegetables"],
+        "treats": "Low purine, carrots",
+        "hydration": "Plenty of water always"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Running", "Fetch", "Obedience"],
+        "training": "Consistent, positive"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Lots of water to prevent stones.",
+        "Low purine diet is key.",
+        "Early socialization helps them shine."
+      ],
+      "golden_rule": "A Dalmatian thrives with lots of water, long runs, and a calm family — spots need smart care!"
+    },
+
+       "English Setter":{
+         image: "/assets/Dogs/English Setter.jpg",
+      "lifespan": "10–12 years",
+      "weight": "25–36 kg",
+      "nature": ["Gentle", "Friendly", "Playful", "Sociable", "Energetic"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large sporting breed risk.",
+          "tip": "Keep fit, healthy weight."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid common.",
+          "tip": "Annual tests."
+        },
+        {
+          "issue": "Deafness",
+          "description": "Some lines have congenital deafness.",
+          "tip": "Hearing test pups."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Long ears trap moisture.",
+          "tip": "Check and clean ears regularly."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Can gain weight if inactive.",
+          "tip": "Daily walks, portion control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Hips", "Thyroid", "Hearing"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Eggs", "Fish", "Rice", "Carrots"],
+        "treats": "Lean meat, boiled veggies",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Fetch", "Hiking", "Obedience"],
+        "training": "Gentle, positive"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Regular ear care is key.",
+        "Daily activity prevents weight gain.",
+        "Social dogs — love company."
+      ],
+      "golden_rule": "An English Setter blossoms with daily play, ear care, and a family who loves the outdoors."
+    },
+    "Basset Hound":{
+      image: "/assets/Dogs/Basset Hound.jpg",
+      "lifespan": "10–12 years",
+      "weight": "20–30 kg",
+      "nature": ["Gentle", "Laid-back", "Affectionate", "Friendly", "Loyal"],
+      "common_health_issues": [
+        {
+          "issue": "Ear Infections",
+          "description": "Long ears trap moisture.",
+          "tip": "Check and clean ears weekly."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Can gain weight easily.",
+          "tip": "Measure food, daily walks."
+        },
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Prone due to build.",
+          "tip": "Keep lean, moderate exercise."
+        },
+        {
+          "issue": "Intervertebral Disc Disease",
+          "description": "Long back, risk for spine issues.",
+          "tip": "Avoid stairs, no jumping off furniture."
+        },
+        {
+          "issue": "Eye Issues",
+          "description": "Prone to glaucoma and cherry eye.",
+          "tip": "Vet checks if eyes red or swollen."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Ears", "Eyes", "Spine", "Hips"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Low-fat dog treats",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes",
+        "play": ["Sniffing games", "Gentle walks"],
+        "training": "Positive and patient"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Protect their back — lift properly.",
+        "Clean ears often.",
+        "Watch weight to avoid spine stress."
+      ],
+      "golden_rule": "A Basset Hound needs calm walks, ear care, and a comfy nap spot — loyal couch companions!"
+    },
+
+     "Boston Terrier":{
+      image: "/assets/Dogs/Boston Terrier.jpg",
+      "lifespan": "11–15 years",
+      "weight": "6–11 kg",
+      "nature": ["Friendly", "Playful", "Bright", "Affectionate", "Gentle"],
+      "common_health_issues": [
+        {
+          "issue": "Brachycephalic Syndrome",
+          "description": "Flat face, breathing issues.",
+          "tip": "Avoid heat, don’t over-exercise in summer."
+        },
+        {
+          "issue": "Eye Problems",
+          "description": "Large eyes prone to injury.",
+          "tip": "Vet if squinting or discharge."
+        },
+        {
+          "issue": "Allergies",
+          "description": "Skin allergies possible.",
+          "tip": "Balanced diet, flea control."
+        },
+        {
+          "issue": "Deafness",
+          "description": "Some lines prone.",
+          "tip": "Check hearing early."
+        },
+        {
+          "issue": "Patellar Luxation",
+          "description": "Knee issue common in small dogs.",
+          "tip": "Limit jumping, check for limping."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Eyes", "Nose", "Knees"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Rice", "Pumpkin"],
+        "treats": "Small, soft treats",
+        "hydration": "Plenty of clean water"
+      },
+      "exercise": {
+        "daily_walks": "30–45 minutes",
+        "play": ["Short fetch", "Indoor play"],
+        "training": "Positive, gentle"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Never overheat; they overheat easily.",
+        "Clean eyes daily if needed.",
+        "Gentle walks in cool times."
+      ],
+      "golden_rule": "A Boston Terrier is a bright, easy-going friend — protect their breathing, watch eyes, enjoy cuddles!"
+    },
+      "Cane Corso":{
+        image: "/assets/Dogs/Cane Corso.jpg",
+      "lifespan": "9–12 years",
+      "weight": "40–50 kg",
+      "nature": ["Confident", "Protective", "Loyal", "Intelligent", "Quiet"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Common in large breeds.",
+          "tip": "Get from health-tested breeders."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest increases risk.",
+          "tip": "Feed 2–3 small meals, rest after eating."
+        },
+        {
+          "issue": "Eyelid Issues",
+          "description": "Entropion or ectropion common.",
+          "tip": "Watch for eye irritation."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Large dog can gain weight easily.",
+          "tip": "Measure food, daily exercise."
+        },
+        {
+          "issue": "Heart Issues",
+          "description": "Some lines prone.",
+          "tip": "Annual heart checks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended if not breeding",
+        "annual_vet_checks": ["Hips", "Eyes", "Heart"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Lean meat treats",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Obedience work", "Short runs"],
+        "training": "Firm, positive, consistent"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Early training and socialization.",
+        "Don’t exercise heavily after eating.",
+        "Protect joints with healthy weight."
+      ],
+      "golden_rule": "A Cane Corso thrives on strong training, daily work, and loyal family ties — a calm, powerful guardian."
+    },
+       "Akita Inu":{
+        image: "/assets/Dogs/Akita Inu.jpg",
+      "lifespan": "10–14 years",
+      "weight": "32–50 kg",
+      "nature": ["Loyal", "Dignified", "Protective", "Independent", "Quiet"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large breed risk.",
+          "tip": "Healthy weight, moderate exercise."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Common in Akitas.",
+          "tip": "Annual thyroid check."
+        },
+        {
+          "issue": "Autoimmune Disorders",
+          "description": "Prone to skin/immune issues.",
+          "tip": "Regular vet monitoring."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Large deep chest.",
+          "tip": "Feed small meals, rest after."
+        },
+        {
+          "issue": "Eye Issues",
+          "description": "Progressive retinal atrophy (PRA).",
+          "tip": "Eye checks yearly."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Thyroid", "Eyes"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Lean meat, healthy chews",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Hiking", "Obedience work"],
+        "training": "Firm, patient, respectful"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Socialize early, they’re independent.",
+        "Firm, calm training needed.",
+        "Watch weight, protect hips."
+      ],
+      "golden_rule": "An Akita is loyal and dignified — they need respect, calm leadership, and a close family bond."
+    },
+
+    "Chow Chow":{
+      image: "/assets/Dogs/Chow Chow.jpg",
+      "lifespan": "9–12 years",
+      "weight": "20–32 kg",
+      "nature": ["Independent", "Loyal", "Dignified", "Reserved", "Protective"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Common in the breed.",
+          "tip": "Healthy weight, no overfeeding."
+        },
+        {
+          "issue": "Entropion",
+          "description": "Eyelids roll inward.",
+          "tip": "Surgery may be needed."
+        },
+        {
+          "issue": "Skin Issues",
+          "description": "Thick coat traps moisture.",
+          "tip": "Regular grooming to prevent hot spots."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Common in breed.",
+          "tip": "Annual thyroid checks."
+        },
+        {
+          "issue": "Heat Sensitivity",
+          "description": "Don’t tolerate heat well.",
+          "tip": "Walk in cool times, shade always."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Eyes", "Thyroid"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Healthy chews",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes",
+        "play": ["Short walks", "Gentle play"],
+        "training": "Firm but kind"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Keep cool in warm weather.",
+        "Regular coat care to avoid mats.",
+        "Early training and socialization."
+      ],
+      "golden_rule": "A Chow Chow is loyal but aloof — they need calm leadership, coat care, and cool comfort."
+    },
+     "Border Collie":{
+       image: "/assets/Dogs/Border Collie.jpg",
+      "lifespan": "12–15 years",
+      "weight": "12–20 kg",
+      "nature": ["Highly Intelligent", "Energetic", "Work-driven", "Alert", "Friendly"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Active breed prone to joint issues.",
+          "tip": "Healthy weight, proper exercise."
+        },
+        {
+          "issue": "Epilepsy",
+          "description": "Some lines prone.",
+          "tip": "Vet check if seizures occur."
+        },
+        {
+          "issue": "Collie Eye Anomaly",
+          "description": "Inherited eye condition.",
+          "tip": "Screen puppies early."
+        },
+        {
+          "issue": "Deafness",
+          "description": "Occasional in merle lines.",
+          "tip": "Check hearing in pups."
+        },
+        {
+          "issue": "Osteochondritis Dissecans",
+          "description": "Joint cartilage issue.",
+          "tip": "Control rapid growth, vet care."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Hips", "Eyes"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "12–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Sweet Potato"],
+        "treats": "Training treats for active work",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "90+ minutes",
+        "play": ["Agility", "Frisbee", "Obedience"],
+        "training": "High mental stimulation"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Mental stimulation daily is must.",
+        "Lots of space and activities.",
+        "Work jobs keep them happiest."
+      ],
+      "golden_rule": "A Border Collie needs a job — they live for learning, running, and bonding through tasks."
+    },
+
+    "Belgian Malinois":{
+       image: "/assets/Dogs/Belgian Malinois.jpg",
+      "lifespan": "12–14 years",
+      "weight": "20–30 kg",
+      "nature": ["Highly Energetic", "Intelligent", "Loyal", "Protective", "Alert"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Large active breed risk.",
+          "tip": "Keep fit, avoid overfeeding."
+        },
+        {
+          "issue": "Progressive Retinal Atrophy (PRA)",
+          "description": "Inherited eye condition.",
+          "tip": "Eye checks yearly."
+        },
+        {
+          "issue": "Epilepsy",
+          "description": "Seen in the breed.",
+          "tip": "Vet care for seizures."
+        },
+        {
+          "issue": "Allergies",
+          "description": "Skin allergies can appear.",
+          "tip": "Balanced diet, flea control."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest risk.",
+          "tip": "Multiple small meals, no heavy exercise after eating."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Eyes"]
+      },
+      "diet": {
+        "protein": "22–28%",
+        "fat": "12–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Lean training treats",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "90+ minutes",
+        "play": ["Obedience drills", "Agility", "Protection work"],
+        "training": "Structured, daily mental tasks"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "They must work daily — mental & physical.",
+        "Early socialization is vital.",
+        "Never keep idle — destructive when bored."
+      ],
+      "golden_rule": "A Belgian Malinois must have daily tasks — they bond through work, training, and active family time."
+    },
+       "Irish Setter":{
+         image: "/assets/Dogs/Irish Setter.jpg",
+      "lifespan": "12–15 years",
+      "weight": "25–32 kg",
+      "nature": ["Friendly", "Energetic", "Affectionate", "Playful", "Outgoing"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large breed risk.",
+          "tip": "Healthy weight, good exercise."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest risk.",
+          "tip": "Feed 2–3 small meals, rest after eating."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid levels common.",
+          "tip": "Annual checks recommended."
+        },
+        {
+          "issue": "Progressive Retinal Atrophy (PRA)",
+          "description": "Inherited eye condition.",
+          "tip": "Eye checks yearly."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Long floppy ears trap moisture.",
+          "tip": "Regular ear checks & cleaning."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Eyes", "Thyroid"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Carrots"],
+        "treats": "Lean treats for training",
+        "hydration": "Plenty of clean water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Fetch", "Running", "Obedience"],
+        "training": "Gentle, fun, positive"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Daily exercise is a must.",
+        "Clean ears to prevent infection.",
+        "Family bonding keeps them happy."
+      ],
+      "golden_rule": "An Irish Setter thrives on play, family time, and wide open spaces — a joyful red companion."
+    },
+
+     "Weimaraner":{
+       image: "/assets/Dogs/Weimaraner.jpg",
+      "lifespan": "10–13 years",
+      "weight": "25–40 kg",
+      "nature": ["Energetic", "Friendly", "Intelligent", "Loyal", "Affectionate"],
+      "common_health_issues": [
+        {
+          "issue": "Bloat",
+          "description": "Deep chest increases risk.",
+          "tip": "Feed multiple small meals, rest after."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large breed joint issue.",
+          "tip": "Keep fit, vet screening."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid risk.",
+          "tip": "Annual checks if symptoms show."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Sensitive skin common.",
+          "tip": "Balanced diet, flea control."
+        },
+        {
+          "issue": "Separation Anxiety",
+          "description": "Very people-oriented.",
+          "tip": "Don’t leave alone too long, training helps."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Thyroid", "Skin"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "12–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Carrots"],
+        "treats": "Lean meat treats",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "90+ minutes",
+        "play": ["Hiking", "Running", "Fetch"],
+        "training": "Daily mental work too"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Exercise daily or they get restless.",
+        "Bond closely with family.",
+        "Don’t leave them alone for long."
+      ],
+      "golden_rule": "A Weimaraner is a loyal shadow — they need adventure, family closeness, and active daily life."
+    },
+
+        "Afghan Hound":{
+           image: "/assets/Dogs/Afghan Hound.jpg",
+      "lifespan": "12–15 years",
+      "weight": "23–27 kg",
+      "nature": ["Elegant", "Independent", "Dignified", "Loyal", "Sensitive"],
+      "common_health_issues": [
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid risk.",
+          "tip": "Annual checks recommended."
+        },
+        {
+          "issue": "Cataracts",
+          "description": "Eye issues common.",
+          "tip": "Vet eye checks yearly."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large breed risk.",
+          "tip": "Healthy weight, controlled exercise."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest risk.",
+          "tip": "Small meals, rest after feeding."
+        },
+        {
+          "issue": "Allergies",
+          "description": "Skin sensitive under coat.",
+          "tip": "Balanced diet, flea control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Eyes", "Thyroid"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Healthy chews",
+        "hydration": "Fresh water always"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Running in safe area", "Leash walks"],
+        "training": "Gentle, patient, respectful"
+      },
+      "grooming": {
+        "brushing": "Daily for coat",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Daily brushing is a must.",
+        "Regular exercise keeps them balanced.",
+        "They love gentle handling."
+      ],
+      "golden_rule": "An Afghan Hound is elegance in motion — they thrive with coat care, dignity, and gentle routine."
+    },
+        "Bichon Frise":{
+          image: "/assets/Dogs/Bichon Frise.jpg",
+      "lifespan": "12–15 years",
+      "weight": "5–10 kg",
+      "nature": ["Cheerful", "Playful", "Friendly", "Gentle", "Affectionate"],
+      "common_health_issues": [
+        {
+          "issue": "Allergies",
+          "description": "Skin allergies common.",
+          "tip": "Regular grooming, balanced diet."
+        },
+        {
+          "issue": "Dental Issues",
+          "description": "Small breeds often get tartar.",
+          "tip": "Brush teeth regularly."
+        },
+        {
+          "issue": "Bladder Stones",
+          "description": "Prone to urinary issues.",
+          "tip": "Plenty of fresh water, vet checks."
+        },
+        {
+          "issue": "Patellar Luxation",
+          "description": "Knee cap slips out of place.",
+          "tip": "Keep weight healthy, vet check for limping."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Hairy ear canals trap moisture.",
+          "tip": "Clean ears regularly."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Teeth", "Ears", "Bladder health"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Small healthy chews",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "30–45 minutes",
+        "play": ["Short games", "Indoor fun"],
+        "training": "Positive, gentle"
+      },
+      "grooming": {
+        "brushing": "3–4 times a week",
+        "bathing": "Every 4 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth daily if possible"
+      },
+      "wellbeing_tips": [
+        "Regular professional grooming needed.",
+        "Keep teeth clean to avoid dental disease.",
+        "Gentle exercise daily."
+      ],
+      "golden_rule": "A Bichon Frise thrives on love, neat grooming, and family fun indoors."
+    },
+
+      "Rough Collie":{
+        image: "/assets/Dogs/Rough Collie.jpg",
+      "lifespan": "12–14 years",
+      "weight": "20–30 kg",
+      "nature": ["Gentle", "Intelligent", "Friendly", "Protective", "Loyal"],
+      "common_health_issues": [
+        {
+          "issue": "Collie Eye Anomaly",
+          "description": "Inherited eye condition.",
+          "tip": "Test puppies early."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Common in larger dogs.",
+          "tip": "Keep lean, balanced exercise."
+        },
+        {
+          "issue": "Dermatomyositis",
+          "description": "Skin/muscle inflammation.",
+          "tip": "Watch for skin lesions."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Deep chest risk.",
+          "tip": "Feed smaller meals, rest after."
+        },
+        {
+          "issue": "Allergies",
+          "description": "Skin and food allergies possible.",
+          "tip": "Balanced diet, flea control."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Eyes", "Hips", "Skin"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Carrots"],
+        "treats": "Healthy chews",
+        "hydration": "Always fresh water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Herding games", "Fetch"],
+        "training": "Positive, patient"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush regularly"
+      },
+      "wellbeing_tips": [
+        "Gentle, positive training.",
+        "Daily brushing during shedding.",
+        "Protect eyes with regular checks."
+      ],
+      "golden_rule": "A Rough Collie is a loyal companion — gentle, smart, and happiest with daily family time."
+    },
+
+      "Samoyed":{
+        image: "/assets/Dogs/Samoyed.jpg",
+      "lifespan": "12–14 years",
+      "weight": "20–30 kg",
+      "nature": ["Friendly", "Gentle", "Lively", "Affectionate", "Social"],
+      "common_health_issues": [
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Large breed risk.",
+          "tip": "Keep fit, vet screening."
+        },
+        {
+          "issue": "Diabetes",
+          "description": "Some lines prone.",
+          "tip": "Monitor weight, balanced diet."
+        },
+        {
+          "issue": "Progressive Retinal Atrophy",
+          "description": "Eye issue common.",
+          "tip": "Annual eye check-ups."
+        },
+        {
+          "issue": "Glaucoma",
+          "description": "Eye pressure issues.",
+          "tip": "Monitor for eye redness or pain."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid common.",
+          "tip": "Annual thyroid test."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Eyes", "Hips", "Thyroid"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Fish", "Chicken", "Eggs", "Rice", "Carrots"],
+        "treats": "Lean, healthy treats",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "60–90 minutes",
+        "play": ["Snow play", "Running", "Obedience"],
+        "training": "Positive, patient"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Double coat needs regular brushing.",
+        "Keep cool in hot climates.",
+        "Gentle training works best."
+      ],
+      "golden_rule": "A Samoyed is a smiling snow dog — they love family, winter, and gentle grooming."
+    },
+
+     "Newfoundland Dog":{
+      image: "/assets/Dogs/Newfoundland Dog.jpg",
+      "lifespan": "8–10 years",
+      "weight": "50–70 kg",
+      "nature": ["Gentle", "Calm", "Sweet", "Loyal", "Patient"],
+      "common_health_issues": [
+        {
+          "issue": "Hip & Elbow Dysplasia",
+          "description": "Large breed joint risk.",
+          "tip": "Keep lean, avoid over-exercising puppies."
+        },
+        {
+          "issue": "Heart Disease",
+          "description": "Subvalvular Aortic Stenosis common.",
+          "tip": "Annual heart checks."
+        },
+        {
+          "issue": "Bloat",
+          "description": "Large chest risk.",
+          "tip": "Feed small meals, no heavy activity after."
+        },
+        {
+          "issue": "Obesity",
+          "description": "Gain weight easily.",
+          "tip": "Balanced diet, moderate daily exercise."
+        },
+        {
+          "issue": "Skin Issues",
+          "description": "Thick coat can trap moisture.",
+          "tip": "Dry coat well after swimming."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended for pets",
+        "annual_vet_checks": ["Hips", "Heart", "Skin"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Fish", "Chicken", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Low-fat treats",
+        "hydration": "Plenty of fresh water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes",
+        "play": ["Swimming", "Gentle play"],
+        "training": "Patient, calm, positive"
+      },
+      "grooming": {
+        "brushing": "2–3 times a week",
+        "bathing": "Every 6–8 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Don’t overheat, they prefer cool areas.",
+        "Swim safely — they love water.",
+        "Keep joints protected with weight control."
+      ],
+      "golden_rule": "A Newfoundland is a gentle giant — happiest when cool, calm, and close to family."
+    },
+
+      "Bull Terrier":{
+        image: "/assets/Dogs/Bull Terrier.jpg",
+      "lifespan": "10–14 years",
+      "weight": "20–35 kg",
+      "nature": ["Playful", "Mischievous", "Strong", "Affectionate", "Energetic"],
+      "common_health_issues": [
+        {
+          "issue": "Deafness",
+          "description": "White Bull Terriers prone.",
+          "tip": "Check hearing in pups."
+        },
+        {
+          "issue": "Skin Allergies",
+          "description": "Prone to rashes.",
+          "tip": "Balanced diet, flea control."
+        },
+        {
+          "issue": "Heart Issues",
+          "description": "Mitral valve disease risk.",
+          "tip": "Annual heart check-ups."
+        },
+        {
+          "issue": "Patellar Luxation",
+          "description": "Knee slipping.",
+          "tip": "Keep weight healthy."
+        },
+        {
+          "issue": "Kidney Issues",
+          "description": "Some lines prone.",
+          "tip": "Regular vet checks."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Heart", "Kidneys", "Hearing"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Lean treats",
+        "hydration": "Plenty of clean water"
+      },
+      "exercise": {
+        "daily_walks": "60 minutes",
+        "play": ["Fetch", "Short runs"],
+        "training": "Firm, fun, consistent"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Monthly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Don’t let boredom build — they get destructive.",
+        "Training must be firm but positive.",
+        "Watch for skin rashes."
+      ],
+      "golden_rule": "A Bull Terrier is a playful clown — best with fun, firm training, and daily activities."
+    },
+
+       "Shar Pei":{
+        image: "/assets/Dogs/Shar Pei.jpg",
+      "lifespan": "8–12 years",
+      "weight": "18–25 kg",
+      "nature": ["Loyal", "Calm", "Independent", "Protective", "Quiet"],
+      "common_health_issues": [
+        {
+          "issue": "Skin Fold Infections",
+          "description": "Wrinkles trap moisture.",
+          "tip": "Clean folds daily."
+        },
+        {
+          "issue": "Entropion",
+          "description": "Eyelids roll inward.",
+          "tip": "May need surgery."
+        },
+        {
+          "issue": "Hip Dysplasia",
+          "description": "Common in breed.",
+          "tip": "Keep lean, balanced exercise."
+        },
+        {
+          "issue": "Hypothyroidism",
+          "description": "Low thyroid risk.",
+          "tip": "Annual thyroid tests."
+        },
+        {
+          "issue": "Ear Infections",
+          "description": "Small ear canals.",
+          "tip": "Clean ears weekly."
+        }
+      ],
+      "preventive_care": {
+        "vaccinations": ["Rabies", "DHPP"],
+        "deworming": {
+          "puppies": "Every 2–4 weeks until 6 months",
+          "adults": "Every 3 months"
+        },
+        "tick_flea_control": "Monthly",
+        "spay_neuter": "Recommended",
+        "annual_vet_checks": ["Eyes", "Skin", "Hips"]
+      },
+      "diet": {
+        "protein": "22–26%",
+        "fat": "10–15%",
+        "carbs": "30–50%",
+        "fiber": "3–5%",
+        "good_foods": ["Chicken", "Fish", "Eggs", "Rice", "Pumpkin"],
+        "treats": "Lean treats",
+        "hydration": "Fresh clean water"
+      },
+      "exercise": {
+        "daily_walks": "45–60 minutes",
+        "play": ["Gentle play"],
+        "training": "Firm but gentle"
+      },
+      "grooming": {
+        "brushing": "Weekly",
+        "bathing": "Every 4–6 weeks",
+        "ear_cleaning": "Weekly",
+        "nail_clipping": "Monthly",
+        "dental_care": "Brush teeth regularly"
+      },
+      "wellbeing_tips": [
+        "Keep skin folds clean & dry.",
+        "Protect eyes with vet checks.",
+        "Socialize early for calm behavior."
+      ],
+      "golden_rule": "A Shar Pei is calm and loyal — care for their wrinkles, eyes, and dignity daily."
+    }
+
+
+  // Add more breeds here...
+};
+
+function searchBreed() {
+  const input = document.getElementById("breedSearch").value.trim();
+  const resultDiv = document.getElementById("breedResult");
+  const backButton = document.getElementById("backButton");
+  
+  if (input === "") {
+    resultDiv.innerHTML = `<p>Start typing to see breed health tips!</p>`;
+    backButton.style.display = "none";
+    return;
+  }
+
+  const matches = Object.keys(breedHealthData).filter(b =>
+    b.toLowerCase().includes(input.toLowerCase())
+  );
+
+  if (matches.length) {
+    resultDiv.innerHTML = matches.map(b => {
+      const d = breedHealthData[b];
+      return `
+
+  
+        <!-- all your breed info here -->
+        <h3>${b}</h3>
+        <img src="${d.image}" alt="${b}" width="200" onerror="this.src='/assets/Dogs/default.webp'">
+        <p><strong>Lifespan:</strong> ${d.lifespan}</p>
+        <p><strong>Weight:</strong> ${d.weight}</p>
+        <p><strong>Nature:</strong> ${d.nature.join(", ")}</p>
+
+        <h4>Common Health Issues</h4>
+        <ul>
+          ${d.common_health_issues.map(i => `
+            <li><strong>${i.issue}:</strong> ${i.description} <em>(Tip: ${i.tip})</em></li>
+          `).join("")}
+        </ul>
+
+        <h4>Preventive Care</h4>
+        <p><strong>Vaccinations:</strong> ${d.preventive_care.vaccinations.join(", ")}</p>
+        <p><strong>Deworming:</strong> Puppies: ${d.preventive_care.deworming.puppies} | Adults: ${d.preventive_care.deworming.adults}</p>
+        <p><strong>Tick/Flea Control:</strong> ${d.preventive_care.tick_flea_control}</p>
+        <p><strong>Spay/Neuter:</strong> ${d.preventive_care.spay_neuter}</p>
+        <p><strong>Annual Vet Checks:</strong> ${d.preventive_care.annual_vet_checks.join(", ")}</p>
+
+        <h4>Diet</h4>
+        <p>Protein: ${d.diet.protein}, Fat: ${d.diet.fat}, Carbs: ${d.diet.carbs}, Fiber: ${d.diet.fiber}</p>
+        <p><strong>Good Foods:</strong> ${d.diet.good_foods.join(", ")}</p>
+        <p><strong>Treats:</strong> ${d.diet.treats}</p>
+        <p><strong>Hydration:</strong> ${d.diet.hydration}</p>
+
+        <h4>Exercise</h4>
+        <p><strong>Daily Walks:</strong> ${d.exercise.daily_walks}</p>
+        <p><strong>Play:</strong> ${d.exercise.play.join(", ")}</p>
+        <p><strong>Training:</strong> ${d.exercise.training}</p>
+
+        <h4>Grooming</h4>
+        <p>Brushing: ${d.grooming.brushing}, Bathing: ${d.grooming.bathing}, Ear Cleaning: ${d.grooming.ear_cleaning}, Nail Clipping: ${d.grooming.nail_clipping}, Dental Care: ${d.grooming.dental_care}</p>
+
+        <h4>Wellbeing Tips</h4>
+        <ul>${d.wellbeing_tips.map(t => `<li>${t}</li>`).join("")}</ul>
+
+        <blockquote><em>🐾 ${d.golden_rule}</em></blockquote>
+      `;
+    }).join("<hr>");
+    backButton.style.display = "inline-block";
+  } else {
+    resultDiv.innerHTML = input ? `<p>No health info found for "${input}"</p>` : `<p>Start typing to see breed health tips!</p>`;
+    backButton.style.display = "none";
+  }
+
+  setTimeout(() => resultDiv.style.opacity = 1, 50);
+}
+
+function clearBreed() {
+  document.getElementById("breedSearch").value = "";
+  document.getElementById("breedResult").innerHTML = `<p>Start typing to see breed health tips!</p>`;
+  document.getElementById("backButton").style.display = "none";
+}
+
+document.getElementById("breedSearch").addEventListener("keyup", function(e) {
+  if (e.key === "Enter") {
+    searchBreed();
+  }
+});
+</script>
+
+</body>
+</html>
+ 

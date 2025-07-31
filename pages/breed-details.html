@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Dog Breeds – BreedLy</title>
+   <link rel="icon" href="/assets/favi2.png" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+body {
+  font-family: 'Fredoka', sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-img-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* keep it behind everything */
+  overflow: hidden;
+}
+
+.bg-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1; /* Adjust for soft background effect */
+}
+
+    h1 {
+      text-align: center;
+      color: #4e148c;
+      margin-bottom: 20px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .filters select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .breed-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .breed-card {
+      background: #fff8f2;
+      width: 240px;
+      padding: 15px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .breed-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .breed-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .breed-card h3 {
+      margin: 10px 0 6px;
+      color: #5a2a03;
+    }
+
+    .breed-card p {
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    .breed-card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #4e148c;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-img-wrapper">
+  <img src="/assets/bgg1.png" alt="Background" />
+</div>
+
+  <h1>🐾 Browse All Dog Breeds</h1>
+
+  <input type="text" id="searchInput" placeholder="Search breed by name..." style="padding:10px; border-radius:8px; border:1px solid #ccc; font-size:1rem; margin-bottom:20px; width:100%; max-width:300px; display:block; margin: 0 auto 20px;" />
+
+  <div class="filters">
+    <select id="sizeFilter">
+      <option value="">All Sizes</option>
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
+    </select>
+    <select id="energyFilter">
+      <option value="">All Energy Levels</option>
+      <option value="low">Low</option>
+      <option value="moderate">Moderate</option>
+      <option value="high">High</option>
+    </select>
+    <select id="groomingFilter">
+      <option value="">All Grooming Needs</option>
+      <option value="low">Low</option>
+      <option value="moderate">Moderate</option>
+      <option value="high">High</option>
+    </select>
+    <select id="expenseFilter">
+        <option value=""">Montly Expenses Range</option>
+        <option value="low">(₹1,000 – ₹3,000)</option>
+        <option value="moderate">(₹3,000 – ₹5,000)</option>
+        <option value="high">(₹5,000 – ₹8,000)</option>
+        <option value="very high">(₹8,000 – ₹`12,000)</option>
+    </select>
+  </div>
+
+  <div class="breed-grid" id="breedGrid">
+    <!-- JavaScript will populate breeds here -->
+  </div>
+
+  <script>
+    const breedCards = [
+  { name: "Labrador Retriever", image: "/assets/Dogs/Labrador Retriever.jpg", size: "large", energy: "moderate", grooming: "moderate",expense:"moderate", link: "full-breed-info.html?breed=Labrador Retriever" },
+  { name: "Golden Retriever", image: "/assets/Dogs/Golden Retriever.webp", size: "large", energy: "high", grooming: "moderate",expense:"moderate", link: "full-breed-info.html?breed=Golden Retriever" },
+  { name: "German Shepherd", image: "/assets/Dogs/German Shepherd.jpg", size: "large", energy: "high", grooming: "moderate",expense:"moderate", link: "full-breed-info.html?breed=German Shepherd" },
+  { name: "Beagle", image: "/assets/Dogs/Beagle.jpg", size: "small", energy: "high", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Beagle" },
+  { name: "Pug", image: "/assets/Dogs/Pug.jpg", size: "small", energy: "low", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Pug" },
+  { name: "Shih Tzu", image: "/assets/Dogs/Shih Tzu.jpg", size: "small", energy: "low", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Shih Tzu" },
+  { name: "Lhasa Apso", image: "/assets/Dogs/Lhasa Apso.jpg", size: "small", energy: "low", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Lhasa Apso" },
+  { name: "Pomeranian", image: "/assets/Dogs/Pomeranian.jpg", size: "small", energy: "high", grooming: "high",expense:"low", link: "full-breed-info.html?breed=Pomeranian" },
+  { name: "Indian Spitz", image: "/assets/Dogs/Indian Spitz.jpg", size: "small", energy: "moderate", grooming: "moderate",expense:"low", link: "full-breed-info.html?breed=Indian Spitz" },
+  { name: "Dachshund", image: "/assets/Dogs/Dachshund.jpg", size: "small", energy: "moderate", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Dachshund" },
+  { name: "Cocker Spaniel", image: "/assets/Dogs/Cocker Spaniel.jpg", size: "medium", energy: "moderate", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Cocker Spaniel" },
+  { name: "Boxer", image: "/assets/Dogs/Boxer.jpg", size: "large", energy: "high", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=Boxer" },
+  { name: "Doberman Pinscher", image: "/assets/Dogs/Doberman Pinscher.jpg", size: "large", energy: "high", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=Doberman Pinscher" },
+  { name: "Rottweiler", image: "/assets/Dogs/Rottweiler.jpg", size: "large", energy: "high", grooming: "low",expense:"high", link: "full-breed-info.html?breed=Rottweiler" },
+  { name: "Great Dane", image: "/assets/Dogs/Great Dane.jpg", size: "giant", energy: "moderate", grooming: "low",expense:"very high", link: "full-breed-info.html?breed=Great Dane" },
+  { name: "Saint Bernard", image: "/assets/Dogs/Saint Bernard.jpg", size: "giant", energy: "low", grooming: "high",expense:"very high", link: "full-breed-info.html?breed=Saint Bernard" },
+  { name: "Siberian Husky", image: "/assets/Dogs/Siberian Husky.jpg", size: "medium", energy: "high", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Siberian Husky" },
+  { name: "Alaskan Malamute", image: "/assets/Dogs/Alaskan Malamute.jpg", size: "large", energy: "high", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Alaskan Malamute" },
+  { name: "French Bulldog", image: "/assets/Dogs/French Bulldog.jpg", size: "small", energy: "low", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=French Bulldog" },
+  { name: "English Bulldog", image: "/assets/Dogs/English Bulldog.jpg", size: "medium", energy: "low", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=English Bulldog" },
+  { name: "Bullmastiff", image: "/assets/Dogs/Bullmastiff.jpg", size: "large", energy: "moderate", grooming: "low",expense:"very high", link: "full-breed-info.html?breed=Bullmastiff" },
+  { name: "Pit Bull Terrier", image: "/assets/Dogs/Pit Bull Terrier.jpg", size: "medium", energy: "high", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=Pit Bull Terrier" },
+  { name: "American Bully", image: "/assets/Dogs/American Bully.jpg", size: "medium", energy: "moderate", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=American Bully" },
+  { name: "Maltese", image: "/assets/Dogs/Maltese.jpg", size: "small", energy: "low", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Maltese" },
+  { name: "Chihuahua", image: "/assets/Dogs/Chihuahua.jpg", size: "small", energy: "high", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Chihuahua" },
+  { name: "Yorkshire Terrier", image: "/assets/Dogs/Yorkshire Terrier.jpg", size: "small", energy: "moderate", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Yorkshire Terrier" },
+  { name: "Miniature Pinscher", image: "/assets/Dogs/Miniature Pinscher.jpg", size: "small", energy: "high", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Miniature Pinscher" },
+  { name: "Poodle", image: "/assets/Dogs/Poodle.jpg", size: "medium", energy: "moderate", grooming: "high",expense:"moderate", link: "full-breed-info.html?breed=Poodle" },
+  { name: "Dalmatian", image: "/assets/Dogs/Dalmatian.jpg", size: "medium", energy: "high", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=Dalmatian" },
+  { name: "English Setter", image: "/assets/Dogs/English Setter.jpg", size: "medium", energy: "high", grooming: "high",expense:"high", link: "full-breed-info.html?breed=English Setter" },
+  { name: "Basset Hound", image: "/assets/Dogs/Basset Hound.jpg", size: "medium", energy: "low", grooming: "low",expense:"high", link: "full-breed-info.html?breed=Basset Hound" },
+  { name: "Boston Terrier", image: "/assets/Dogs/Boston Terrier.jpg", size: "small", energy: "moderate", grooming: "low",expense:"high", link: "full-breed-info.html?breed=Boston Terrier" },
+  { name: "Cane Corso", image: "/assets/Dogs/Cane Corso.jpg", size: "large", energy: "moderate", grooming: "low",expense:"low", link: "full-breed-info.html?breed=Cane Corso" },
+  { name: "Akita Inu", image: "/assets/Dogs/Akita Inu.jpg", size: "large", energy: "moderate", grooming: "high",expense:"low", link: "full-breed-info.html?breed=Akita Inu" },
+  { name: "Chow Chow", image: "/assets/Dogs/Chow Chow.jpg", size: "medium", energy: "low", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Chow Chow" },
+  { name: "Border Collie", image: "/assets/Dogs/Border Collie.jpg", size: "medium", energy: "high", grooming: "moderate",expense:"high", link: "full-breed-info.html?breed=Border Collie" },
+  { name: "Belgian Malinois", image: "/assets/Dogs/Belgian Malinois.jpg", size: "medium", energy: "high", grooming: "low",expense:"high", link: "full-breed-info.html?breed=Belgian Malinois" },
+  { name: "Irish Setter", image: "/assets/Dogs/Irish Setter.jpg", size: "large", energy: "high", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Irish Setter" },
+  { name: "Weimaraner", image: "/assets/Dogs/Weimaraner.jpg", size: "large", energy: "high", grooming: "low",expense:"high", link: "full-breed-info.html?breed=Weimaraner" },
+  { name: "Afghan Hound", image: "/assets/Dogs/Afghan Hound.jpg", size: "large", energy: "moderate", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Afghan Hound" },
+  { name: "Bichon Frise", image: "/assets/Dogs/Bichon Frise.jpg", size: "small", energy: "moderate", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Bichon Frise" },
+  { name: "Rough Collie", image: "/assets/Dogs/Rough Collie.jpg", size: "large", energy: "moderate", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Rough Collie" },
+  { name: "Samoyed", image: "/assets/Dogs/Samoyed.jpg", size: "medium", energy: "high", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Samoyed" },
+  { name: "Newfoundland Dog", image: "/assets/Dogs/Newfoundland Dog.jpg", size: "giant", energy: "low", grooming: "high",expense:"high", link: "full-breed-info.html?breed=Newfoundland Dog" },
+  { name: "Bull Terrier", image: "/assets/Dogs/Bull Terrier.jpg", size: "medium", energy: "high", grooming: "low",expense:"very high", link: "full-breed-info.html?breed=Bull Terrier" },
+  { name: "Shar Pei", image: "/assets/Dogs/Shar Pei.jpg", size: "medium", energy: "low", grooming: "moderate",expense:"moderate", link: "full-breed-info.html?breed=Shar Pei" },
+  { name: "Dogo Argentino", image: "/assets/Dogs/Dogo Argentino.jpg", size: "large", energy: "high", grooming: "low",expense:"moderate", link: "full-breed-info.html?breed=Dogo Argentino" }
+];
+
+
+    
+  const grid = document.getElementById("breedGrid");
+  const sizeFilter = document.getElementById("sizeFilter");
+  const energyFilter = document.getElementById("energyFilter");
+  const groomingFilter = document.getElementById("groomingFilter");
+  const expenseFilter = document.getElementById("expenseFilter");
+
+  function renderBreeds() {
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    grid.innerHTML = "";
+    const size = sizeFilter.value;
+    const energy = energyFilter.value;
+    const grooming = groomingFilter.value;
+    const expense = expenseFilter.value;
+
+    const filtered = breedCards.filter(breed => {
+      const matchesSearch = breed.name.toLowerCase().includes(search);
+      return matchesSearch &&
+        (!size || breed.size === size) &&
+        (!energy || breed.energy === energy) &&
+        (!grooming || breed.grooming === grooming) &&
+        (!expense || breed.expense === expense);
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p>No breeds match your filters.</p>';
+      return;
+    }
+
+    filtered.forEach(b => {
+      const card = document.createElement("div");
+      card.className = "breed-card";
+      card.innerHTML = `
+        <img src="${b.image}" alt="${b.name}" />
+        <h3>${b.name}</h3>
+        <p>Size: ${b.size}, Energy: ${b.energy}, Grooming: ${b.grooming}, Expense: ${b.expense}</p>
+        <a href="${b.link}">View Info</a>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  sizeFilter.onchange = energyFilter.onchange = groomingFilter.onchange = expenseFilter.onchange = renderBreeds;
+  document.getElementById("searchInput").addEventListener("input", renderBreeds);
+  renderBreeds();
+  </script>
+</body>
+</html>

@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Breed Info – BreedLy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+   body {
+  font-family: "Fredoka", sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
+  overflow-x: hidden;
+}
+.bg-image-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+.bg-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1; /* subtle background effect */
+  pointer-events: none;
+}
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .breed-info {
+      overflow: visible;
+      max-width: 800px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      animation: slideUp 0.7s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .breed-info img {
+      width: 450px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      color: #4e148c;
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      color: #ff7a00;
+      margin-bottom: 10px;
+    }
+
+    .desc,
+    .traits,
+    .pros-cons,
+    .grooming,
+    .exercise,
+    .notes,
+    .lifespan,
+    .bestfor {
+      text-align: left;
+      margin: 20px 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    ul {
+      padding-left: 20px;
+      color: #000000;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    .back-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px auto;
+    }
+
+    .back-link {
+      background: #ff7a00;
+      color: #fff;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      background: #ff9900;
+    }
+
+    .health-guide {
+      text-align: left;
+      margin: 20px 0;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .health-guide h2 {
+      color: #4e148c;
+    }
+
+    .health-guide h3 {
+      margin-top: 10px;
+      color: #ff7a00;
+    }
+
+    .health-guide ul {
+      list-style: disc;
+      padding-left: 40px;
+    }
+
+    .health-guide p {
+      margin: 8px 0;
+    }
+
+   .video-section {
+  position: relative;
+  z-index: 2;
+  margin-top: 40px;
+  text-align: center;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.video-section h2 {
+  color: #4e148c;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.video-section video {
+  width: 100%;
+  max-width: 500px;
+  height: 400px;
+  border-radius: 16px;
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);
+  background-color: #000;
+  transition: transform 0.3s ease;
+}
+
+.video-section video:hover {
+  transform: scale(1.02);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .video-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .video-section video {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="bg-image-wrapper">
+  <img src="/assets/bgg1.png" alt="Background Pattern" />
+</div>
+
+  
+  <div class="breed-info" id="breedContainer">
+    <!-- Breed info loads here dynamically -->
+  </div>
+
+ <div class="video-section" id="videoSection" style="display: none;">
+  <h2>🎥 Watch this Breed in Action!</h2>
+  <video id="breedVideo" controls playsinline>
+    <source id="breedVideoSource" src="" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
+</div>
+
+  <div class="back-links">
+    <a href="results.html" class="back-link">← Back to Matches</a>
+    <a href="#" onclick="history.back(); return false;" class="back-link">← Back to All Breed</a>
+  </div>
+
+  <script>
+    const breeds = {
+      "Golden Retriever": {
+        image: "/assets/Dogs/Golden Retriever.webp",
+        video: "/assets/videos/Golden Retriever.mp4",
+        description:
+          "Size: Large (55–75 lbs). Friendly, intelligent, affectionate. Heavy shedder. High energy.",
+        traits: [
+          "Size: Large (55–75 lbs)",
+          "Appearance: Long golden double coat, floppy ears, feathered tail",
+          "Temperament: Friendly, intelligent, affectionate, patient",
+          "Good With: Kids, other dogs, strangers",
+          "Trainability: Very easy to train",
+          "Barking Level: Moderate",
+          "Shedding Level: Heavy, year-round",
+          "Energy Level: High energy",
+        ],
+        pros: [
+          "Excellent family dog",
+          "Loyal and playful",
+          "Very trainable",
+          "Good with kids and other pets",
+        ],
+        cons: [
+          "Heavy shedding",
+          "High exercise needs",
+          "Not ideal for hot climates",
+          "Needs mental stimulation and company",
+        ],
+        grooming: [
+          "Brush 2–3 times a week",
+          "Bath monthly",
+          "Seasonal heavy shedding",
+        ],
+        exercise: "1–2 hours daily (walks, play, fetch)",
+        notes: [
+          "🌡️ Climate Caution: Doesn’t do well in extreme heat — needs shade and cooling",
+          "🧩 Mental Stimulation: Needs puzzle toys, games, and learning tasks",
+          "💛 Separation Anxiety: Hates being alone for long",
+          "🌳 Activities: Loves swimming, fetch, hiking, and family time",
+        ],
+        lifespan: "10–12 years",
+        bestFor:
+          "Active families, homes with yards, cool or temperate climate",
+
+      },
+
+      "Labrador Retriever": {
+        image: "/assets/Dogs/Labrador Retriever.jpg",
+        video: "/assets/videos/Labrador Retriever.mp4",
+        description:
+          "Size: Large (55–80 lbs). Outgoing, playful, loyal. Loves food. High shedding and high energy.",
+        traits: [
+          "Size: Large (55–80 lbs)",
+          "Appearance: Short dense double coat, broad head, otter tail",
+          "Temperament: Friendly, energetic, loyal, intelligent",
+          "Good With: Kids, other dogs, families",
+          "Trainability: Very easy to train",
+          "Barking Level: Moderate",
+          "Shedding Level: Heavy, year-round",
+          "Energy Level: Very high energy",
+        ],
+        pros: [
+          "Great with kids and other pets",
+          "Very loyal and friendly",
+          "Easy to train",
+          "Adaptable to many environments",
+        ],
+        cons: [
+          "Prone to obesity if overfed",
+          "Needs lots of exercise",
+          "Heavy shedder",
+          "Can be destructive if bored",
+        ],
+        grooming: [
+          "Brush weekly (more during shedding season)",
+          "Bath every 1–2 months",
+          "Check ears for infections",
+        ],
+        exercise: "1–2 hours daily (walks, swimming, games, fetch)",
+        notes: [
+          "🐾 Labs are food-driven — watch portion sizes!",
+          "💧 Labs love water and swimming.",
+          "🔑 Needs daily exercise and mental work to avoid boredom.",
+          "💙 Very social — doesn’t like being left alone too long.",
+        ],
+        lifespan: "10–12 years",
+        bestFor: "Active families, homes with yards, rural or suburban areas",
+      },
+
+      "German Shepherd": {
+        image: "/assets/Dogs/German Shepherd.jpg",
+        video: "/assets/videos/German Shepherd.mp4",
+        description:
+          "Size: Large (50–90 lbs). Loyal, intelligent, protective. Heavy shedder. High energy.",
+        traits: [
+          "Size: Large (50–90 lbs)",
+          "Appearance: Strong, athletic frame, upright ears",
+          "Temperament: Loyal, courageous, alert",
+          "Good With: Families, experienced owners",
+          "Trainability: Very high",
+          "Barking Level: Moderate to high",
+          "Shedding Level: Heavy",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Excellent guard and service dog",
+          "Very trainable",
+          "Protective and obedient",
+        ],
+        cons: [
+          "Needs socialization",
+          "Heavy seasonal shedding",
+          "Can become overprotective if not trained",
+        ],
+        grooming: [
+          "Brush 3–4 times per week",
+          "Bath every 6–8 weeks",
+          "Extra brushing during shedding seasons",
+        ],
+        exercise: "1.5–2 hours daily (training, fetch, walks)",
+        notes: [
+          "🧠 Needs consistent training and leadership",
+          "🌪️ Not ideal for first-time dog owners",
+          "🌞 Handles a range of climates but needs shade and hydration in heat",
+        ],
+        lifespan: "9–13 years",
+        bestFor:
+          "Experienced families, active households, those seeking loyalty and protection",
+        
+      },
+
+      Beagle: {
+        image: "/assets/Dogs/Beagle.jpg",
+        video: "/assets/videos/Beagle.mp4",
+        description:
+          "Size: Small to Medium (20–30 lbs). Curious, merry, and friendly. Moderate shedding. High energy.",
+        traits: [
+          "Size: Small to Medium (20–30 lbs)",
+          "Appearance: Short coat, big floppy ears, compact body",
+          "Temperament: Curious, friendly, playful",
+          "Good With: Kids, families, other dogs",
+          "Trainability: Moderate",
+          "Barking Level: High (vocal breed)",
+          "Shedding Level: Moderate",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Great with kids",
+          "Loves companionship",
+          "Low grooming needs",
+        ],
+        cons: [
+          "Can be stubborn",
+          "Prone to barking/howling",
+          "Needs a secure yard (escape artist)",
+        ],
+        grooming: ["Brush weekly", "Occasional bath"],
+        exercise: "1–2 hours daily (walks, play, sniffing games)",
+        notes: [
+          "🧠 Needs mental stimulation to prevent boredom",
+          "👃 Follow their nose — scent-driven explorer",
+          "🏡 Best with secure fencing",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Families, active homes, multi-dog households",
+      },
+
+      Pug: {
+        image: "/assets/Dogs/Pug.jpg",
+        video: "/assets/videos/Pug.mp4",
+        description:
+          "Size: Small (14–18 lbs). Charming, comical, affectionate. Low energy. Moderate shedding.",
+        traits: [
+          "Size: Small (14–18 lbs)",
+          "Appearance: Wrinkly face, short muzzle, curled tail",
+          "Temperament: Loving, playful, entertaining",
+          "Good With: Kids, apartment dwellers",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Low to moderate",
+        ],
+        pros: [
+          "Adorable and funny",
+          "Perfect for small spaces",
+          "Gets along with everyone",
+        ],
+        cons: [
+          "Prone to breathing issues",
+          "Sheds despite short coat",
+          "Sensitive to heat",
+        ],
+        grooming: ["Brush weekly", "Clean facial wrinkles regularly"],
+        exercise: "Short walks and light play",
+        notes: [
+          "🌡️ Keep indoors in hot weather",
+          "🐽 No heavy physical exertion",
+          "💤 Loves to nap and cuddle",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Indoor families, seniors, apartment living",
+      },
+
+      "Shih Tzu": {
+        image: "/assets/Dogs/Shih Tzu.jpg",
+        video: "/assets/videos/shih Tzu.mp4",
+        description:
+          "Size: Toy (9–16 lbs). Sweet, calm, affectionate lapdog. Long coat. Low exercise needs.",
+        traits: [
+          "Size: Toy (9–16 lbs)",
+          "Appearance: Long flowing coat, short nose, round eyes",
+          "Temperament: Friendly, gentle, affectionate",
+          "Good With: Kids, small homes, seniors",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Low",
+          "Energy Level: Low",
+        ],
+        pros: [
+          "Loves laps and cuddles",
+          "Adapts to any space",
+          "Great for seniors",
+        ],
+        cons: [
+          "High grooming needs",
+          "Can be stubborn to train",
+          "Needs frequent face cleaning",
+        ],
+        grooming: ["Daily brushing", "Frequent trims or keep in puppy cut"],
+        exercise: "Short indoor play and brief walks",
+        notes: [
+          "👑 Bred for royalty",
+          "🛋️ Indoor snuggle champion",
+          "💇 Requires regular coat maintenance",
+        ],
+        lifespan: "10–16 years",
+        bestFor: "Low-energy homes, seniors, apartment life",
+      },
+
+      "Lhasa Apso": {
+        image: "/assets/Dogs/Lhasa Apso.jpg",
+        video: "/assets/videos/Lhasa Apso.mp4",
+        description:
+          "Size: Small (12–18 lbs). Confident, loyal, watchful. Long coat. Moderate energy.",
+        traits: [
+          "Size: Small (12–18 lbs)",
+          "Appearance: Long, flowing coat; dark eyes",
+          "Temperament: Confident, independent, affectionate",
+          "Good With: Families, singles, seniors",
+          "Trainability: Moderate",
+          "Barking Level: Moderate to high",
+          "Shedding Level: Low",
+          "Energy Level: Moderate",
+        ],
+        pros: ["Good watchdog", "Low shedding", "Adaptable to apartments"],
+        cons: [
+          "Needs regular grooming",
+          "May be wary of strangers",
+          "Independent streak can challenge training",
+        ],
+        grooming: [
+          "Brush daily or keep in puppy cut",
+          "Clean ears and trim hair regularly",
+        ],
+        exercise: "Short daily walks and indoor play",
+        notes: [
+          "🏔️ Originates from Tibet as monastery guard dog",
+          "🧠 Intelligent but may act aloof",
+          "🛏️ Enjoys time alone but loyal to owners",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Quiet homes, experienced dog owners",
+      },
+
+      Pomeranian: {
+        image: "/assets/Dogs/Pomeranian.jpg",
+        video: "/assets/videos/Pomeranian.mp4",
+        description:
+          "Size: Toy (3–7 lbs). Bold, alert, extroverted. Fluffy coat. High shedding.",
+        traits: [
+          "Size: Toy (3–7 lbs)",
+          "Appearance: Fluffy double coat, foxy face",
+          "Temperament: Bold, lively, outgoing",
+          "Good With: Adults, older children",
+          "Trainability: Moderate",
+          "Barking Level: High",
+          "Shedding Level: High",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Adorable and alert",
+          "Entertaining personality",
+          "Good watchdog",
+        ],
+        cons: [
+          "Prone to barking",
+          "Needs regular grooming",
+          "Can be bossy with larger pets",
+        ],
+        grooming: ["Brush daily", "Frequent trims during shedding"],
+        exercise: "Short walks and indoor play",
+        notes: [
+          "🦊 Thinks it’s bigger than it is",
+          "🧼 Coat needs maintenance",
+          "🏠 Perfect for apartments",
+        ],
+        lifespan: "12–16 years",
+        bestFor: "Toy breed lovers, apartments, experienced owners",
+      },
+
+      "Indian Spitz": {
+        image: "/assets/Dogs/Indian Spitz.jpg",
+        video: "/assets/videos/Indian Spitz.mp4",
+        description:
+          "Size: Small to medium (10–20 kg). Friendly, lively, alert. Moderate grooming.",
+        traits: [
+          "Size: Small to Medium (10–20 kg)",
+          "Appearance: Fluffy white coat, pointed ears",
+          "Temperament: Loyal, playful, smart",
+          "Good With: Families, first-time owners",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: Medium",
+        ],
+        pros: ["Adaptable", "Good with children", "Low maintenance"],
+        cons: ["Can bark excessively", "Needs early socialization"],
+        grooming: ["Brush twice a week", "Bathe monthly"],
+        exercise: "Daily walk and indoor games",
+        notes: [
+          "🇮🇳 Indian-origin breed",
+          "🐶 Easygoing temperament",
+          "🏡 Great apartment companion",
+        ],
+        lifespan: "10–14 years",
+        bestFor: "Indian homes, all family types",
+      },
+
+      Dachshund: {
+        image: "/assets/Dogs/Dachshund.jpg",
+        video: "/assets/videos/Dachshund.mp4",
+        description:
+          "Size: Small (16–32 lbs). Brave, stubborn, lively. Unique long body. Low grooming.",
+        traits: [
+          "Size: Small (16–32 lbs)",
+          "Appearance: Long body, short legs",
+          "Temperament: Curious, bold, stubborn",
+          "Good With: Families, singles",
+          "Trainability: Moderate",
+          "Barking Level: High",
+          "Shedding Level: Low to moderate",
+          "Energy Level: Medium",
+        ],
+        pros: [
+          "Great watchdog",
+          "Comical personality",
+          "Loves digging and burrowing",
+        ],
+        cons: [
+          "Prone to back issues",
+          "Needs stair avoidance",
+          "Can be stubborn to train",
+        ],
+        grooming: ["Brush weekly", "Wipe ears and folds"],
+        exercise: "Daily walk and mental play",
+        notes: [
+          "🦴 Loves food — manage weight",
+          "🪑 Avoid stairs/jumps to protect spine",
+          "🦮 Enjoys short walks and sniff games",
+        ],
+        lifespan: "12–16 years",
+        bestFor: "Families with ramps, city life, playful homes",
+      },
+
+      "Cocker Spaniel": {
+        image: "/assets/Dogs/Cocker Spaniel.jpg",
+        video: "/assets/videos/Cocker Spaniel.mp4",
+        description:
+          "Size: Medium (20–30 lbs). Gentle, joyful, sweet. Long ears. Moderate grooming.",
+        traits: [
+          "Size: Medium (20–30 lbs)",
+          "Appearance: Silky coat, long ears",
+          "Temperament: Merry, trusting, affectionate",
+          "Good With: Kids, families",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: Medium",
+        ],
+        pros: [
+          "Loving and social",
+          "Great companion",
+          "Responsive to training",
+        ],
+        cons: [
+          "Prone to ear infections",
+          "Needs regular brushing",
+          "Sensitive to harsh treatment",
+        ],
+        grooming: ["Brush every other day", "Clean ears weekly"],
+        exercise: "1 hour/day of walks, fetch, sniffing",
+        notes: [
+          "🎀 Needs gentle training",
+          "🦻 Keep ears clean to avoid issues",
+          "🏃 Loves family outings",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Families, gentle children, suburban homes",
+      },
+
+      Boxer: {
+        image: "/assets/Dogs/Boxer.jpg",
+        video: "/assets/videos/Boxer.mp4",
+        description:
+          "Size: Medium to Large (55–70 lbs). Energetic, fun-loving, protective. Low grooming.",
+        traits: [
+          "Size: Medium to Large (55–70 lbs)",
+          "Appearance: Muscular build, short muzzle",
+          "Temperament: Energetic, loyal, silly",
+          "Good With: Kids, active owners",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Low",
+          "Energy Level: High",
+        ],
+        pros: ["Playful and strong", "Protective of family", "Loves kids"],
+        cons: [
+          "Needs daily energy release",
+          "Short snout can affect breathing",
+          "Can be jumpy",
+        ],
+        grooming: ["Brush weekly", "Wipe face folds"],
+        exercise: "1–2 hours/day of running, fetch, tug",
+        notes: [
+          "🏃 Thrives on physical games",
+          "❤️ Affectionate with family",
+          "👶 Gentle giant with proper training",
+        ],
+        lifespan: "10–12 years",
+        bestFor: "Active families, homes with yards",
+      },
+
+      "Doberman Pinscher": {
+        image: "/assets/Dogs/Doberman Pinscher.jpg",
+        video: "/assets/videos/Doberman Pinscher.mp4",
+        description:
+          "Size: Large (60–100 lbs). Loyal, fearless, obedient. Sleek coat. High energy.",
+        traits: [
+          "Size: Large (60–100 lbs)",
+          "Appearance: Sleek, muscular, cropped ears (optional)",
+          "Temperament: Alert, brave, loyal",
+          "Good With: Experienced owners, families",
+          "Trainability: Very high",
+          "Barking Level: Moderate",
+          "Shedding Level: Low",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Excellent guard dog",
+          "Highly intelligent",
+          "Obedient and quick to learn",
+        ],
+        cons: [
+          "Needs strong training",
+          "Not ideal for first-time owners",
+          "High physical and mental needs",
+        ],
+        grooming: ["Brush weekly", "Wipe coat for shine"],
+        exercise: "1.5–2 hours/day (running, agility, training)",
+        notes: [
+          "🛡️ Excellent personal protection dog",
+          "⚠️ Needs strong leadership and discipline",
+          "🏃‍♂️ Loves fast-paced activities",
+        ],
+        lifespan: "10–13 years",
+        bestFor: "Experienced, active families or single owners",
+      },
+
+      Rottweiler: {
+        image: "/assets/Dogs/Rottweiler.jpg",
+        video: "/assets/videos/Rottweiler.mp4",
+        description:
+          "Size: Large (80–135 lbs). Confident, calm, powerful. Protective. Low grooming.",
+        traits: [
+          "Size: Large (80–135 lbs)",
+          "Appearance: Muscular, black & tan",
+          "Temperament: Confident, fearless, loyal",
+          "Good With: Adults, protective households",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: Medium",
+        ],
+        pros: [
+          "Loyal and fearless",
+          "Protective of family",
+          "Can be gentle giants",
+        ],
+        cons: [
+          "Needs early training and socialization",
+          "Misunderstood breed",
+          "Can be territorial",
+        ],
+        grooming: ["Brush weekly", "Wipe paws/face after outdoor time"],
+        exercise: "1 hour/day (walks, fetch, guarding play)",
+        notes: [
+          "🛡️ Excellent family guardian",
+          "⚖️ Needs firm, calm training",
+          "🏋️‍♂️ Strong and muscular breed",
+        ],
+        lifespan: "8–10 years",
+        bestFor: "Experienced owners, family homes with space",
+      },
+
+      "Great Dane": {
+        image: "/assets/Dogs/Great Dane.jpg",
+        video: "/assets/videos/Great Dane.mp4",
+        description:
+          "Size: Giant (100–175 lbs). Gentle giant, friendly, calm. Low grooming.",
+        traits: [
+          "Size: Giant (100–175 lbs)",
+          "Appearance: Tall, elegant, long legs",
+          "Temperament: Sweet, gentle, patient",
+          "Good With: Kids, adults",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Low to moderate",
+        ],
+        pros: [
+          "Calm and dignified",
+          "Great with kids",
+          "Low maintenance coat",
+        ],
+        cons: [
+          "Short lifespan",
+          "Can accidentally knock things over",
+          "Needs space despite low activity",
+        ],
+        grooming: ["Brush weekly", "Clean drool and ears"],
+        exercise: "Short daily walks and lounging",
+        notes: [
+          "🛏️ Needs large resting space",
+          "👨‍👩‍👧 Gentle with family",
+          "🦴 Watch for bone/joint issues",
+        ],
+        lifespan: "7–10 years",
+        bestFor: "Calm households with space, big dog lovers",
+      },
+
+      "Saint Bernard": {
+        image: "/assets/Dogs/Saint Bernard.jpg",
+        video: "/assets/videos/Saint Bernard.mp4",
+        description:
+          "Size: Giant (120–180 lbs). Gentle, patient, loyal. Drools. Heavy grooming.",
+        traits: [
+          "Size: Giant (120–180 lbs)",
+          "Appearance: Fluffy, massive, big droopy face",
+          "Temperament: Calm, gentle, friendly",
+          "Good With: Kids, families",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: High",
+          "Energy Level: Low",
+        ],
+        pros: ["Great with kids", "Very loyal", "Majestic appearance"],
+        cons: ["Short lifespan", "Heavy drooling", "Needs lots of grooming"],
+        grooming: [
+          "Brush 3–4 times a week",
+          "Clean ears, eyes, and slobber daily",
+        ],
+        exercise: "Short gentle walks and cool rest",
+        notes: [
+          "❄️ Cold-weather dog",
+          "🛏️ Needs large living space",
+          "🧽 Requires regular cleanup",
+        ],
+        lifespan: "8–10 years",
+        bestFor: "Cold climates, patient families, spacious homes",
+      },
+
+      "Siberian Husky": {
+        image: "/assets/Dogs/Siberian Husky.jpg",
+        video: "/assets/videos/Siberian Husky.mp4",
+        description:
+          "Size: Medium (35–60 lbs). Energetic, outgoing, mischievous. Thick coat. High shedding.",
+        traits: [
+          "Size: Medium (35–60 lbs)",
+          "Appearance: Thick fur, blue eyes, curled tail",
+          "Temperament: Friendly, outgoing, energetic",
+          "Good With: Families, other dogs",
+          "Trainability: Moderate",
+          "Barking Level: Low — but howls",
+          "Shedding Level: Very high",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Beautiful and athletic",
+          "Social with dogs and people",
+          "Loves to run and play",
+        ],
+        cons: [
+          "Can be an escape artist",
+          "Heavy shedding",
+          "Not ideal for hot weather",
+        ],
+        grooming: ["Brush daily", "Heavy seasonal shedding"],
+        exercise: "2 hours/day (runs, hikes, play)",
+        notes: [
+          "🌨️ Cold climate breed",
+          "🐺 Very vocal — loves to talk/howl",
+          "🪜 Needs secure fence and supervision",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Cool climates, active owners, spacious yards",
+      },
+
+      "Alaskan Malamute": {
+        image: "/assets/Dogs/Alaskan Malamute.jpg",
+        video: "/assets/videos/Alaskan Malamute.mp4",
+        description:
+          "Size: Large (75–100 lbs). Strong, independent, affectionate. Thick coat. Heavy shedding.",
+        traits: [
+          "Size: Large (75–100 lbs)",
+          "Appearance: Thick fur, wolf-like face, curled tail",
+          "Temperament: Affectionate, independent, strong-willed",
+          "Good With: Families, experienced dog owners",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Very high",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Striking appearance",
+          "Loyal and gentle",
+          "Great sled dog — powerful and strong",
+        ],
+        cons: [
+          "Can be stubborn",
+          "Prone to wander",
+          "Not ideal for hot climates",
+        ],
+        grooming: ["Brush daily", "Heavy seasonal shedding"],
+        exercise: "2+ hours/day (runs, hikes, pulling games)",
+        notes: [
+          "❄️ Bred for cold Arctic climates",
+          "🐾 Needs secure space",
+          "🧠 Independent thinker — patient training needed",
+        ],
+        lifespan: "10–14 years",
+        bestFor: "Cool climates, active owners, fenced outdoor space",
+      },
+
+      "French Bulldog": {
+        image: "/assets/Dogs/French Bulldog.jpg",
+        video: "/assets/videos/French Bulldog.mp4",
+        description:
+          "Size: Small (16–28 lbs). Affectionate, quiet, easygoing. Minimal grooming.",
+        traits: [
+          "Size: Small (16–28 lbs)",
+          "Appearance: Bat ears, compact body",
+          "Temperament: Loving, low-key, funny",
+          "Good With: Apartment dwellers, families",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Low",
+          "Energy Level: Low to moderate",
+        ],
+        pros: [
+          "Charming personality",
+          "Does well in small spaces",
+          "Low exercise and grooming needs",
+        ],
+        cons: [
+          "Sensitive to heat",
+          "Can have breathing issues",
+          "Can be stubborn at times",
+        ],
+        grooming: ["Brush weekly", "Wipe folds and eyes regularly"],
+        exercise: "Short walks and indoor play",
+        notes: [
+          "🌞 Avoid heavy exercise in heat",
+          "🛋️ Great lap companion",
+          "💤 Needs comfy indoor lifestyle",
+        ],
+        lifespan: "10–12 years",
+        bestFor: "Urban dwellers, seniors, relaxed homes",
+      },
+
+      "English Bulldog": {
+        image: "/assets/Dogs/English Bulldog.jpg",
+        video: "/assets/videos/English Bulldog.mp4",
+        description:
+          "Size: Medium (40–50 lbs). Calm, brave, loyal. Wrinkled face. Minimal grooming.",
+        traits: [
+          "Size: Medium (40–50 lbs)",
+          "Appearance: Wrinkled face, stocky build",
+          "Temperament: Friendly, calm, courageous",
+          "Good With: Families, kids",
+          "Trainability: Low to moderate",
+          "Barking Level: Low",
+          "Shedding Level: Low to moderate",
+          "Energy Level: Low",
+        ],
+        pros: [
+          "Gentle and dependable",
+          "Good apartment dog",
+          "Low activity needs",
+        ],
+        cons: [
+          "Prone to breathing problems",
+          "Needs help in hot weather",
+          "Not ideal for very active homes",
+        ],
+        grooming: ["Brush weekly", "Wipe face folds"],
+        exercise: "Short walks, indoor movement",
+        notes: [
+          "😴 Great napper",
+          "🌡️ Avoid high heat",
+          "👃 Brachycephalic — sensitive respiratory system",
+        ],
+        lifespan: "8–10 years",
+        bestFor: "Low-energy families, apartment living",
+      },
+
+      Bullmastiff: {
+        image: "/assets/Dogs/Bullmastiff.jpg",
+        video: "/assets/videos/Bullmastiff.mp4",
+        description:
+          "Size: Giant (100–130 lbs). Loyal, strong, calm. Natural guardian.",
+        traits: [
+          "Size: Giant (100–130 lbs)",
+          "Appearance: Powerful frame, short coat",
+          "Temperament: Quiet, affectionate, protective",
+          "Good With: Families, adults",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Low",
+        ],
+        pros: ["Loyal protector", "Calm indoors", "Low barking"],
+        cons: [
+          "Needs training from young age",
+          "Drools a lot",
+          "Prone to heat exhaustion",
+        ],
+        grooming: ["Brush weekly", "Wipe drool frequently"],
+        exercise: "Short walks and yard play",
+        notes: [
+          "🛡️ Excellent guard dog",
+          "🌞 Provide shade and water",
+          "🧠 Needs early training to manage size",
+        ],
+        lifespan: "7–10 years",
+        bestFor: "Calm, experienced households with yard",
+      },
+
+      "Pit Bull Terrier": {
+        image: "/assets/Dogs/Pit Bull Terrier.jpg",
+        video: "/assets/videos/Pit Bull Terrier.mp4",
+        description:
+          "Size: Medium (30–70 lbs). Energetic, loving, loyal. Strong build. Misunderstood breed.",
+        traits: [
+          "Size: Medium (30–70 lbs)",
+          "Appearance: Muscular frame, broad head",
+          "Temperament: Loving, energetic, determined",
+          "Good With: Families, active homes",
+          "Trainability: High",
+          "Barking Level: Low",
+          "Shedding Level: Low",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Affectionate and loyal",
+          "Highly trainable",
+          "Great with kids when socialized",
+        ],
+        cons: [
+          "Needs consistent leadership",
+          "Strong prey drive",
+          "Breed misconceptions",
+        ],
+        grooming: ["Brush weekly", "Wipe coat after play"],
+        exercise: "1.5 hours/day (walks, runs, fetch)",
+        notes: [
+          "💪 Powerful and energetic",
+          "👨‍👩‍👧‍👦 Bonds deeply with family",
+          "🧠 Needs mental challenge & stimulation",
+        ],
+        lifespan: "12–16 years",
+        bestFor: "Active, confident owners who provide love and structure",
+      },
+
+      "American Bully": {
+        image: "/assets/Dogs/American Bully.jpg",
+        video: "/assets/videos/American Bully.mp4",
+        description:
+          "Size: Medium to Large (30–85 lbs). Strong, affectionate, confident. Low grooming.",
+        traits: [
+          "Size: Medium to Large (30–85 lbs)",
+          "Appearance: Muscular, compact, broad head",
+          "Temperament: Loyal, friendly, outgoing",
+          "Good With: Families, children, other pets",
+          "Trainability: Moderate to high",
+          "Barking Level: Low",
+          "Shedding Level: Low to moderate",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Great family companion",
+          "Affectionate and social",
+          "Low-maintenance coat",
+        ],
+        cons: [
+          "Needs proper training",
+          "Strong build — needs supervision with small kids",
+          "May be restricted in some regions",
+        ],
+        grooming: ["Brush weekly", "Wipe coat occasionally"],
+        exercise: "1 hour/day (walks, tug, play)",
+        notes: [
+          "💪 Strong and stocky",
+          "👨‍👩‍👧‍👦 Great with family",
+          "⚖️ Ensure socialization and manners early",
+        ],
+        lifespan: "10–13 years",
+        bestFor: "Friendly homes, active families, confident owners",
+      },
+
+      Maltese: {
+        image: "/assets/Dogs/Maltese.jpg",
+        video: "/assets/videos/Maltese.mp4",
+        description:
+          "Size: Toy (4–7 lbs). Elegant, gentle, affectionate. Long white coat. Low shedding.",
+        traits: [
+          "Size: Toy (4–7 lbs)",
+          "Appearance: Long silky white hair, button eyes",
+          "Temperament: Sweet, loving, playful",
+          "Good With: Families, seniors, gentle kids",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Very low",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Hypoallergenic coat",
+          "Great for apartment life",
+          "Loves companionship",
+        ],
+        cons: [
+          "High grooming needs",
+          "Fragile — not ideal for rough kids",
+          "Prone to tear staining",
+        ],
+        grooming: [
+          "Daily brushing or regular trims",
+          "Clean eyes and face often",
+        ],
+        exercise: "Short walks, indoor play",
+        notes: [
+          "👑 Regal lapdog",
+          "🌟 Great for allergy sufferers",
+          "🧼 Needs coat care and cleanliness",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Seniors, apartment dwellers, hypoallergenic households",
+      },
+
+      Chihuahua: {
+        image: "/assets/Dogs/Chihuahua.jpg",
+        video: "/assets/videos/Chihuahua.mp4",
+        description:
+          "Size: Tiny (3–6 lbs). Bold, lively, devoted. Low grooming.",
+        traits: [
+          "Size: Tiny (3–6 lbs)",
+          "Appearance: Apple head or deer head, large eyes",
+          "Temperament: Alert, feisty, affectionate",
+          "Good With: Adults, singles",
+          "Trainability: Moderate",
+          "Barking Level: High",
+          "Shedding Level: Low to moderate",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Loyal lap companion",
+          "Extremely portable",
+          "Low exercise needs",
+        ],
+        cons: [
+          "Not ideal for small kids",
+          "Can be yappy",
+          "Needs warmth in cold weather",
+        ],
+        grooming: ["Brush weekly", "Wipe face and ears"],
+        exercise: "Short indoor or leash walks",
+        notes: [
+          "👛 Purse-sized with attitude",
+          "🛋️ Thrives in cozy homes",
+          "🌡️ Needs sweaters in cold",
+        ],
+        lifespan: "14–17 years",
+        bestFor: "Tiny dog lovers, seniors, warm homes",
+      },
+
+      "Yorkshire Terrier": {
+        image: "/assets/Dogs/Yorkshire Terrier.jpg",
+        video: "/assets/videos/Yorkshire Terrier.mp4",
+        description:
+          "Size: Toy (4–7 lbs). Spirited, loving, bold. Long silky hair. Hypoallergenic.",
+        traits: [
+          "Size: Toy (4–7 lbs)",
+          "Appearance: Glossy steel blue and tan coat",
+          "Temperament: Confident, affectionate, brave",
+          "Good With: Singles, seniors, older kids",
+          "Trainability: High",
+          "Barking Level: High",
+          "Shedding Level: Very low",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Hypoallergenic coat",
+          "Great apartment pet",
+          "Smart and quick learners",
+        ],
+        cons: [
+          "Needs hair trims",
+          "May be bossy with larger dogs",
+          "Can bark a lot",
+        ],
+        grooming: [
+          "Daily brushing or short puppy cuts",
+          "Clean face and trim hair",
+        ],
+        exercise: "Short walks and playful bursts",
+        notes: [
+          "👗 Fashionable purse dog",
+          "🧠 Needs stimulation",
+          "📦 Big attitude in a small body",
+        ],
+        lifespan: "13–16 years",
+        bestFor: "Small dog lovers, allergy-prone homes, gentle households",
+      },
+
+      "Miniature Pinscher": {
+        image: "/assets/Dogs/Miniature Pinscher.jpg",
+        video: "/assets/videos/Miniature Pinscher.mp4",
+        description:
+          "Size: Small (8–12 lbs). Energetic, alert, fearless. Sleek coat. Minimal grooming.",
+        traits: [
+          "Size: Small (8–12 lbs)",
+          "Appearance: Compact, sleek, high tail",
+          "Temperament: Spirited, clever, confident",
+          "Good With: Adults, active singles",
+          "Trainability: Moderate",
+          "Barking Level: High",
+          "Shedding Level: Low",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Entertaining and lively",
+          "Easy coat maintenance",
+          "Loves to be active",
+        ],
+        cons: [
+          "Not ideal for small children",
+          "Prone to barking",
+          "Needs mental engagement",
+        ],
+        grooming: ["Brush weekly", "Wipe after walks"],
+        exercise: "Daily walks and active play",
+        notes: [
+          "⚡ Nicknamed the ‘King of Toys’",
+          "🔒 Needs secure fence",
+          "🎾 Thrives on agility and games",
+        ],
+        lifespan: "12–16 years",
+        bestFor: "Small breed fans, energetic owners, secure yards",
+      },
+
+      Poodle: {
+        image: "/assets/Dogs/Poodle.jpg",
+        video: "/assets/videos/Poodle.mp4",
+        description:
+          "Size: Toy to Standard (6–70 lbs). Intelligent, elegant, hypoallergenic. High grooming needs.",
+        traits: [
+          "Size: Toy (6–9 lbs), Miniature (10–15 lbs), Standard (40–70 lbs)",
+          "Appearance: Curly coat, proud stance, long muzzle",
+          "Temperament: Alert, intelligent, trainable",
+          "Good With: Families, allergy-prone people",
+          "Trainability: Very high",
+          "Barking Level: Moderate",
+          "Shedding Level: Very low",
+          "Energy Level: Medium to high",
+        ],
+        pros: [
+          "Hypoallergenic coat",
+          "Extremely smart",
+          "Adaptable to apartment or home",
+        ],
+        cons: [
+          "High grooming demand",
+          "Needs mental stimulation",
+          "Can be sensitive",
+        ],
+        grooming: [
+          "Professional grooming every 4–6 weeks",
+          "Brush 2–3 times a week",
+          "Ear cleaning essential",
+        ],
+        exercise: "30 mins to 1 hour/day — fetch, agility, swimming",
+        notes: [
+          "🎓 Among the smartest dog breeds",
+          "✂️ Needs regular clipping and coat care",
+          "💡 Loves learning new tricks",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Allergy-prone families, intelligent dog lovers",
+      },
+
+      Dalmatian: {
+        image: "/assets/Dogs/Dalmatian.jpg",
+        video: "/assets/videos/Dalmatian.mp4",
+        description:
+          "Size: Medium (45–70 lbs). Active, loyal, eye-catching. Needs daily exercise.",
+        traits: [
+          "Size: Medium (45–70 lbs)",
+          "Appearance: White coat with black/brown spots",
+          "Temperament: Outgoing, dignified, loyal",
+          "Good With: Active families",
+          "Trainability: Moderate to high",
+          "Barking Level: Moderate",
+          "Shedding Level: High",
+          "Energy Level: High",
+        ],
+        pros: ["Unique look", "Protective", "Playful and alert"],
+        cons: [
+          "Heavy shedding",
+          "Not ideal for sedentary homes",
+          "Can be aloof with strangers",
+        ],
+        grooming: ["Brush 2–3 times a week", "Bath every 1–2 months"],
+        exercise: "1–2 hours/day — running, fetch, agility",
+        notes: [
+          "🎨 Instantly recognizable coat",
+          "🏃 Needs room to run",
+          "👂 Prone to congenital deafness",
+        ],
+        lifespan: "11–13 years",
+        bestFor: "Active families, homes with yards",
+      },
+
+      "English Setter": {
+        image: "/assets/Dogs/English Setter.jpg",
+        video: "/assets/videos/English Setter.mp4",
+        description:
+          "Size: Large (45–80 lbs). Gentle, friendly, active. Long feathered coat.",
+        traits: [
+          "Size: Large (45–80 lbs)",
+          "Appearance: Speckled feathered coat, long ears",
+          "Temperament: Affectionate, friendly, mild-mannered",
+          "Good With: Families, kids",
+          "Trainability: High",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Medium to high",
+        ],
+        pros: ["Great family dog", "Gentle with kids", "Beautiful coat"],
+        cons: [
+          "Needs space",
+          "Requires regular grooming",
+          "Can be distracted by scents",
+        ],
+        grooming: [
+          "Brush 2–3 times/week",
+          "Trim ears and feathering regularly",
+        ],
+        exercise: "1 hour/day — walks, games, open field play",
+        notes: [
+          "🎯 Great nose for hunting",
+          "🎨 Unique speckled look",
+          "🐕 Needs social time",
+        ],
+        lifespan: "10–12 years",
+        bestFor: "Homes with space, gentle families",
+      },
+
+      "Basset Hound": {
+        image: "/assets/Dogs/Basset Hound.jpg",
+        video: "/assets/videos/Basset Hound.mp4",
+        description:
+          "Size: Medium (40–65 lbs). Laid-back, loyal, stubborn. Long ears. Prone to drool.",
+        traits: [
+          "Size: Medium (40–65 lbs)",
+          "Appearance: Long ears, droopy face, short legs",
+          "Temperament: Mellow, devoted, independent",
+          "Good With: Kids, laid-back families",
+          "Trainability: Low",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: Low to moderate",
+        ],
+        pros: ["Chill and calm", "Good for lazy days", "Adorable look"],
+        cons: [
+          "Can be stubborn",
+          "Prone to drooling",
+          "Needs scent supervision",
+        ],
+        grooming: ["Brush weekly", "Clean ears frequently"],
+        exercise: "Short walks and sniffing games",
+        notes: [
+          "👃 Excellent scent tracker",
+          "💤 Naps a lot",
+          "💧 Wipe drool daily",
+        ],
+        lifespan: "12–13 years",
+        bestFor: "Chill homes, scent-loving owners",
+      },
+
+      "Boston Terrier": {
+        image: "/assets/Dogs/Boston Terrier.jpg",
+        video: "/assets/videos/Boston Terrier.mp4",
+        description:
+          "Size: Small (10–25 lbs). Happy, bright, tuxedo-coated. Low maintenance.",
+        traits: [
+          "Size: Small (10–25 lbs)",
+          "Appearance: Compact with tuxedo look",
+          "Temperament: Cheerful, affectionate, alert",
+          "Good With: Everyone",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Low",
+          "Energy Level: Medium",
+        ],
+        pros: [
+          "Smart and fun",
+          "Adaptable to homes or apartments",
+          "Friendly",
+        ],
+        cons: [
+          "Snorts and wheezes",
+          "Can get overexcited",
+          "Needs early socialization",
+        ],
+        grooming: ["Brush weekly", "Wipe face"],
+        exercise: "30–45 min daily — play, walks, zoomies",
+        notes: [
+          "🎩 The American Gentleman",
+          "🎭 Entertaining face",
+          "🏠 Great in small spaces",
+        ],
+        lifespan: "11–15 years",
+        bestFor: "Apartment dwellers, all ages",
+      },
+
+      "Cane Corso": {
+        image: "/assets/Dogs/Cane Corso.jpg",
+        video: "/assets/videos/Cane Corso.mp4",
+        description:
+          "Size: Large (90–120 lbs). Protective, confident, calm. Powerful guardian breed.",
+        traits: [
+          "Size: Large (90–120 lbs)",
+          "Appearance: Muscular, square jaw, cropped ears (optional)",
+          "Temperament: Reserved, loyal, intelligent",
+          "Good With: Experienced handlers",
+          "Trainability: High",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Excellent guard dog",
+          "Strong bond with owner",
+          "Confident and watchful",
+        ],
+        cons: [
+          "Needs early socialization",
+          "Not for novice owners",
+          "Can be wary of strangers",
+        ],
+        grooming: ["Brush weekly", "Wipe down after outdoor activity"],
+        exercise: "1 hour/day — protection games, walks",
+        notes: [
+          "🛡️ Natural guardian",
+          "🎓 Requires confident training",
+          "🚪 Alert but not noisy",
+        ],
+        lifespan: "9–12 years",
+        bestFor: "Experienced, secure homes needing a guard dog",
+      },
+
+      "Akita Inu": {
+        image: "/assets/Dogs/Akita Inu.jpg",
+        video: "/assets/videos/Akita Inu.mp4",
+        description:
+          "Size: Large (70–130 lbs). Dignified, brave, loyal. Reserved with strangers.",
+        traits: [
+          "Size: Large (70–130 lbs)",
+          "Appearance: Thick double coat, curled tail",
+          "Temperament: Proud, quiet, faithful",
+          "Good With: Adults, solo owners",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: High",
+          "Energy Level: Moderate",
+        ],
+        pros: ["Beautiful and noble", "Loyal to one person", "Calm indoors"],
+        cons: [
+          "Needs early socialization",
+          "Not dog park friendly",
+          "Heavy seasonal shedding",
+        ],
+        grooming: ["Brush 2–3 times/week", "Deshed during season"],
+        exercise: "1 hour/day — walks and space to roam",
+        notes: [
+          "🐺 Has ancient Japanese heritage",
+          "👤 Strong personal loyalty",
+          "🧤 Independent mindset",
+        ],
+        lifespan: "10–13 years",
+        bestFor: "Experienced single dog homes, cool climates",
+      },
+
+      "Chow Chow": {
+        image: "/assets/Dogs/Chow Chow.jpg",
+        video: "/assets/videos/Chow Chow.mp4",
+        description:
+          "Size: Medium (45–70 lbs). Aloof, dignified, lion-like. Needs careful socialization.",
+        traits: [
+          "Size: Medium (45–70 lbs)",
+          "Appearance: Dense mane, scowling expression",
+          "Temperament: Independent, quiet, aloof",
+          "Good With: Calm, confident owners",
+          "Trainability: Low to moderate",
+          "Barking Level: Low",
+          "Shedding Level: High",
+          "Energy Level: Low",
+        ],
+        pros: ["Majestic look", "Very clean", "Loyal to family"],
+        cons: [
+          "Not cuddly",
+          "Needs space and calm",
+          "Standoffish with strangers",
+        ],
+        grooming: ["Brush daily", "Keep coat dry and cool"],
+        exercise: "Short walks in cool weather",
+        notes: [
+          "🦁 Resembles a mini lion",
+          "❄️ Prefers cold",
+          "🚪 Guarding instincts strong",
+        ],
+        lifespan: "8–12 years",
+        bestFor: "Luxury breed lovers in cool, calm homes",
+      },
+
+      "Border Collie": {
+        image: "/assets/Dogs/Border Collie.jpg",
+        video: "/assets/videos/Border Collie.mp4",
+        description:
+          "Size: Medium (30–45 lbs). Brilliant, active, focused. Herding instinct.",
+        traits: [
+          "Size: Medium (30–45 lbs)",
+          "Appearance: Athletic build, intelligent eyes",
+          "Temperament: Focused, energetic, smart",
+          "Good With: Experienced, active homes",
+          "Trainability: Very high",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: Very high",
+        ],
+        pros: ["Extremely smart", "Quick to learn", "Loves agility and work"],
+        cons: [
+          "Needs mental work",
+          "Can be too intense",
+          "Not great for city life",
+        ],
+        grooming: ["Brush twice weekly", "Deshed during season"],
+        exercise: "2+ hours/day — fetch, herding, agility",
+        notes: [
+          "🎓 World’s smartest dog",
+          "🐑 Natural herder",
+          "💡 Needs jobs to do",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Farm life, agility fans, high-energy homes",
+      },
+
+      "Belgian Malinois": {
+        image: "/assets/Dogs/Belgian Malinois.jpg",
+        video: "/assets/videos/Belgian Malinois.mp4",
+        description:
+          "Size: Medium to Large (55–75 lbs). Loyal, protective, driven. Police dog breed.",
+        traits: [
+          "Size: Medium to Large (55–75 lbs)",
+          "Appearance: Sleek coat, alert ears",
+          "Temperament: Intense, active, courageous",
+          "Good With: Working families, experienced handlers",
+          "Trainability: Very high",
+          "Barking Level: High",
+          "Shedding Level: Moderate",
+          "Energy Level: Very high",
+        ],
+        pros: [
+          "Excellent working dog",
+          "Protective and loyal",
+          "Highly trainable",
+        ],
+        cons: [
+          "Needs purpose and structure",
+          "Can become destructive if bored",
+          "Not for beginners",
+        ],
+        grooming: ["Brush weekly", "Bathe monthly"],
+        exercise: "2+ hours/day — obedience, fetch, work tasks",
+        notes: [
+          "🚓 Common police/military dog",
+          "🧠 Very intelligent",
+          "💪 Needs daily challenge",
+        ],
+        lifespan: "12–14 years",
+        bestFor: "Working roles, guard homes, sport trainers",
+      },
+
+      "Irish Setter": {
+        image: "/assets/Dogs/Irish Setter.jpg",
+        video: "/assets/videos/Irish Setter.mp4",
+        description:
+          "Size: Large (60–70 lbs). Graceful, playful, energetic. Striking red coat.",
+        traits: [
+          "Size: Large (60–70 lbs)",
+          "Appearance: Silky mahogany coat, feathered ears and tail",
+          "Temperament: Outgoing, sweet-natured, lively",
+          "Good With: Families, kids, other dogs",
+          "Trainability: Moderate to high",
+          "Barking Level: Moderate",
+          "Shedding Level: Moderate",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Beautiful flowing coat",
+          "Playful and affectionate",
+          "Loves outdoor fun",
+        ],
+        cons: [
+          "Needs space to run",
+          "Can be easily distracted",
+          "Regular grooming needed",
+        ],
+        grooming: ["Brush 2–3 times/week", "Trim ears and feathering"],
+        exercise: "1–2 hours/day — running, fetch, agility",
+        notes: [
+          "🔴 Famous for its red coat",
+          "🎾 Ideal for energetic families",
+          "🧠 Needs mental play",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Active households, families with yards",
+      },
+
+      Weimaraner: {
+        image: "/assets/Dogs/Weimaraner.jpg",
+        video: "/assets/videos/Weimaraner.mp4",
+        description:
+          "Size: Large (55–90 lbs). Sleek, silver-gray, very energetic. Velcro dog.",
+        traits: [
+          "Size: Large (55–90 lbs)",
+          "Appearance: Smooth silver-gray coat, amber or blue-gray eyes",
+          "Temperament: Loyal, fearless, friendly",
+          "Good With: Families, older kids",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Low",
+          "Energy Level: Very high",
+        ],
+        pros: [
+          "Stunning appearance",
+          "Very athletic",
+          "Deeply bonded with family",
+        ],
+        cons: [
+          "Not for apartment living",
+          "Needs constant activity",
+          "Separation anxiety prone",
+        ],
+        grooming: ["Brush weekly", "Wipe with damp cloth after outings"],
+        exercise: "2+ hours/day — running, games, obedience",
+        notes: [
+          "👣 Velcro dog — always wants to be near you",
+          "⚡ High stamina, great jogging partner",
+          "🎯 Needs task-based training",
+        ],
+        lifespan: "10–13 years",
+        bestFor: "Athletic families, open-space homes",
+      },
+
+      "Afghan Hound": {
+        image: "/assets/Dogs/Afghan Hound.jpg",
+        video: "/assets/videos/Afghan Hound.mp4",
+        description:
+          "Size: Large (50–60 lbs). Elegant, aloof, independent. Flowing silky coat.",
+        traits: [
+          "Size: Large (50–60 lbs)",
+          "Appearance: Long flowing coat, aristocratic face",
+          "Temperament: Dignified, independent, sweet",
+          "Good With: Calm households",
+          "Trainability: Low to moderate",
+          "Barking Level: Low",
+          "Shedding Level: Moderate",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Striking appearance",
+          "Quiet indoors",
+          "Loyal in their own way",
+        ],
+        cons: [
+          "Not very obedient",
+          "Needs intensive grooming",
+          "Not very playful",
+        ],
+        grooming: ["Brush daily", "Professional grooming needed"],
+        exercise: "1 hour/day — running in safe space",
+        notes: [
+          "👑 Often called the supermodel of dogs",
+          "🎀 Show-stopper coat",
+          "😌 Quiet elegance",
+        ],
+        lifespan: "12–14 years",
+        bestFor: "Elegant homes, low-noise environments",
+      },
+
+      "Bichon Frise": {
+        image: "/assets/Dogs/Bichon Frise.jpg",
+        video: "/assets/videos/Bichon Frise.mp4",
+        description:
+          "Size: Small (10–20 lbs). Cheerful, hypoallergenic, playful. Fluffy white coat.",
+        traits: [
+          "Size: Small (10–20 lbs)",
+          "Appearance: Curly white puffball, black eyes and nose",
+          "Temperament: Cheerful, affectionate, peppy",
+          "Good With: Families, allergy-sensitive people",
+          "Trainability: High",
+          "Barking Level: Moderate",
+          "Shedding Level: Very low",
+          "Energy Level: Moderate",
+        ],
+        pros: ["Hypoallergenic", "Great with kids", "Adorable personality"],
+        cons: ["Needs grooming", "Can bark when alone", "Sensitive to heat"],
+        grooming: ["Brush every other day", "Groom every 4–6 weeks"],
+        exercise: "30–60 min/day — playtime, short walks",
+        notes: [
+          "🌸 Fluffy cloud companion",
+          "🎠 Joyful and bouncy",
+          "🏡 Apartment friendly",
+        ],
+        lifespan: "12–15 years",
+        bestFor: "Indoor homes, allergy sufferers, playful families",
+      },
+
+      "Rough Collie": {
+        image: "/assets/Dogs/Rough Collie.jpg",
+        video: "/assets/videos/Rough Collie.mp4",
+        description:
+          "Size: Large (50–75 lbs). Loyal, elegant, expressive. Famous as Lassie dog.",
+        traits: [
+          "Size: Large (50–75 lbs)",
+          "Appearance: Long flowing coat, wedge-shaped head",
+          "Temperament: Loyal, sensitive, alert",
+          "Good With: Families, kids",
+          "Trainability: High",
+          "Barking Level: Moderate to high",
+          "Shedding Level: High",
+          "Energy Level: Moderate",
+        ],
+        pros: [
+          "Great family protector",
+          "Good herder",
+          "Gentle with children",
+        ],
+        cons: [
+          "Heavy seasonal shedding",
+          "Needs frequent brushing",
+          "Can be vocal",
+        ],
+        grooming: ["Brush 3–4 times/week", "Extra care during shedding"],
+        exercise: "1 hour/day — walks, light play",
+        notes: [
+          "🐶 Known from Lassie",
+          "🧒 Great with kids",
+          "💤 Enjoys routine",
+        ],
+        lifespan: "12–14 years",
+        bestFor: "Family-oriented homes, cooler climates",
+      },
+      Samoyed: {
+        image: "/assets/Dogs/Samoyed.jpg",
+        video: "/assets/videos/Samoyed.mp4",
+        description:
+          "Medium to Large (45–65 lbs). Fluffy white coat, friendly, playful, heavy shedder.",
+        traits: [
+          "Size: Medium to Large (45–65 lbs)",
+          "Appearance: Fluffy white double coat, ‘Sammy smile’, curled tail",
+          "Temperament: Gentle, friendly, playful, affectionate",
+          "Good With: Families, kids, other dogs",
+          "Trainability: Moderate to high",
+          "Barking Level: Moderate to high",
+          "Shedding Level: Very heavy",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Loving family dog",
+          "Beautiful fluffy coat",
+          "Friendly and playful",
+        ],
+        cons: ["Heavy shedder", "High grooming needs", "Vocal"],
+        grooming: [
+          "Brush 3–4 times a week",
+          "Daily brushing in shedding season",
+          "Regular baths",
+        ],
+        exercise: "1–2 hours daily (walks, runs, play, mental games)",
+        notes: [
+          "❄️ Cold Weather Dog: Thrives in cool climates, heat sensitive",
+          "🧩 Needs Purpose: Enjoys pulling, herding, tasks",
+          "💨 Vocal: Loves to ‘talk’",
+        ],
+        lifespan: "12–14 years",
+        bestFor: "Active families, cold climates, yards",
+      },
+
+      "Newfoundland Dog": {
+        image: "/assets/Dogs/Newfoundland Dog.jpg",
+        video: "/assets/videos/Newfoundland Dog.mp4",
+        description:
+          "Giant (100–150 lbs). Gentle giant, patient, calm. Moderate to heavy shedder.",
+        traits: [
+          "Size: Giant (100–150 lbs)",
+          "Appearance: Large, strong build; thick double coat (black, brown, or Landseer)",
+          "Temperament: Gentle giant, calm, patient, sweet-natured",
+          "Good With: Kids, families, other pets",
+          "Trainability: Moderate",
+          "Barking Level: Low",
+          "Shedding Level: Moderate to heavy",
+          "Energy Level: Low to moderate",
+        ],
+        pros: ["Great with children", "Calm and loyal", "Natural swimmer"],
+        cons: ["Short lifespan", "Drools a lot", "Needs big space"],
+        grooming: [
+          "Brush several times a week",
+          "Manage drool",
+          "Clean ears regularly",
+        ],
+        exercise: "Daily walks and swimming",
+        notes: [
+          "💧 Water Lover: Natural lifesaving swimmer",
+          "❄️ Cold Climate: Heat sensitive",
+          "💦 Drooler: Be ready for slobber",
+        ],
+        lifespan: "8–10 years",
+        bestFor: "Spacious homes, cold climates, patient owners",
+      },
+
+      "Bull Terrier": {
+        image: "/assets/Dogs/Bull Terrier.jpg",
+        video: "/assets/videos/Bull Terrier.mp4",
+        description:
+          "Medium (50–70 lbs). Playful, clownish, courageous. Low to moderate shedding.",
+        traits: [
+          "Size: Medium (50–70 lbs)",
+          "Appearance: Muscular, egg-shaped head, small triangular eyes",
+          "Temperament: Playful, clownish, courageous, affectionate",
+          "Good With: Families, older kids",
+          "Trainability: Moderate",
+          "Barking Level: Low to moderate",
+          "Shedding Level: Low to moderate",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Loyal and loving",
+          "Fun personality",
+          "Entertaining family clown",
+        ],
+        cons: ["Strong-willed", "Needs training", "Can be mischievous"],
+        grooming: ["Brush weekly", "Low maintenance coat"],
+        exercise: "1 hour daily (walks, play, training)",
+        notes: [
+          "🎭 Family Clown: Very entertaining",
+          "🧩 Needs Engagement: Gets bored easily",
+          "👀 Watch Play: Play can get rough",
+        ],
+        lifespan: "10–14 years",
+        bestFor: "Active families, secure yard",
+      },
+
+      "Shar Pei": {
+        image: "/assets/Dogs/Shar Pei.jpg",
+        video: "/assets/videos/Shar Pei.mp4",
+        description:
+          "Medium (40–60 lbs). Loyal, independent, calm. Unique wrinkled look.",
+        traits: [
+          "Size: Medium (40–60 lbs)",
+          "Appearance: Wrinkled skin, hippo face, blue-black tongue",
+          "Temperament: Loyal, independent, calm, protective",
+          "Good With: Families, experienced owners",
+          "Trainability: Moderate",
+          "Barking Level: Low to moderate",
+          "Shedding Level: Low to moderate",
+          "Energy Level: Low to moderate",
+        ],
+        pros: ["Unique look", "Loyal and clean dog", "Calm guardian"],
+        cons: ["Sensitive skin", "Can be aloof", "Needs consistent training"],
+        grooming: ["Brush weekly", "Wipe wrinkles clean"],
+        exercise: "Daily walks, moderate play",
+        notes: [
+          "🧖‍♂️ Wrinkle Care: Keep folds clean and dry",
+          "🛡️ Guard Dog: Reserved with strangers",
+          "🧠 Strong Minded: Needs consistent training",
+        ],
+        lifespan: "8–12 years",
+        bestFor: "Calm owners, secure yard",
+      },
+
+      "Dogo Argentino": {
+        image: "/assets/Dogs/Dogo Argentino.jpg",
+        video: "/assets/videos/Dogo Argentino.mp4",
+        description:
+          "Large (80–100 lbs). Brave, loyal, protective. Low shedding, high energy.",
+        traits: [
+          "Size: Large (80–100 lbs)",
+          "Appearance: Muscular, white coat, strong build",
+          "Temperament: Brave, loyal, protective, affectionate",
+          "Good With: Experienced handlers, older kids",
+          "Trainability: High",
+          "Barking Level: Low",
+          "Shedding Level: Low",
+          "Energy Level: High",
+        ],
+        pros: [
+          "Loyal guardian",
+          "Athletic and intelligent",
+          "Protective family dog",
+        ],
+        cons: [
+          "Not for novice owners",
+          "Needs firm structure",
+          "May not tolerate other animals",
+        ],
+        grooming: ["Occasional brushing", "Low coat maintenance"],
+        exercise: "1–2 hours daily (walks, runs, mental work)",
+        notes: [
+          "🛡️ Natural Protector: Needs firm training and leadership",
+          "⚖️ Strong Willed: Best for experienced owners",
+          "👃 Hunting Heritage: Bred for big game",
+        ],
+        lifespan: "10–12 years",
+        bestFor: "Secure home, experienced handler, active lifestyle",
+      },
+    };
+    // Get breed from URL
+    const params = new URLSearchParams(window.location.search);
+    const breed = decodeURIComponent(params.get("breed")).trim();
+    console.log("Breed param:", breed);
+    console.log("Available keys:", Object.keys(breeds));
+
+    // Get page elements
+    const container = document.getElementById("breedContainer");
+    const videoFrame = document.getElementById("breedVideo");
+    const videoSection = document.getElementById("videoSection");
+    if (breeds[breed]) {
+      const b = breeds[breed];
+      console.log("Available keys:", Object.keys(breeds));
+
+      container.innerHTML = `
+    <img src="${b.image}" alt="${breed}">
+    <h1>${breed}</h1>
+
+    <div class="desc">
+      <h2>Description</h2>
+      <p>${b.description}</p>
+    </div>
+
+    <div class="traits">
+      <h2>Key Traits</h2>
+      <ul>${b.traits.map((t) => `<li>${t}</li>`).join("")}</ul>
+    </div>
+
+    <div class="pros-cons">
+      <h2>Pros</h2>
+      <ul>${b.pros.map((p) => `<li>${p}</li>`).join("")}</ul>
+      <h2>Cons</h2>
+      <ul>${b.cons.map((c) => `<li>${c}</li>`).join("")}</ul>
+    </div>
+
+    <div class="grooming">
+      <h2>Grooming Needs</h2>
+      <ul>${b.grooming.map((g) => `<li>${g}</li>`).join("")}</ul>
+    </div>
+
+    <div class="exercise">
+      <h2>Daily Exercise</h2>
+      <p>${b.exercise}</p>
+    </div>
+
+    ${b.notes
+          ? `
+      <div class="notes">
+        <h2>Special Notes</h2>
+        <ul>${b.notes.map((n) => `<li>${n}</li>`).join("")}</ul>
+      </div>`
+          : ""
+        }
+
+    ${b.lifespan
+          ? `
+      <div class="lifespan">
+        <h2>Average Lifespan</h2>
+        <p>${b.lifespan}</p>
+      </div>`
+          : ""
+        }
+
+    ${b.bestFor
+          ? `
+      <div class="bestfor">
+        <h2>Best For</h2>
+        <p>${b.bestFor}</p>
+      </div>`
+          : ""
+        }
+
+    ${b.healthGuide
+          ? `
+  <div class="health-guide">
+    <h2>Health Guide</h2>
+
+    <p><strong>Lifespan:</strong> ${b.healthGuide.lifespan}</p>
+    <p><strong>Average Weight:</strong> ${b.healthGuide.weight}</p>
+
+    <h3>Common Health Issues:</h3>
+    <ul>
+      ${b.healthGuide.common_health_issues
+            .map(
+              (issue) => `
+        <li>
+          <strong>${issue.issue}:</strong> ${issue.description}
+          <br><em>Tip:</em> ${issue.tip}
+        </li>
+      `
+            )
+            .join("")}
+    </ul>
+
+    <h3>Preventive Care:</h3>
+    <ul>
+      <li><strong>Vaccinations:</strong> ${b.healthGuide.preventive_care.vaccinations.join(
+              ", "
+            )}</li>
+      <li><strong>Deworming:</strong> Puppies: ${b.healthGuide.preventive_care.deworming.puppies
+          }, Adults: ${b.healthGuide.preventive_care.deworming.adults}</li>
+      <li><strong>Tick & Flea:</strong> ${b.healthGuide.preventive_care.tick_flea_control
+          }</li>
+      <li><strong>Spay/Neuter:</strong> ${b.healthGuide.preventive_care.spay_neuter
+          }</li>
+      <li><strong>Annual Vet Checks:</strong> ${b.healthGuide.preventive_care.annual_vet_checks.join(
+            ", "
+          )}</li>
+    </ul>
+
+    <h3>Diet Recommendations:</h3>
+    <ul>
+      <li>Protein: ${b.healthGuide.diet.protein}</li>
+      <li>Fat: ${b.healthGuide.diet.fat}</li>
+      <li>Carbs: ${b.healthGuide.diet.carbs}</li>
+      <li>Fiber: ${b.healthGuide.diet.fiber}</li>
+      <li><strong>Good Foods:</strong> ${b.healthGuide.diet.good_foods.join(
+            ", "
+          )}</li>
+      <li><strong>Treats:</strong> ${b.healthGuide.diet.treats}</li>
+      <li><strong>Hydration:</strong> ${b.healthGuide.diet.hydration}</li>
+    </ul>
+
+    <h3>Daily Exercise:</h3>
+    <p><strong>Walks:</strong> ${b.healthGuide.exercise.daily_walks}</p>
+    <p><strong>Play:</strong> ${b.healthGuide.exercise.play.join(", ")}</p>
+    <p><strong>Training:</strong> ${b.healthGuide.exercise.training}</p>
+
+    <h3>Grooming Routine:</h3>
+    <ul>
+      <li>Brushing: ${b.healthGuide.grooming.brushing}</li>
+      <li>Bathing: ${b.healthGuide.grooming.bathing}</li>
+      <li>Ear Cleaning: ${b.healthGuide.grooming.ear_cleaning}</li>
+      <li>Nail Clipping: ${b.healthGuide.grooming.nail_clipping}</li>
+      <li>Dental Care: ${b.healthGuide.grooming.dental_care}</li>
+    </ul>
+
+    <h3>Wellbeing Tips:</h3>
+    <ul>
+      ${b.healthGuide.wellbeing_tips.map((tip) => `<li>${tip}</li>`).join("")}
+    </ul>
+
+    <p><strong>Golden Rule:</strong> ${b.healthGuide.golden_rule}</p>
+  </div>
+`
+          : ""
+        }
+
+  `;
+
+   if (b.video) {
+  videoSection.style.display = "block"; // Make the section visible
+  const videoEl = document.getElementById("breedVideo");
+  const sourceEl = document.getElementById("breedVideoSource");
+
+  sourceEl.src = b.video;  // Assign video file path
+  videoEl.load();          // Reload video with new source
+}
+
+
+    } else {
+      container.innerHTML = `
+    <h1>Breed Not Found</h1>
+    <p>Try going back and selecting again.</p>
+  `;
+    }
+  </script>
+</body>
+
+</html>

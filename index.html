@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+
+<!-- Optional: Include Dogica (you'll need to download .woff or .ttf and use @font-face if not hosted) -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Dogica';
+    src: url('fonts/Dogica.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+
+  <title>BreedLy - Find Your Perfect Companion</title>
+  <link rel="icon" href="assets/Dog face.png" type="image/x-icon" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('show');
+      });
+    }
+  });
+</script>
+
+<body>
+  <!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="assets/dog (2).png" alt="BreedLy Logo" class="logo-img" />
+    <div class="logo-text">
+      <h1>BreedLy 🐾</h1>
+      <span>Know about Paws</span>
+    </div>
+  </div>
+<ul class="nav-center" id="mobile-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="/pages/quiz.html">Breed Selector</a></li>
+    <li><a href="/pages/breed-details.html">Breed Info</a></li>
+    <li><a href="pages/health-guide.html">Health</a></li>
+    <li><a href="pages/food-guide.html">food</a></li>
+    <li><a href="pages/training-guide.html">Training</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+  <a href="/pages/breed-details.html" class="search-icon">🔎</a>
+    <a href="/pages/quiz.html" class="btn-primary">🐶 Start Quiz</a>
+  </div>
+<button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+</nav>
+
+  <!-- Hero Section -->
+
+<section class="hero">
+  <img src="/assets/hero-dog.png" alt="Hero Dog" class="hero-image" />
+  
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1 id="love">You're Loved</h1>
+      <h1>Find Your<br />Perfect Dog</h1>
+      <p>
+        Smart advice for choosing & caring for your furry friend.<br />
+        Every Dog Deserves a Loving Home — Maybe Yours,<br />
+        Find the One Who’ll Always Wait at the Door
+      </p>
+      <div class="hero-buttons">
+        <a href="pages/breed-details.html" class="btn1">I Know My Breed</a>
+        <a href="pages/quiz.html" class="btn2">Help Me Choose</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="overview">
+    <p>
+      🐾 Welcome to BreedLy </br>Your One-Stop Dog Companion,
+      Whether you’re a first-time dog parent or adding another furry friend to your family, BreedLy makes finding your
+      perfect match easy and stress-free.
+    </p>
+    <h2>WHY CHOOSE <span>BREEDLY</span>?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <img src="assets/paw.png" alt="Icon" />
+        <h3>Breed Match</h3>
+        <p>
+          Find a dog that suits your lifestyle with smart recommendations.
+        </p>
+      </div>
+      <div class="feature-card">
+        <img src="assets/book.png" alt="Icon" />
+        <h3>Care Guides</h3>
+        <p>
+          Explore detailed profiles for each breed — size, nature, grooming, health, pros & cons, and more.
+        </p>
+      </div>
+      <div class="feature-card">
+        <img src="assets/budget.png" alt="Icon" />
+        <h3>Real Expense</h3>
+        <p>Get an estimate of your monthly dog care costs — food, vet visits, toys, and grooming..</p>
+      </div>
+    </div>
+  </section>
+  <section class="learn-strip">
+    <h2>What You’ll Learn</h2>
+    <div class="learn-features">
+      <div class="learn-box">
+        <img src="assets/turkey-leg.png" alt="Food Icon" />
+        <h3>Feeding Plans</h3>
+        <p>Know exactly what to feed your pup, how much, and get brand or homemade food tips.</p>
+      </div>
+      <div class="learn-box">
+        <img src="assets/medicine.png" alt="Health Icon" />
+        <h3>Health Care</h3>
+        <p>Learn about common health needs, vaccines, and vet care for each breed.</p>
+      </div>
+      <div class="learn-box">
+        <img src="assets/training.png" alt="Training Icon" />
+        <h3>Training Guides</h3>
+        <p>Easy steps for house training, commands, and socialization.</p>
+      </div>
+    </div>
+  </section>
+<section class="gallery">
+  <h2>Pup Gallery</h2>
+<p class="subline">“Wet noses, warm hearts.”</p>
+
+  <div class="pet-cards">
+    <div class="pet-card">
+      <img src="assets/images/cute1.jpg" alt="Penelope" />
+      <div class="overlay">
+        <p class="dog-name">Penelope</p>
+        <span class="paw-hover">🐾</span>
+      </div>
+    </div>
+
+    <div class="pet-card">
+      <img src="assets/images/cute2.jpg" alt="Gordo" />
+      <div class="overlay">
+        <p class="dog-name">Gordo</p>
+        <span class="paw-hover">🐾</span>
+      </div>
+    </div>
+
+    <div class="pet-card">
+      <img src="assets/images/cute3.jpg" alt="Baby Girl" />
+      <div class="overlay">
+        <p class="dog-name">Baby Girl</p>
+        <span class="paw-hover">🐾</span>
+      </div>
+    </div>
+
+    <div class="pet-card">
+      <img src="assets/images/cute4.jpg" alt="Marshmallow" />
+      <div class="overlay">
+        <p class="dog-name">Marshmallow</p>
+        <span class="paw-hover">🐾</span>
+      </div>
+    </div>
+      <div class="pet-card">
+      <img src="assets/images/cute5.webp" alt="Marshmallow" />
+      <div class="overlay">
+        <p class="dog-name">Rio</p>
+        <span class="paw-hover">🐾</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dog-feel">
+  <div class="feel-container">
+    <div class="feel-image">
+      <div class="gradient-blob"></div>
+      <img src="assets/images/hug1.png" alt="Puppy love" />
+      <div class="paw-bg">🐾</div>
+    </div>
+    <div class="feel-text">
+      <h2>How Dogs Make Us Feel</h2>
+      <p class="intro">
+        Dogs aren’t just pets — they’re comfort, loyalty, and unconditional love.
+      </p>
+      <blockquote>
+        “The world would be a nicer place if everyone had the ability to love as unconditionally as a dog.”
+      </blockquote>
+      <p class="author">— M.K. Clinton</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="breed-section">
+  <h2>Popular Dog Breeds</h2>
+  <div class="breed-cards">
+
+    <!-- German Shepherd -->
+    <div class="breed-card">
+      <img src="/assets/images/germen.jpg" alt="German Shepherd" class="breed-img" />
+      <div class="context align-left">
+        <h3>German Shepherd – Loyal Guardian</h3>
+        <p>The German Shepherd is more than a protector — it's a loyal soul with endless devotion. With their sharp mind and fearless heart, they form unbreakable bonds and thrive in a loving, purpose-driven home.</p>
+      </div>
+    </div>
+
+    <!-- Labrador -->
+    <div class="breed-card">
+      <img src="/assets/images/labro.webp" alt="Labrador" class="breed-img" />
+      <div class="context align-right">
+        <h3>Labrador – Joyful Companion</h3>
+        <p>The Labrador brings sunshine into every home — full of joy, playfulness, and unconditional love. With their gentle hearts and playful energy, they’re the perfect match for families and open arms.</p>
+      </div>
+    </div>
+
+    <!-- Husky -->
+    <div class="breed-card">
+      <img src="/assets/images/huskyy.avif" alt="Husky" class="breed-img" />
+      <div class="context align-left">
+        <h3>Husky – Wild-Hearted Friend</h3>
+        <p>The Husky is a spirited wanderer with a heart as vast as the open snowfields. Behind those icy eyes lies a loyal, loving companion who craves adventure, connection, and freedom with their human pack.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="care-tips-alt">
+  <h2>Love in Little Things</h2>
+  <p class="intro-line">A healthy dog is a happy heart with paws. Show your love through the little everyday moments that matter most.</p>
+  <div class="tips-alt-content">
+    <img src="assets/images/care.jpg" alt="Dog being bathed with love" />
+    <ul class="healthy-tips-list">
+      <li><span>🍲</span> Nourish them with thoughtful meals — made with care, served with love.</li>
+      <li><span>🌳</span> Explore the world together — walks aren’t just exercise, they’re connection.</li>
+      <li><span>🫧</span> Brush softly, bathe gently — grooming is trust in motion.</li>
+      <li><span>💬</span> Train with kindness — every “good boy” builds a lifelong bond.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="dog-facts">
+  <h2>Why Dogs Steal Our Hearts</h2>
+  <div class="fact-cards">
+    <div class="fact-card">
+      <p>🦴 Dogs have around <strong>1,700 taste buds</strong> — and somehow, they still think your old slipper is delicious.</p>
+    </div>
+    <div class="fact-card">
+      <p>💨 Greyhounds can run up to <strong>45 mph</strong> — but will always slow down for a cuddle.</p>
+    </div>
+    <div class="fact-card">
+      <p>💗 Dogs can truly <strong>read your emotions</strong> — because their hearts beat for yours.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <h2>🐶 Ready to Meet Your Match?</h2>
+  <p>Your future best friend might just be a tail-wag away. Let’s help you find a companion who fits your heart and home.</p>
+  <a class="cta-btn" href="#">Begin the Journey</a>
+</section>
+
+  <!-- Optional wave at top -->
+  <div class="footer-wave"></div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2>BreedLy <span class="paw">🐾</span></h2>
+        <p>Find your pawfect match — happy dogs, happy homes.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="pages/quiz.html">Breed Selector</a>
+        <a href="pages/breed-details.html">Breed Info</a>
+        <a href="pages/health-guide.html">Health</a>
+        <a href="pages/food-guide.html">Breed Info</a>
+        <a href="pages/training-guide.html">Training </a>
+        <a href="#">Contact</a>
+       
+      </div>
+
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+
+      <p class="footer-contact">
+        📧 hello@breedly.com
+      </p>
+
+      <p class="copyright">
+        © 2025 BreedLy. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>

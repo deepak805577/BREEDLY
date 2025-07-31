@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BreedLy Dog Match Quiz</title>
+    <link rel="icon" href="/assets/favi1.png" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+ body {
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(to bottom, #fffaf0, #ffe9d6); /* gradient only */
+  position: relative;
+  z-index: 0;
+}
+
+.bg-image-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Behind all content */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bg-image-wrapper .bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+    .quiz-header-banner {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+    .quiz-header-banner h1 {
+      font-size: 2.5rem;
+      color: #4e148c;
+    }
+    .quiz-header-banner p {
+      font-size: 1.1rem;
+      color: #5a4c4c;
+    }
+
+    .quote-bar {
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px;
+      border-radius: 24px;
+      background: #fffefc;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    .quiz-header h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .quiz-tip {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .option-circle {
+      border: 2px dashed #aaa;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: #fff8f2;
+    }
+
+    .option-circle:hover {
+      background-color: #ffe9cc;
+    }
+
+    .option-circle.selected {
+      border: 3px solid #ff7a00;
+      background: #fff1de;
+    }
+
+    .option-circle span {
+      font-size: 1.8rem;
+    }
+
+    .option-circle p {
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    .quiz-navigation {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav-btn {
+      padding: 12px 26px;
+      font-size: 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn.back {
+      background: #fff;
+      border: 2px solid #4e148c;
+      color: #4e148c;
+    }
+
+    .nav-btn.next {
+      background: #4e148c;
+      color: white;
+    }
+
+    .nav-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .progress-bar {
+      margin: 30px auto;
+      width: 80%;
+      height: 10px;
+      background: #f2f2f2;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #ff7a00;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-summary {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+   @media screen and (max-width: 768px) {
+  .quiz-header-banner h1 {
+    font-size: 1rem;
+  }
+
+  .quiz-header-banner p {
+    font-size: 2rem;
+    padding: 0 10px;
+  }
+
+  .quiz-container {
+    padding: 20px;
+    margin: 20px 10px;
+    height: 100vh;
+    border-radius: 16px;
+  }
+
+  .quiz-header h2 {
+    font-size: 2rem;
+  }
+  .quiz-options{
+    flex-direction:row ;
+  }
+  .quiz-tip {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .option-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .option-circle span {
+    font-size: 1.5rem;
+  }
+
+  .option-circle p {
+    font-size: 0.8rem;
+  }
+
+  .quiz-navigation {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-btn {
+    width: 100%;
+  }
+
+  .progress-bar {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .quiz-header-banner h1 {
+    font-size: 1rem;
+  }
+
+  .quiz-header-banner p {
+    font-size: 0.5rem;
+  }
+
+  .quiz-container {
+    padding: 15px;
+  }
+
+  .option-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .option-circle span {
+    font-size: 1.2rem;
+  }
+
+  .option-circle p {
+    font-size: 0.75rem;
+  }
+
+  .nav-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .quiz-header h2 {
+    font-size: 1rem;
+  }
+
+  .quote-bar {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+
+  .quiz-summary {
+    font-size: 0.85rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="bg-image-wrapper">
+    <img src="/assets/images/quiz-bg.png" alt="Background Paws" class="bg-image" />
+  </div>
+  <div class="quiz-header-banner">
+    <h1>BreedLy 🐶</h1>
+    <p>Find your perfect pup match — Tail-wagging happiness awaits!</p>
+  </div>
+  <div class="quote-bar">
+    "Dogs do speak, but only to those who know how to listen." – Orhan Pamuk
+  </div>
+
+  <section class="quiz-container">
+    <div class="quiz-header">
+      <h2 id="quiz-question">Loading...</h2>
+      <p class="quiz-tip">(Tip here)</p>
+    </div>
+
+    <div class="quiz-options" id="quiz-options"></div>
+
+    <div class="quiz-navigation">
+      <button class="nav-btn back" id="backBtn">← Back</button>
+      <button class="nav-btn next" id="nextBtn">Next →</button>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="quiz-summary">
+      <strong>Your choices so far:</strong>
+      <p id="summaryText">None yet.</p>
+    </div>
+  </section>
+
+<script>
+  const questions = [
+  {
+    question: "What type of home do you live in?",
+    tip: "Apartment dwellers may prefer smaller or quiet breeds.",
+    options : [
+  { text: "1BHK", icon: "🏙️" },      // Small apartment / city living
+  { text: "2-3BHK", icon: "🏢" },    // Family-sized apartment / housing complex
+  { text: "House", icon: "🏡" },      // Standalone house with a yard
+  { text: "Bungalow", icon: "🏯" }    // Villa / bungalow style
+]
+  },
+  {
+    question: "Do you have air conditioning?",
+    tip: "Thick-fur breeds like Huskies need a cool environment.",
+    options: [
+      { text: "Yes", icon: "❄️" },
+      { text: "No", icon: "🔥" }
+    ]
+  },
+  {
+    question: "How much indoor space will your dog have?",
+    tip: "Dogs need space to stretch and move comfortably.",
+    options: [
+      { text: "Very little", icon: "📏" },
+      { text: "Moderate", icon: "📐" },
+      { text: "Spacious", icon: "🏡" }
+    ]
+  },
+  {
+    question: "How much outdoor space is available?",
+    tip: "Some breeds need large yards, others are fine with less.",
+    options: [
+      { text: "None", icon: "🚫" },
+      { text: "Small yard", icon: "🌱" },
+      { text: "Large yard", icon: "🌳" },
+      { text: "Open field", icon: "🌾" }
+    ]
+  },
+  {
+    question: "Do you have any children at home?",
+    tip: "Kid-friendly breeds are gentler and more patient.",
+    options: [
+      { text: "No", icon: "🚫" },
+      { text: "Yes - Ages 0–5", icon: "👶" },
+      { text: "Yes - Ages 6–12", icon: "🧒" },
+      { text: "Yes - Teenagers", icon: "🧑" }
+    ]
+  },
+  {
+    question: "What are their ages?",
+    tip: "Age matters for energy level & compatibility.",
+    options: [
+      { text: "0–5", icon: "👶" },
+      { text: "6–12", icon: "🧒" },
+      { text: "13+", icon: "🧑" }
+    ]
+  },
+  {
+    question: "Will your dog have kids to snuggle with?",
+    tip: "Cuddly breeds love being with children.",
+    options: [
+      { text: "Yes", icon: "❤️" },
+      { text: "No", icon: "🛏️" }
+    ]
+  },
+  {
+    question: "Is anyone allergic to dogs or dog hair?",
+    tip: "Hypoallergenic or low-shedding breeds may be better.",
+    options: [
+      { text: "Yes", icon: "🤧" },
+      { text: "No", icon: "😊" },
+      { text: "Not Sure", icon: "❓" }
+    ]
+  },
+  {
+    question: "How much time can you dedicate to your dog daily?",
+    tip: "Dogs thrive on attention and routine.",
+    options: [
+      { text: "< 1 hour", icon: "⏳" },
+      { text: "1–2 hours", icon: "🕰️" },
+      { text: "3+ hours", icon: "⏱️" }
+    ]
+  },
+  {
+    question: "How much time will your dog spend alone each day?",
+    tip: "Independent breeds do better when left alone.",
+    options: [
+      { text: "< 2 hrs", icon: "⌛" },
+      { text: "2–5 hrs", icon: "🕓" },
+      { text: "5–8 hrs", icon: "🕗" },
+      { text: "8+ hrs", icon: "🕘" }
+    ]
+  },
+  {
+    question: "Have you owned a dog before?",
+    tip: "First-timers may want easier-to-train breeds.",
+    options: [
+      { text: "Yes", icon: "👍" },
+      { text: "No", icon: "👎" }
+    ]
+  },
+  {
+    question: "What's your activity level?",
+    tip: "Dogs need matching energy! Active people = active breeds.",
+    options: [
+      { text: "Very Active", icon: "🏃‍♂️" },
+      { text: "Moderate", icon: "🚶‍♀️" },
+      { text: "Low", icon: "🛋️" }
+    ]
+  },
+  {
+    question: "How playful should your dog be?",
+    tip: "Energetic dogs need families who can play with them.",
+    options: [
+      { text: "Very playful", icon: "🎾" },
+      { text: "Moderately playful", icon: "🎲" },
+      { text: "Low energy", icon: "🛌" }
+    ]
+  },
+  {
+    question: "Which best describes your ideal dog’s personality?",
+    tip: "Choose a personality that suits your lifestyle.",
+    options: [
+      { text: "Playful", icon: "😄" },
+      { text: "Calm", icon: "😌" },
+      { text: "Protective", icon: "🛡️" },
+      { text: "Friendly", icon: "🤗" },
+      { text: "Independent", icon: "😎" }
+    ]
+  },
+  {
+    question: "How much barking can you tolerate?",
+    tip: "Quieter breeds are better for apartments.",
+    options: [
+      { text: "Loud & frequent", icon: "🔊" },
+      { text: "Some barking", icon: "🔉" },
+      { text: "Prefer quiet", icon: "🔇" }
+    ]
+  },
+  {
+    question: "How much training are you willing to provide?",
+    tip: "More obedient breeds require less training effort.",
+    options: [
+      { text: "A lot — I enjoy it", icon: "🧠" },
+      { text: "Just the basics", icon: "📘" },
+      { text: "Prefer trained", icon: "🎓" }
+    ]
+  },
+  {
+    question: "What size of dog do you prefer?",
+    tip: "If you live in a smaller space, consider a smaller dog.",
+    options: [
+      { text: "7kg & under", icon: "🐶" },
+      { text: "7–14kg", icon: "🐕" },
+      { text: "14–23kg", icon: "🦮" },
+      { text: "23–50kg", icon: "🐕‍🦺" },
+      { text: "50kg+", icon: "🐾" },
+      { text: "No preference", icon: "❔" }
+    ]
+  },
+  {
+    question: "How much grooming can you manage?",
+    tip: "Long-coated breeds require more grooming time.",
+    options: [
+      { text: "Daily", icon: "🧴" },
+      { text: "Weekly", icon: "🧼" },
+      { text: "Occasional", icon: "🪮" },
+      { text: "Minimal", icon: "✂️" }
+    ]
+  },
+  {
+    question: "How important is low shedding to you?",
+    tip: "Low-shedding breeds are great for cleanliness & allergies.",
+    options: [
+      { text: "Very important", icon: "✅" },
+      { text: "Somewhat", icon: "➖" },
+      { text: "Not important", icon: "🚫" }
+    ]
+  }
+];
+
+
+  let currentQuestion = 0;
+  const answers = [];
+
+  const questionText = document.getElementById("quiz-question");
+  const tipText = document.querySelector(".quiz-tip");
+  const optionsContainer = document.getElementById("quiz-options");
+  const progressFill = document.getElementById("progressFill");
+  const summaryText = document.getElementById("summaryText");
+
+  function loadQuestion(index) {
+    const q = questions[index];
+    questionText.textContent = q.question;
+    tipText.textContent = q.tip;
+
+    optionsContainer.innerHTML = "";
+    q.options.forEach(opt => {
+      const div = document.createElement("div");
+      div.className = "option-circle";
+      div.innerHTML = `<span>${opt.icon}</span><p>${opt.text}</p>`;
+      div.onclick = () => {
+        document.querySelectorAll(".option-circle").forEach(o => o.classList.remove("selected"));
+        div.classList.add("selected");
+        answers[index] = opt.text;
+        updateSummary();
+      };
+      optionsContainer.appendChild(div);
+    });
+
+    if (answers[index]) {
+      [...optionsContainer.children].forEach(btn => {
+        if (btn.innerText.includes(answers[index])) btn.classList.add("selected");
+      });
+    }
+
+    progressFill.style.width = `${((index + 1) / questions.length) * 100}%`;
+  }
+
+  function updateSummary() {
+    summaryText.textContent = answers
+      .map((a, i) => a ? `Q${i + 1}: ${a}` : null)
+      .filter(Boolean)
+      .join(" | ");
+  }
+
+  document.getElementById("nextBtn").onclick = () => {
+    if (!answers[currentQuestion]) {
+      alert("Please select an option before proceeding.");
+      return;
+    }
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      loadQuestion(currentQuestion);
+    } else {
+  document.getElementById('nextBtn').style.display = 'none';
+  const resultBtn = document.createElement('button');
+  resultBtn.className = 'nav-btn next';
+  resultBtn.textContent = 'View My Results';
+  resultBtn.onclick = () => {
+    localStorage.setItem("breedlyAnswers", JSON.stringify(answers));
+    window.location.href = "results.html";
+  };
+  document.querySelector('.quiz-navigation').appendChild(resultBtn);
+}
+
+  };
+
+  document.getElementById("backBtn").onclick = () => {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      loadQuestion(currentQuestion);
+    }
+  };
+
+  loadQuestion(0);
+</script>
+</body>
+</html>

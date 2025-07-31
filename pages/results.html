@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BreedLy Match Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+   /* Base styles */
+body {
+  font-family: 'Fredoka', sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  background: transparent;
+  background-size: cover;
+  background-attachment: fixed;
+  text-align: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+}
+
+
+h1 {
+  color: #4e148c;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.slogan {
+  color: #5a4c4c;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.quote {
+  font-style: italic;
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 40px;
+}
+
+/* Dog card grid */
+.dog-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* Individual card */
+.dog-card {
+  background: #fff8f2;
+  padding: 20px;
+  border-radius: 16px;
+  width: 260px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.dog-card:hover {
+  transform: translateY(-5px);
+}
+
+.dog-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.dog-card h3 {
+  margin: 10px 0 6px;
+  color: #5a2a03;
+}
+
+.dog-card p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Button section */
+.btn-bar {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.restart-btn {
+  background: #f8a151;
+  color: white;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.restart-btn:hover {
+  background-color: #fd8f28;
+}
+
+.fallback {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 60px;
+}
+
+/* --------------------------- */
+/* 💡 RESPONSIVE BREAKPOINTS */
+/* --------------------------- */
+
+/* Tablets */
+@media (max-width: 991px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .dog-card {
+    width: 300px;
+    height: 420px;
+    padding: 18px;
+  }
+
+  .dog-card img {
+    height: 300px;
+  }
+
+  .restart-btn {
+    font-size: 0.95rem;
+    padding: 10px 24px;
+  }
+  .dog-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+}
+
+/* Mobiles */
+@media (max-width: 600px) {
+  body {
+    padding: 30px 15px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .slogan {
+    font-size: 1rem;
+  }
+
+  .quote {
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+  }
+
+  .dog-card {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+  }
+
+  .dog-card img {
+    height: 200px;
+  }
+
+  .btn-bar {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .restart-btn {
+    width: 100%;
+    max-width: 260px;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+
+  .fallback {
+    font-size: 0.95rem;
+    margin-top: 40px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <img src="/assets/images/bggg.jpg" alt="Background" class="bg-image" />
+
+  <h1>🐾 Your Perfect Pup Matches!</h1>
+  <p class="slogan">Handpicked for you based on your lifestyle 🐶💛</p>
+  <p class="quote">“The better I get to know men, the more I find myself loving dogs.” – Charles de Gaulle</p>
+
+  <div class="dog-cards" id="resultsContainer"></div>
+
+  <div class="btn-bar">
+   
+    <button class="restart-btn" onclick="restartQuiz()">🔁 Retake the Quiz</button>
+  </div>
+
+  <p class="fallback" id="fallback"></p>
+
+  <script>
+ const breedProfiles = {
+  "Labrador Retriever": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "3+ hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Labrador Retriever.jpg",
+    desc: "Friendly, playful, and always ready for family fun."
+  },
+  "Golden Retriever": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "3+ hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Golden Retriever.webp",
+    desc: "Loyal, gentle, and perfect for active families with kids."
+  },
+  "German Shepherd": {
+    traits: ["House", "Yes", "Spacious", "Open field", "Yes - Teenagers", "13+", "Yes", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Protective", "Some barking", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/German Shepherd.jpg",
+    desc: "Intelligent and loyal — great for security and companionship."
+  },
+  "Beagle": {
+    traits: ["2-3BHK", "Yes", "Moderate", "Small yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Beagle.jpg",
+    desc: "Curious, merry, and loves to sniff out fun with kids."
+  },
+  "Pug": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "7–14kg", "Weekly", "Very important"],
+    image: "/assets/Dogs/Pug.jpg",
+    desc: "Charming and comical — perfect for apartment life."
+  },
+  "Shih Tzu": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "7–14kg", "Daily", "Very important"],
+    image: "/assets/Dogs/Shih Tzu.jpg",
+    desc: "Affectionate lapdog — loves pampering and cuddles."
+  },
+  "Lhasa Apso": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Independent", "Prefer quiet", "Prefer trained", "7–14kg", "Daily", "Very important"],
+    image: "/assets/Dogs/Lhasa Apso.jpg",
+    desc: "Small, loyal, and full of personality — great for apartments."
+  },
+  "Pomeranian": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Very playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Very important"],
+    image: "/assets/Dogs/Pomeranian.jpg",
+    desc: "Fluffy, energetic, and full of charm — loves attention."
+  },
+  "Indian Spitz": {
+    traits: ["2-3BHK", "Yes", "Moderate", "Small yard", "No", "0–5", "Yes", "Yes", "1–2 hours", "2–5 hrs", "No", "Moderate", "Moderately playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Indian Spitz.jpg",
+    desc: "Lively and intelligent — perfect family companion for Indian homes."
+  },
+  "Dachshund": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "No", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Moderately playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Very important"],
+    image: "/assets/Dogs/Dachshund.jpg",
+    desc: "Bold and curious — tiny but full of personality."
+  },
+  "Cocker Spaniel": {
+    traits: ["2-3BHK", "Yes", "Moderate", "Moderate", "Yes - Ages 6–12", "6–12", "Yes", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Cocker Spaniel.jpg",
+    desc: "Sweet-natured, loves cuddles and playtime."
+  },
+  "Boxer": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "Yes", "No", "2–3 hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Boxer.jpg",
+    desc: "Energetic, fun-loving, and protective family clown."
+  },
+  "Doberman Pinscher": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "Yes", "No", "3+ hours", "< 2 hrs", "Yes", "Very Active", "Moderately playful", "Protective", "Some barking", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Doberman Pinscher.jpg",
+    desc: "Alert, loyal, and brave — needs structure and exercise."
+  },
+  "Rottweiler": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "Yes", "No", "2–3 hours", "< 2 hrs", "Yes", "Moderate", "Moderately playful", "Protective", "Some barking", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Rottweiler.jpg",
+    desc: "Confident and strong — devoted guardian for experienced owners."
+  },
+  "Great Dane": {
+    traits: ["House", "Yes", "Spacious", "Open yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "2–3 hours", "< 2 hrs", "Yes", "Moderate", "Low energy", "Calm", "Some barking", "Just the basics", "50kg+", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Great Dane.jpg",
+    desc: "Gentle giant — affectionate and easy-going."
+  },
+  "Saint Bernard": {
+    traits: ["House", "Yes", "Spacious", "Open yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "1–2 hours", "< 2 hrs", "Yes", "Low", "Low energy", "Calm", "Prefer quiet", "Just the basics", "50kg+", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Saint Bernard.jpg",
+    desc: "Patient and gentle — loves kids and cold weather."
+  }
+  , "Siberian Husky": {
+    traits: ["House", "Yes", "Spacious", "Open field", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Independent", "Loud & frequent", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Siberian Husky.jpg",
+    desc: "Adventurous and vocal — best for active families with space."
+  },
+  "Alaskan Malamute": {
+    traits: ["House", "Yes", "Spacious", "Open field", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Independent", "Loud & frequent", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Alaskan Malamute.jpg",
+    desc: "Strong, hardy, loves snow — needs space and activity."
+  },
+  "French Bulldog": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "7–14kg", "Weekly", "Very important"],
+    image: "/assets/Dogs/French Bulldog.jpg",
+    desc: "Easy-going and comical — loves apartment life."
+  },
+  "English Bulldog": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/English Bulldog.jpg",
+    desc: "Chilled-out and loving — great for relaxed homes."
+  },
+  "Bullmastiff": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "1–2 hours", "< 2 hrs", "Yes", "Low", "Low energy", "Protective", "Prefer quiet", "Just the basics", "50kg+", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Bullmastiff.jpg",
+    desc: "Loyal guardian — calm, brave, and protective."
+  },
+  "Pit Bull Terrier": {
+    traits: ["House", "Yes", "Spacious", "Moderate yard", "Yes - Teenagers", "13+", "No", "No", "2–3 hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Protective", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Pit Bull Terrier.jpg",
+    desc: "Energetic, loyal, and loving — needs strong leadership."
+  },
+  "American Bully": {
+    traits: ["House", "Yes", "Spacious", "Moderate yard", "Yes - Teenagers", "13+", "No", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Protective", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/American Bully.jpg",
+    desc: "Friendly and sturdy — great companion with proper training."
+  },
+  "Maltese": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "7kg & under", "Daily", "Very important"],
+    image: "/assets/Dogs/Maltese.jpg",
+    desc: "Tiny, loving, hypoallergenic — perfect lapdog for small spaces."
+  },
+  "Chihuahua": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Independent", "Loud & frequent", "Prefer trained", "7kg & under", "Weekly", "Very important"],
+    image: "/assets/Dogs/Chihuahua.jpg",
+    desc: "Small but bold — big personality in a tiny package!"
+  },
+  "Yorkshire Terrier": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Independent", "Some barking", "Prefer trained", "7kg & under", "Daily", "Very important"],
+    image: "/assets/Dogs/Yorkshire Terrier.jpg",
+    desc: "Tiny, clever, and charming — loves attention and pampering."
+  },
+  "Miniature Pinscher": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "No", "Yes", "< 1 hour", "2–5 hrs", "No", "Moderate", "Very playful", "Independent", "Some barking", "Just the basics", "7kg & under", "Weekly", "Very important"],
+    image: "/assets/Dogs/Miniature Pinscher.jpg",
+    desc: "Tiny, brave, and energetic — loves to explore and play."
+  },
+  "Poodle": {
+    traits: ["Apartment", "Yes", "Moderate", "Small yard", "No", "0–5", "Yes", "Yes", "1–2 hours", "2–5 hrs", "No", "Low", "Moderately playful", "Friendly", "Some barking", "A lot — I enjoy it", "7–14kg", "Daily", "Very important"],
+    image: "/assets/Dogs/Poodle.jpg",
+    desc: "Smart, hypoallergenic, and stylish — easy to train."
+  },
+  "Dalmatian": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "No", "0–5", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Independent", "Some barking", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Dalmatian.jpg",
+    desc: "Spotted, energetic, and fun-loving — loves open spaces."
+  },
+  "English Cocker Spaniel": {
+    traits: ["2-3BHK", "Yes", "Moderate", "Moderate yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "7–14kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Cocker Spaniel.jpg",
+    desc: "Happy and cheerful — loves playtime and cuddles."
+  },
+  "English Setter": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "2–3 hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/English Setter.jpg",
+    desc: "Gentle, friendly, and energetic — loves big yards."
+  },
+  "Basset Hound": {
+    traits: ["Apartment", "Yes", "Very little", "Small yard", "No", "0–5", "No", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Low energy", "Calm", "Prefer quiet", "Prefer trained", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Basset Hound.jpg",
+    desc: "Laid-back with adorable droopy ears — calm and loyal."
+  },
+  "Boston Terrier": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "2–5 hrs", "No", "Low", "Moderately playful", "Friendly", "Prefer quiet", "Prefer trained", "7–14kg", "Weekly", "Very important"],
+    image: "/assets/Dogs/Boston Terrier.jpg"
+  },
+  "Border Collie": {
+    traits: ["House", "Yes", "Spacious", "Open field", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Friendly", "Loud & frequent", "A lot — I enjoy it", "14–23kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Border Collie.jpg",
+    desc: "Super smart and energetic — loves tasks and big spaces."
+  },
+  "Belgian Malinois": {
+    traits: ["House", "Yes", "Spacious", "Open field", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "< 2 hrs", "Yes", "Very Active", "Very playful", "Protective", "Loud & frequent", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Beligan Malinois.jpg",
+    desc: "Brilliant and loyal — best for experienced, active families."
+  },
+  "Irish Setter": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Irish Setter.jpg",
+    desc: "Joyful and playful — needs space to run and explore."
+  },
+  "Weimaraner": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Protective", "Some barking", "A lot — I enjoy it", "23–50kg", "Weekly", "Not important"],
+    image: "/assets/Dogs/Weimaraner.jpg",
+    desc: "Sleek, loyal, and adventurous — loves outdoor activities."
+  },
+  "Afghan Hound": {
+    traits: ["House", "Yes", "Spacious", "Moderate yard", "No", "0–5", "No", "No", "2–3 hours", "2–5 hrs", "No", "Moderate", "Calm", "Independent", "Prefer quiet", "Just the basics", "23–50kg", "Daily", "Somewhat"],
+    image: "/assets/Dogs/Afghan Hound.jpg",
+    desc: "Elegant and graceful — independent spirit with stunning looks."
+  },
+  "Bichon Frise": {
+    traits: ["Apartment", "Yes", "Very little", "None", "No", "0–5", "Yes", "Yes", "< 1 hour", "< 2 hrs", "No", "Low", "Moderately playful", "Friendly", "Prefer quiet", "Prefer trained", "7–14kg", "Daily", "Very important"],
+    image: "/assets/Dogs/Bichon Frise.jpg",
+    desc: "Happy, hypoallergenic fluffball — perfect for allergy sufferers."
+  },
+  "Rough Collie": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Ages 6–12", "6–12", "Yes", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Protective", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Rough Collie.jpg",
+    desc: "Loyal and gentle — loves kids and watching over the family."
+  },
+  "Samoyed": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "2–5 hrs", "Yes", "Very Active", "Very playful", "Friendly", "Some barking", "A lot — I enjoy it", "23–50kg", "Daily", "Somewhat"],
+    image: "/assets/Dogs/Samoyed.jpg",
+    desc: "Fluffy and friendly — loves people and cold weather."
+  },
+  "Newfoundland Dog": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Ages 0–5", "0–5", "Yes", "No", "1–2 hours", "2–5 hrs", "Yes", "Low", "Calm", "Friendly", "Prefer quiet", "Just the basics", "50kg+", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/NewFoundland Dog.jpg",
+    desc: "Gentle giant — calm, loving, and great with kids."
+  },
+  "Bull Terrier": {
+    traits: ["House", "Yes", "Moderate", "Moderate yard", "Yes - Teenagers", "13+", "No", "No", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Bull Terrier.jpg",
+    desc: "Bold and fun-loving — always ready to play."
+  },
+  "Shar Pei": {
+    traits: ["House", "Yes", "Moderate", "Small yard", "No", "0–5", "No", "No", "< 1 hour", "< 2 hrs", "No", "Low", "Calm", "Protective", "Prefer quiet", "Prefer trained", "23–50kg", "Weekly", "Somewhat"],
+    image: "/assets/Dogs/Shar Pei.jpg",
+    desc: "Loyal and calm — famous for unique wrinkles."
+  },
+  "Dogo Argentino": {
+    traits: ["House", "Yes", "Spacious", "Large yard", "Yes - Teenagers", "13+", "No", "No", "3+ hours", "< 2 hrs", "Yes", "Very Active", "Protective", "Protective", "Some barking", "A lot — I enjoy it", "50kg+", "Weekly", "Not important"],
+    image: "/assets/Dogs/Dogo Argentino.jpg",
+    desc: "Powerful and loyal — needs experienced owners and open space."
+  }
+};
+
+
+
+
+function renderResults(answers) {
+  const container = document.getElementById('resultsContainer');
+  const fallback = document.getElementById('fallback');
+
+  let matched = [];
+  Object.entries(breedProfiles).forEach(([breed, profile]) => {
+    let score = 0;
+    profile.traits.forEach(trait => {
+      if (answers.includes(trait)) {
+        score++;
+      }
+    });
+    matched.push({ breed, score });
+  });
+
+  // Keep only breeds with non-zero match score
+  matched = matched.filter(b => b.score > 0);
+
+  // Sort by best match first
+  matched.sort((a, b) => b.score - a.score);
+
+  const topBreeds = matched.slice(0, 3); // Get top 3
+
+  if (topBreeds.length === 0) {
+    fallback.textContent = "😔 Sorry, no matches found. Please retake the quiz!";
+    return;
+  }
+
+  topBreeds.forEach(({ breed }) => {
+    const dog = breedProfiles[breed];
+    const card = document.createElement("div");
+    card.className = "dog-card";
+    card.innerHTML = `
+      <img src="${dog.image}" alt="${breed}">
+      <h3>${breed}</h3>
+      <p>${dog.desc}</p>
+      <a href="full-breed-info.html?breed=${encodeURIComponent(breed)}" target="_blank" style="display:inline-block;margin-top:10px;color:#4e148c;text-decoration:underline;font-weight:600;">View Full Info</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+  function shareResults() {
+    alert("✨ Share functionality coming soon!");
+  }
+
+  function restartQuiz() {
+    localStorage.removeItem("breedlyAnswers");
+    window.location.href = "quiz.html";
+  }
+
+  const storedAnswers = localStorage.getItem("breedlyAnswers");
+  if (storedAnswers) {
+    const answers = JSON.parse(storedAnswers);
+    renderResults(answers);
+  } else {
+    document.getElementById("fallback").innerText = "Oops! No quiz answers found. Please take the quiz again.";
+  }
+</script>
+</body>
+</html>
