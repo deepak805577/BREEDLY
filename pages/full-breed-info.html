@@ -5,82 +5,88 @@
   <meta charset="UTF-8" />
   <title>Breed Info – BreedLy</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Baloo+2&display=swap" rel="stylesheet">
   <style>
-   body {
-  font-family: "Fredoka", sans-serif;
-  margin: 0;
-  padding: 40px 20px;
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
-  position: relative;
-  overflow-x: hidden;
-}
-.bg-image-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-}
-.bg-image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 1; /* subtle background effect */
-  pointer-events: none;
-}
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+       body {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+      background-color: #fff8f2;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .breed-info {
-      overflow: visible;
-      max-width: 800px;
-      margin: auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-      animation: slideUp 0.7s ease forwards;
+    .bg-image-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    .breed-info {
+      max-width: 800px;
+      margin: auto;
+      background: #fffdf9;
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 2px dashed #ffcc99;
+      animation: slideUp 0.7s ease forwards;
     }
 
     .breed-info img {
-      width: 450px;
-      height: 500px;
+      width: 100%;
+      max-width: 300px;
+      height: 400px;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 20px;
       margin-bottom: 20px;
-      box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
-      animation: fadeIn 1.5s ease-in-out;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
-      color: #4e148c;
+      color: #8b4e1d;
       font-size: 2.4rem;
       margin-bottom: 10px;
+      font-family: 'Baloo 2', cursive;
+      position: relative;
+    }
+
+    h1::before {
+      content: "🐾";
+      position: absolute;
+      left: -30px;
+      top: 0;
+    }
+
+    h1::after {
+      content: "🐶";
+      position: absolute;
+      right: -30px;
+      top: 0;
     }
 
     h2 {
@@ -100,15 +106,48 @@
       text-align: left;
       margin: 20px 0;
       animation: fadeIn 1s ease-in-out;
+      padding: 10px 15px;
+      background: #fff5e6;
+      border-left: 5px solid #ffa94d;
+      border-radius: 12px;
     }
 
     ul {
       padding-left: 20px;
-      color: #000000;
+      color: #333;
     }
 
     ul li {
       margin-bottom: 8px;
+    }
+
+    .video-section {
+      position: relative;
+      z-index: 2;
+      margin-top: 40px;
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .video-section h2 {
+      color: #8b4e1d;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    .video-section video {
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+      border-radius: 16px;
+      box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);
+      background-color: #000;
+      transition: transform 0.3s ease;
+    }
+
+    .video-section video:hover {
+      transform: scale(1.02);
     }
 
     .back-links {
@@ -125,78 +164,67 @@
       text-decoration: none;
       border-radius: 30px;
       font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .back-link:hover {
-      background: #ff9900;
+      background: #ffaa3c;
+      transform: scale(1.05);
     }
 
-    .health-guide {
-      text-align: left;
-      margin: 20px 0;
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
 
-    .health-guide h2 {
-      color: #4e148c;
-    }
+      .video-section h2 {
+        font-size: 1.3rem;
+      }
 
-    .health-guide h3 {
-      margin-top: 10px;
-      color: #ff7a00;
-    }
+      .video-section video {
+        height: auto;
+        border-radius: 12px;
+      }
 
-    .health-guide ul {
-      list-style: disc;
-      padding-left: 40px;
+      .breed-info img {
+        width: 100%;
+      }
     }
-
-    .health-guide p {
-      margin: 8px 0;
-    }
-
-   .video-section {
-  position: relative;
-  z-index: 2;
-  margin-top: 40px;
+    /* 🐶 Quote Banner */
+.dog-quote-banner {
+  background: #ffe6cc;
+  padding: 15px 10px;
   text-align: center;
-  animation: fadeIn 1.2s ease-in-out;
+  color: #8b4e1d;
+  font-size: 1.3rem;
+  font-family: 'Baloo 2', cursive;
+  border-bottom: 3px dashed #ffcc99;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-.video-section h2 {
-  color: #4e148c;
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  font-family: 'Fredoka', sans-serif;
+
+html, body {
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
-.video-section video {
+.bg-image-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
-  max-width: 500px;
-  height: 400px;
-  border-radius: 16px;
-  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.12);
-  background-color: #000;
-  transition: transform 0.3s ease;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.video-section video:hover {
-  transform: scale(1.02);
-}
-
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-  .video-section h2 {
-    font-size: 1.2rem;
-  }
-
-  .video-section video {
-    max-width: 100%;
-    border-radius: 12px;
-  }
+.bg-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.25;
 }
 
   </style>
@@ -204,31 +232,40 @@
 
 <body>
   <div class="bg-image-wrapper">
-  <img src="/assets/bgg1.png" alt="Background Pattern" />
-</div>
+    <img src="/assets/bgg1.png" alt="Dog background" />
+  </div>
 
-  
   <div class="breed-info" id="breedContainer">
     <!-- Breed info loads here dynamically -->
   </div>
 
- <div class="video-section" id="videoSection" style="display: none;">
-  <h2>🎥 Watch this Breed in Action!</h2>
-  <video id="breedVideo" controls playsinline>
-    <source id="breedVideoSource" src="" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+  <div class="video-section" id="videoSection" style="display: none;">
+    <h2>🎥 Watch this Breed in Action!</h2>
+    <video id="breedVideo" controls playsinline>
+      <source id="breedVideoSource" src="" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <!-- 🦴 Fun Facts Section -->
+<div class="fun-facts" id="funFactsSection" style="display: none;">
+  <h2>🐾 Fun Facts About This Breed!</h2>
+  <ul id="funFactsList">
+    <!-- Fun facts will be added dynamically -->
+  </ul>
 </div>
 
-
-</div>
 
   <div class="back-links">
     <a href="results.html" class="back-link">← Back to Matches</a>
-    <a href="#" onclick="history.back(); return false;" class="back-link">← Back to All Breed</a>
+    <a href="#" onclick="history.back(); return false;" class="back-link">← Back to All Breeds</a>
   </div>
+  <!-- 🐾 Cute Quote Banner -->
+<div class="dog-quote-banner">
+  🐶 Every dog is a story waiting to be loved. 🐾
+</div>
 
   <script>
+    
     const breeds = {
       "Golden Retriever": {
         image: "/assets/Dogs/Golden Retriever.webp",
