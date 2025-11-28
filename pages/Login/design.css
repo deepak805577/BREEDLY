@@ -192,14 +192,17 @@ form{
 @media screen and (max-width:650px) {
 
     .container {
-        width: 100%;
+    
          height: calc(100vh - 40px);
         border-radius: 30px;
         margin:20px;
+      
+        
     }
 
     /* FORM SECTION */
     .form-box {
+        top:200px;
         bottom: 0;
         right: 0 !important;
         width: 100%;
@@ -208,24 +211,20 @@ form{
         transition: 0.4s ease-in-out !important;
     }
 
-    .container.active .form-box {
-        right: 0 !important;
-        bottom: 30%;
-    }
-
-    /* REGISTER VISIBILITY FIX */
-    .form-box.register {
-        visibility: visible !important;
-    }
-
+  
     /* TOGGLE BACKGROUND CIRCLE */
     .toggle-box::before {
         left: 0;
-        top: -270px;
+        top: -470px;
         width: 100%;
-        height: 280%;
+        height: 100%;
         border-radius: 22vw;
         transition: 0.8s ease-in-out !important;
+    }
+
+    .container.active .form-box {
+        top:20px;
+        bottom: 200px;
     }
 
     .container.active .toggle-box::before {
@@ -261,12 +260,38 @@ form{
 
 /* -----------------------  EXTRA SMALL (max-width: 400px) ----------------------- */
 @media screen and (max-width:400px) {
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 700px;
+        margin-top: 0;
+        margin-bottom: 90px;
+    }
 
+   
     .form-box {
         padding: 18px;
+        
+
+    }
+    .form-box h1{
+        font-size: 25px;
     }
 
     .toggle-panel h1 {
-        font-size: 28px;
+        font-size: 20px;
+    }
+    .toggle-box{
+        text-align: center;
+        
+    }
+       .toggle-box::before {
+        left: 0;
+        top: -470px;
+        width: 100%;
+        height: 100%;
+        border-radius: 22vw;
+        transition: 0.8s ease-in-out !important;
     }
 }
