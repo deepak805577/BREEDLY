@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import type { Message, DogProfile } from "@/types/chat";
+import type { Message, DogProfile } from "@/app/types/chat";
 
 function uid() {
   return Math.random().toString(36).slice(2, 10);
