@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { ChatRequest } from "@/types/chat";
+import type { ChatRequest } from "../../types/chat";
 
 export const runtime = "edge";
 
