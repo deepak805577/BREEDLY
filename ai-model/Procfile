@@ -1,0 +1,1 @@
+web: gunicorn bark_app:app

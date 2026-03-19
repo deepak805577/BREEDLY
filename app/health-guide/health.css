@@ -1,0 +1,427 @@
+  .health-guide-page {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      background: #fff9f2;
+      color: #333;
+    }
+
+.health-header {
+      background: linear-gradient(135deg, #ffe4c4, #ffccb3);
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
+      position: relative;
+}
+
+.health-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.puppy-left-img {
+  width: 160px;
+  height: auto;
+  transform: scaleX(-1); /* optional: flip to face text */
+}
+
+.health-text {
+  text-align: center;
+}
+
+.health-text h1 {
+  font-size: 2.8rem;
+  color: #4e148c;
+  margin-bottom: 10px;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.health-text p {
+  font-size: 1.15rem;
+  color: #5a4c4c;
+  font-weight: 500;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Optional paw background */
+.health-header::after {
+  content: "";
+  position: absolute;
+  background: url('/assets/paws.svg') no-repeat center;
+  opacity: 0.03;
+  background-size: contain;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+    .slogan {
+  animation: fadeInUp 1.2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+    .health-section {
+      max-width: 1100px;
+      margin: 0px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+.health-card {
+  position: relative;
+  border-radius: 20px 20px 20px 0;
+  box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
+}
+.health-card::after {
+  content: "🐾";
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 1.2rem;
+  opacity: 0.3;
+}
+
+    .health-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .health-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .health-card h3 {
+      font-size: 1.2rem;
+      color: #ff7a00;
+      margin: 10px 0;
+    }
+
+    .health-card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .health-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+.health-warning {
+  background: #fff3cd;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+}
+
+    .footer-note {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+       border-style: none;
+        background: transparent;
+      font-size: 0.9rem;
+    }
+    
+    .breed-health-search {
+      text-align: center;
+      padding: 40px 20px;
+      background: #fffaf3;
+    }
+
+    #breedSearch {
+      padding: 12px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: 2px solid #ff9f4d;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+.breed-result-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Peeking Puppy Image */
+.puppy-top {
+  width: 190px;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Result Box */
+.health-result-box {
+  background: #f9f6ec;
+  border-radius: 20px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  margin-top: 40px; /* gives space for the puppy image above */
+}
+
+
+/* Add soft paw icon watermark */
+.health-result-box::before {
+  content: "🐾";
+  position: absolute;
+  font-size: 4rem;
+  opacity: 0.06;
+  top: 10px;
+  right: 20px;
+  transform: rotate(-10deg);
+}
+
+/* Breed name */
+.health-result-box h3 {
+  font-size: 2rem;
+  color: #4e148c;
+  margin-bottom: 10px;
+}
+
+/* Subheadings */
+.health-result-box h4 {
+  font-size: 1.3rem;
+  color: #ff7a00;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  border-bottom: 2px dashed #ffe1c4;
+  padding-bottom: 4px;
+}
+
+/* Paragraphs */
+.health-result-box p {
+  font-size: 1rem;
+  color: #5a4c4c;
+  margin: 8px 0;
+}
+
+/* Lists */
+.health-result-box ul {
+  padding-left: 1.2rem;
+}
+
+.health-result-box li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+/* Tags like Nature traits */
+.health-result-box p strong + span,
+.health-result-box .tags {
+  display: inline-block;
+  background: #ffe7c4;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 4px 4px 4px 0;
+  font-size: 0.85rem;
+  color: #4e2a1e;
+  font-weight: 500;
+}
+
+/* Breed image */
+.health-result-box img {
+  border-radius: 16px;
+  max-width: 50%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  margin: 20px 0;
+}
+
+/* Blockquote */
+.health-result-box blockquote {
+  margin-top: 30px;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #6d4c41;
+  background: #fff4ea;
+  padding: 15px 20px;
+  border-left: 5px solid #ff9f4d;
+  border-radius: 10px;
+}
+
+    #backButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ff9f4d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#backButton:hover {
+  background: #ff7a00;
+}
+.cute img{
+  width: 200px;
+}
+@media screen and (max-width: 768px) {
+  .health-header-content {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .puppy-left-img {
+    width: 120px;
+  }
+
+  .health-text h1 {
+    font-size: 2rem;
+  }
+
+  .health-text p {
+    font-size: 1rem;
+  }
+
+  .health-section {
+    grid-template-columns: 1fr; /* single column on smaller screens */
+    padding: 20px 10px;
+    gap: 20px;
+  }
+
+  .health-card {
+    padding: 16px;
+  }
+
+  .health-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .health-card p {
+    font-size: 0.9rem;
+  }
+
+  .breed-health-search {
+    padding: 20px 10px;
+  }
+
+  #breedSearch {
+    width: 90%;
+    font-size: 0.95rem;
+  }
+
+  .puppy-top {
+    width: 140px;
+    top: -20px;
+  }
+
+  .health-result-box {
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  .health-result-box h3 {
+    font-size: 1.6rem;
+  }
+
+  .health-result-box h4 {
+    font-size: 1.1rem;
+  }
+
+  .health-result-box p,
+  .health-result-box li {
+    font-size: 0.95rem;
+  }
+
+  blockquote {
+    font-size: 1rem;
+  }
+
+  #backButton {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .cute img {
+    width: 140px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .health-text h1 {
+    font-size: 1.5rem;
+  }
+
+  .health-text p {
+    font-size: 0.9rem;
+  }
+
+  .health-result-box h3 {
+    font-size: 1.4rem;
+  }
+
+  .health-result-box h4 {
+    font-size: 1rem;
+  }
+
+  .health-result-box p,
+  .health-result-box li {
+    font-size: 0.85rem;
+  }
+
+  .health-card .icon {
+    font-size: 1.8rem;
+  }
+
+  .health-card h3 {
+    font-size: 1rem;
+  }
+
+  .health-card p {
+    font-size: 0.85rem;
+  }
+
+  blockquote {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  #breedSearch {
+    max-width: 250px;
+    font-size: 0.9rem;
+  }
+
+  .puppy-top {
+    width: 110px;
+    top: -15px;
+  }
+
+  .cute img {
+    width: 110px;
+  }
+}
+

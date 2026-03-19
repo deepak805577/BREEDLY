@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+
+:root {
+  --bg: #f3f0e6;
+  --surface: #ffffff;
+  --primary: #e8c8a6;
+  --primary-soft: #e7f0ff;
+  --text: #8b7a6a;
+  --muted: #A67B5B;
+  --border: #e5e7eb;
+  --radius: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Fredoka', sans-serif;
+  overflow-x: hidden;
+}@font-face {
+  font-family: 'Dogica';
+  src: url('/fonts/Dogica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+.adoption-success-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Soft animated background */
+.success-bg {
+  position: absolute;
+  inset: 0;
+  animation: bgFloat 10s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes bgFloat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* Card */
+.success-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 50px 40px;
+  border-radius: 24px;
+  max-width: 460px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  animation: popIn 0.6s ease forwards;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Icon */
+.success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  animation: bounce 1.8s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Text */
+.success-card h1 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #5a4c4c;
+  margin-bottom: 15px;
+}
+
+.message {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* CTA */
+.primary-btn {
+  background: var(--muted);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  background: #75645a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(248,161,81,0.4);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .success-card {
+    padding: 40px 25px;
+  }
+
+  .success-icon {
+    font-size: 3rem;
+  }
+}

@@ -1,0 +1,371 @@
+/* ---------- GLOBAL ---------- */
+:root {
+  --bg: #f3f0e6;
+  --surface: #ffffff;
+  --primary: #e8c8a6;
+  --primary-soft: #e7f0ff;
+  --text: #8b7a6a;
+  --muted: #A67B5B;
+  --border: #e5e7eb;
+  --radius: 16px;
+}
+@font-face {
+  font-family: 'Dogica';
+  src: url('/fonts/Dogica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* ---------- PAGE CONTAINER ---------- */
+.breeds-page {
+  padding: 40px 20px;
+}
+
+
+
+/* ---------- BACKGROUND ---------- */
+.bg-img-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  filter: blur(2px);
+}
+
+/* ---------- HEADER ---------- */
+.breeds-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.breeds-header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 6px;
+}
+
+.breeds-header p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* ---------- SEARCH ---------- */
+.search-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #A67B5B;
+}
+
+/* ---------- FILTERS ---------- */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters.sticky {
+  top: 10px;
+  z-index: 5;
+}
+
+.filters select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  background: white;
+}
+.temperament-input{
+    padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  background: white;
+}
+.clear-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #A67B5B;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  background: #7d5d44;
+}
+
+/* ---------- RESULTS INFO ---------- */
+.results-info {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ---------- GRID ---------- */
+.breed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* ---------- CARD ---------- */
+.breed-card {
+  max-width: 290px;
+  background: rgba(255, 248, 242, 0.95);
+  border-radius: 18px;
+  height: 440px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.1s ease, box-shadow 0.35s ease;
+  animation: fadeUp 0.45s ease forwards;
+  opacity: 0;
+}
+
+.breed-card:hover {
+  transform: translateY(-8px) scale(1.2);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+}
+
+
+/* ---------- IMAGE ---------- */
+.breed-card img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+
+/* ---------- TEXT ---------- */
+.breed-card h3 {
+  /*margin: 6px 0 4px;*/
+  font-size: 1.1rem;
+  color: #5a2a03;
+  font-weight: 600;
+}
+
+.breed-card .meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+/* ---------- CTA ---------- */
+
+.view-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+   background: #A67B5B;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background: #826148;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #555;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.empty-state button {
+  background: #c9a37f;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.empty-state button:hover {
+  background: #c49e7a;
+}
+
+/* ---------- Card Entrance Animation ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.breed-card {
+  animation: fadeUp 0.45s ease forwards;
+  opacity: 0;
+}
+
+/* Stagger effect */
+.breed-card:nth-child(1) { animation-delay: 0.05s; }
+.breed-card:nth-child(2) { animation-delay: 0.1s; }
+.breed-card:nth-child(3) { animation-delay: 0.15s; }
+.breed-card:nth-child(4) { animation-delay: 0.2s; }
+.breed-card:nth-child(5) { animation-delay: 0.25s; }
+.breed-card:nth-child(6) { animation-delay: 0.3s; }
+/* ---------- Skeleton Loader ---------- */
+.skeleton {
+  background: #f6f3ef;
+  pointer-events: none;
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 260px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeleton-line {
+  height: 14px;
+  margin: 12px auto;
+  width: 80%;
+  border-radius: 6px;
+  background: #e0e0e0;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeleton-line.small {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (max-width: 600px) {
+  .breed-card img {
+    max-height: 220px;
+    width: 100%;
+  }
+
+  .breed-card h3 {
+    font-size: 1rem;
+  }
+
+  .view-btn {
+    font-size: 0.7rem;
+    padding: 7px 14px;
+  }
+}
+.breed-card .meta {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 380px){
+  .breed-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+.breed-card{
+  height: auto;
+  width: 100%;
+}
+  .breed-card img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .breeds-page {
+    padding: 20px 12px;
+  }
+
+  .breeds-header h1 {
+    font-size: 1.8rem;
+  }
+ .breed-card h3 {
+    font-size: .8rem;
+  }
+  .breeds-header p {
+    font-size: 0.9rem;
+  }
+
+  .breed-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+.breed-card{
+  width: 100%;
+  height: auto;
+}
+  .breed-card img {
+    height: auto;
+  }
+
+  .view-btn {
+    font-size: 0.7rem;
+    padding: 7px 12px;
+  }
+}
+@media (max-width: 768px) {
+  .breed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+  .breed-card img {
+    height: 200px;
+  }
+}

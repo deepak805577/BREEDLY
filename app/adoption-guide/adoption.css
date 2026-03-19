@@ -1,0 +1,315 @@
+/* ===============================
+   Adoption Readiness – Super UI
+================================ */
+
+:root {
+  --primary: #e8c8a6;
+  --primary-soft: #fff1e3;
+  --text-main: #7a6c5e;
+  --text-muted: #6b6b6b;
+  --border-light: #e8e8e8;
+  --bg-soft: #f3f3f3;
+  --bg-card: #ffffff;
+  --success: #2e7d32;
+  --warn: #c62828;
+}
+
+.page-content{
+    padding: 0;
+}
+/* Page */
+.adoption-page {
+  min-height: 100vh;
+  padding: 50px 20px 90px;
+
+  font-family: 'Fredoka', system-ui, sans-serif;
+  color: var(--text-main);
+}
+
+/* Header */
+.adoption-page .adoption-header {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+  animation: fadeDown 0.6s ease both;
+}
+
+.adoption-page .adoption-header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+}
+
+.adoption-page .adoption-header p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Main Card */
+.adoption-page .adoption-card {
+  max-width: 780px;
+  margin: auto;
+  padding: 30px;
+  background: var(--bg-card);
+  border-radius: 18px;
+  border: 1px solid var(--border-light);
+  animation: fadeUp 0.6s ease both;
+}
+
+/* Section */
+.adoption-page .check-section {
+  margin-bottom: 28px;
+}
+
+.adoption-page .check-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: #3d3d3d;
+}
+
+/* Checklist */
+.adoption-page .checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Item */
+.adoption-page .check-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  margin-bottom: 12px;
+  transition: all 0.25s ease;
+  animation: slideIn 0.4s ease both;
+}
+
+.adoption-page .check-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+/* Checkbox */
+.adoption-page .check-item input {
+  margin-top: 6px;
+  accent-color: var(--primary);
+  transform: scale(1.1);
+}
+
+/* Text */
+.adoption-page .check-content strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.adoption-page .check-content span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Checked state */
+.adoption-page .check-item.checked {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+
+/* Progress */
+.adoption-page .progress-box {
+  margin-top: 30px;
+}
+
+.adoption-page .progress-box p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.adoption-page .progress-bar {
+  height: 9px;
+  background: #ececec;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.adoption-page .fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #b8865b, #dcac7f);
+  transition: width 0.45s cubic-bezier(.4,0,.2,1);
+}
+
+/* Result */
+.adoption-page .result-text {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  animation: pulse 0.4s ease;
+}
+
+.adoption-page .result-text.good {
+  color: var(--success);
+}
+
+.adoption-page .result-text.warn {
+  color: var(--warn);
+}
+
+/* Actions */
+.adoption-page .adoption-actions {
+  margin-top: 34px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.adoption-page .adoption-actions button {
+  padding: 12px 26px;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+/* Buttons */
+.adoption-page .btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.adoption-page .btn-primary:hover {
+  transform: translateY(-1px);
+  background: #b4885e;
+}
+
+.adoption-page .btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+}
+
+.adoption-page .btn-secondary:hover {
+  background: #f4f4f4;
+}
+
+.adoption-page .continue-btn {
+  margin: 30px auto 10px;
+  padding: 14px 36px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(135deg, #a78265, #b4a089);
+  color: #fff;
+
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+
+  display: block;
+  box-shadow: 0 12px 28px rgba(242, 194, 155, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* Hover */
+.adoption-page .continue-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 16px 36px rgba(255, 140, 43, 0.45);
+}
+
+/* Active click */
+.adoption-page .continue-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Disabled state */
+.adoption-page .continue-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  background: linear-gradient(135deg, #d6d6d6, #eeeeee);
+  color: #888;
+}
+
+/* Entrance animation */
+.adoption-page .continue-btn {
+  animation: popIn 0.5s ease forwards;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 📱 Mobile optimization */
+@media (max-width: 600px) {
+  .adoption-page .continue-btn {
+    width: 100%;
+    max-width: 260px;
+    font-size: 1rem;
+    padding: 13px 0;
+  }
+}
+
+
+/* ===============================
+   Animations
+================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.96); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===============================
+   Mobile
+================================ */
+
+@media (max-width: 600px) {
+  .adoption-page .adoption-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .adoption-page .adoption-card {
+    padding: 22px;
+  }
+
+  .adoption-page .check-item {
+    padding: 12px;
+  }
+
+  .adoption-page .adoption-actions button {
+    width: 100%;
+    max-width: 260px;
+  }
+}

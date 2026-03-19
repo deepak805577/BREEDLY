@@ -1,0 +1,313 @@
+.my-dog-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Fredoka', sans-serif;
+  text-align: center;
+}
+
+.my-dog-header h1 {
+  color: #866e54;
+  margin-bottom: 4px;
+}
+
+.my-dog-header p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Empty State */
+.empty-state {
+  background: #fffefc;
+  padding: 40px 20px;
+  border-radius: 20px;
+  max-width: 420px;
+  margin: 40px auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* Grid */
+.dog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Card */
+.dog-card {
+  background: #fff8f2;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease;
+  text-align: left;
+}
+
+.dog-card:hover {
+  transform: translateY(-6px);
+}
+
+.dog-card h3 {
+  margin: 0;
+  color: #5a2a03;
+}
+
+.breed {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 12px;
+}
+
+.dog-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.dog-meta li {
+  margin-bottom: 6px;
+}
+.age-warning {
+  background: #fff3f3;
+  color: #c00;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+}
+.daily-care-plan {
+  background: #f0f9ff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #4982cd;
+}
+.daily-care-plan ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* Buttons */
+.primary-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 30px;
+  background: #866e54;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.secondary-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #ffe9d6;
+  color: #866e54;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.edit-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #ffe9d6;
+  color: #6b5741;
+  font-size: 0.85rem;
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.delete-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: #ffe9d6;
+  color: #822828;
+  font-size: 0.85rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Card Actions */
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Add More */
+.add-more {
+  margin-top: 30px;
+}
+.dog-card.active {
+  border: 2px solid #735636;
+  box-shadow: 0 0 0 3px rgba(78, 20, 140, 0.15);
+}
+
+.active-badge {
+  display: inline-block;
+  background: #148c30;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+
+/* ===============================
+   Inline Edit Form (Dog Card)
+================================ */
+
+.edit-form {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed #e6d8c9;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Labels */
+.edit-form label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5a2a03;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Inputs & Select */
+.edit-form input,
+.edit-form select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fffefc;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-form input::placeholder {
+  color: #aaa;
+}
+
+/* Focus State */
+.edit-form input:focus,
+.edit-form select:focus {
+  outline: none;
+  border-color: #4e148c;
+  box-shadow: 0 0 0 2px rgba(78, 20, 140, 0.15);
+}
+
+/* Row Layout (Age + Weight) */
+.edit-form .row {
+  display: flex;
+  gap: 12px;
+}
+
+.edit-form .row label {
+  flex: 1;
+}
+
+/* Action Buttons */
+.edit-form .card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Save Button */
+.edit-form .secondary-btn {
+     font-family: 'Fredoka', sans-serif;
+  flex: 1;
+  padding: 10px;
+  border-radius: 22px;
+  background: #5e503e;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.edit-form .secondary-btn:hover {
+  background: #7f6950;
+  transform: scale(1.03);
+}
+
+/* Cancel Button */
+.edit-form .delete-btn {
+  flex: 1;
+   font-family: 'Fredoka', sans-serif;
+  padding: 10px;
+  border-radius: 22px;
+  background: #ceab83;
+  color:white;
+  font-size: 0.85rem;
+  font-weight: 900;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.edit-form .delete-btn:hover {
+  background: #b29974;
+  transform: scale(1.03);
+}
+
+/* ===============================
+   Mobile Optimization
+================================ */
+
+@media (max-width: 480px) {
+  .edit-form {
+    gap: 12px;
+  }
+
+  .edit-form .row {
+    flex-direction: column;
+  }
+
+  .edit-form .card-actions {
+    flex-direction: column;
+  }
+
+  .edit-form .secondary-btn,
+  .edit-form .delete-btn {
+    width: 100%;
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 480px) {
+  .dog-card {
+    padding: 18px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+  .active-badge{
+    width: 25%;
+  }
+
+  .primary-btn, .secondary-btn, .edit-btn, .delete-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

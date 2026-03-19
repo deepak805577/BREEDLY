@@ -1,0 +1,50 @@
+.services-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.services-page h1 {
+  color: #866e54;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.service-card {
+  background: #fff8f2;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  text-align: left;
+}
+
+.service-card h3 {
+  margin-bottom: 8px;
+  color: #5a2a03;
+}
+
+.service-card p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  background: #eee;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
