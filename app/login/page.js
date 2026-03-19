@@ -51,33 +51,17 @@ export default function LoginPage() {
       localStorage.setItem("username", data.user.email.split("@")[0]);
 
       // Your existing redirect logic — unchanged
-     // Replace this:
-const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
-sessionStorage.removeItem("redirectAfterLogin");
-const hasDog = localStorage.getItem("dogProfile");
+      const redirectAfterLogin = sessionStorage.getItem("redirectAfterLogin");
+      sessionStorage.removeItem("redirectAfterLogin");
+      const hasDog = localStorage.getItem("dogProfile");
 
-if (redirectAfterLogin) {
-  router.replace(redirectAfterLogin);
-} else if (!hasDog) {
-  router.replace("/");
-} else {
-  router.replace("/");
-}
-
-// With this:
-const { data: profile } = await supabase
-  .from("profiles")
-  .select("dog_name, primary_breed")
-  .eq("id", data.user.id)
-  .single();
-
-const hasCompletedOnboarding = profile?.dog_name || profile?.primary_breed;
-
-if (hasCompletedOnboarding) {
-  router.replace("/");
-} else {
-  router.replace("/onboarding");
-}
+      if (redirectAfterLogin) {
+        router.replace(redirectAfterLogin);
+      } else if (!hasDog) {
+        router.replace("/");
+      } else {
+        router.replace("/");
+      }
 
     } catch (err) {
       console.error(err);
@@ -133,13 +117,9 @@ const handleRegister = async (e) => {
     // Log profile error but don't block — trigger may have already inserted
     if (profileError) console.warn("Profile upsert warning:", profileError.message);
 
-   // Replace this:
-alert("✅ Registered successfully! You can now login.");
-setIsRegister(false);
-setRegisterData({ username: "", email: "", password: "" });
-
-// With this:
-router.replace("/onboarding");
+    alert("✅ Registered successfully! You can now login.");
+    setIsRegister(false);
+    setRegisterData({ username: "", email: "", password: "" }); // clear form
 
   } catch (err) {
     console.error(err);

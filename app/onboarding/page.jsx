@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth }        from "../context/AuthContext";
-import  OnboardingFlow  from "./OnboardingFlow";
+import OnboardingFlow from "./OnboardingFlow";
 import { useRouter }      from "next/navigation";
 
 export default function OnboardingPage() {
