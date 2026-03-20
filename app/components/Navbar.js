@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/hooks/useAuth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileAvatarModal from "@/app/components/AvatarModal";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default function Navbar() {
 const router = useRouter();
   const { user, profile, loading } = useAuth();
   const [avatarOpen, setAvatarOpen] = useState(false);
-
+const [mobileAIOpen, setMobileAIOpen] = useState(false); // ✅ FIXED
   const username = profile?.username;
   const profilePic = profile?.avatar_url;
 
@@ -41,6 +41,10 @@ const router = useRouter();
     pathname.startsWith("/community")||
     pathname.startsWith("/profile")||
     pathname.startsWith("/onboarding");
+  useEffect(() => {
+    setMobileAIOpen(false);
+    setMobileGuideOpen(false);
+  }, [pathname]);
 
 
   if (hideNavbar || loading) return null;
@@ -162,7 +166,7 @@ const router = useRouter();
     </Link>
 
     {/* GUIDE BUTTON */}
-    <button
+   {/* <button
       className="button"
       onClick={() => setMobileGuideOpen(!mobileGuideOpen)}
     >
@@ -172,44 +176,78 @@ const router = useRouter();
         className="icon"
       />
     </button>
+    */}
+   <button
+            className="button highlight"
+            onClick={() => setMobileAIOpen(!mobileAIOpen)}
+          >
+            
+           <img
+        src="/assets/icons/ai-bot.png"
+        alt="Guide"
+        className="icon"
+      />
+          </button>
 
+           <Link href="/community" className={`button ${pathname === "/community" ? "active" : ""}`}>
+            <img src="/assets/icons/community.png" className="icon" />
+       
+          </Link>
     <Link href="/my-dog" className="button">
       <img src="/assets/icons/paw-icon(1).png" alt="My Dog" className="icon" />
     </Link>
   </div>
 
-  {/* MOBILE GUIDE MENU */}
  {/* OVERLAY */}
-{mobileGuideOpen && (
+{(mobileAIOpen || mobileGuideOpen) && (
   <div
     className="guide-overlay"
-    onClick={() => setMobileGuideOpen(false)}
+    onClick={() => {
+      setMobileAIOpen(false);
+      setMobileGuideOpen(false);
+    }}
   />
 )}
 
 {/* BOTTOM SHEET */}
-<div
-  className={`mobile-guide-sheet ${
-    mobileGuideOpen ? "open" : ""
-  }`}
->
+<div className={`mobile-guide-sheet ${mobileAIOpen ? "open" : ""}`}>
   <div className="sheet-handle" />
 
-  <h3 className="sheet-title">Guides</h3>
+  <h3 className="sheet-title">🐾 PupAI Hub</h3>
 
-  <Link href="/food-guide" onClick={() => setMobileGuideOpen(false)}>
+  <Link href="/detect-dog" onClick={() => setMobileAIOpen(false)}>
+    🐶 Breed Identify
+  </Link>
+
+  <Link href="/bark-analyzer" onClick={() => setMobileAIOpen(false)}>
+    🔊 Bark Analyzer
+  </Link>
+
+  <Link href="/pet-services" onClick={() => setMobileAIOpen(false)}>
+    📍 Nearby Pet Care
+  </Link>
+
+  <Link href="/chat" onClick={() => setMobileAIOpen(false)}>
+    💬 Paw Assistant
+  </Link>
+
+  <hr />
+
+  <h3 className="sheet-title">📘 Guides</h3>
+
+  <Link href="/food-guide" onClick={() => setMobileAIOpen(false)}>
     🍖 Food Guide
   </Link>
 
-  <Link href="/health-guide" onClick={() => setMobileGuideOpen(false)}>
+  <Link href="/health-guide" onClick={() => setMobileAIOpen(false)}>
     🩺 Health Guide
   </Link>
 
-  <Link href="/care-grooming" onClick={() => setMobileGuideOpen(false)}>
+  <Link href="/care-grooming" onClick={() => setMobileAIOpen(false)}>
     🛁 Care Guide
   </Link>
 
-  <Link href="/training-guide" onClick={() => setMobileGuideOpen(false)}>
+  <Link href="/training-guide" onClick={() => setMobileAIOpen(false)}>
     🐶 Training Guide
   </Link>
 </div>
