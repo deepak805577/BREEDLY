@@ -127,6 +127,18 @@
     background: var(--card);
     transform: translateY(-2px);
 }
+.btnCream{
+
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cream);
+
+}
+.btnOutline{
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent);
+}
 
 /* ─── HERO ─── */
 .hero {

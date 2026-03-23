@@ -199,7 +199,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
             <p className={styles.eyebrowLight}>Breed Selector Quiz</p>
             <h2>We don't guess.<br />We ask the<br />right questions.</h2>
             <p>Our quiz considers your lifestyle, space, time, and commitment — so dogs don't end up in the wrong home.</p>
-            <Link href="/breed-selector" className={styles.btnCream}>Start the Quiz 🐾</Link>
+            <Link href="/breed-selector" className={styles.btnCream}> Start the Quiz → </Link>
             <p className={styles.microLight}>Takes less than 2 minutes · Free</p>
           </div>
           <div className={styles.quizRight}>
@@ -324,7 +324,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
       <section className={`${styles.aiSection} ${styles.fadeIn}`}>
         <div className={styles.aiInner}>
           <div className={styles.aiLeft}>
-            <p className={styles.eyebrowLight}>AI Assistant</p>
+            <p className={styles.eyebrowLight}>Paw Assistant</p>
             <h2>Ask anything<br />about dogs.</h2>
             <p>Food, health, behaviour, training — our AI knows every breed inside out. Get instant, personalised answers anytime.</p>
             <Link href="/chat" className={styles.btnCream}>Try the AI Assistant ✨</Link>
