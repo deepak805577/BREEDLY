@@ -49,7 +49,7 @@ body {
 }
 /* Tagline under logo = handwritten playful */
 .logo-text span {
-  font-family: 'Caveat', cursive;
+  font-family: 'Fredoka', cursive;
   font-size: 0.85rem;
   color: #c29a81;
   margin-top: -5px;
@@ -57,7 +57,7 @@ body {
 }
 /* Nav links = rounded playful */
 .nav-center li a {
-  font-family: 'Fredoka', sans-serif;
+   font-family: 'Fraunces', serif;
   font-weight: 500;
   font-size: 0.95rem;
 }
@@ -112,6 +112,7 @@ body {
 }
 
 .dropdown-title {
+    font-family: 'Fraunces', serif;
   color: #8b7a6a;
   display: flex;
   align-items: center;
@@ -1257,3 +1258,4 @@ footer {
   font-weight: 600;
   color: #5b4636;
 }
+

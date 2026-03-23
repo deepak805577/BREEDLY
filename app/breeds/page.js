@@ -5,211 +5,246 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { breedCards } from "../data/breed";
 
+const SIZE_OPTS     = ["Small", "Medium", "Large"];
+const ENERGY_OPTS   = ["Low", "Moderate", "High"];
+const GROOMING_OPTS = ["Low", "Moderate", "High"];
+const EXPENSE_OPTS  = ["Low", "Standard", "High", "Very High"];
+const GROUP_OPTS    = ["Companion", "Sporting", "Working", "Toy", "Herding"];
+const OWNER_OPTS    = ["Apartment", "Family", "First-time Owner", "Active Owner"];
+
 export default function BreedsPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sizeFilter, setSizeFilter] = useState("");
-  const [energyFilter, setEnergyFilter] = useState("");
-  const [groomingFilter, setGroomingFilter] = useState("");
-  const [expenseFilter, setExpenseFilter] = useState("");
-  const [groupFilter, setGroupFilter] = useState("");
-  const [idealOwnerFilter, setIdealOwnerFilter] = useState("");
+  const [searchTerm,        setSearchTerm]        = useState("");
+  const [sizeFilter,        setSizeFilter]        = useState("");
+  const [energyFilter,      setEnergyFilter]      = useState("");
+  const [groomingFilter,    setGroomingFilter]    = useState("");
+  const [expenseFilter,     setExpenseFilter]     = useState("");
+  const [groupFilter,       setGroupFilter]       = useState("");
+  const [idealOwnerFilter,  setIdealOwnerFilter]  = useState("");
   const [temperamentFilter, setTemperamentFilter] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading,           setLoading]           = useState(true);
+  const [filtersOpen,       setFiltersOpen]       = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 700);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoading(false), 700);
+    return () => clearTimeout(t);
   }, []);
 
   const filteredBreeds = useMemo(() => {
     return breedCards.filter((breed) => {
-      const search = searchTerm.toLowerCase();
-      const temperamentSearch = temperamentFilter.toLowerCase();
-
-      const matchesSearch =
-        breed.name.toLowerCase().includes(search) ||
-        breed.aliases?.toLowerCase().includes(search);
-
-      const matchesTemperament =
-        !temperamentFilter ||
-        breed.temperament?.toLowerCase().includes(temperamentSearch);
-
-      const size = breed.size?.toLowerCase() || "";
-      const energy = breed.energy?.toLowerCase() || "";
-      const grooming = breed.grooming?.toLowerCase() || "";
-      const expense = breed.expense?.toLowerCase() || "";
-      const group = breed.group?.toLowerCase() || "";
-      const idealOwner = breed.idealOwner?.toLowerCase() || "";
-
+      const s = searchTerm.toLowerCase();
+      const t = temperamentFilter.toLowerCase();
       return (
-        matchesSearch &&
-        matchesTemperament &&
-        (!sizeFilter || size.includes(sizeFilter)) &&
-        (!energyFilter || energy === energyFilter) &&
-        (!groomingFilter || grooming === groomingFilter) &&
-        (!expenseFilter || expense === expenseFilter) &&
-        (!groupFilter || group === groupFilter) &&
-        (!idealOwnerFilter || idealOwner.includes(idealOwnerFilter))
+        (breed.name.toLowerCase().includes(s) || breed.aliases?.toLowerCase().includes(s)) &&
+        (!temperamentFilter || breed.temperament?.toLowerCase().includes(t)) &&
+        (!sizeFilter        || breed.size?.toLowerCase().includes(sizeFilter.toLowerCase())) &&
+        (!energyFilter      || breed.energy?.toLowerCase() === energyFilter.toLowerCase()) &&
+        (!groomingFilter    || breed.grooming?.toLowerCase() === groomingFilter.toLowerCase()) &&
+        (!expenseFilter     || breed.expense?.toLowerCase() === expenseFilter.toLowerCase()) &&
+        (!groupFilter       || breed.group?.toLowerCase() === groupFilter.toLowerCase()) &&
+        (!idealOwnerFilter  || breed.idealOwner?.toLowerCase().includes(idealOwnerFilter.toLowerCase()))
       );
     });
-  }, [
-    searchTerm,
-    sizeFilter,
-    energyFilter,
-    groomingFilter,
-    expenseFilter,
-    groupFilter,
-    idealOwnerFilter,
-    temperamentFilter,
-  ]);
+  }, [searchTerm, sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter]);
+
+  const activeCount = [sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter].filter(Boolean).length;
 
   const clearFilters = () => {
-    setSearchTerm("");
-    setSizeFilter("");
-    setEnergyFilter("");
-    setGroomingFilter("");
-    setExpenseFilter("");
-    setGroupFilter("");
-    setIdealOwnerFilter("");
-    setTemperamentFilter("");
+    setSearchTerm(""); setSizeFilter(""); setEnergyFilter("");
+    setGroomingFilter(""); setExpenseFilter(""); setGroupFilter("");
+    setIdealOwnerFilter(""); setTemperamentFilter("");
+  };
+
+  const energyClass = (e) => {
+    const v = e?.toLowerCase();
+    if (v === "high")     return "bp-badge--high";
+    if (v === "moderate") return "bp-badge--mod";
+    return "bp-badge--low";
   };
 
   return (
     <ProtectedRoute>
-    <div className="breeds-page">
-      <header className="breeds-header">
-        <h1>🐾 Browse Dog Breeds</h1>
-        <p>Find your perfect match based on lifestyle & care needs</p>
-      </header>
+      <div className="bp-page">
 
-      {/* Search */}
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Search breed or alias…"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+        {/* HEADER */}
+        <header className="bp-header">
+          <p className="bp-eyebrow">Dog Breeds</p>
+          <h1>Find your perfect<br /><em>companion.</em></h1>
+          <p className="bp-header-sub">
+            Filter by lifestyle, space, energy, and care needs — find the breed that truly fits.
+          </p>
+        </header>
 
-      {/* Filters */}
-      <div className="filters sticky">
-        <select value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
-          <option value="">Group</option>
-          <option value="companion">Companion</option>
-          <option value="sporting">Sporting</option>
-          <option value="working">Working</option>
-          <option value="toy">Toy</option>
-          <option value="herding">Herding</option>
-        </select>
-
-        <select value={sizeFilter} onChange={(e) => setSizeFilter(e.target.value)}>
-          <option value="">Size</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-        </select>
-
-        <select value={energyFilter} onChange={(e) => setEnergyFilter(e.target.value)}>
-          <option value="">Energy</option>
-          <option value="low">Low</option>
-          <option value="moderate">Moderate</option>
-          <option value="high">High</option>
-        </select>
-
-        <select value={groomingFilter} onChange={(e) => setGroomingFilter(e.target.value)}>
-          <option value="">Grooming</option>
-          <option value="low">Low</option>
-          <option value="moderate">Moderate</option>
-          <option value="high">High</option>
-        </select>
-
-        <select value={expenseFilter} onChange={(e) => setExpenseFilter(e.target.value)}>
-          <option value="">Cost</option>
-          <option value="low">Low</option>
-          <option value="standard">Standard</option>
-          <option value="high">High</option>
-          <option value="very high">Very High</option>
-        </select>
-
-        <select
-          value={idealOwnerFilter}
-          onChange={(e) => setIdealOwnerFilter(e.target.value)}
-        >
-          <option value="">Ideal Owner</option>
-          <option value="apartment">Apartment</option>
-          <option value="family">Family</option>
-          <option value="first-time">First-time Owner</option>
-          <option value="active">Active Owner</option>
-        </select>
-
-        <input
-          type="text"
-          className="temperament-input"
-          placeholder="Temperament (friendly, calm…) "
-          value={temperamentFilter}
-          onChange={(e) => setTemperamentFilter(e.target.value)}
-        />
-
-        <button className="clear-btn" onClick={clearFilters}>
-          Clear
-        </button>
-      </div>
-
-      {/* Result Count */}
-      <div className="results-info">
-        Showing <strong>{filteredBreeds.length}</strong> breeds
-      </div>
-
-      {/* Grid */}
-      <div className="breed-grid">
-        {loading ? (
-          Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="breed-card skeleton">
-              <div className="skeleton-img"></div>
-              <div className="skeleton-line"></div>
-              <div className="skeleton-line small"></div>
-            </div>
-          ))
-        ) : filteredBreeds.length === 0 ? (
-          <div className="empty-state">
-            <p>No breeds match your filters.</p>
-            <button onClick={clearFilters}>Reset Filters</button>
+        {/* SEARCH + FILTER TOGGLE */}
+        <div className="bp-controls">
+          <div className="bp-search-wrap">
+            <span className="bp-search-icon">🔍</span>
+            <input
+              className="bp-search"
+              type="text"
+              placeholder="Search breed or alias…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button className="bp-search-clear" onClick={() => setSearchTerm("")}>✕</button>
+            )}
           </div>
-        ) : (
-          filteredBreeds.map((breed) => (
-            <div key={breed.name} className="breed-card">
-              <img src={breed.image} alt={breed.name} />
 
-              <h3>{breed.name}</h3>
-              {breed.aliases && <p className="meta">aka {breed.aliases}</p>}
+          <button
+            className={`bp-filter-toggle${filtersOpen ? " bp-filter-toggle--open" : ""}`}
+            onClick={() => setFiltersOpen((o) => !o)}
+          >
+            ⚙️ Filters
+            {activeCount > 0 && <span className="bp-filter-count">{activeCount}</span>}
+          </button>
+        </div>
 
-              <p className="meta">
-                {breed.group} • {breed.size}
-              </p>
-
-              <p className="meta">
-                Energy: {breed.energy} • Grooming: {breed.grooming}
-              </p>
-
-              <p className="meta">
-                Ideal for: {breed.idealOwner}
-              </p>
- <p className="meta">
-                Temperament: {breed.temperament}
-              </p>
-
-              <Link
-                href={`/breeds/${encodeURIComponent(breed.name)}`}
-                className="view-btn"
-              >
-                View Details →
-              </Link>
+        {/* FILTER PANEL */}
+        {filtersOpen && (
+          <div className="bp-filters">
+            <div className="bp-filters-grid">
+              <div className="bp-filter-group">
+                <label>Group</label>
+                <select value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
+                  <option value="">All groups</option>
+                  {GROUP_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group">
+                <label>Size</label>
+                <select value={sizeFilter} onChange={(e) => setSizeFilter(e.target.value)}>
+                  <option value="">All sizes</option>
+                  {SIZE_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group">
+                <label>Energy</label>
+                <select value={energyFilter} onChange={(e) => setEnergyFilter(e.target.value)}>
+                  <option value="">Any energy</option>
+                  {ENERGY_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group">
+                <label>Grooming</label>
+                <select value={groomingFilter} onChange={(e) => setGroomingFilter(e.target.value)}>
+                  <option value="">Any grooming</option>
+                  {GROOMING_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group">
+                <label>Cost</label>
+                <select value={expenseFilter} onChange={(e) => setExpenseFilter(e.target.value)}>
+                  <option value="">Any cost</option>
+                  {EXPENSE_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group">
+                <label>Ideal Owner</label>
+                <select value={idealOwnerFilter} onChange={(e) => setIdealOwnerFilter(e.target.value)}>
+                  <option value="">All owners</option>
+                  {OWNER_OPTS.map((o) => <option key={o} value={o.toLowerCase()}>{o}</option>)}
+                </select>
+              </div>
+              <div className="bp-filter-group bp-filter-group--wide">
+                <label>Temperament</label>
+                <input
+                  type="text"
+                  placeholder="e.g. friendly, calm, loyal…"
+                  value={temperamentFilter}
+                  onChange={(e) => setTemperamentFilter(e.target.value)}
+                />
+              </div>
             </div>
-          ))
+            {activeCount > 0 && (
+              <button className="bp-clear-btn" onClick={clearFilters}>✕ Clear all filters</button>
+            )}
+          </div>
         )}
+
+        {/* ACTIVE FILTER CHIPS */}
+        {activeCount > 0 && (
+          <div className="bp-active-chips">
+            {[
+              { label: groupFilter,       clear: () => setGroupFilter("") },
+              { label: sizeFilter,        clear: () => setSizeFilter("") },
+              { label: energyFilter,      clear: () => setEnergyFilter("") },
+              { label: groomingFilter,    clear: () => setGroomingFilter("") },
+              { label: expenseFilter,     clear: () => setExpenseFilter("") },
+              { label: idealOwnerFilter,  clear: () => setIdealOwnerFilter("") },
+              { label: temperamentFilter, clear: () => setTemperamentFilter("") },
+            ].filter((c) => c.label).map((c) => (
+              <button key={c.label} className="bp-active-chip" onClick={c.clear}>
+                {c.label} ✕
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* RESULTS COUNT */}
+        <div className="bp-results-info">
+          <strong>{filteredBreeds.length}</strong> breed{filteredBreeds.length !== 1 ? "s" : ""} 
+        </div>
+
+        {/* GRID */}
+        <div className="bp-grid">
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="bp-card bp-card--skeleton">
+                <div className="bp-skel-img" />
+                <div className="bp-skel-body">
+                  <div className="bp-skel-line" />
+                  <div className="bp-skel-line bp-skel-line--sm" />
+                  <div className="bp-skel-line bp-skel-line--xs" />
+                </div>
+              </div>
+            ))
+          ) : filteredBreeds.length === 0 ? (
+            <div className="bp-empty">
+              <span>🐕</span>
+              <p>No breeds match your filters.</p>
+              <button onClick={clearFilters}>Reset Filters</button>
+            </div>
+          ) : (
+            filteredBreeds.map((breed, i) => (
+              <Link
+                key={breed.name}
+                href={`/breeds/${encodeURIComponent(breed.name)}`}
+                className="bp-card"
+                style={{ animationDelay: `${Math.min(i * 0.04, 0.4)}s` }}
+              >
+                <div className="bp-card-img-wrap">
+                  <img src={breed.image} alt={breed.name} loading="lazy" />
+                  {breed.energy && (
+                    <span className={`bp-energy-badge ${energyClass(breed.energy)}`}>
+                      ⚡ {breed.energy}
+                    </span>
+                  )}
+                </div>
+
+                <div className="bp-card-body">
+                  <h3 className="bp-card-name">{breed.name}</h3>
+                  {breed.aliases && (
+                    <p className="bp-card-alias">aka {breed.aliases}</p>
+                  )}
+                  <div className="bp-card-tags">
+                    {breed.group    && <span>{breed.group}</span>}
+                    {breed.size     && <span>📏 {breed.size}</span>}
+                    {breed.grooming && <span>✂️ {breed.grooming}</span>}
+                  </div>
+                  {breed.idealOwner && (
+                    <p className="bp-card-owner">🏠 {breed.idealOwner}</p>
+                  )}
+                  {breed.temperament && (
+                    <p className="bp-card-temp">🌿 {breed.temperament}</p>
+                  )}
+                  <span className="bp-view-btn">View Details →</span>
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
+
       </div>
-    </div>
     </ProtectedRoute>
   );
 }

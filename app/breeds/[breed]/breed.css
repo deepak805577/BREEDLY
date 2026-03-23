@@ -1,235 +1,944 @@
-/* ---------------- GLOBAL ---------------- */
-body {
-  font-family: "Fredoka", sans-serif;
-  margin: 0;
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
-  position: relative;
-  overflow-x: hidden;
-  background: var(--bg);
-  color: var(--text);
-}
+/* ============================================================
+   BREEDLY — breed.css
+   ALL styles scoped under .breed-detail-page
+   No bare body / h2 / ul / section selectors — zero bleed
+   ============================================================ */
 
-@font-face {
-  font-family: "Dogica";
-  src: url("/fonts/Dogica.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
 
-.breed-info {
-  padding: 40px 20px;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.breed-info {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  margin: auto;
-  background: #fffdf9;
-  padding: 30px;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 2px dashed #ffcc99;
-  animation: slideUp 0.7s ease forwards;
-}
-
-
+/* ─── TOKENS (scoped so they don't override globals) ────── */
 .breed-detail-page {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
+  --bd-bg:           #F5EFE6;
+  --bd-bg-soft:      #EFE7DB;
+  --bd-card:         #E8D8C4;
+  --bd-accent:       #B08968;
+  --bd-accent-dark:  #7F5539;
+  --bd-accent-light: #D4A97A;
+  --bd-cream:        #FAF7F2;
+  --bd-teal:         #2E9C8A;
+  --bd-teal-light:   #D0F0EC;
+  --bd-teal-dark:    #1E7A6A;
+  --bd-amber:        #D4830A;
+  --bd-amber-light:  #FFF0D6;
+  --bd-sage:         #5A8F4A;
+  --bd-sage-light:   #D6E8CB;
+  --bd-red-light:    #FDDDD9;
+  --bd-red:          #C0392B;
+  --bd-green-light:  #D6F0DC;
+  --bd-green:        #27AE60;
+  --bd-text:         #3E3E3E;
+  --bd-text-mid:     #6F6F6F;
+  --bd-text-light:   #9A9A9A;
+  --bd-border:       rgba(176, 137, 104, 0.18);
+  --bd-radius-xl:    28px;
+  --bd-radius-lg:    20px;
+  --bd-radius-md:    14px;
+  --bd-radius-sm:    10px;
+  --bd-shadow:       0 6px 24px rgba(100, 70, 40, 0.07);
+  --bd-shadow-md:    0 12px 40px rgba(100, 70, 40, 0.11);
+  --bd-shadow-lg:    0 20px 60px rgba(100, 70, 40, 0.15);
+  --bd-ease:         all 0.3s cubic-bezier(.4, 0, .2, 1);
 }
 
-section {
-  margin-bottom: 30px;
-  animation: fadeIn 0.9s ease-in-out;
+/* ─── ANIMATIONS ─────────────────────────────────────────── */
+@keyframes bdFadeUp  { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bdFadeIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes bdSlideUp { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bdBarGrow { from { width:0; } to { width:var(--bar-w); } }
+
+/* ─── PAGE WRAPPER ───────────────────────────────────────── */
+.breed-detail-page {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 24px 20px 120px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--bd-text);
+  line-height: 1.7;
+  animation: bdFadeUp 0.6s ease forwards;
+  background: transparent;
 }
 
-h2 {
-  color: #8b7a6a;
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  position: relative;
+/* ─── OUTER CARD ─────────────────────────────────────────── */
+.breed-detail-page .breed-info {
+  background: var(--bd-cream);
+  border-radius: var(--bd-radius-xl);
+  padding: 36px 32px;
+  box-shadow: var(--bd-shadow-md);
+  border: 1px solid var(--bd-border);
+  animation: bdSlideUp 0.6s ease forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-
-ul {
-  padding-left: 25px;
-  color: #746659;
-}
-
-ul li {
-  margin-bottom: 8px;
-}
-
-/* ---------------- BREED HERO ---------------- */
-.breed-hero {
+/* ─── NOT FOUND ──────────────────────────────────────────── */
+.breed-detail-page .bd-not-found {
+  text-align: center;
+  padding: 80px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
+  gap: 16px;
+}
+.breed-detail-page .bd-nf-emoji { font-size: 4rem; }
+.breed-detail-page .bd-not-found h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--bd-text);
+}
+.breed-detail-page .bd-not-found p { color: var(--bd-text-mid); }
+
+/* ─── SECTION BASE ───────────────────────────────────────── */
+.breed-detail-page section {
+  animation: bdFadeIn 0.7s ease;
 }
 
-.breed-hero img {
-  width: 100%;
-  max-width: 480px;
-  height: 100%;
-  max-height: 500px;
-  object-fit: cover;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+/* ─── HEADINGS ───────────────────────────────────────────── */
+.breed-detail-page h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 300;
+  color: var(--bd-text);
+  line-height: 1.25;
+  margin-bottom: 4px;
 }
 
-.breed-hero h1 {
-   color: #8b4e1d;
-  font-size: 2.4rem;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 1;
-}
-.breed-hero p {
+.breed-detail-page h3 {
+  font-family: 'Fraunces', serif;
   font-size: 1rem;
-  color: #555;
+  font-weight: 400;
+  color: var(--bd-accent-dark);
+  margin: 20px 0 10px;
 }
 
-/* ---------------- INFO BOXES ---------------- */
-.basic-info, .quick-overview, .personality, .appearance, .exercise,
-.training, .grooming, .lifestyle, .history, .fun-facts, .faqs,
-.owner-reviews, .final-verdict {
- 
-  text-align: left;
-  margin: 20px 0;
-  animation: fadeIn 1s ease-in-out;
-  padding: 10px 15px;
-  background: #fff5e6;
-  border-left: 5px solid #ffa94d;
-  border-radius: 12px;
+/* ─── LISTS ──────────────────────────────────────────────── */
+.breed-detail-page ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--bd-text-mid);
 }
-
-section h3 {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  color: #a35d1b;
-  font-size: 1.3rem;
-}
-.breed-info ul {
+.breed-detail-page ul li {
+  position: relative;
   padding-left: 20px;
-  color: #555;
-}
-.breed-info ul li {
+  font-size: 0.92rem;
+  line-height: 1.65;
   margin-bottom: 8px;
 }
+.breed-detail-page ul li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--bd-accent);
+  font-weight: 700;
+}
 
-section p {
+.breed-detail-page p {
+  font-size: 0.93rem;
+  color: var(--bd-text-mid);
+  line-height: 1.75;
   margin-bottom: 10px;
-  color: #555;
 }
 
-/* ---------------- VIDEO SECTION ---------------- */
-.video-section {
-  margin-top: 40px;
-  text-align: center;
+/* KV list */
+.breed-detail-page .bd-kv-list li { margin-bottom: 10px; }
+.breed-detail-page .bd-kv-list li strong { color: var(--bd-text); margin-right: 4px; }
+
+/* ══════════════════════════════════════════════════════════
+   NAMED SECTION CARDS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .basic-info,
+.breed-detail-page .quick-overview,
+.breed-detail-page .personality,
+.breed-detail-page .appearance,
+.breed-detail-page .exercise,
+.breed-detail-page .training,
+.breed-detail-page .grooming,
+.breed-detail-page .lifestyle,
+.breed-detail-page .history,
+.breed-detail-page .fun-facts,
+.breed-detail-page .faqs,
+.breed-detail-page .owner-reviews,
+.breed-detail-page .final-verdict {
+  text-align: left;
+  margin: 20px 0;
+  padding: 28px 26px;
+  border-radius: var(--bd-radius-lg);
+  border: 1px solid var(--bd-border);
+  box-shadow: var(--bd-shadow);
+  background: var(--bd-cream);
+  animation: bdFadeIn 0.7s ease;
+  transition: var(--bd-ease);
+  position: relative;
+  overflow: hidden;
 }
 
-.video-section video {
-  width: 100%;
-  max-width: 500px;
-  height: 400px;
-  border-radius: 16px;
-  box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-  background-color: #000;
-  transition: transform 0.3s ease;
+/* Coloured top accent bar */
+.breed-detail-page .basic-info::before,
+.breed-detail-page .quick-overview::before,
+.breed-detail-page .personality::before,
+.breed-detail-page .appearance::before,
+.breed-detail-page .exercise::before,
+.breed-detail-page .training::before,
+.breed-detail-page .grooming::before,
+.breed-detail-page .lifestyle::before,
+.breed-detail-page .history::before,
+.breed-detail-page .fun-facts::before,
+.breed-detail-page .faqs::before,
+.breed-detail-page .owner-reviews::before,
+.breed-detail-page .final-verdict::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
 }
 
-.video-section video:hover {
-  transform: scale(1.02);
+.breed-detail-page .basic-info::before,
+.breed-detail-page .quick-overview::before { background: var(--bd-accent); }
+.breed-detail-page .personality::before    { background: var(--bd-teal); }
+.breed-detail-page .appearance::before     { background: var(--bd-sage); }
+.breed-detail-page .exercise::before       { background: #E07B39; }
+.breed-detail-page .training::before       { background: var(--bd-teal); }
+.breed-detail-page .grooming::before       { background: var(--bd-sage); }
+.breed-detail-page .lifestyle::before      { background: var(--bd-accent-light); }
+.breed-detail-page .history::before        { background: #9C7B5A; }
+.breed-detail-page .fun-facts::before      { background: var(--bd-amber); }
+.breed-detail-page .faqs::before           { background: var(--bd-accent-dark); }
+.breed-detail-page .owner-reviews::before  { background: var(--bd-teal); }
+.breed-detail-page .final-verdict::before  { background: rgba(255,255,255,0.25); }
+
+/* Hover lift */
+.breed-detail-page .basic-info:hover,
+.breed-detail-page .quick-overview:hover,
+.breed-detail-page .personality:hover,
+.breed-detail-page .appearance:hover,
+.breed-detail-page .exercise:hover,
+.breed-detail-page .training:hover,
+.breed-detail-page .grooming:hover,
+.breed-detail-page .lifestyle:hover,
+.breed-detail-page .history:hover,
+.breed-detail-page .fun-facts:hover,
+.breed-detail-page .faqs:hover,
+.breed-detail-page .owner-reviews:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--bd-shadow-md);
 }
 
-/* ---------------- NEXT STEPS ---------------- */
-.next-steps {
-  margin-top: 50px;
-  padding: 25px;
-  background: linear-gradient(135deg, #fff3e6, #fef9f4);
-  border-radius: 20px;
-  text-align: center;
+/* Special backgrounds */
+.breed-detail-page .fun-facts {
+  background: var(--bd-amber-light);
+  border-color: rgba(212,131,10,.15);
 }
+.breed-detail-page .owner-reviews {
+  background: var(--bd-teal-light);
+  border-color: rgba(46,156,138,.15);
+}
+.breed-detail-page .final-verdict {
+  background: var(--bd-accent-dark);
+  border-color: transparent;
+}
+.breed-detail-page .final-verdict h2,
+.breed-detail-page .final-verdict h3,
+.breed-detail-page .final-verdict p,
+.breed-detail-page .final-verdict li { color: #fff; }
+.breed-detail-page .final-verdict li::before { color: rgba(255,255,255,0.5); }
+.breed-detail-page .final-verdict h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
 
-.step-actions {
+/* ══════════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .breed-hero {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--bd-border);
+}
+
+.breed-detail-page .bd-hero-img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+}
+
+.breed-detail-page .breed-hero img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  border-radius: var(--bd-radius-xl);
+  box-shadow: var(--bd-shadow-lg);
+  border: 1px solid var(--bd-border);
+  display: block;
+  transition: var(--bd-ease);
+}
+.breed-detail-page .breed-hero img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 28px 70px rgba(100,70,40,.18);
+}
+
+.breed-detail-page .bd-hero-badge {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  background: rgba(250,247,242,0.92);
+  backdrop-filter: blur(8px);
+  color: var(--bd-accent-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--bd-border);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.breed-detail-page .bd-hero-text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.breed-detail-page .bd-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--bd-accent);
+  display: block;
+}
+
+.breed-detail-page .breed-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  font-weight: 300;
+  color: var(--bd-text);
+  line-height: 1.1;
+}
+
+.breed-detail-page .bd-tagline {
+  font-size: 1rem;
+  color: var(--bd-text-mid);
+  max-width: 540px;
+  line-height: 1.7;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+}
+
+.breed-detail-page .bd-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.breed-detail-page .bd-hero-chips span {
+  background: var(--bd-card);
+  color: var(--bd-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--bd-border);
+}
+
+/* ══════════════════════════════════════════════════════════
+   STAT GRID
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.breed-detail-page .bd-stat {
+  background: var(--bd-bg-soft);
+  border-radius: var(--bd-radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border: 1px solid var(--bd-border);
+}
+.breed-detail-page .bd-stat-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--bd-text-light);
+}
+.breed-detail-page .bd-stat-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bd-accent-dark);
+  line-height: 1.3;
+}
+
+.breed-detail-page .bd-summary-note {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--bd-card);
+  border-radius: var(--bd-radius-md);
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--bd-accent-dark);
+  border-left: 3px solid var(--bd-accent);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SIZE ROW
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-size-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.breed-detail-page .bd-size-row--2 { grid-template-columns: 1fr 1fr; }
+
+.breed-detail-page .bd-size-box {
+  background: var(--bd-bg-soft);
+  border-radius: var(--bd-radius-md);
+  padding: 14px 14px 12px;
+  border: 1px solid var(--bd-border);
+  text-align: center;
+}
+.breed-detail-page .bd-size-box span {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--bd-text-light);
+  margin-bottom: 4px;
+}
+.breed-detail-page .bd-size-box strong {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--bd-accent-dark);
+}
+.breed-detail-page .bd-size-box--wide { grid-column: span 2; }
+
+/* ══════════════════════════════════════════════════════════
+   RATING BARS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-ratings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.breed-detail-page .bd-trait-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+}
+.breed-detail-page .bd-trait-row::before { display: none; }
+
+.breed-detail-page .bd-trait-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--bd-text);
+  white-space: nowrap;
+}
+
+.breed-detail-page .bd-bar-wrap {
+  height: 8px;
+  background: var(--bd-card);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.breed-detail-page .bd-bar {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--bd-accent) 0%, var(--bd-accent-dark) 100%);
+  animation: bdBarGrow 0.8s ease forwards;
+  width: 0;
+}
+
+.breed-detail-page .bd-trait-val {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--bd-accent-dark);
+  text-align: right;
+}
+.breed-detail-page .bd-trait-val--sm {
+  font-size: 0.75rem;
+  color: var(--bd-text-mid);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TRAIT CHIPS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-trait-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.breed-detail-page .bd-chip {
+  background: var(--bd-card);
+  color: var(--bd-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--bd-border);
+  transition: var(--bd-ease);
+}
+.breed-detail-page .bd-chip:hover {
+  background: var(--bd-accent);
+  color: #fff;
+  border-color: var(--bd-accent);
+}
+
+.breed-detail-page .bd-chip--teal {
+  background: var(--bd-teal-light);
+  color: var(--bd-teal-dark);
+  border-color: rgba(46,156,138,.2);
+}
+.breed-detail-page .bd-chip--teal:hover {
+  background: var(--bd-teal);
+  color: #fff;
+}
+
+.breed-detail-page .bd-chip--sage {
+  background: var(--bd-sage-light);
+  color: var(--bd-sage);
+  border-color: rgba(90,143,74,.2);
+}
+.breed-detail-page .bd-chip--sage:hover {
+  background: var(--bd-sage);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════════════════
+   CALLOUT BOXES
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-callout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--bd-bg-soft);
+  border-radius: var(--bd-radius-md);
+  padding: 14px 16px;
+  margin: 14px 0;
+  border: 1px solid var(--bd-border);
+}
+.breed-detail-page .bd-callout > span {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.breed-detail-page .bd-callout p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--bd-text-mid);
+}
+.breed-detail-page .bd-callout--amber {
+  background: var(--bd-amber-light);
+  border-color: rgba(212,131,10,.2);
+}
+.breed-detail-page .bd-callout--warn {
+  background: #fff5e6;
+  border-color: rgba(212,131,10,.25);
+}
+
+.breed-detail-page .bd-note {
+  font-size: 0.85rem;
+  color: var(--bd-text-light);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   INTELLIGENCE BADGE
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-intelligence-badge {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: var(--bd-teal-light);
+  border-radius: var(--bd-radius-md);
+  padding: 16px 18px;
+  margin: 12px 0 20px;
+  border: 1px solid rgba(46,156,138,.18);
+}
+.breed-detail-page .bd-intelligence-badge > span { font-size: 1.8rem; flex-shrink: 0; }
+.breed-detail-page .bd-intelligence-badge strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--bd-teal-dark);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.breed-detail-page .bd-intelligence-badge p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--bd-teal-dark);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRO GROOMING
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-pro-grooming {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--bd-sage-light);
+  border-radius: var(--bd-radius-md);
+  padding: 14px 16px;
+  margin-top: 16px;
+  border: 1px solid rgba(90,143,74,.15);
+}
+.breed-detail-page .bd-pro-grooming > span { font-size: 1.2rem; flex-shrink: 0; }
+.breed-detail-page .bd-pro-grooming strong {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--bd-sage);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+.breed-detail-page .bd-pro-grooming p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--bd-text-mid);
+}
+
+/* ══════════════════════════════════════════════════════════
+   DECISION GRID
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-decision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.breed-detail-page .bd-decision-yes,
+.breed-detail-page .bd-decision-no {
+  border-radius: var(--bd-radius-md);
+  padding: 18px 18px 14px;
+  border: 1px solid transparent;
+}
+.breed-detail-page .bd-decision-yes {
+  background: var(--bd-green-light);
+  border-color: rgba(39,174,96,.18);
+}
+.breed-detail-page .bd-decision-no {
+  background: var(--bd-red-light);
+  border-color: rgba(192,57,43,.15);
+}
+.breed-detail-page .bd-decision-yes h3 { color: var(--bd-green); }
+.breed-detail-page .bd-decision-no  h3 { color: var(--bd-red); }
+.breed-detail-page .bd-decision-yes li::before { color: var(--bd-green); }
+.breed-detail-page .bd-decision-no  li::before { color: var(--bd-red); }
+
+/* ══════════════════════════════════════════════════════════
+   FUN FACTS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-fun-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.breed-detail-page .bd-fun-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.55);
+  border-radius: var(--bd-radius-md);
+  border: 1px solid rgba(212,131,10,.12);
+}
+.breed-detail-page .bd-fun-list li::before { display: none; }
+
+.breed-detail-page .bd-fun-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--bd-amber);
+  flex-shrink: 0;
+  line-height: 1;
+  min-width: 28px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FAQs ACCORDION
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+}
+.breed-detail-page .bd-faq-item {
+  border-bottom: 1px solid rgba(127,85,57,.1);
+  padding: 2px 0;
+}
+.breed-detail-page .bd-faq-item:last-child { border-bottom: none; }
+
+.breed-detail-page .bd-faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 14px 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--bd-text);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--bd-ease);
+}
+.breed-detail-page .bd-faq-q:hover { color: var(--bd-accent-dark); }
+
+.breed-detail-page .bd-faq-chevron {
+  font-size: 0.65rem;
+  color: var(--bd-accent);
+  flex-shrink: 0;
+  transition: var(--bd-ease);
+}
+.breed-detail-page .bd-faq-open .bd-faq-chevron { transform: rotate(180deg); }
+
+.breed-detail-page .bd-faq-a {
+  padding: 0 4px 14px;
+  font-size: 0.9rem;
+  color: var(--bd-text-mid);
+  line-height: 1.7;
+  animation: bdFadeIn 0.25s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   OWNER REVIEWS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-sentiment {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.5);
+  border-radius: var(--bd-radius-md);
+  margin-bottom: 16px;
+}
+.breed-detail-page .bd-sentiment > span { font-size: 1.2rem; flex-shrink: 0; }
+.breed-detail-page .bd-sentiment p { margin: 0; font-size: 0.9rem; color: var(--bd-text-mid); }
+
+.breed-detail-page .bd-reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.breed-detail-page .bd-review-col {
+  border-radius: var(--bd-radius-md);
+  padding: 18px 16px 14px;
+  border: 1px solid transparent;
+}
+.breed-detail-page .bd-review-col--pos {
+  background: var(--bd-green-light);
+  border-color: rgba(39,174,96,.15);
+}
+.breed-detail-page .bd-review-col--neg {
+  background: #fff8f0;
+  border-color: rgba(212,131,10,.15);
+}
+.breed-detail-page .bd-review-col h3 { margin-top: 0; margin-bottom: 12px; }
+.breed-detail-page .bd-review-col--pos h3 { color: var(--bd-green); }
+.breed-detail-page .bd-review-col--neg h3 { color: var(--bd-amber); }
+.breed-detail-page .bd-review-col li::before { color: inherit; }
+
+/* ══════════════════════════════════════════════════════════
+   VIDEO
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .video-section {
+  margin: 40px 0;
+  text-align: center;
+}
+.breed-detail-page .video-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.breed-detail-page .video-section video {
+  width: 100%;
+  max-width: 580px;
+  height: 380px;
+  border-radius: var(--bd-radius-xl);
+  box-shadow: var(--bd-shadow-lg);
+  background: #111;
+  border: 1px solid var(--bd-border);
+  object-fit: cover;
+  transition: var(--bd-ease);
+}
+.breed-detail-page .video-section video:hover {
+  transform: scale(1.01);
+  box-shadow: 0 28px 70px rgba(100,70,40,.18);
+}
+
+/* ══════════════════════════════════════════════════════════
+   NEXT STEPS
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .next-steps {
+  margin-top: 40px;
+  padding: 44px 36px;
+  background: var(--bd-accent-dark);
+  border-radius: var(--bd-radius-xl);
+  box-shadow: var(--bd-shadow-lg);
+  overflow: hidden;
+  position: relative;
+}
+.breed-detail-page .next-steps::before {
+  content: "";
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  top: -80px; right: -60px;
+  pointer-events: none;
+}
+.breed-detail-page .bd-next-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
   flex-wrap: wrap;
 }
-
-.step-actions button {
-  padding: 12px 20px;
-  border-radius: 12px;
-  background: #645040;
-  border: none;
+.breed-detail-page .next-steps h2 {
   color: #fff;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  margin-bottom: 8px;
+}
+.breed-detail-page .next-steps p {
+  color: rgba(255,255,255,.65);
+  font-size: 0.95rem;
+  margin: 0;
+}
+.breed-detail-page .step-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.breed-detail-page .step-actions button {
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--bd-cream);
+  color: var(--bd-accent-dark);
+  border: none;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--bd-ease);
+  white-space: nowrap;
+}
+.breed-detail-page .step-actions button:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+}
+.breed-detail-page .step-actions button:active { transform: scale(0.97); }
+
+/* ══════════════════════════════════════════════════════════
+   QUOTE BANNER
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .dog-quote-banner {
+  margin: 32px 0 0;
+  padding: 24px 32px;
+  background: var(--bd-card);
+  border-radius: var(--bd-radius-lg);
+  border: 1px solid var(--bd-border);
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--bd-accent-dark);
+  text-align: center;
+  position: relative;
+}
+.breed-detail-page .dog-quote-banner::before {
+  content: "\201C";
+  position: absolute;
+  top: -8px; left: 20px;
+  font-size: 3.5rem;
+  color: var(--bd-accent);
+  opacity: 0.3;
+  line-height: 1;
+  font-family: 'Fraunces', serif;
 }
 
-.step-actions button:hover {
-  background: #ab8b6f;
+/* ══════════════════════════════════════════════════════════
+   BUTTON
+══════════════════════════════════════════════════════════ */
+.breed-detail-page .bd-btn {
+  display: inline-block;
+  background: var(--bd-accent-dark);
+  color: #fff;
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--bd-ease);
+  text-decoration: none;
+}
+.breed-detail-page .bd-btn:hover {
+  background: var(--bd-accent);
+  transform: translateY(-2px);
 }
 
-/* ---------------- DOG QUOTE ---------------- */
-.dog-quote-banner {
-  margin: 30px 0;
-  background: transparent;
-  padding: 15px 10px;
-  width: 100%;
-  color: #8b4e1d;
-  font-size: 1.3rem;
-  border-bottom: 2px dashed #efa152;
-}
-
-/* ---------------- RESPONSIVE ---------------- */
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .breed-hero {
-    flex-direction: column;
-  }
+  .breed-detail-page .breed-info { padding: 22px 16px; border-radius: var(--bd-radius-lg); }
+  .breed-detail-page .breed-hero img { height: 340px; }
+  .breed-detail-page .breed-hero h1 { font-size: 2rem; }
+  .breed-detail-page .bd-decision-grid,
+  .breed-detail-page .bd-reviews-grid { grid-template-columns: 1fr; }
+  .breed-detail-page .bd-trait-row { grid-template-columns: 120px 1fr 60px; gap: 8px; }
+  .breed-detail-page .next-steps { padding: 28px 20px; }
+  .breed-detail-page .bd-next-inner { flex-direction: column; align-items: flex-start; }
+  .breed-detail-page .video-section video { height: 220px; }
 
-  .breed-hero img {
-    height: auto;
-    max-height: 300px;
-  }
+  .breed-detail-page .basic-info,
+  .breed-detail-page .quick-overview,
+  .breed-detail-page .personality,
+  .breed-detail-page .appearance,
+  .breed-detail-page .exercise,
+  .breed-detail-page .training,
+  .breed-detail-page .grooming,
+  .breed-detail-page .lifestyle,
+  .breed-detail-page .history,
+  .breed-detail-page .fun-facts,
+  .breed-detail-page .faqs,
+  .breed-detail-page .owner-reviews,
+  .breed-detail-page .final-verdict { padding: 20px 16px; border-radius: var(--bd-radius-md); }
+}
 
-  .video-section video {
-    height: auto;
-    max-height: 300px;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-
-  section h3 {
-    font-size: 1.1rem;
-  }
+@media (max-width: 480px) {
+  .breed-detail-page { padding: 12px 12px 90px; }
+  .breed-detail-page .bd-trait-row { grid-template-columns: 1fr; gap: 4px; }
+  .breed-detail-page .bd-bar-wrap  { display: none; }
+  .breed-detail-page .step-actions { flex-direction: column; }
+  .breed-detail-page .step-actions button { width: 100%; text-align: center; }
+  .breed-detail-page .bd-size-box--wide { grid-column: span 1; }
 }

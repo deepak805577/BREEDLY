@@ -1,11 +1,11 @@
 // app/breed-selector/page.js
 'use client';
 import './breed-selector.css';
-import { useState } from 'react';
-import { useEffect } from "react";
+import { useState, useEffect } from 'react';
 import ProtectedRoute from "../components/ProtectedRoute";
 import { useRouter } from "next/navigation";
-import Confetti from 'react-confetti'; // npm install react-confetti
+import Confetti from 'react-confetti';
+
 const questions = [
   // 1. Home & environment
   {
@@ -45,7 +45,6 @@ const questions = [
       { text: "No", icon: "🔥" }
     ]
   },
-
   // 2. Household & people
   {
     question: "Do you have children at home, and what are their ages?",
@@ -84,7 +83,6 @@ const questions = [
       { text: "Both", icon: "🐱🐕" }
     ]
   },
-
   // 3. Time & experience
   {
     question: "How much time can you dedicate to your dog daily?",
@@ -123,7 +121,6 @@ const questions = [
       { text: "No", icon: "👎" }
     ]
   },
-
   // 4. Lifestyle & preferences
   {
     question: "What's your activity level?",
@@ -144,7 +141,7 @@ const questions = [
     ]
   },
   {
-    question: "Which best describes your ideal dog’s personality?",
+    question: "Which best describes your ideal dog's personality?",
     tip: "Choose a personality that suits your lifestyle.",
     options: [
       { text: "Playful", icon: "😄" },
@@ -181,7 +178,6 @@ const questions = [
       { text: "Not sure", icon: "❓" }
     ]
   },
-
   // 5. Dog specifics
   {
     question: "What size of dog do you prefer?",
@@ -216,135 +212,188 @@ const questions = [
   }
 ];
 
+/* Section labels for the step indicator */
+const SECTIONS = [
+  { label: "Home",       range: [0, 3]  },
+  { label: "Household",  range: [4, 7]  },
+  { label: "Time",       range: [8, 11] },
+  { label: "Lifestyle",  range: [12, 17]},
+  { label: "Your Dog",   range: [18, 20]},
+];
 
 export default function BreedSelector() {
   const router = useRouter();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [fade, setFade] = useState(true);
-  const [finished, setFinished] = useState(false);
-  const [progressWidth, setProgressWidth] = useState(0);
-  const [isBouncing, setIsBouncing] = useState(false);
+  const [answers,          setAnswers]         = useState([]);
+  const [fade,             setFade]            = useState(true);
+  const [finished,         setFinished]        = useState(false);
+  const [progressWidth,    setProgressWidth]   = useState(0);
+  const [isBouncing,       setIsBouncing]      = useState(false);
 
+  useEffect(() => {
+    const pct = ((currentQuestion + 1) / questions.length) * 100;
+    const t = setTimeout(() => setProgressWidth(pct), 50);
+    return () => clearTimeout(t);
+  }, [currentQuestion]);
 
-useEffect(() => {
-  const newProgress = ((currentQuestion + 1) / questions.length) * 100;
-  const timer = setTimeout(() => setProgressWidth(newProgress), 50);
-  return () => clearTimeout(timer);
-}, [currentQuestion]);
-useEffect(() => {
-  if (currentQuestion === 0) return; // skip initial load
-  setIsBouncing(true);
-  const timer = setTimeout(() => setIsBouncing(false), 500);
-  return () => clearTimeout(timer);
-}, [currentQuestion]);
-
-
-useEffect(() => {
-  const newProgress = ((currentQuestion + 1) / questions.length) * 100;
-  const timer = setTimeout(() => setProgressWidth(newProgress), 50);
-  return () => clearTimeout(timer);
-}, [currentQuestion]);
-
+  useEffect(() => {
+    if (currentQuestion === 0) return;
+    setIsBouncing(true);
+    const t = setTimeout(() => setIsBouncing(false), 500);
+    return () => clearTimeout(t);
+  }, [currentQuestion]);
 
   const q = questions[currentQuestion];
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+  /* Which section are we in? */
+  const currentSection = SECTIONS.findIndex(
+    (s) => currentQuestion >= s.range[0] && currentQuestion <= s.range[1]
+  );
 
   const handleAnswer = (answer) => {
-    // Save answer
-    const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestion] = answer;
-    setAnswers(updatedAnswers);
-
-    // Trigger fade-out
-
-    //setFade(false);
+    const updated = [...answers];
+    updated[currentQuestion] = answer;
+    setAnswers(updated);
 
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
-        setFade(true); // fade-in next question
+        setFade(true);
       } else {
-        // Quiz finished
         setFinished(true);
-        localStorage.setItem('breedlyAnswers', JSON.stringify(updatedAnswers));
-
-        // Redirect after 2s
-        setTimeout(() => router.push('/results'), 2000);
+        localStorage.setItem('breedlyAnswers', JSON.stringify(updated));
+        setTimeout(() => router.push('/results'), 2200);
       }
-    }, 300); // fade duration
+    }, 300);
   };
 
   const handleBack = () => {
     if (currentQuestion === 0) return;
     setFade(false);
-
     setTimeout(() => {
       setCurrentQuestion(currentQuestion - 1);
       setFade(true);
     }, 200);
   };
 
+  /* ── Finished screen ── */
+  if (finished) {
+    return (
+      <ProtectedRoute>
+        <div className="qs-page">
+          <Confetti recycle={false} numberOfPieces={260} colors={["#B08968","#E8D8C4","#7F5539","#FAF7F2","#D4A97A"]} />
+          <div className="qs-done">
+            <div className="qs-done-emoji">🐾</div>
+            <h2>All done!</h2>
+            <p>Finding your perfect match…</p>
+            <div className="qs-done-dots">
+              <span /><span /><span />
+            </div>
+          </div>
+        </div>
+      </ProtectedRoute>
+    );
+  }
+
   return (
-        <ProtectedRoute>
-    <div className="quiz-page">
-      {finished && <Confetti />}
-      {/* Header */}
-      <div className="quiz-header-banner">
-        <h1>BreedLy 🐶</h1>
-        <p>Find your perfect pup match</p>
-      </div>
+    <ProtectedRoute>
+      <div className="qs-page">
 
-      {/* Quote */}
-      <div className="quote-bar">
-        “Dogs do speak, but only to those who know how to listen.”
-      </div>
-
-      {/* Quiz */}
-      <section className={`quiz-container ${fade ? 'fade-in' : 'fade-out'}`}>
-        <div className="quiz-header">
-          <h2>{q.question}</h2>
-          <p className="quiz-tip">{q.tip}</p>
+        {/* ── TOP HEADER ── */}
+        <div className="qs-top">
+          <div className="qs-brand">
+            <span>🐾</span> BreedLy
+          </div>
+          <p className="qs-tagline">Find your perfect pup match</p>
         </div>
 
-        <div className="quiz-options">
-          {q.options.map((opt, i) => (
-            <button
-              key={i}
-              className={`option-circle ${answers[currentQuestion] === opt.text ? 'selected' : ''}`}
-              onClick={() => handleAnswer(opt.text)}
+        {/* ── SECTION TABS ── */}
+        <div className="qs-sections">
+          {SECTIONS.map((s, i) => (
+            <div
+              key={s.label}
+              className={`qs-section-dot${i < currentSection ? " qs-section-done" : ""}${i === currentSection ? " qs-section-active" : ""}`}
             >
-              <span>{opt.icon}</span>
-              <p>{opt.text}</p>
-            </button>
+              <span>{i < currentSection ? "✓" : i + 1}</span>
+              <p>{s.label}</p>
+            </div>
           ))}
         </div>
 
-     <div className="paw-progress">
-  <div className="paw-fill" style={{ width: `${progressWidth}%` }} />
-  <span
-  className={`paw-icon ${isBouncing ? 'bounce' : ''}`}
-  style={{ left: `${progressWidth}%` }}
->
-  🐾
-</span>
+        {/* ── QUIZ CARD ── */}
+        <section className={`qs-card ${fade ? "qs-fade-in" : "qs-fade-out"}`}>
 
-</div>
+          {/* Question */}
+          <div className="qs-question-wrap">
+            <span className="qs-q-num">Q{currentQuestion + 1} of {questions.length}</span>
+            <h2 className="qs-question">{q.question}</h2>
+            <p className="qs-tip">💡 {q.tip}</p>
+          </div>
 
-        {/* Navigation */}
-        <div className="quiz-nav">
-          <button
-            className="back-btn"
-            onClick={handleBack}
-            disabled={currentQuestion === 0}
-          >
-            ← Back
-          </button>
-          <span className="step-count">{currentQuestion + 1} / {questions.length}</span>
-        </div>
-      </section>
-    </div>
+          {/* Options */}
+          <div className={`qs-options${q.options.length > 4 ? " qs-options--wide" : ""}`}>
+            {q.options.map((opt, i) => (
+              <button
+                key={i}
+                className={`qs-option${answers[currentQuestion] === opt.text ? " qs-option--selected" : ""}`}
+                onClick={() => handleAnswer(opt.text)}
+              >
+                <span className="qs-opt-icon">{opt.icon}</span>
+                <span className="qs-opt-text">{opt.text}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Progress bar */}
+          <div className="qs-progress-wrap">
+            <div className="qs-progress-track">
+              <div
+                className="qs-progress-fill"
+                style={{ width: `${progressWidth}%` }}
+              />
+              <span
+                className={`qs-paw-icon${isBouncing ? " qs-paw-bounce" : ""}`}
+                style={{ left: `${progressWidth}%` }}
+              >
+                🐾
+              </span>
+            </div>
+            <div className="qs-progress-labels">
+              <span>Start</span>
+              <span>{Math.round(progressWidth)}% done</span>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="qs-nav">
+            <button
+              className="qs-back-btn"
+              onClick={handleBack}
+              disabled={currentQuestion === 0}
+            >
+              ← Back
+            </button>
+            <span className="qs-step">{currentQuestion + 1} / {questions.length}</span>
+            {answers[currentQuestion] && currentQuestion < questions.length - 1 && (
+              <button
+                className="qs-skip-btn"
+                onClick={() => handleAnswer(answers[currentQuestion])}
+              >
+                Next →
+              </button>
+            )}
+            {!answers[currentQuestion] && <span className="qs-hint">Tap any option</span>}
+          </div>
+
+        </section>
+
+        {/* ── QUOTE ── */}
+        <p className="qs-quote">
+          "Dogs do speak, but only to those who know how to listen."
+        </p>
+
+      </div>
     </ProtectedRoute>
   );
 }
