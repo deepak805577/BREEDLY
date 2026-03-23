@@ -252,10 +252,10 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
         <h2 className={styles.sectionTitle}>Everything your dog needs,<br />explained simply.</h2>
         <div className={styles.careGrid}>
           {[
-            { href:"/care/food",     bg:"#FDF3E7", emoji:"🥗", title:"Nutrition & Food",   desc:"Portion sizes, ingredients to avoid, and breed-specific diets." },
-            { href:"/care/health",   bg:"#EDF7F0", emoji:"🩺", title:"Health & Vet Care",  desc:"Vaccination schedules, common issues, and preventive routines." },
-            { href:"/care/training", bg:"#F0EDF7", emoji:"🎓", title:"Training",           desc:"Reward-based methods, basic commands, and building trust." },
-            { href:"/care/grooming", bg:"#F7EDF0", emoji:"✂️", title:"Grooming",          desc:"Coat types, brushing frequency, and at-home grooming tips." },
+            { href:"/food-guide",     bg:"#FDF3E7", emoji:"🥗", title:"Nutrition & Food",   desc:"Portion sizes, ingredients to avoid, and breed-specific diets." },
+            { href:"/health-guide",   bg:"#EDF7F0", emoji:"🩺", title:"Health & Vet Care",  desc:"Vaccination schedules, common issues, and preventive routines." },
+            { href:"/training-guide", bg:"#F0EDF7", emoji:"🎓", title:"Training",           desc:"Reward-based methods, basic commands, and building trust." },
+            { href:"/care-grooming", bg:"#F7EDF0", emoji:"✂️", title:"Grooming",          desc:"Coat types, brushing frequency, and at-home grooming tips." },
           ].map((c) => (
             <Link href={c.href} key={c.href} className={styles.careCard}>
               <div className={styles.careCardTop} style={{ background: c.bg }}>
@@ -270,7 +270,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
           ))}
         </div>
         <div className={styles.sectionCta}>
-          <Link href="/care" className={styles.btnOutline}>Browse All Care Guides →</Link>
+          <Link href="/care" className={styles.btnOutline}>{/* Explore Guides →*/}</Link>
         </div>
       </section>
 
@@ -297,7 +297,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
             </h2>
           </div>
           <Link href="/puphub" className={styles.btnPrimary} style={{ alignSelf:"flex-end" }}>
-            Explore PupHub →
+           {/* Explore PupHub →*/}
           </Link>
         </div>
  
@@ -327,7 +327,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
             <p className={styles.eyebrowLight}>AI Assistant</p>
             <h2>Ask anything<br />about dogs.</h2>
             <p>Food, health, behaviour, training — our AI knows every breed inside out. Get instant, personalised answers anytime.</p>
-            <Link href="/ai-assistant" className={styles.btnCream}>Try the AI Assistant ✨</Link>
+            <Link href="/chat" className={styles.btnCream}>Try the AI Assistant ✨</Link>
             <p className={styles.microLight}>Powered by Claude · Always free</p>
           </div>
           <div className={styles.aiRight}>
@@ -453,7 +453,7 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
             </div>
  
             <div className={styles.myDogActions}>
-              <Link href="/my-dog/create" className={styles.btnPrimary}>
+              <Link href="/my-dog" className={styles.btnPrimary}>
                 Create My Dog's Profile 🐾
               </Link>
               <Link href="/my-dog" className={styles.btnGhost}>
