@@ -28,111 +28,125 @@ export default function AddDogPage() {
       ...form,
       age: Number(form.age),
       weight: Number(form.weight),
+      // Adding a placeholder for the care plan data
+      food: { recommended: "Calculate based on breed" }
     };
 
     const existing = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    localStorage.setItem(
-      "breedlyDogs",
-      JSON.stringify([...existing, dogProfile])
-    );
+    const updatedPack = [...existing, dogProfile];
+    
+    localStorage.setItem("breedlyDogs", JSON.stringify(updatedPack));
+    
+    // Auto-select the new dog as active
+    localStorage.setItem("activeDogId", dogProfile.id);
 
     router.push("/my-dog");
   };
 
-  // ✅ Add handleSkip function
-  const handleSkip = () => {
-    // Just redirect to /my-dog without saving
-    router.push("/");
-  };
-
   return (
     <main className="add-dog-page">
-      <h1>🐾 Add Your Dog</h1>
-      <p className="subtitle">
-        Tell us about your dog so we can guide you better.
-      </p>
+      <header style={{textAlign: 'center'}}>
+        <h1>Build Your <em>Pack</em></h1>
+        <p className="subtitle">
+          Every dog is unique. Tell us about your companion to generate a custom 
+          health and nutrition dashboard.
+        </p>
+      </header>
 
       <form className="dog-form" onSubmit={handleSubmit}>
-        <label>
-          Dog Name
-          <input
-            type="text"
-            name="name"
-            required
-            value={form.name}
-            onChange={handleChange}
-          />
-        </label>
+        {/* Section 1: The Basics */}
+        <div className="form-group">
+          <h3 className="form-group-title">The Basics</h3>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+            <label>
+              Dog Name
+              <input
+                type="text"
+                name="name"
+                placeholder="e.g. Charlie"
+                required
+                value={form.name}
+                onChange={handleChange}
+              />
+            </label>
 
-        <label>
-          Breed
-          <select
-            name="breed"
-            required
-            value={form.breed}
-            onChange={handleChange}
-          >
-            <option value="">Select breed</option>
-            {breedCards.map((b) => (
-              <option key={b.name} value={b.name}>
-                {b.name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div className="row">
-          <label>
-            Age (years)
-            <input
-              type="number"
-              step="0.1"
-              name="age"
-              required
-              value={form.age}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label>
-            Weight (kg)
-            <input
-              type="number"
-              step="0.1"
-              name="weight"
-              required
-              value={form.weight}
-              onChange={handleChange}
-            />
-          </label>
+            <label>
+              Breed
+              <select name="breed" required value={form.breed} onChange={handleChange}>
+                <option value="">Search Breed</option>
+                {breedCards.map((b) => (
+                  <option key={b.name} value={b.name}>{b.name}</option>
+                ))}
+              </select>
+            </label>
+          </div>
         </div>
 
-        <label>
-          Allergies (if any)
-          <input
-            type="text"
-            name="allergies"
-            placeholder="e.g. Chicken, grains"
-            value={form.allergies}
-            onChange={handleChange}
-          />
-        </label>
+        {/* Section 2: Vitals */}
+        <div className="form-group">
+          <h3 className="form-group-title">Vitals</h3>
+          <div className="row">
+            <label>
+              Age (Years)
+              <input
+                type="number"
+                step="0.1"
+                name="age"
+                placeholder="2"
+                required
+                value={form.age}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Weight (kg)
+              <input
+                type="number"
+                step="0.1"
+                name="weight"
+                placeholder="15"
+                required
+                value={form.weight}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+        </div>
 
-        <label>
-          City
-          <input
-            type="text"
-            name="city"
-            required
-            value={form.city}
-            onChange={handleChange}
-          />
-        </label>
+        {/* Section 3: Lifestyle */}
+        <div className="form-group">
+          <h3 className="form-group-title">Lifestyle</h3>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+            <label>
+              Allergies & Sensitivities
+              <input
+                type="text"
+                name="allergies"
+                placeholder="e.g. Chicken, Grains, or None"
+                value={form.allergies}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Current City
+              <input
+                type="text"
+                name="city"
+                placeholder="For local vet discovery"
+                required
+                value={form.city}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+        </div>
 
-        <button type="submit" className="btn save-btn">Save Profile</button>
-        <button type="button" className="btn skip-btn" onClick={handleSkip}>
-          Skip for now
-        </button>
+        <div className="form-footer">
+          <button type="submit" className="save-btn">Create Dog Profile</button>
+          <button type="button" className="skip-btn" onClick={() => router.push("/")}>
+            I'll do this later
+          </button>
+        </div>
       </form>
     </main>
   );

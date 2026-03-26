@@ -2,41 +2,87 @@
 
 import { useState } from "react";
 
+/**
+ * ProfilePostsGrid — single-column post list for mobile profile view.
+ * Uses Breedly design tokens from UserProfile.jsx's :root block.
+ */
 export default function ProfilePostsGrid({ posts = [] }) {
   const [selected, setSelected] = useState(null);
 
   if (posts.length === 0) {
     return (
-      <div style={{ textAlign: "center", padding: "60px 24px", fontFamily: "'Nunito', sans-serif" }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🐾</div>
-        <div style={{ fontWeight: 800, fontSize: 16, color: "#3B4FC8", marginBottom: 6 }}>No posts yet</div>
-        <div style={{ fontSize: 13, color: "#B7A5C4", fontWeight: 600 }}>Share your first moment with the pack!</div>
+      <div style={{
+        textAlign: "center",
+        padding: "64px 24px",
+        fontFamily: "var(--font-body)",
+      }}>
+        <div style={{ fontSize: 46, marginBottom: 14 }}>🐾</div>
+        <div style={{
+          fontFamily: "var(--font-display)",
+          fontSize: 20, fontWeight: 300,
+          color: "var(--accent-dark)",
+          marginBottom: 8,
+        }}>
+          No posts yet
+        </div>
+        <div style={{ fontSize: 13, color: "var(--text-light)", lineHeight: 1.65 }}>
+          Share your first moment with the pack!
+        </div>
       </div>
     );
   }
 
   return (
     <>
-      {/* Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(1, 1fr)", gap: 2, padding: 2 }}>
+      {/* Grid — 1 column on mobile, 3 columns on larger screens */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: 3,
+        padding: 3,
+      }}>
         {posts.map(post => (
           <div
             key={post.id}
             onClick={() => setSelected(post)}
             style={{
-              aspectRatio: "1", background: post.image_url ? "transparent" : "#F3EAF6",
-              overflow: "hidden", cursor: "pointer", position: "relative",
-              transition: "opacity 0.15s",
+              position: "relative",
+              width: "100%",
+              paddingBottom: "100%",
+              background: post.image_url ? "transparent" : "var(--card-bg)",
+              overflow: "hidden",
+              cursor: "pointer",
+              borderRadius: "var(--radius-sm)",
+              transition: "var(--transition)",
             }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+            onMouseEnter={e => { e.currentTarget.style.opacity = "0.80"; e.currentTarget.style.transform = "scale(0.98)"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}
           >
             {post.image_url ? (
-              <img src={post.image_url} alt={post.caption} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img
+                src={post.image_url}
+                alt={post.caption}
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
             ) : (
-              <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 8 }}>
-                <div style={{ fontSize: 24, marginBottom: 4 }}>🐾</div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: "#9B8AAB", textAlign: "center", fontFamily: "'Nunito', sans-serif", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}>
+              <div style={{
+                position: "absolute", inset: 0,
+                display: "flex", flexDirection: "column",
+                alignItems: "center", justifyContent: "center",
+                padding: 8, gap: 5,
+              }}>
+                <div style={{ fontSize: 22 }}>🐾</div>
+                <div style={{
+                  fontSize: 10,
+                  color: "var(--text-secondary)",
+                  textAlign: "center",
+                  lineHeight: 1.4,
+                  fontFamily: "var(--font-body)",
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                }}>
                   {post.caption}
                 </div>
               </div>
@@ -45,7 +91,6 @@ export default function ProfilePostsGrid({ posts = [] }) {
         ))}
       </div>
 
-      {/* Post detail modal */}
       {selected && (
         <PostDetailModal post={selected} onClose={() => setSelected(null)} />
       )}
@@ -55,28 +100,94 @@ export default function ProfilePostsGrid({ posts = [] }) {
 
 function PostDetailModal({ post, onClose }) {
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(40,30,60,0.7)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 20, width: "100%", maxWidth: 420, overflow: "hidden", position: "relative" }}>
+    <>
+      <style>{`
+        @keyframes gridModalIn { from { opacity:0; transform:scale(0.96) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        .grid-modal-inner { animation: gridModalIn 0.28s cubic-bezier(0.34,1.1,0.64,1) forwards; }
+      `}</style>
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed", inset: 0,
+          background: "rgba(50,35,20,0.55)",
+          backdropFilter: "blur(4px)",
+          zIndex: 200,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          padding: 16,
+        }}
+      >
+        <div
+          className="grid-modal-inner"
+          onClick={e => e.stopPropagation()}
+          style={{
+            background: "var(--soft-white)",
+            borderRadius: "var(--radius-xl)",
+            width: "100%",
+            maxWidth: 420,
+            overflow: "hidden",
+            position: "relative",
+            boxShadow: "0 32px 80px rgba(60,40,20,0.20)",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <button
+            onClick={onClose}
+            style={{
+              position: "absolute", top: 12, right: 12,
+              background: "rgba(127,85,57,0.18)",
+              backdropFilter: "blur(4px)",
+              border: "none",
+              borderRadius: "50%",
+              width: 30, height: 30,
+              color: "var(--soft-white)",
+              cursor: "pointer",
+              fontSize: 13,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              zIndex: 1,
+              transition: "var(--transition)",
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = "rgba(127,85,57,0.40)"}
+            onMouseLeave={e => e.currentTarget.style.background = "rgba(127,85,57,0.18)"}
+          >✕</button>
 
-        <button onClick={onClose} style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.3)", border: "none", borderRadius: "50%", width: 28, height: 28, color: "#fff", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>✕</button>
+          {post.image_url && (
+            <img
+              src={post.image_url}
+              alt={post.caption}
+              style={{ width: "100%", maxHeight: 320, objectFit: "cover", display: "block" }}
+            />
+          )}
 
-        {post.image_url && (
-          <img src={post.image_url} alt={post.caption} style={{ width: "100%", maxHeight: 320, objectFit: "cover", display: "block" }} />
-        )}
-
-        <div style={{ padding: "14px 16px" }}>
-          <p style={{ fontSize: 14, fontWeight: 600, color: "#2D2340", lineHeight: 1.6, fontFamily: "'Nunito', sans-serif", marginBottom: 10 }}>
-            {post.caption}
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {(post.tags ?? []).map(tag => (
-              <span key={tag} style={{ fontSize: 12, fontWeight: 700, color: "#3B4FC8", background: "#E8ECFF", padding: "3px 10px", borderRadius: 20, fontFamily: "'Nunito', sans-serif" }}>
-                {tag}
-              </span>
-            ))}
+          <div style={{ padding: "18px 20px" }}>
+            <p style={{
+              fontSize: 14,
+              fontWeight: 300,
+              color: "var(--text-primary)",
+              lineHeight: 1.75,
+              marginBottom: 14,
+              fontFamily: "var(--font-body)",
+            }}>
+              {post.caption}
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {(post.tags ?? []).map(tag => (
+                <span key={tag} style={{
+                  fontSize: 11,
+                  fontWeight: 500,
+                  padding: "3px 11px",
+                  borderRadius: "var(--radius-pill)",
+                  background: "var(--card-bg)",
+                  color: "var(--accent-dark)",
+                  border: "1px solid var(--border-strong)",
+                  letterSpacing: "0.03em",
+                }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

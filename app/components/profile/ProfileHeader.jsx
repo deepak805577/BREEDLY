@@ -2,78 +2,173 @@
 
 import { useRef } from "react";
 
+/**
+ * ProfileHeader — mobile-first header layout (avatar top-left, stats top-right).
+ * Uses the Breedly design system tokens defined in UserProfile.jsx's <style> block.
+ */
 export default function ProfileHeader({ profile, postCount, isOwnProfile, onEdit, onAvatarUpload }) {
   const fileRef = useRef(null);
   const initials = profile?.initials ?? profile?.full_name?.[0]?.toUpperCase() ?? "?";
-  const color    = profile?.avatar_color ?? "#FFD54F";
 
   return (
-    <div style={{ background: "#fff", borderBottom: "1.5px solid #F0E0EC" }}>
+    <div style={{
+      background: "var(--soft-white)",
+      borderBottom: "1px solid var(--border)",
+    }}>
 
-      {/* ── Top section: avatar + stats ── */}
-      <div style={{ padding: "24px 20px 16px", display: "flex", alignItems: "flex-start", gap: 20 }}>
+      {/* ── Top row: avatar + stats + action ── */}
+      <div style={{
+        padding: "22px 20px 16px",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 20,
+      }}>
 
         {/* Avatar with upload button */}
         <div style={{ position: "relative", flexShrink: 0 }}>
           <div style={{
-            width: 88, height: 88, borderRadius: "50%",
-            background: color, border: "3px solid #FFD54F",
+            width: 86, height: 86,
+            borderRadius: "50%",
+            background: "var(--card-bg)",
+            border: "3px solid var(--accent)",
+            boxShadow: "0 4px 18px rgba(127,85,57,0.14)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontWeight: 900, fontSize: 28, color: "#6B4C00",
-            fontFamily: "'Nunito', sans-serif", overflow: "hidden",
+            fontFamily: "var(--font-display)",
+            fontWeight: 300, fontSize: 26,
+            color: "var(--accent-dark)",
+            overflow: "hidden",
           }}>
             {profile?.avatar_url
               ? <img src={profile.avatar_url} alt={profile.full_name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               : initials
             }
           </div>
+
           {isOwnProfile && (
             <>
               <button
                 onClick={() => fileRef.current?.click()}
-                style={{ position: "absolute", bottom: 2, right: 2, width: 26, height: 26, borderRadius: "50%", background: "#3B4FC8", border: "2px solid #fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 12 }}
-              >📷</button>
-              <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => onAvatarUpload(e.target.files[0])} />
+                aria-label="Upload avatar"
+                style={{
+                  position: "absolute", bottom: 2, right: 2,
+                  width: 27, height: 27,
+                  borderRadius: "50%",
+                  background: "var(--accent-dark)",
+                  border: "2px solid var(--soft-white)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "var(--transition)",
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = "var(--accent)"}
+                onMouseLeave={e => e.currentTarget.style.background = "var(--accent-dark)"}
+              >
+                <CameraIcon />
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={e => onAvatarUpload(e.target.files[0])}
+              />
             </>
           )}
         </div>
 
-        {/* Stats + action button */}
-        <div style={{ flex: 1, paddingTop: 6 }}>
-          <div style={{ display: "flex", gap: 20, marginBottom: 14 }}>
+        {/* Stats + button */}
+        <div style={{ flex: 1, paddingTop: 4 }}>
+          <div style={{ display: "flex", gap: 24, marginBottom: 14 }}>
             <Stat value={postCount} label="Posts" />
             <Stat value="—" label="Followers" />
             <Stat value="—" label="Following" />
           </div>
+
           {isOwnProfile ? (
             <button
               onClick={onEdit}
-              style={{ width: "100%", padding: "8px 0", border: "2px solid #EDD8F5", borderRadius: 12, background: "#fff", fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: 13, color: "#3B4FC8", cursor: "pointer", transition: "background 0.15s" }}
-              onMouseEnter={e => e.currentTarget.style.background = "#F3EAF6"}
-              onMouseLeave={e => e.currentTarget.style.background = "#fff"}
+              style={{
+                width: "100%",
+                padding: "9px 0",
+                border: "1.5px solid var(--border-strong)",
+                borderRadius: "var(--radius-pill)",
+                background: "none",
+                fontFamily: "var(--font-body)",
+                fontWeight: 500,
+                fontSize: 13,
+                color: "var(--text-secondary)",
+                cursor: "pointer",
+                transition: "var(--transition)",
+                letterSpacing: "0.02em",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "var(--card-lite)";
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.color = "var(--accent-dark)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "none";
+                e.currentTarget.style.borderColor = "var(--border-strong)";
+                e.currentTarget.style.color = "var(--text-secondary)";
+              }}
             >
               Edit Profile
             </button>
           ) : (
-            <button style={{ width: "100%", padding: "8px 0", border: "none", borderRadius: 12, background: "#3B4FC8", fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: 13, color: "#fff", cursor: "pointer" }}>
+            <button
+              style={{
+                width: "100%",
+                padding: "9px 0",
+                border: "none",
+                borderRadius: "var(--radius-pill)",
+                background: "var(--accent-dark)",
+                fontFamily: "var(--font-body)",
+                fontWeight: 500,
+                fontSize: 13,
+                color: "var(--soft-white)",
+                cursor: "pointer",
+                transition: "var(--transition)",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "var(--accent-dark)"; e.currentTarget.style.transform = "none"; }}
+            >
               Follow
             </button>
           )}
         </div>
       </div>
 
-      {/* ── Name + username + bio ── */}
+      {/* ── Name / username / bio ── */}
       <div style={{ padding: "0 20px 16px" }}>
-        <div style={{ fontWeight: 900, fontSize: 16, color: "#2D2340", fontFamily: "'Nunito', sans-serif" }}>
+        <div style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 400,
+          fontSize: 17,
+          color: "var(--accent-dark)",
+          lineHeight: 1.25,
+        }}>
           {profile?.full_name ?? "Dog Lover"}
         </div>
+
         {profile?.username && (
-          <div style={{ fontSize: 13, color: "#9B8AAB", fontWeight: 600, fontFamily: "'Nunito', sans-serif", marginTop: 2 }}>
+          <div style={{
+            fontSize: 12,
+            color: "var(--text-light)",
+            marginTop: 2,
+            letterSpacing: "0.02em",
+          }}>
             @{profile.username}
           </div>
         )}
+
         {profile?.bio && (
-          <p style={{ fontSize: 13, color: "#5A4D6E", fontWeight: 600, marginTop: 8, lineHeight: 1.6, fontFamily: "'Nunito', sans-serif" }}>
+          <p style={{
+            fontSize: 13,
+            color: "var(--text-secondary)",
+            fontWeight: 300,
+            marginTop: 8,
+            lineHeight: 1.70,
+            fontFamily: "var(--font-body)",
+          }}>
             {profile.bio}
           </p>
         )}
@@ -81,14 +176,24 @@ export default function ProfileHeader({ profile, postCount, isOwnProfile, onEdit
 
       {/* ── Dog info card ── */}
       {(profile?.dog_name || profile?.primary_breed || profile?.dog_age || profile?.dog_photo_url) && (
-        <div style={{ margin: "0 16px 16px", background: "#FBF2F8", borderRadius: 18, border: "2px solid #EDD8F5", padding: "14px 16px", display: "flex", alignItems: "center", gap: 14 }}>
-
-          {/* Dog photo */}
+        <div style={{
+          margin: "0 16px 16px",
+          background: "var(--bg-soft)",
+          borderRadius: "var(--radius-md)",
+          border: "1px solid var(--border)",
+          padding: "13px 15px",
+          display: "flex",
+          alignItems: "center",
+          gap: 13,
+        }}>
           <div style={{
-            width: 58, height: 58, borderRadius: 14, flexShrink: 0,
-            background: "#F3EAF6", overflow: "hidden",
+            width: 56, height: 56,
+            borderRadius: "var(--radius-sm)",
+            background: "var(--card-bg)",
+            border: "1.5px solid var(--accent)",
+            overflow: "hidden",
             display: "flex", alignItems: "center", justifyContent: "center",
-            border: "2px solid #FFD54F", fontSize: 28,
+            fontSize: 26, flexShrink: 0,
           }}>
             {profile?.dog_photo_url
               ? <img src={profile.dog_photo_url} alt={profile.dog_name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -96,39 +201,66 @@ export default function ProfileHeader({ profile, postCount, isOwnProfile, onEdit
             }
           </div>
 
-          {/* Dog details */}
           <div style={{ flex: 1 }}>
             {profile?.dog_name && (
-              <div style={{ fontWeight: 900, fontSize: 15, color: "#2D2340", fontFamily: "'Nunito', sans-serif" }}>
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 400,
+                fontSize: 15,
+                color: "var(--accent-dark)",
+                marginBottom: 6,
+              }}>
                 {profile.dog_name}
               </div>
             )}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 5 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
               {profile?.primary_breed && (
-                <span style={{ fontSize: 11, fontWeight: 800, background: "#FFD54F", color: "#6B4C00", padding: "3px 10px", borderRadius: 20, fontFamily: "'Nunito', sans-serif" }}>
-                  {profile.primary_breed}
-                </span>
+                <Badge>{profile.primary_breed}</Badge>
               )}
               {profile?.dog_age && (
-                <span style={{ fontSize: 11, fontWeight: 800, background: "#E8ECFF", color: "#3B4FC8", padding: "3px 10px", borderRadius: 20, fontFamily: "'Nunito', sans-serif" }}>
-                  {profile.dog_age} {profile.dog_age === 1 ? "year" : "years"} old
-                </span>
+                <Badge>{profile.dog_age} {profile.dog_age === 1 ? "yr" : "yrs"}</Badge>
               )}
             </div>
           </div>
         </div>
       )}
 
-      {/* Placeholder if no dog info and own profile */}
+      {/* ── Empty dog prompt ── */}
       {isOwnProfile && !profile?.dog_name && !profile?.primary_breed && (
         <div
           onClick={onEdit}
-          style={{ margin: "0 16px 16px", background: "#F9F2FC", borderRadius: 18, border: "2px dashed #EDD8F5", padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => e.key === "Enter" && onEdit()}
+          style={{
+            margin: "0 16px 16px",
+            background: "var(--bg-soft)",
+            borderRadius: "var(--radius-md)",
+            border: "1.5px dashed var(--border-strong)",
+            padding: "13px 15px",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            cursor: "pointer",
+            transition: "var(--transition)",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.background = "var(--card-lite)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border-strong)"; e.currentTarget.style.background = "var(--bg-soft)"; }}
         >
-          <span style={{ fontSize: 32 }}>🐶</span>
+          <span style={{ fontSize: 30 }}>🐶</span>
           <div>
-            <div style={{ fontWeight: 800, fontSize: 14, color: "#3B4FC8", fontFamily: "'Nunito', sans-serif" }}>Add your dog's info</div>
-            <div style={{ fontSize: 12, color: "#C4AED4", fontWeight: 600, fontFamily: "'Nunito', sans-serif" }}>Name, breed, age & photo</div>
+            <div style={{
+              fontWeight: 500,
+              fontSize: 13,
+              color: "var(--accent-dark)",
+              fontFamily: "var(--font-body)",
+              marginBottom: 2,
+            }}>
+              Add your dog's info
+            </div>
+            <div style={{ fontSize: 12, color: "var(--text-light)" }}>
+              Name, breed, age &amp; photo
+            </div>
           </div>
         </div>
       )}
@@ -139,8 +271,50 @@ export default function ProfileHeader({ profile, postCount, isOwnProfile, onEdit
 function Stat({ value, label }) {
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ fontWeight: 900, fontSize: 18, color: "#2D2340", fontFamily: "'Nunito', sans-serif" }}>{value}</div>
-      <div style={{ fontSize: 11, color: "#9B8AAB", fontWeight: 600, fontFamily: "'Nunito', sans-serif" }}>{label}</div>
+      <div style={{
+        fontFamily: "var(--font-display)",
+        fontWeight: 300,
+        fontSize: 20,
+        color: "var(--accent-dark)",
+        lineHeight: 1.1,
+      }}>{value}</div>
+      <div style={{
+        fontSize: 10,
+        color: "var(--text-light)",
+        marginTop: 3,
+        letterSpacing: "0.07em",
+        textTransform: "uppercase",
+        fontFamily: "var(--font-body)",
+      }}>{label}</div>
     </div>
+  );
+}
+
+function Badge({ children }) {
+  return (
+    <span style={{
+      display: "inline-flex",
+      alignItems: "center",
+      fontSize: 11,
+      fontWeight: 500,
+      padding: "3px 10px",
+      borderRadius: "var(--radius-pill)",
+      background: "var(--card-bg)",
+      color: "var(--accent-dark)",
+      border: "1px solid var(--accent)",
+      letterSpacing: "0.02em",
+    }}>
+      {children}
+    </span>
+  );
+}
+
+function CameraIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="#FAF7F2" strokeWidth="1.6">
+      <rect x="1" y="3" width="12" height="9" rx="1.5" />
+      <circle cx="7" cy="7.5" r="2" />
+      <path d="M5 3l1-2h2l1 2" />
+    </svg>
   );
 }

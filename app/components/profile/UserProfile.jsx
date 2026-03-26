@@ -79,36 +79,134 @@ export default function UserProfile({ userId = null }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
+
         :root {
-          --bg:#f3f0e6;--surface:#fff;--primary:#e8c8a6;
-          --primary-soft:#f5ede3;--primary-dark:#A67B5B;
-          --text:#8b7a6a;--muted:#A67B5B;--border:#e8ddd0;
-          --font-display:'Playfair Display',Georgia,serif;
-          --font-body:'DM Sans',system-ui,sans-serif;
-          --radius-lg:18px;--radius-xl:24px;--radius-pill:99px;
+          --bg-main:       #F5EFE6;
+          --bg-soft:       #EFE7DB;
+          --card-bg:       #E8D8C4;
+          --card-lite:     #F0E6D8;
+          --accent:        #B08968;
+          --accent-dark:   #7F5539;
+          --sage:          #A3B18A;
+          --soft-white:    #FAF7F2;
+          --text-primary:  #3E3E3E;
+          --text-secondary:#6F6F6F;
+          --text-light:    #9A9A9A;
+          --border:        rgba(176,137,104,0.18);
+          --border-strong: rgba(176,137,104,0.30);
+          --shadow-soft:   0 8px 30px rgba(100,70,40,0.06);
+          --shadow-hover:  0 16px 48px rgba(100,70,40,0.12);
+          --radius-xl:     24px;
+          --radius-lg:     16px;
+          --radius-md:     12px;
+          --radius-sm:     8px;
+          --radius-pill:   999px;
+          --font-display:  'Fraunces', Georgia, serif;
+          --font-body:     'DM Sans', system-ui, sans-serif;
+          --transition:    all 0.30s cubic-bezier(0.4,0,0.2,1);
         }
-        .up-root * { box-sizing:border-box; margin:0; padding:0; }
+
+        .up-root * { box-sizing: border-box; margin: 0; padding: 0; }
+
         .up-root {
-          font-family:var(--font-body);
-          background:var(--bg);
-          color:var(--text);
-          display:flex;
-          min-height:100vh;
+          font-family: var(--font-body);
+          background: var(--bg-main);
+          color: var(--text-primary);
+          display: flex;
+          min-height: 100vh;
         }
-        .up-main { flex:1; display:flex; flex-direction:column; min-width:0; overflow:hidden; }
-        .up-scroll { flex:1; overflow-y:auto; padding:28px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+
+        .up-main {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          overflow: hidden;
+        }
+
+        .up-topbar {
+          background: var(--soft-white);
+          border-bottom: 1px solid var(--border);
+          padding: 0 28px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          backdrop-filter: blur(8px);
+        }
+
+        .up-scroll {
+          flex: 1;
+          overflow-y: auto;
+          padding: 32px 28px;
+          scrollbar-width: thin;
+          scrollbar-color: var(--card-bg) transparent;
+        }
+
         .up-grid {
-          display:grid;
-          grid-template-columns:300px 1fr;
-          gap:24px;
-          align-items:start;
+          display: grid;
+          grid-template-columns: 300px 1fr;
+          gap: 24px;
+          align-items: start;
+          max-width: 1100px;
+          margin: 0 auto;
         }
-        @media(max-width:900px) {
-          .up-grid { grid-template-columns:1fr; }
+
+        .up-topbar-title {
+          font-family: var(--font-display);
+          font-size: 18px;
+          font-weight: 400;
+          color: var(--accent-dark);
+          letter-spacing: 0.01em;
         }
-        @media(max-width:768px) {
-          .up-scroll { padding:16px; }
+
+        .up-btn-back {
+          padding: 7px 16px;
+          background: none;
+          border: 1.5px solid var(--border-strong);
+          border-radius: var(--radius-pill);
+          font-family: var(--font-body);
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--text-secondary);
+          cursor: pointer;
+          transition: var(--transition);
+        }
+        .up-btn-back:hover {
+          background: var(--card-lite);
+          border-color: var(--accent);
+          color: var(--accent-dark);
+        }
+
+        .up-btn-edit {
+          padding: 8px 20px;
+          background: var(--accent-dark);
+          border: none;
+          border-radius: var(--radius-pill);
+          font-family: var(--font-body);
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--soft-white);
+          cursor: pointer;
+          transition: var(--transition);
+          letter-spacing: 0.02em;
+        }
+        .up-btn-edit:hover {
+          background: var(--accent);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 18px rgba(127,85,57,0.22);
+        }
+
+        @media (max-width: 900px) {
+          .up-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+          .up-scroll { padding: 16px; }
+          .up-topbar  { padding: 0 16px; }
         }
       `}</style>
 
@@ -116,25 +214,16 @@ export default function UserProfile({ userId = null }) {
         <Sidebar currentUser={currentUser} />
 
         <div className="up-main">
-          {/* Top bar */}
-          <div style={{ background:"var(--surface)", borderBottom:"1px solid var(--border)", padding:"0 28px", height:58, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-            <div style={{ fontFamily:"var(--font-display)", fontSize:19, color:"var(--primary-dark)", fontWeight:500 }}>
-              {isOwnProfile ? "My Profile" : profile?.full_name ?? "Profile"}
-            </div>
-            <div style={{ display:"flex", gap:10, alignItems:"center" }}>
-              <button
-                onClick={() => window.history.back()}
-                style={{ padding:"7px 14px", background:"none", border:"1.5px solid var(--border)", borderRadius:"var(--radius-pill)", fontFamily:"var(--font-body)", fontSize:12, color:"var(--muted)", cursor:"pointer" }}
-              >
+          <div className="up-topbar">
+            <span className="up-topbar-title">
+              {isOwnProfile ? "My Profile" : (profile?.full_name ?? "Profile")}
+            </span>
+            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+              <button className="up-btn-back" onClick={() => window.history.back()}>
                 ← Back
               </button>
               {isOwnProfile && (
-                <button
-                  onClick={() => setShowEdit(true)}
-                  style={{ padding:"8px 18px", background:"var(--primary-dark)", border:"none", borderRadius:"var(--radius-pill)", fontFamily:"var(--font-body)", fontSize:13, fontWeight:500, color:"#fff", cursor:"pointer", transition:"opacity 0.15s" }}
-                  onMouseEnter={e => e.currentTarget.style.opacity="0.88"}
-                  onMouseLeave={e => e.currentTarget.style.opacity="1"}
-                >
+                <button className="up-btn-edit" onClick={() => setShowEdit(true)}>
                   Edit Profile
                 </button>
               )}
@@ -172,9 +261,22 @@ export default function UserProfile({ userId = null }) {
 
 function LoadingScreen() {
   return (
-    <div style={{ minHeight:"100vh", background:"#f3f0e6", display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:16, fontFamily:"'DM Sans',sans-serif" }}>
-      <div style={{ fontFamily:"'Playfair Display',serif", fontSize:24, color:"#A67B5B" }}>BreedLy</div>
-      <div style={{ fontSize:13, color:"#A67B5B" }}>Loading profile...</div>
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(160deg, #F8F3EC 0%, #F5EFE6 60%, #ECE0D0 100%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      gap: 16,
+      fontFamily: "'DM Sans', sans-serif",
+    }}>
+      <div style={{ fontFamily: "'Fraunces', serif", fontSize: 28, fontWeight: 300, color: "#7F5539", letterSpacing: "0.02em" }}>
+        Breedly
+      </div>
+      <div style={{ fontSize: 13, color: "#B08968", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        Loading profile…
+      </div>
     </div>
   );
 }

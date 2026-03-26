@@ -1,240 +1,138 @@
 "use client";
-
 import { useRef, useState, useEffect } from "react";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
+import "./detect.css";
 
-export default function DetectDog(){
+export default function DetectDog() {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const imageRef = useRef(null);
 
-const videoRef = useRef(null);
-const canvasRef = useRef(null);
-const imageRef = useRef(null);
+  const [model, setModel] = useState(null);
+  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [detecting, setDetecting] = useState(false);
+  const [mode, setMode] = useState("camera"); // camera or upload
 
-const [model,setModel] = useState(null);
-const [result,setResult] = useState("");
-const [loading,setLoading] = useState(true);
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        await tf.ready();
+        const loadedModel = await mobilenet.load({ version: 2, alpha: 1.0 });
+        setModel(loadedModel);
+        setLoading(false);
+      } catch (error) {
+        console.error("Model load error:", error);
+      }
+    };
+    loadModel();
+  }, []);
 
+  const startCamera = async () => {
+    setMode("camera");
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoRef.current.srcObject = stream;
+  };
 
-// Load AI model automatically
-useEffect(() => {
+  const captureAndDetect = async () => {
+    setDetecting(true);
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0);
 
-const loadModel = async () => {
+    const predictions = await model.classify(canvas);
+    setResult(predictions);
+    setDetecting(false);
+  };
 
-try{
+  const uploadImage = (e) => {
+    setMode("upload");
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      imageRef.current.src = url;
+      setResult("");
+    }
+  };
 
-await tf.ready();
+  const detectUploaded = async () => {
+    setDetecting(true);
+    const predictions = await model.classify(imageRef.current);
+    setResult(predictions);
+    setDetecting(false);
+  };
 
-const loadedModel = await mobilenet.load({
-version:2,
-alpha:1.0
-});
+  return (
+    <main className="detect-page">
+      <div className="detect-container">
+        <header>
+          <h1>Breed <em>Identify</em></h1>
+          <p className="subtitle">Our Neural Network analyzes 1,000+ traits to identify your dog's lineage.</p>
+        </header>
 
-setModel(loadedModel);
-setLoading(false);
+        {loading ? (
+          <div className="loading-state">
+            <p>Initializing AI Vision Engine...</p>
+          </div>
+        ) : (
+          <div className="detect-grid">
+            {/* Live Camera Lab */}
+            <div className="media-box">
+              <h3 style={{fontFamily: 'Fraunces'}}>Vision Lab</h3>
+              <video ref={videoRef} autoPlay className="preview-window" />
+              <canvas ref={canvasRef} style={{ display: "none" }} />
+              <div style={{width: '100%', display: 'flex', gap: '10px'}}>
+                <button onClick={startCamera} className="ai-btn ai-btn-secondary">Enable Camera</button>
+                <button onClick={captureAndDetect} className="ai-btn ai-btn-primary">Scan Live</button>
+              </div>
+            </div>
 
-}catch(error){
+            {/* Upload Lab */}
+            <div className="media-box">
+              <h3 style={{fontFamily: 'Fraunces'}}>Upload Lab</h3>
+              <div className="preview-window" style={{background: '#F0E6D8', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <img ref={imageRef} alt="" style={{maxWidth: '100%', maxHeight: '100%'}} />
+              </div>
+              <input type="file" accept="image/*" onChange={uploadImage} id="file-up" style={{display: 'none'}} />
+              <div style={{width: '100%', display: 'flex', gap: '10px'}}>
+                <label htmlFor="file-up" className="ai-btn ai-btn-secondary" style={{textAlign: 'center', cursor: 'pointer'}}>Select Photo</label>
+                <button onClick={detectUploaded} className="ai-btn ai-btn-primary">Analyze Photo</button>
+              </div>
+            </div>
 
-console.error("Model load error:",error);
-
-}
-
-};
-
-loadModel();
-
-}, []);
-
-
-// Start camera
-const startCamera = async () => {
-
-const stream = await navigator.mediaDevices.getUserMedia({video:true});
-
-videoRef.current.srcObject = stream;
-
-};
-
-
-// Capture photo
-const capturePhoto = () => {
-
-const video = videoRef.current;
-const canvas = canvasRef.current;
-
-canvas.width = video.videoWidth;
-canvas.height = video.videoHeight;
-
-const ctx = canvas.getContext("2d");
-ctx.drawImage(video,0,0);
-
-};
-
-
-// Upload image
-const uploadImage = (e) => {
-
-const file = e.target.files[0];
-
-if(file){
-const url = URL.createObjectURL(file);
-imageRef.current.src = url;
-}
-
-};
-
-
-// Detect dog
-const detectDog = async () => {
-
-if(!model){
-alert("Model still loading");
-return;
-}
-
-let predictions;
-
-if(imageRef.current.src){
-predictions = await model.classify(imageRef.current);
-}else{
-predictions = await model.classify(canvasRef.current);
-}
-
-setResult(
-predictions.map(p => `${p.className} (${(p.probability*100).toFixed(1)}%)`).join(", ")
-);
-
-};
-
-
-return(
-    
-<div
-
-  style={{
-    maxWidth: "600px",
-    margin: "50px auto",
-    padding: "30px",
-    borderRadius: "15px",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-    backgroundColor: "#fff",
-    textAlign: "center",
-    fontFamily: "'Fredoka', sans-serif"
-  }}
->
-    <img
-            src="/assets/download-removebg-preview.png"
-            alt="Peeking Puppies"
-            className="puppy-top"
-          />
-  <h1 style={{ marginBottom: "10px" }}>Breed Identify</h1>
-
-  <p style={{ color: "#555", fontSize: "14px", marginBottom: "20px" }}>
-    Use the power of AI to identify dogs in photos or live camera feed. Capture images or upload photos, then let the AI tell you which dog breed it is!
-  </p>
-
-  {loading && <p style={{ color: "#555" }}>Loading AI Model...</p>}
-
-  {/* Vertical Flex Container */}
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",  // changed from row to column
-      gap: "30px",
-      justifyContent: "center",
-      alignItems: "center",
-      flexWrap: "wrap"
-    }}
-  >
-    {/* Camera Section */}
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
-      <button
-        onClick={startCamera}
-        style={{
-          padding: "10px 20px",
-          borderRadius: "8px",
-          border: "none",
-          backgroundColor: "#A67B5B",
-          color: "#fff",
-          cursor: "pointer",
-          fontWeight: "bold",
-          transition: "background 0.3s"
-        }}
-        onMouseEnter={e => e.target.style.backgroundColor = "#d58d56"}
-        onMouseLeave={e => e.target.style.backgroundColor = "#A67B5B"}
-      >
-        Start Camera
-      </button>
-
-      <video
-        ref={videoRef}
-        autoPlay
-        style={{ width: "300px", borderRadius: "10px", boxShadow:" rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px" }}
-      />
-
-      <button
-        onClick={capturePhoto}
-        style={{
-          padding: "10px 20px",
-          borderRadius: "8px",
-          border: "none",
-          backgroundColor: "#A67B5B",
-          color: "#fff",
-          cursor: "pointer",
-          fontWeight: "bold",
-          transition: "background 0.3s"
-        }}
-        onMouseEnter={e => e.target.style.backgroundColor = "#d58d56"}
-        onMouseLeave={e => e.target.style.backgroundColor = "#A67B5B"}
-      >
-        Capture Photo
-      </button>
-
-      <canvas
-        ref={canvasRef}
-        style={{ width: "300px", borderRadius: "10px",boxShadow:" rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px" }}
-      />
-    </div>
-
-    {/* Upload Section */}
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
-      <h3 style={{ margin: "0 0 10px 0" }}>OR Upload Dog Photo</h3>
-
-      <input
-        type="file"
-        accept="image/*"
-        onChange={uploadImage}
-        style={{ padding: "8px", borderRadius: "6px", border: "1px solid #A67B5B",fontFamily: "'Fredoka', sans-serif" }}
-      />
-
-      <img
-        ref={imageRef}
-        alt="Uploaded Dog"
-        style={{ width: "200px", minHeight:"30px",maxHeight:"250px",borderRadius: "5px", boxShadow:" rgba(0, 0, 0, 0.25) 0px 14px 28px" }}
-      />
-
-      <button
-        onClick={detectDog}
-        style={{
-          padding: "10px 20px",
-          borderRadius: "8px",
-          border: "none",
-          backgroundColor: "#A67B5B",
-          color: "#fff",
-          cursor: "pointer",
-          fontWeight: "bold",
-          transition: "background 0.3s",
-          marginTop: "10px"
-        }}
-        onMouseEnter={e => e.target.style.backgroundColor = "#d58d56"}
-        onMouseLeave={e => e.target.style.backgroundColor = "#A67B5B"}
-      >
-        Detect Dog
-      </button>
-
-      <h2 style={{ marginTop: "20px", color: "#333" }}>{result}</h2>
-    </div>
-  </div>
-</div>
-);
+            {/* AI Analysis Result */}
+            {(result || detecting) && (
+              <div className="result-area">
+                <span className="result-tag">AI Analysis Report</span>
+                {detecting ? (
+                  <h2 style={{fontFamily: 'Fraunces'}}>Scanning biometric data...</h2>
+                ) : (
+                  <div>
+                    <h2 style={{fontFamily: 'Fraunces', color: '#A3B18A'}}>
+                        Matches Found: {result[0].className.split(',')[0]}
+                    </h2>
+                    <p style={{fontSize: '0.9rem', color: '#666', marginTop: '10px'}}>
+                      Confidence Level: {(result[0].probability * 100).toFixed(1)}%
+                    </p>
+                    <div style={{display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '15px'}}>
+                        {result.slice(1,3).map(p => (
+                            <span key={p.className} style={{fontSize: '0.75rem', background: '#fff', padding: '4px 10px', borderRadius: '5px'}}>
+                                {p.className.split(',')[0]}
+                            </span>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </main>
+  );
 }

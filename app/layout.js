@@ -20,7 +20,7 @@ export const metadata = {
     title: "BreedLy – Know About Paws",
     description:
       "Discover dog breeds, care guides, and find your perfect canine companion.",
-     icons: { icon: "./Dog face.png" }
+    icons: { icon: "./Dog face.png" }
   }
 };
 export default function RootLayout({ children }) {
@@ -33,11 +33,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-         <AuthProvider>
-        {/* ClientShell wraps all client-side interactive components */}
-        <ClientShell>
-          {children}
-        </ClientShell>
+        <AuthProvider>
+          {/* ClientShell wraps all client-side interactive components */}
+          <ClientShell>
+            {children}
+          </ClientShell>
         </AuthProvider>
       </body>
     </html>

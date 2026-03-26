@@ -1,118 +1,146 @@
+/* add-dog.css — Premium Onboarding Style */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
 
 .add-dog-page {
+  --bg: #F5EFE6;
+  --accent: #B08968;
+  --accent-dark: #7F5539;
+  --cream: #FAF7F2;
+  --sage: #A3B18A;
+  
+  background-color: var(--bg);
   min-height: 100vh;
-  padding: 40px 20px;
-  font-family: 'Fredoka', sans-serif;
-  text-align: center;
-  background: #fff9f2;
+  padding: 80px 20px;
+  font-family: 'DM Sans', sans-serif;
+  color: #3E3E3E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .add-dog-page h1 {
-  color: #866e54;
-  margin-bottom: 8px;
-  font-size: 2.2rem;
+  font-family: 'Fraunces', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--accent-dark);
+  margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 1rem;
+  color: #6F6F6F;
+  margin-bottom: 45px;
+  font-size: 1.1rem;
+  max-width: 500px;
+  line-height: 1.6;
 }
 
 .dog-form {
-  max-width: 450px;
-  margin: auto;
-  background: #fffefc;
-  padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 550px;
+  background: white;
+  padding: 50px;
+  border-radius: 32px;
+  box-shadow: 0 20px 50px rgba(100, 70, 40, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 30px;
+}
+
+/* Form Sections */
+.form-group-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  color: var(--accent-dark);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-group-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #EEE3D3;
 }
 
 .dog-form label {
-  text-align: left;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #444;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
 }
 
 .dog-form input,
 .dog-form select {
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-family: inherit;
-  font-size: 0.95rem;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid #EFE7DB;
+  background: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   outline: none;
-  transition: border 0.2s ease;
 }
 
 .dog-form input:focus,
 .dog-form select:focus {
-  border-color: #866e54;
+  border-color: var(--accent);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(176, 137, 104, 0.1);
 }
 
 .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Actions */
+.form-footer {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .save-btn {
-   font-family: 'Fredoka', sans-serif;
-  margin-top: 16px;
-  padding: 14px;
-  border-radius: 30px;
-  border: none;
- background-color: #866e54;
+  background: var(--accent-dark);
   color: white;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 18px;
+  border-radius: 99px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: 0.3s;
 }
 
 .save-btn:hover {
-  background: #62503e;
-  transform: scale(1.03);
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(127, 85, 57, 0.2);
 }
 
 .skip-btn {
-   font-family: 'Fredoka', sans-serif;
-  background-color: #866e54;
-  color: white;
-  border: 2px solid #866e54;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 30px;
- font-size: 15px;
-  font-weight: 600;
+  background: transparent;
+  color: #9A9A9A;
+  border: none;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .skip-btn:hover {
-  background-color: #62503e;
-  color: white;
-  transform: scale(1.03);
+  color: var(--accent-dark);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 480px) {
-  .dog-form {
-    padding: 22px;
-  }
-
-  .row {
-    flex-direction: column;
-  }
-
-  .primary-btn,
-  .skip-btn {
-    width: 100%;
-  }
+@media (max-width: 600px) {
+  .dog-form { padding: 30px 20px; }
+  .row { grid-template-columns: 1fr; }
 }

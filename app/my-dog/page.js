@@ -7,280 +7,153 @@ import { breedCards } from "@/app/data/breed";
 
 export default function MyDogPage() {
   const [dogs, setDogs] = useState([]);
-  const [editingId, setEditingId] = useState(null);
+  const [activeId, setActiveId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
-  const [activeDogId, setActiveDogId] = useState(null);
 
-  // Load dogs from localStorage
   useEffect(() => {
-    const storedDogs = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    const storedActive = localStorage.getItem("activeDogId");
-
-    setDogs(storedDogs);
-
-    if (storedActive && storedDogs.find((d) => d.id === storedActive)) {
-      setActiveDogId(storedActive);
-    } else if (storedDogs.length > 0) {
-      setActiveDogId(storedDogs[0].id);
-      localStorage.setItem("activeDogId", storedDogs[0].id);
-    }
+    const stored = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
+    setDogs(stored);
+    if (stored.length > 0) setActiveId(localStorage.getItem("activeDogId") || stored[0].id);
   }, []);
 
-  const selectDog = (id) => {
-    setActiveDogId(id);
-    localStorage.setItem("activeDogId", id);
+  const activeDog = dogs.find(d => d.id === activeId);
+
+  // Calculate Life Stage Percentage for Progress Bar
+  const getLifeProgress = (age) => {
+    const percentage = (age / 15) * 100; // Assuming 15 is max life expectancy
+    return Math.min(percentage, 100);
   };
 
-  // Delete dog
   const handleDelete = (id) => {
-    if (confirm("Are you sure you want to delete this dog profile?")) {
-      const updatedDogs = dogs.filter((dog) => dog.id !== id);
-      setDogs(updatedDogs);
-      localStorage.setItem("breedlyDogs", JSON.stringify(updatedDogs));
+    if (confirm("Permanently remove this family member?")) {
+      const updated = dogs.filter(d => d.id !== id);
+      setDogs(updated);
+      localStorage.setItem("breedlyDogs", JSON.stringify(updated));
+      if (id === activeId) setActiveId(updated[0]?.id || null);
     }
-  };
-
-  // Start editing
-  const startEdit = (dog) => {
-    setEditingId(dog.id);
-    setEditData({ ...dog });
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditData({ ...editData, [name]: value });
-  };
-
-  // Save edits
-  const saveEdit = () => {
-    const updatedDogs = dogs.map((dog) =>
-      dog.id === editingId ? editData : dog
-    );
-    setDogs(updatedDogs);
-    localStorage.setItem("breedlyDogs", JSON.stringify(updatedDogs));
-    setEditingId(null);
-  };
-
-  // Cancel editing
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditData({});
   };
 
   return (
-     <ProtectedRoute>
-    <main className="my-dog-page">
-      <header className="my-dog-header">
-        <h1>🐾 My Dogs</h1>
-        <p>Your personalized dog profiles</p>
-      </header>
-
-      {dogs.length === 0 ? (
-        <div className="empty-state">
-          <p>You haven’t added any dogs yet.</p>
-          <Link href="/my-dog/add" className="primary-btn">
-            + Add Your Dog
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="dog-grid">
-            {dogs.map((dog) => (
-              <div
-                key={dog.id}
-                className={`dog-card ${activeDogId === dog.id ? "active" : ""}`}
-                onClick={() => selectDog(dog.id)}
+    <ProtectedRoute>
+      <main className="my-dog-page">
+        <div className="dashboard-layout">
+          
+          {/* LEFT SIDEBAR */}
+          <aside className="sidebar-nav">
+            <h3 style={{fontFamily: 'Fraunces', marginLeft: '10px'}}>The Pack</h3>
+            {dogs.map(dog => (
+              <div 
+                key={dog.id} 
+                className={`dog-nav-item ${activeId === dog.id ? 'active' : ''}`}
+                onClick={() => { setActiveId(dog.id); localStorage.setItem("activeDogId", dog.id); setIsEditing(false); }}
               >
-                {editingId === dog.id ? (
-                  <div className="edit-form">
-                    <label>
-                      Dog Name
-                      <input
-                        type="text"
-                        name="name"
-                        required
-                        value={editData.name}
-                        onChange={handleChange}
-                      />
-                    </label>
-
-                    <label>
-                      Breed
-                      <select
-                        name="breed"
-                        required
-                        value={editData.breed}
-                        onChange={handleChange}
-                      >
-                        <option value="">Select breed</option>
-                        {breedCards.map((b) => (
-                          <option key={b.name} value={b.name}>
-                            {b.name}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-
-                    <div className="row">
-                      <label>
-                        Age (years)
-                        <input
-                          type="number"
-                          step="0.1"
-                          name="age"
-                          required
-                          value={editData.age}
-                          onChange={handleChange}
-                        />
-                      </label>
-
-                      <label>
-                        Weight (kg)
-                        <input
-                          type="number"
-                          step="0.1"
-                          name="weight"
-                          required
-                          value={editData.weight}
-                          onChange={handleChange}
-                        />
-                      </label>
-                    </div>
-
-                    <label>
-                      Allergies (if any)
-                      <input
-                        type="text"
-                        name="allergies"
-                        placeholder="e.g. Chicken, grains"
-                        value={editData.allergies}
-                        onChange={handleChange}
-                      />
-                    </label>
-
-                    <label>
-                      City
-                      <input
-                        type="text"
-                        name="city"
-                        required
-                        value={editData.city}
-                        onChange={handleChange}
-                      />
-                    </label>
-
-                    <div className="card-actions">
-                      <button onClick={saveEdit} className="secondary-btn">
-                        💾 Save
-                      </button>
-                      <button onClick={cancelEdit} className="delete-btn">
-                        ❌ Cancel
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <h3>{dog.name}</h3>
-                    <p className="breed">{dog.breed}</p>
-                    <ul className="dog-meta">
-                      <li>🎂 Age: {dog.age} yrs</li>
-                      <li>⚖️ Weight: {dog.weight} kg</li>
-                      {dog.allergies && <li>🚫 Allergies: {dog.allergies}</li>}
-                      <li>📍 City: {dog.city}</li>
-                    </ul>
-                    <div className="age-warning">
-                      {dog.age < 1 && (
-                        <p>
-                          🐶 Puppy Warning: Frequent vet visits, vaccinations,
-                          socialization & puppy diet required.
-                        </p>
-                      )}
-                      {dog.age >= 1 && dog.age < 7 && (
-                        <p>
-                          🐕 Adult Tip: Maintain regular exercise, balanced diet
-                          & preventive care.
-                        </p>
-                      )}
-                      {dog.age >= 7 && (
-                        <p>
-                          🦴 Senior Alert: Monitor joints, special diet, gentle
-                          exercise, frequent vet checks.
-                        </p>
-                      )}
-                    </div>
-                    <div className="daily-care-plan">
-                      <h4>📋 Daily Care Plan</h4>
-                      <ul>
-                        <li>
-                          🥗 Meals:{" "}
-                          {dog.food ? dog.food.recommended : "Check Food Guide"}
-                        </li>
-                        <li>💧 Hydration: Keep fresh water available</li>
-                        <li>
-                          🏃 Exercise:{" "}
-                          {dog.age < 1
-                            ? "Short frequent play"
-                            : dog.age < 7
-                            ? "1–2 walks/day"
-                            : "Gentle walks & light play"}
-                        </li>
-                        <li>🩺 Health: Preventive care, regular vet checks</li>
-                        <li>🧼 Grooming: Brushing, baths, dental & ear care</li>
-                      </ul>
-                    </div>
-
-                    <div className="card-actions">
-                      <button
-                        onClick={() => startEdit(dog)}
-                        className="secondary-btn edit-btn"
-                      >
-                        ✏️ Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(dog.id)}
-                        className="delete-btn"
-                      >
-                        🗑️ Delete
-                      </button>
-                      <Link
-                        href={`/food-guide`}
-                        className="secondary-btn"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        🍖 Food Guide
-                      </Link>
-                      <Link
-                        href={`/health-guide?breed=${encodeURIComponent(
-                          dog.breed
-                        )}`}
-                        className="secondary-btn"
-                      >
-                        🩺 Health Guide
-                      </Link>
-
-                      <Link href="/my-dog/services" className="secondary-btn">
-                        📍 Local Services
-                      </Link>
-
-                      {activeDogId === dog.id && (
-                        <span className="active-badge">Active 🐾</span>
-                      )}
-                    </div>
-                  </>
-                )}
+                <span style={{fontSize: '1.5rem'}}>🐕</span>
+                <div>
+                  <div style={{fontWeight: '600', fontSize: '0.95rem'}}>{dog.name}</div>
+                  <div style={{fontSize: '0.75rem', opacity: 0.6}}>{dog.breed}</div>
+                </div>
               </div>
             ))}
-          </div>
-
-          <div className="add-more">
-            <Link href="/my-dog/add" className="primary-btn">
-              + Add Another Dog
+            <Link href="/my-dog/add" className="p-btn p-btn-outline" style={{marginTop: '10px', justifyContent: 'center'}}>
+              + Add Member
             </Link>
-          </div>
-        </>
-      )}
-    </main>
-     </ProtectedRoute>
+          </aside>
+
+          {/* MAIN CONTENT AREA */}
+          <section className="profile-container">
+            {!activeDog ? (
+              <div className="profile-card" style={{textAlign: 'center'}}>
+                <h2>Start your journey</h2>
+                <p>Add your first dog to unlock personalized health tracking.</p>
+                <Link href="/my-dog/add" className="p-btn p-btn-main">Add My Dog</Link>
+              </div>
+            ) : isEditing ? (
+              <div className="profile-card">
+                <h2 style={{fontFamily: 'Fraunces'}}>Refine Profile</h2>
+                {/* Simplified Edit Form */}
+                <div style={{display: 'grid', gap: '15px', marginTop: '20px'}}>
+                  <input className="info-tile" type="text" value={editData.name} onChange={e => setEditData({...editData, name: e.target.value})} />
+                  <div style={{display: 'flex', gap: '10px'}}>
+                     <button onClick={() => {
+                       const updated = dogs.map(d => d.id === activeId ? editData : d);
+                       setDogs(updated);
+                       localStorage.setItem("breedlyDogs", JSON.stringify(updated));
+                       setIsEditing(false);
+                     }} className="p-btn p-btn-main">Save</button>
+                     <button onClick={() => setIsEditing(false)} className="p-btn p-btn-outline">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="profile-card">
+                <div className="profile-header">
+                  <div>
+                    <span className="progress-labels" style={{color: '#A3B18A', fontWeight: '700'}}>Active Profile</span>
+                    <h2>{activeDog.name}</h2>
+                    <span style={{color: '#B08968', fontSize: '0.9rem'}}>{activeDog.breed}</span>
+                  </div>
+                  <div className="btn-group" style={{marginTop: '0'}}>
+                    <button onClick={() => { setEditData(activeDog); setIsEditing(true); }} className="p-btn p-btn-outline">Edit</button>
+                    <button onClick={() => handleDelete(activeDog.id)} className="p-btn" style={{color: '#b85c5c'}}>Remove</button>
+                  </div>
+                </div>
+
+                {/* Life Stage Progress */}
+                <div className="life-stage-container">
+                  <div className="progress-labels">
+                    <span>Puppy</span>
+                    <span>Adult</span>
+                    <span>Senior</span>
+                  </div>
+                  <div className="progress-track">
+                    <div className="progress-fill" style={{width: `${getLifeProgress(activeDog.age)}%`}}></div>
+                  </div>
+                  <p style={{fontSize: '0.8rem', marginTop: '10px', color: '#666'}}>
+                    {activeDog.name} is currently in the <strong>{activeDog.age < 1 ? 'Development' : activeDog.age < 7 ? 'Maintenance' : 'Golden'}</strong> stage of life.
+                  </p>
+                </div>
+
+                {/* Quick Info Grid */}
+                <div className="info-grid">
+                  <div className="info-tile"><span>Age</span><strong>{activeDog.age} Years</strong></div>
+                  <div className="info-tile"><span>Weight</span><strong>{activeDog.weight} kg</strong></div>
+                  <div className="info-tile"><span>Location</span><strong>{activeDog.city}</strong></div>
+                  <div className="info-tile"><span>Status</span><strong style={{color: '#A3B18A'}}>Healthy</strong></div>
+                </div>
+
+                {/* Split Care Content */}
+                <div className="care-grid">
+                  <div className="care-section">
+                    <h4>🦴 Nutrition & Health</h4>
+                    <ul className="care-list">
+                      <li><span>Daily Diet</span> <strong>{activeDog.food?.recommended || "Standard"}</strong></li>
+                      <li><span>Restrictions</span> <strong>{activeDog.allergies || "None"}</strong></li>
+                      <li><span>Next Checkup</span> <strong>In 4 Months</strong></li>
+                    </ul>
+                    <Link href={`/health-guide?breed=${activeDog.breed}`} className="p-btn p-btn-main" style={{width: '100%', marginTop: '15px', justifyContent: 'center'}}>
+                      View Health Guide
+                    </Link>
+                  </div>
+
+                  <div className="care-section">
+                    <h4>🎾 Activity & Routine</h4>
+                    <ul className="care-list">
+                      <li><span>Exercise</span> <strong>{activeDog.age < 7 ? '60 mins' : '30 mins'}</strong></li>
+                      <li><span>Socialization</span> <strong>High Priority</strong></li>
+                      <li><span>Grooming</span> <strong>Every 2 Weeks</strong></li>
+                    </ul>
+                    <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
+                      <Link href="/food-guide" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Food</Link>
+                      <Link href="/my-dog/services" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Vets</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+      </main>
+    </ProtectedRoute>
   );
 }

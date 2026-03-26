@@ -73,7 +73,54 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
   const AI_Q = "What food is best for a Golden Retriever?";
   const AI_A =
     "Golden Retrievers do best on high-quality dry kibble with real chicken or fish as the first ingredient. Feed twice daily — around 3 cups total — and watch their weight, as they love to overeat! 🐾";
+const QUESTIONS = [
+  "What should I feed my dog?",
+  "Why is my dog barking at night?",
+  "How to train a puppy?",
+  "Best food for Golden Retriever?"
+];
 
+const ANSWERS = [
+  "A balanced high-protein diet with controlled portions is best for most dogs 🥗",
+  "Night barking can be due to anxiety, alertness, or boredom.",
+  "Start with positive reinforcement and short sessions 🐾",
+  "Golden Retrievers need protein-rich food with healthy fats."
+];
+
+const [index, setIndex] = useState(0);
+const [typedText, setTypedText] = useState("");
+const [done, setDone] = useState(false);
+
+useEffect(() => {
+  let i = 0;
+  setTypedText("");
+  setDone(false);
+
+  const current = ANSWERS[index];
+
+  const typing = setInterval(() => {
+    i++;
+    setTypedText(current.slice(0, i));
+
+    if (i >= current.length) {
+      clearInterval(typing);
+      setDone(true);
+
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % ANSWERS.length);
+      }, 2000);
+    }
+  }, 25);
+
+  return () => clearInterval(typing);
+}, [index]);
+
+/* Floating bubbles */
+const bubbles = [
+  { text: QUESTIONS[(index) % QUESTIONS.length], style: { top: "10%", left: "5%" } },
+  { text: QUESTIONS[(index+1) % QUESTIONS.length], style: { top: "40%", left: "0%" } },
+  { text: QUESTIONS[(index+2) % QUESTIONS.length], style: { top: "20%", right: "0%" } },
+];
   useEffect(() => {
     // Fade-in observer
     const observer = new IntersectionObserver(
@@ -330,37 +377,37 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
             <Link href="/chat" className={styles.btnCream}>Try the AI Assistant ✨</Link>
             <p className={styles.microLight}>Powered by Claude · Always free</p>
           </div>
-          <div className={styles.aiRight}>
-            <div className={styles.aiChatWindow}>
-              <div className={styles.aiChatHeader}>
-                <div className={styles.aiDot} />
-                <span>Breedly AI</span>
-                <span className={styles.aiOnline}>Online</span>
-              </div>
-              <div className={styles.aiChatBody}>
-                {aiTyped && (
-                  <div className={styles.aiMsgUser}>
-                    {aiTyped}
-                    {aiTyped.length < AI_Q.length && <span className={styles.cursor}>|</span>}
-                  </div>
-                )}
-                {aiResponse && (
-                  <div className={styles.aiMsgBot}>
-                    <div className={styles.aiBotAvatar}>🤖</div>
-                    <div className={styles.aiBotBubble}>
-                      {aiResponse}
-                      {!aiDone && <span className={styles.cursor}>|</span>}
-                    </div>
-                  </div>
-                )}
-              </div>
-              {aiDone && (
-                <div className={styles.aiChatFooter}>
-                  <span>Ask a follow-up question…</span>
-                </div>
-              )}
-            </div>
-          </div>
+    <div className={styles.aiRight}>
+  <div className={styles.aiVisual}>
+
+    {/* FLOATING QUESTIONS */}
+{bubbles.map((q, i) => (
+  <div key={i} className={`${styles.bubble} ${styles["b" + i]}`}>
+    {q.text}
+  </div>
+))}
+
+    {/* MAIN AI CARD */}
+    <div className={styles.aiMainCard}>
+
+      <div className={styles.aiHeader}>
+        <span className={styles.aiLive}></span>
+        Breedly AI is thinking...
+      </div>
+
+      <div className={styles.aiContent}>
+        {typedText}
+        {!done && <span className={styles.cursor}>|</span>}
+      </div>
+
+      <div className={styles.aiFooter}>
+        <span>Personalised · Instant · Smart</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
         </div>
       </section>
 
@@ -396,73 +443,106 @@ const AI_ANSWER   = "Labrador puppies do best on large-breed puppy kibble with c
        {/* ════════════════════════════════════════════════════════════
           TEASER 6 — MY DOG
       ════════════════════════════════════════════════════════════ */}
-         <section className={`${styles.myDogSection} ${styles.fadeIn}`}>
-        <div className={styles.myDogInner}>
-          {/* Left: illustration / mock profile */}
-          <div className={styles.myDogLeft}>
-            <div className={styles.myDogProfileCard}>
-              <div className={styles.myDogAvatar}>🐶</div>
-              <div className={styles.myDogInfo}>
-                <span className={styles.myDogName}>Bruno</span>
-                <span className={styles.myDogBreed}>Golden Retriever · 2 yrs</span>
-              </div>
-              <span className={styles.myDogVerified}>✔ Profile complete</span>
-              <div className={styles.myDogStats}>
-                <div className={styles.myDogStat}><span>Weight</span><strong>28 kg</strong></div>
-                <div className={styles.myDogStat}><span>Size</span><strong>Large</strong></div>
-                <div className={styles.myDogStat}><span>Health</span><strong>Healthy</strong></div>
-              </div>
-            </div>
- 
-            {/* Floating guide pills */}
-            <div className={styles.myDogPill} style={{ top:"10px", right:"-20px" }}>
-              🥗 Personalised food plan
-            </div>
-            <div className={styles.myDogPill} style={{ bottom:"50px", left:"-10px", animationDelay:"1.2s" }}>
-              🩺 Next vaccine in 3 months
-            </div>
-            <div className={styles.myDogPill} style={{ bottom:"-10px", right:"10px", animationDelay:"2.1s" }}>
-              🏃 30 min walk recommended
-            </div>
+       <section className={`${styles.myDogSection} ${styles.fadeIn}`}>
+  <div className={styles.myDogInner}>
+
+    {/* LEFT */}
+    <div className={styles.myDogLeft}>
+
+      <div className={styles.myDogProfileCard}>
+        <div className={styles.myDogTop}>
+          <div className={styles.myDogAvatar}>🐶</div>
+
+          <div className={styles.myDogInfo}>
+            <span className={styles.myDogName}>Bruno</span>
+            <span className={styles.myDogBreed}>
+              Golden Retriever · 2 yrs
+            </span>
           </div>
- 
-          {/* Right: copy */}
-          <div className={styles.myDogRight}>
-            <p className={styles.eyebrow}>My Dog</p>
-            <h2>
-              Create your dog's profile.<br />
-              <em>Get guides made just<br />for them.</em>
-            </h2>
-            <p>
-              Add your dog's name, breed, age, weight, and health info.
-              Breedly tailors food guides, health reminders, and training
-              tips specifically for your dog — not a generic one.
-            </p>
- 
-            <div className={styles.myDogFeatures}>
-              {[
-                { icon:"🥗", text:"Breed & age specific food portions"  },
-                { icon:"🩺", text:"Personalised vaccination reminders"  },
-                { icon:"🐕", text:"Training tips for your dog's breed"  },
-                { icon:"📊", text:"Track weight, health & milestones"   },
-              ].map((f) => (
-                <div key={f.text} className={styles.myDogFeature}>
-                  <span>{f.icon}</span>{f.text}
-                </div>
-              ))}
-            </div>
- 
-            <div className={styles.myDogActions}>
-              <Link href="/my-dog" className={styles.btnPrimary}>
-                Create My Dog's Profile 🐾
-              </Link>
-              <Link href="/my-dog" className={styles.btnGhost}>
-                See how it works
-              </Link>
-            </div>
+
+          <span className={styles.myDogVerified}>✔</span>
+        </div>
+
+        {/* Stats */}
+        <div className={styles.myDogStats}>
+          <div className={styles.myDogStat}>
+            <span>Weight</span>
+            <strong>28 kg</strong>
+          </div>
+          <div className={styles.myDogStat}>
+            <span>Size</span>
+            <strong>Large</strong>
+          </div>
+          <div className={styles.myDogStat}>
+            <span>Health</span>
+            <strong className={styles.green}>Healthy</strong>
           </div>
         </div>
-      </section>
+
+        {/* subtle progress */}
+        <div className={styles.healthBar}>
+          <div className={styles.healthFill}></div>
+        </div>
+      </div>
+
+      {/* FLOATING PILLS */}
+      <div className={styles.myDogPill} style={{ top:"0px", right:"-30px" }}>
+        🥗 Food tailored
+      </div>
+
+      <div className={styles.myDogPill} style={{ bottom:"60px", left:"-20px", animationDelay:"1.2s" }}>
+        🩺 Vaccine due soon
+      </div>
+
+      <div className={styles.myDogPill} style={{ bottom:"-10px", right:"0px", animationDelay:"2s" }}>
+        🏃 Daily walk ready
+      </div>
+
+    </div>
+
+    {/* RIGHT */}
+    <div className={styles.myDogRight}>
+      <p className={styles.eyebrow}>My Dog</p>
+
+      <h2>
+        Build your dog’s profile.<br />
+        <em>Get everything personalised.</em>
+      </h2>
+
+      <p className={styles.desc}>
+        No more generic advice. Add your dog’s details and BreedLy
+        creates a complete lifestyle guide — from food to health
+        to training — built specifically for them.
+      </p>
+
+      {/* FEATURES */}
+      <div className={styles.myDogFeatures}>
+        {[
+          { icon:"🥗", text:"Smart food plans"  },
+          { icon:"🩺", text:"Health reminders"  },
+          { icon:"🐕", text:"Training guidance"  },
+          { icon:"📊", text:"Track growth & health"   },
+        ].map((f) => (
+          <div key={f.text} className={styles.myDogFeature}>
+            <span>{f.icon}</span>
+            <p>{f.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div className={styles.myDogActions}>
+        <Link href="/my-dog" className={styles.btnPrimary}>
+          Create Profile 🐾
+        </Link>
+
+        <Link href="/my-dog" className={styles.btnGhost}>
+          Learn More →
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
  
 
       {/* ── HOW IT WORKS ── */}
