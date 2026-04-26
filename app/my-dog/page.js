@@ -4,18 +4,27 @@ import Link from "next/link";
 import "./my-dog.css";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { breedCards } from "@/app/data/breed";
-
+import { supabase } from "@/lib/supabase";
 export default function MyDogPage() {
   const [dogs, setDogs] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    setDogs(stored);
-    if (stored.length > 0) setActiveId(localStorage.getItem("activeDogId") || stored[0].id);
-  }, []);
+useEffect(() => {
+  const fetchDogs = async () => {
+    const { data, error } = await supabase
+      .from("dogs")
+      .select("*");
+
+    if (!error) {
+      setDogs(data);
+      if (data.length > 0) setActiveId(data[0].id);
+    }
+  };
+
+  fetchDogs();
+}, []);
 
   const activeDog = dogs.find(d => d.id === activeId);
 
@@ -144,7 +153,8 @@ export default function MyDogPage() {
                       <li><span>Grooming</span> <strong>Every 2 Weeks</strong></li>
                     </ul>
                     <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
-                      <Link href="/food-guide" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Food</Link>
+                      <Link href={`/food-guide?breed=${activeDog.breed}`} className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Food</Link>
+                      <Link href="/care-grooming" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Groom</Link>
                       <Link href="/my-dog/services" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Vets</Link>
                     </div>
                   </div>

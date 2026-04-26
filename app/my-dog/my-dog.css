@@ -58,6 +58,8 @@
 
 /* Main Profile Header */
 .profile-card {
+  font-family: Fraunces, serif;
+
   background: white;
   border-radius: 32px;
   padding: 40px;

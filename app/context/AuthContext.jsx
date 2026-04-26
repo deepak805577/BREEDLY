@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
 
   async function loadProfile(userId) {
     const { data, error } = await supabase
-      .from("profiles").select("id, full_name, initials, avatar_url, avatar_color, primary_breed, bio, username, dog_name, dog_age, dog_photo_url, onboarding_completed")
+      .from("profiles").select("id, full_name, initials, avatar_url, avatar_color, primary_breed, bio, username, dog_name, dog_age, dog_photo_url")
       .eq("id", userId)
       .single();
     if (!error && data) setProfile(data);

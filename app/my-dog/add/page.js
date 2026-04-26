@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import "./add-dog.css";
 import { breedCards } from "@/app/data/breed";
+import { supabase } from "@/lib/supabase";
 
 export default function AddDogPage() {
   const router = useRouter();
@@ -16,54 +17,119 @@ export default function AddDogPage() {
     city: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  // ✅ SINGLE CLEAN FUNCTION
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const dogProfile = {
-      id: `dog_${Date.now()}`,
-      ...form,
-      age: Number(form.age),
-      weight: Number(form.weight),
-      // Adding a placeholder for the care plan data
-      food: { recommended: "Calculate based on breed" }
-    };
+    try {
+      // 1. Get logged-in user
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-    const existing = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    const updatedPack = [...existing, dogProfile];
-    
-    localStorage.setItem("breedlyDogs", JSON.stringify(updatedPack));
-    
-    // Auto-select the new dog as active
-    localStorage.setItem("activeDogId", dogProfile.id);
+      if (authError || !user) {
+        console.error("Auth error:", authError);
+        alert("Please login first");
+        setLoading(false);
+        return;
+      }
 
-    router.push("/my-dog");
+      console.log("Authenticated user:", { id: user.id, email: user.email });
+
+      // 2. Insert dog
+ const insertPayload = {
+        user_id: user.id,
+        name: form.name,
+        breed: form.breed,
+        age: Number(form.age),
+        city: form.city,
+        allergies: form.allergies,
+        created_at: new Date(),
+        last_fed_at: null,
+      };
+      
+      console.log("Inserting with payload:", insertPayload);
+      
+      const { data, error } = await supabase
+  .from("dogs")
+  .insert([insertPayload])
+  .select();
+
+console.log("INSERT RESPONSE:", { data, error });
+
+if (error) {
+  console.error("INSERT FAILED - Error Object:", JSON.stringify(error, null, 2));
+  alert(`Insert failed: ${error.message || JSON.stringify(error)}`);
+  setLoading(false);
+  return;
+}
+
+if (!data || data.length === 0) {
+  console.error("INSERT FAILED - No data returned");
+  alert("Insert failed: No data returned from database");
+  setLoading(false);
+  return;
+}
+
+const insertedDog = data[0];
+      // 3. Create initial streak
+      await supabase.from("streaks").insert([
+        {
+          dog_id: insertedDog.id,
+          current_streak: 0,
+          last_updated: new Date(),
+        },
+      ]);
+
+      // 4. Add onboarding log (reward trigger)
+      await supabase.from("care_logs").insert([
+        {
+          dog_id: insertedDog.id,
+          type: "onboarding",
+          value: "profile_created",
+          created_at: new Date(),
+        },
+      ]);
+
+      // 5. Redirect
+      router.push("/my-dog");
+
+    } catch (err) {
+  console.error("FULL ERROR:", JSON.stringify(err, null, 2));
+  alert(err?.message || "Something went wrong!");
+} finally {
+      setLoading(false);
+    }
   };
 
   return (
     <main className="add-dog-page">
-      <header style={{textAlign: 'center'}}>
-        <h1>Build Your <em>Pack</em></h1>
+      <header style={{ textAlign: "center" }}>
+        <h1>Welcome to Your Dog’s Journey 🐾</h1>
         <p className="subtitle">
-          Every dog is unique. Tell us about your companion to generate a custom 
+          Every dog is unique. Tell us about your companion to generate a custom
           health and nutrition dashboard.
         </p>
       </header>
 
       <form className="dog-form" onSubmit={handleSubmit}>
-        {/* Section 1: The Basics */}
+        
+        {/* BASICS */}
         <div className="form-group">
           <h3 className="form-group-title">The Basics</h3>
-          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            
             <label>
               Dog Name
               <input
                 type="text"
                 name="name"
-                placeholder="e.g. Charlie"
+                placeholder="e.g. Bruno 🐶"
                 required
                 value={form.name}
                 onChange={handleChange}
@@ -79,13 +145,15 @@ export default function AddDogPage() {
                 ))}
               </select>
             </label>
+
           </div>
         </div>
 
-        {/* Section 2: Vitals */}
+        {/* VITALS */}
         <div className="form-group">
           <h3 className="form-group-title">Vitals</h3>
           <div className="row">
+            
             <label>
               Age (Years)
               <input
@@ -98,6 +166,7 @@ export default function AddDogPage() {
                 onChange={handleChange}
               />
             </label>
+
             <label>
               Weight (kg)
               <input
@@ -110,13 +179,15 @@ export default function AddDogPage() {
                 onChange={handleChange}
               />
             </label>
+
           </div>
         </div>
 
-        {/* Section 3: Lifestyle */}
+        {/* LIFESTYLE */}
         <div className="form-group">
           <h3 className="form-group-title">Lifestyle</h3>
-          <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            
             <label>
               Allergies & Sensitivities
               <input
@@ -127,6 +198,7 @@ export default function AddDogPage() {
                 onChange={handleChange}
               />
             </label>
+
             <label>
               Current City
               <input
@@ -138,15 +210,25 @@ export default function AddDogPage() {
                 onChange={handleChange}
               />
             </label>
+
           </div>
         </div>
 
+        {/* ACTIONS */}
         <div className="form-footer">
-          <button type="submit" className="save-btn">Create Dog Profile</button>
-          <button type="button" className="skip-btn" onClick={() => router.push("/")}>
+          <button type="submit" className="save-btn" disabled={loading}>
+            {loading ? "Creating..." : "Create Dog Profile"}
+          </button>
+
+          <button
+            type="button"
+            className="skip-btn"
+            onClick={() => router.push("/")}
+          >
             I'll do this later
           </button>
         </div>
+
       </form>
     </main>
   );

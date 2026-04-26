@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { breedFoodData } from "../data/food";
+import { supabase } from "@/lib/supabase";
 
 // ─── Section pill ─────────────────────────────────────────────────────────────
 function SectionPill({ icon, label }) {
@@ -106,18 +107,37 @@ export default function FoodGuidePage() {
   const [autoLoaded,   setAutoLoaded]   = useState(false);
 
   useEffect(() => {
-    const dogs     = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    const activeId = localStorage.getItem("activeDogId");
-    if (!activeId || dogs.length === 0) return;
-    const activeDog = dogs.find(d => d.id === activeId);
-    if (!activeDog) return;
-    setSearchTerm(activeDog.breed);
-    setAgeGroup(activeDog.age < 1 ? "puppy" : "adult");
-    setDogWeight(activeDog.weight);
-    setAutoLoaded(true);
-    if (activeDog.allergies) {
-      setDogAllergies(activeDog.allergies.split(",").map(a => a.trim().toLowerCase()));
-    }
+    const loadDogFromSupabase = async () => {
+      try {
+        // Get current user
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // Fetch user's dogs
+        const { data: dogs, error } = await supabase
+          .from("dogs")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(1);
+
+        if (error || !dogs || dogs.length === 0) return;
+
+        const dog = dogs[0];
+        setSearchTerm(dog.breed || "");
+        setAgeGroup(dog.age < 1 ? "puppy" : "adult");
+        setDogWeight(dog.weight || null);
+        setAutoLoaded(true);
+        
+        if (dog.allergies) {
+          setDogAllergies(dog.allergies.split(",").map(a => a.trim().toLowerCase()));
+        }
+      } catch (err) {
+        console.error("Error loading dog from Supabase:", err);
+      }
+    };
+
+    loadDogFromSupabase();
   }, []);
 
   const breeds       = Object.keys(breedFoodData);

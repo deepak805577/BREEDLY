@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { breedGroomingAndCare } from "../data/care";
+import { supabase } from "@/lib/supabase";
 
 // ─── Section Pill ─────────────────────────────────────────────────────────────
 function SectionPill({ icon, label }) {
@@ -100,15 +101,33 @@ export default function CareGroomingGuidePage() {
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    const dogs     = JSON.parse(localStorage.getItem("breedlyDogs")) || [];
-    const activeId = localStorage.getItem("activeDogId");
-    if (!activeId || dogs.length === 0) return;
-    const activeDog = dogs.find(d => String(d.id) === String(activeId));
-    if (!activeDog) return;
-    setSearchTerm(activeDog.breed || "");
-    setAgeGroup(activeDog.age < 1 ? "puppy" : "adult");
-    setDogWeight(activeDog.weight || null);
-    setAutoLoaded(true);
+    const loadDogFromSupabase = async () => {
+      try {
+        // Get current user
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        // Fetch user's dogs
+        const { data: dogs, error } = await supabase
+          .from("dogs")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(1);
+
+        if (error || !dogs || dogs.length === 0) return;
+
+        const dog = dogs[0];
+        setSearchTerm(dog.breed || "");
+        setAgeGroup(dog.age < 1 ? "puppy" : "adult");
+        setDogWeight(dog.weight || null);
+        setAutoLoaded(true);
+      } catch (err) {
+        console.error("Error loading dog from Supabase:", err);
+      }
+    };
+
+    loadDogFromSupabase();
   }, []);
 
   const breeds = Object.keys(breedGroomingAndCare);

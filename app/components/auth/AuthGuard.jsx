@@ -2,26 +2,13 @@
 
 import { useAuth }          from "../../context/AuthContext";
 import AuthPage             from "./AuthPage";
-import { OnboardingFlow } from "../../onboarding";
+
 
 export default function AuthGuard({ children }) {
   const { isLoggedIn, isLoading, profile } = useAuth();
 
   if (isLoading) return <LoadingScreen />;
   if (!isLoggedIn) return <AuthPage />;
-
-  // Show onboarding if dog_name hasn't been set yet (first login)
-  if (profile && !profile.dog_name && !profile.primary_breed) {
-    return (
-      <OnboardingFlow
-        onComplete={() => {
-          // Reload the page to refresh the profile and show the community
-          window.location.reload();
-        }}
-      />
-    );
-  }
-
   return children;
 }
 

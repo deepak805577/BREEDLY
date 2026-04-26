@@ -22,8 +22,7 @@ export default function Footer() {
     pathname.startsWith("/detect-dog")||
     pathname.startsWith("/chat")||
     pathname.startsWith("/community")||
-    pathname.startsWith("/profile")||
-    pathname.startsWith("/onboarding");
+    pathname.startsWith("/profile");
 
 
 

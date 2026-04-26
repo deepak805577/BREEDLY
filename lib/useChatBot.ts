@@ -22,56 +22,77 @@ export function useChatBot() {
   const [dogProfile, setDogProfile] = useState<DogProfile>({ breed: "", age: "", name: "" });
   const abortRef = useRef<AbortController | null>(null);
 
-  const sendMessage = useCallback(
-    async (text: string) => {
-      if (!text.trim() || loading) return;
-      setError(null);
+const sendMessage = useCallback(
+  async (text: string, options?: { displayMessage?: string }) => {
+    if (!text.trim() || loading) return;
+    setError(null);
 
-      const userMsg: Message = { id: uid(), role: "user", content: text.trim(), timestamp: new Date() };
-      setMessages((prev) => [...prev, userMsg]);
-      setLoading(true);
+    // ✅ use clean text for UI
+    const displayText = options?.displayMessage || text;
 
-      // Build history excluding the static welcome message
-      const history = [...messages.filter((m) => m.id !== "welcome"), userMsg].map((m) => ({
-        role: m.role,
-        content: m.content,
-      }));
+    const userMsg: Message = {
+      id: uid(),
+      role: "user",
+      content: displayText, // 👈 ONLY CLEAN TEXT SHOWN
+      timestamp: new Date(),
+    };
 
-      abortRef.current = new AbortController();
+    setMessages((prev) => [...prev, userMsg]);
+    setLoading(true);
 
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: abortRef.current.signal,
-          body: JSON.stringify({ messages: history, dogProfile }),
-        });
+    // ✅ use FULL text (prompt) for backend history
+    const history = [
+      ...messages.filter((m) => m.id !== "welcome"),
+      { ...userMsg, content: text } // 👈 IMPORTANT: send full prompt
+    ].map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
 
-        const data = await res.json();
+    abortRef.current = new AbortController();
 
-        if (!res.ok || data.error) {
-          throw new Error(data.error || "Unexpected error");
-        }
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: abortRef.current.signal,
+        body: JSON.stringify({
+          messages: history,
+          dogProfile,
+        }),
+      });
 
-        const botMsg: Message = {
-          id: uid(),
-          role: "assistant",
-          content: data.reply,
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, botMsg]);
-      } catch (err: unknown) {
-        if (err instanceof Error && err.name === "AbortError") return;
-        const msg = err instanceof Error ? err.message : "Connection error. Please try again.";
-        setError(msg);
-        setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
-      } finally {
-        setLoading(false);
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        throw new Error(data.error || "Unexpected error");
       }
-    },
-    [messages, loading, dogProfile]
-  );
 
+      const botMsg: Message = {
+        id: uid(),
+        role: "assistant",
+        content: data.reply,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, botMsg]);
+
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === "AbortError") return;
+
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Connection error. Please try again.";
+
+      setError(msg);
+      setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
+    } finally {
+      setLoading(false);
+    }
+  },
+  [messages, loading, dogProfile]
+);
   const clearChat = useCallback(() => {
     abortRef.current?.abort();
     setMessages([WELCOME]);

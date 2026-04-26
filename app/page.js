@@ -532,7 +532,7 @@ const bubbles = [
 
       {/* CTA */}
       <div className={styles.myDogActions}>
-        <Link href="/my-dog" className={styles.btnPrimary}>
+        <Link href="/my-dog/add" className={styles.btnPrimary}>
           Create Profile 🐾
         </Link>
 

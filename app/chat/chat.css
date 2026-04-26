@@ -3,8 +3,9 @@
    Scoped under .cp-page — zero global bleed
    Fonts: Fraunces + DM Sans — exact homepage match
    ============================================================ */
-
+@import url('https://fonts.googleapis.com/css2?family=Fraunces...&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400&family=DM+Sans:wght@300;400;500&display=swap');
 
 /* ─── TOKENS ──────────────────────────────────────────────── */
 .cp-page {
@@ -31,6 +32,22 @@
   --cp-sh-lg:       0 24px 64px rgba(100,70,40,0.15);
   --cp-ease:        all 0.3s cubic-bezier(.4,0,.2,1);
 }
+:root {
+  --bg: #F5EFE6;
+  --panel: #EFE7DB;
+  --card: #E8D8C4;
+
+  --accent: #B08968;
+  --accent-dark: #7F5539;
+
+  --text: #3E3E3E;
+  --text-light: #8A817C;
+
+  --border: rgba(176,137,104,0.2);
+
+  --radius: 16px;
+}
+
 
 /* ─── KEYFRAMES ───────────────────────────────────────────── */
 @keyframes cpFadeUp  { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -237,382 +254,6 @@
 
 /* ══════════════════════════════════════════════════════════
    CHAT SECTION
-══════════════════════════════════════════════════════════ */
-.cp-chat-section { padding: 0 24px; scroll-margin-top: 20px; }
-
-.cp-chat-inner {
-  max-width: 860px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* ── Chat window ── */
-.cp-window {
-  width: 100%;
-  height: 620px;
-  display: flex;
-  flex-direction: column;
-  background: var(--cp-cream);
-  border-radius: var(--cp-r-xl);
-  border: 1px solid var(--cp-border);
-  box-shadow: var(--cp-sh-lg);
-  overflow: hidden;
-}
-
-/* header */
-.cp-header {
-  background: var(--cp-cream);
-  border-bottom: 1px solid var(--cp-border);
-  padding: 14px 18px 0;
-  flex-shrink: 0;
-}
-
-.cp-header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.cp-header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.cp-avatar-badge {
-  width: 38px; height: 38px;
-  border-radius: var(--cp-r-sm);
-  background: var(--cp-accent-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.cp-title {
-  font-family: 'Fraunces', serif;
-  font-size: 0.98rem;
-  font-weight: 400;
-  color: var(--cp-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cp-subtitle {
-  font-size: 0.7rem;
-  color: var(--cp-text-light);
-  margin-top: 1px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cp-header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.cp-online-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--cp-teal);
-  animation: cpPulse 2s ease-in-out infinite;
-}
-.cp-online-label {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--cp-teal-dark);
-}
-
-.cp-clear-btn {
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--cp-border-mid);
-  background: transparent;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--cp-text-light);
-  cursor: pointer;
-  transition: var(--cp-ease);
-  white-space: nowrap;
-}
-.cp-clear-btn:hover {
-  background: #fef2f2;
-  color: #a7463b;
-  border-color: rgba(192,57,43,.3);
-}
-
-/* Profile bar (DogProfileBar component) */
-.cp-page .profile-bar {
-  display: flex;
-  gap: 8px;
-  padding-bottom: 12px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
-.cp-page .profile-field {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  flex: 1;
-  min-width: 90px;
-}
-.cp-page .profile-field label {
-  font-size: 0.6rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--cp-text-light);
-}
-.cp-page .profile-field input,
-.cp-page .profile-field select {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.8rem;
-  padding: 7px 10px;
-  border: 1.5px solid var(--cp-border);
-  border-radius: var(--cp-r-sm);
-  background: var(--cp-bg-soft);
-  color: var(--cp-text);
-  outline: none;
-  transition: var(--cp-ease);
-  appearance: none;
--webkit-appearance: none;
-}
-.cp-page .profile-field input:focus,
-.cp-page .profile-field select:focus {
-  border-color: var(--cp-accent);
-  background: var(--cp-cream);
-}
-.cp-page .profile-field input::placeholder { color: var(--cp-text-light); }
-
-/* messages area */
-.cp-body {
-  flex: 1;
-  overflow-y: auto;
-  background: var(--cp-bg-soft);
-  padding: 18px;
-  scroll-behavior: smooth;
-}
-.cp-body::-webkit-scrollbar       { width: 3px; }
-.cp-body::-webkit-scrollbar-track { background: transparent; }
-.cp-body::-webkit-scrollbar-thumb { background: var(--cp-card); border-radius: 3px; }
-
-.cp-messages {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* welcome */
-.cp-welcome {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 36px 20px;
-  text-align: center;
-  animation: cpFadeUp 0.5s ease;
-}
-.cp-welcome-icon {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  background: var(--cp-card);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
-}
-.cp-welcome h3 {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--cp-text);
-}
-.cp-welcome p {
-  font-size: 0.85rem;
-  color: var(--cp-text-mid);
-  max-width: 380px;
-  line-height: 1.7;
-}
-
-/* chat bubbles (ChatMessage component) */
-.cp-page .chat-message {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  animation: cpPop 0.25s ease forwards;
-}
-.cp-page .chat-message.user { flex-direction: row-reverse; }
-
-.cp-page .avatar {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.cp-page .bot-avatar  { background: var(--cp-card); }
-.cp-page .user-avatar { background: var(--cp-teal-light); }
-
-.cp-page .bubble {
-  max-width: 78%;
-  padding: 11px 15px;
-  border-radius: var(--cp-r-md);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.7;
-  color: var(--cp-text);
-}
-.cp-page .bubble p            { margin-bottom: 6px; }
-.cp-page .bubble p:last-child { margin-bottom: 0; }
-.cp-page .bubble ul           { padding-left: 18px; margin: 6px 0; display: flex; flex-direction: column; gap: 4px; }
-.cp-page .bubble strong       { font-weight: 500; }
-
-.cp-page .bubble-bot {
-  background: var(--cp-cream);
-  border: 1px solid var(--cp-border);
-  border-top-left-radius: 4px;
-  box-shadow: 0 2px 6px rgba(100,70,40,.05);
-}
-.cp-page .bubble-user {
-  background: var(--cp-accent-dark);
-  color: #fff;
-  border-top-right-radius: 4px;
-}
-
-/* typing (TypingIndicator component) */
-.cp-page .typing-bubble {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 11px 15px;
-  background: var(--cp-cream);
-  border: 1px solid var(--cp-border);
-  border-radius: var(--cp-r-md);
-  border-top-left-radius: 4px;
-  width: fit-content;
-  box-shadow: 0 2px 6px rgba(100,70,40,.05);
-}
-.cp-page .dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--cp-accent);
-  animation: cpBounce 1.2s ease-in-out infinite;
-}
-.cp-page .dot:nth-child(2) { animation-delay: .18s; }
-.cp-page .dot:nth-child(3) { animation-delay: .36s; }
-
-/* error */
-.cp-error {
-  font-size: 0.82rem;
-  color: #c0392b;
-  background: #fef2f2;
-  border: 1px solid rgba(192,57,43,.2);
-  border-radius: var(--cp-r-sm);
-  padding: 10px 14px;
-  text-align: center;
-}
-
-/* footer / input */
-.cp-footer {
-  background: var(--cp-cream);
-  border-top: 1px solid var(--cp-border);
-  padding: 10px 16px 12px;
-  flex-shrink: 0;
-}
-
-/* QuickChips component */
-.cp-page .quick-chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 9px;
-}
-.cp-page .chip {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 4px 11px;
-  border-radius: 999px;
-  border: 1px solid var(--cp-border);
-  background: var(--cp-bg-soft);
-  color: var(--cp-text-mid);
-  cursor: pointer;
-  transition: var(--cp-ease);
-  display: flex; align-items: center; gap: 4px;
-  white-space: nowrap;
-}
-.cp-page .chip:hover:not(:disabled) {
-  background: var(--cp-card);
-  color: var(--cp-accent-dark);
-  border-color: var(--cp-accent);
-}
-.cp-page .chip:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.cp-input-row {
-  display: flex;
-  gap: 8px;
-  align-items: flex-end;
-}
-
-.cp-input {
-  flex: 1;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.875rem;
-  padding: 10px 14px;
-  border: 1.5px solid var(--cp-border-mid);
-  border-radius: var(--cp-r-lg);
-  background: var(--cp-bg-soft);
-  color: var(--cp-text);
-  resize: none;
-  min-height: 42px;
-  max-height: 140px;
-  line-height: 1.55;
-  outline: none;
-  transition: var(--cp-ease);
-}
-.cp-input:focus {
-  border-color: var(--cp-accent);
-  background: var(--cp-cream);
-  box-shadow: 0 0 0 3px rgba(176,137,104,.1);
-}
-.cp-input:disabled { opacity: 0.45; cursor: not-allowed; }
-.cp-input::placeholder { color: var(--cp-text-light); }
-
-.cp-send-btn {
-  width: 42px; height: 42px;
-  background: var(--cp-accent-dark);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.05rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: var(--cp-ease);
-}
-.cp-send-btn:hover:not(:disabled) {
-  background: var(--cp-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(127,85,57,.28);
-}
-.cp-send-btn:active:not(:disabled) { transform: scale(0.93); }
-.cp-send-btn:disabled { opacity: 0.36; cursor: not-allowed; }
-
-.cp-footer-note {
-  font-size: 0.65rem;
-  color: var(--cp-text-light);
-  text-align: center;
-  margin-top: 7px;
-  font-style: italic;
-}
 
 /* ══════════════════════════════════════════════════════════
    TRUST SECTION
@@ -719,6 +360,7 @@
   .cp-title    { font-size: 0.88rem; }
   .cp-subtitle { display: none; } /* hide on smallest screens */
   .cp-online-label { display: none; }
+}
 
   /* profile bar — horizontal scroll on mobile */
   .cp-page .profile-bar {
@@ -750,7 +392,7 @@
   .cp-trust h2 { font-size: 1.4rem; }
   .cp-trust p  { font-size: 0.88rem; }
   .cp-trust-pills span { font-size: 0.75rem; padding: 7px 14px; }
-}
+
 
 /* ══════════════════════════════════════════════════════════
    RESPONSIVE — VERY SMALL (≤ 360px)
@@ -761,3 +403,6 @@
   .cp-page .bubble { max-width: 92%; }
   .cp-page .quick-chips { display: none; } /* too cramped — hide chips */
 }
+
+
+
