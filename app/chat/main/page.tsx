@@ -749,8 +749,8 @@ function ChatInterface() {
     if (rawMessages.length === 0) { toast.addToast("No messages to save", "info"); return; }
     const firstMsg = rawMessages[0];
     const lastMsg  = rawMessages[rawMessages.length-1];
-    const firstText = (firstMsg?.content ?? firstMsg?.text ?? "").slice(0, 40) || "Chat";
-    const lastText  = (lastMsg?.content ?? lastMsg?.text ?? "").slice(0, 60) || "";
+    const firstText = (firstMsg?.content ?? "").slice(0, 40) || "Chat";
+    const lastText  = (lastMsg?.content ?? "").slice(0, 60) || "";
     
     if (!firstText || firstText === "Chat") {
       toast.addToast("Messages are empty - cannot save", "error");
