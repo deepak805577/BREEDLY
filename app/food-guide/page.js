@@ -1,6 +1,6 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { breedFoodData } from "../data/food";
 import { supabase } from "@/lib/supabase";
 
@@ -99,27 +99,31 @@ function RecipeBlock({ recipe }) {
 }
 
 // ─── Main page ────────────────────────────────────────────────────────────────
-export default function FoodGuidePage() {
+function FoodGuideContent() {
   const [searchTerm,   setSearchTerm]   = useState("");
   const [ageGroup,     setAgeGroup]     = useState(null);
   const [dogAllergies, setDogAllergies] = useState([]);
   const [dogWeight,    setDogWeight]    = useState(null);
   const [autoLoaded,   setAutoLoaded]   = useState(false);
 
+  const searchParams = useSearchParams();
+  const dogId = searchParams.get("dogId");
+
   useEffect(() => {
     const loadDogFromSupabase = async () => {
       try {
-        // Get current user
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
-        // Fetch user's dogs
-        const { data: dogs, error } = await supabase
-          .from("dogs")
-          .select("*")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(1);
+        let query = supabase.from("dogs").select("*").eq("user_id", user.id);
+        
+        if (dogId) {
+          query = query.eq("id", dogId);
+        } else {
+          query = query.order("created_at", { ascending: false }).limit(1);
+        }
+
+        const { data: dogs, error } = await query;
 
         if (error || !dogs || dogs.length === 0) return;
 
@@ -138,7 +142,7 @@ export default function FoodGuidePage() {
     };
 
     loadDogFromSupabase();
-  }, []);
+  }, [dogId]);
 
   const breeds       = Object.keys(breedFoodData);
   const matchedBreed = searchTerm
@@ -595,10 +599,17 @@ export default function FoodGuidePage() {
             Breedly
           </div>
           <p style={{ fontSize:12, color:"var(--text-light)" }}>
-            Happy tummies, happy tails 🐶 · © 2025
           </p>
         </footer>
       </div>
     </>
+  );
+}
+
+export default function FoodGuidePage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 100, textAlign: "center" }}>Loading...</div>}>
+      <FoodGuideContent />
+    </Suspense>
   );
 }

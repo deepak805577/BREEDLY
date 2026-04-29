@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import "./my-dog.css";
+import DogCareTabs from "./DogCareTabs";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { breedCards } from "@/app/data/breed";
 import { supabase } from "@/lib/supabase";
@@ -13,13 +14,21 @@ export default function MyDogPage() {
 
 useEffect(() => {
   const fetchDogs = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
     const { data, error } = await supabase
       .from("dogs")
-      .select("*");
+      .select("*")
+      .eq("user_id", user.id);
 
     if (!error) {
       setDogs(data);
-      if (data.length > 0) setActiveId(data[0].id);
+      if (data.length > 0) {
+        const savedId = localStorage.getItem("activeDogId");
+        const exists = data.find(d => d.id === savedId);
+        setActiveId(exists ? savedId : data[0].id);
+      }
     }
   };
 
@@ -34,12 +43,20 @@ useEffect(() => {
     return Math.min(percentage, 100);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (confirm("Permanently remove this family member?")) {
-      const updated = dogs.filter(d => d.id !== id);
-      setDogs(updated);
-      localStorage.setItem("breedlyDogs", JSON.stringify(updated));
-      if (id === activeId) setActiveId(updated[0]?.id || null);
+      const { error } = await supabase
+        .from("dogs")
+        .delete()
+        .eq("id", id);
+
+      if (!error) {
+        const updated = dogs.filter(d => d.id !== id);
+        setDogs(updated);
+        if (id === activeId) setActiveId(updated[0]?.id || null);
+      } else {
+        alert("Failed to delete dog: " + error.message);
+      }
     }
   };
 
@@ -57,7 +74,7 @@ useEffect(() => {
                 className={`dog-nav-item ${activeId === dog.id ? 'active' : ''}`}
                 onClick={() => { setActiveId(dog.id); localStorage.setItem("activeDogId", dog.id); setIsEditing(false); }}
               >
-                <span style={{fontSize: '1.5rem'}}>🐕</span>
+                <span style={{fontSize: '1.3rem'}}>🐕</span>
                 <div>
                   <div style={{fontWeight: '600', fontSize: '0.95rem'}}>{dog.name}</div>
                   <div style={{fontSize: '0.75rem', opacity: 0.6}}>{dog.breed}</div>
@@ -82,13 +99,40 @@ useEffect(() => {
                 <h2 style={{fontFamily: 'Fraunces'}}>Refine Profile</h2>
                 {/* Simplified Edit Form */}
                 <div style={{display: 'grid', gap: '15px', marginTop: '20px'}}>
-                  <input className="info-tile" type="text" value={editData.name} onChange={e => setEditData({...editData, name: e.target.value})} />
                   <div style={{display: 'flex', gap: '10px'}}>
-                     <button onClick={() => {
-                       const updated = dogs.map(d => d.id === activeId ? editData : d);
-                       setDogs(updated);
-                       localStorage.setItem("breedlyDogs", JSON.stringify(updated));
-                       setIsEditing(false);
+                    <div style={{flex: 1}}>
+                      <label style={{fontSize: '0.8rem', color: '#666', marginBottom: '4px', display: 'block'}}>Name</label>
+                      <input className="info-tile" style={{width: '100%', padding: '10px'}} type="text" value={editData.name || ""} onChange={e => setEditData({...editData, name: e.target.value})} />
+                    </div>
+                  </div>
+                  <div style={{display: 'flex', gap: '10px'}}>
+                    <div style={{flex: 1}}>
+                      <label style={{fontSize: '0.8rem', color: '#666', marginBottom: '4px', display: 'block'}}>Age (Years)</label>
+                      <input className="info-tile" style={{width: '100%', padding: '10px'}} type="number" step="0.1" value={editData.age || ""} onChange={e => setEditData({...editData, age: e.target.value ? Number(e.target.value) : null})} />
+                    </div>
+                    <div style={{flex: 1}}>
+                      <label style={{fontSize: '0.8rem', color: '#666', marginBottom: '4px', display: 'block'}}>Weight (kg)</label>
+                      <input className="info-tile" style={{width: '100%', padding: '10px'}} type="number" step="0.1" value={editData.weight || ""} onChange={e => setEditData({...editData, weight: e.target.value ? Number(e.target.value) : null})} />
+                    </div>
+                  </div>
+                  <div style={{display: 'flex', gap: '10px', marginTop: '5px'}}>
+                     <button onClick={async () => {
+                       const { error } = await supabase
+                         .from("dogs")
+                         .update({ 
+                           name: editData.name,
+                           age: editData.age,
+                           weight: editData.weight
+                         })
+                         .eq("id", activeId);
+
+                       if (!error) {
+                         const updated = dogs.map(d => d.id === activeId ? editData : d);
+                         setDogs(updated);
+                         setIsEditing(false);
+                       } else {
+                         alert("Failed to update dog: " + error.message);
+                       }
                      }} className="p-btn p-btn-main">Save</button>
                      <button onClick={() => setIsEditing(false)} className="p-btn p-btn-outline">Cancel</button>
                   </div>
@@ -107,6 +151,10 @@ useEffect(() => {
                     <button onClick={() => handleDelete(activeDog.id)} className="p-btn" style={{color: '#b85c5c'}}>Remove</button>
                   </div>
                 </div>
+                <DogCareTabs
+    dog={activeDog}
+    onUpdate={(updated) => setDogs(dogs.map(d => d.id === updated.id ? updated : d))}
+    />
 
                 {/* Life Stage Progress */}
                 <div className="life-stage-container">
@@ -153,11 +201,12 @@ useEffect(() => {
                       <li><span>Grooming</span> <strong>Every 2 Weeks</strong></li>
                     </ul>
                     <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
-                      <Link href={`/food-guide?breed=${activeDog.breed}`} className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Food</Link>
+                      <Link href={`/food-guide?dogId=${activeDog.id}`} className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Food</Link>
                       <Link href="/care-grooming" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Groom</Link>
                       <Link href="/my-dog/services" className="p-btn p-btn-outline" style={{flex: 1, justifyContent: 'center'}}>Vets</Link>
                     </div>
                   </div>
+           
                 </div>
               </div>
             )}

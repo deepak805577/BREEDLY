@@ -47,6 +47,7 @@ export default function AddDogPage() {
         name: form.name,
         breed: form.breed,
         age: Number(form.age),
+        weight: Number(form.weight),
         city: form.city,
         allergies: form.allergies,
         created_at: new Date(),
