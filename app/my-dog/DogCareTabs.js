@@ -1251,6 +1251,45 @@ export default function DogCareTabs({ dog, onUpdate }) {
   const handleEnableNotif = async () => {
     const perm = await requestNotifPermission();
     setNotifPerm(perm);
+
+    if (perm === "granted") {
+      try {
+        const registration = await navigator.serviceWorker.register('/sw.js');
+        
+        // Base64 to Uint8Array helper
+        const urlBase64ToUint8Array = (base64String) => {
+          const padding = '='.repeat((4 - base64String.length % 4) % 4);
+          const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+          const rawData = window.atob(base64);
+          const outputArray = new Uint8Array(rawData.length);
+          for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+          }
+          return outputArray;
+        };
+
+        const vapidKey = process.env.NEXT_PUBLIC_VAPID_KEY;
+        if (!vapidKey) return console.error("Missing NEXT_PUBLIC_VAPID_KEY");
+
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(vapidKey)
+        });
+
+        // Send to backend
+        await fetch("/api/push/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            subscription: subscription.toJSON(),
+            user_id: dog.user_id || "anonymous"
+          })
+        });
+
+      } catch (err) {
+        console.error("Failed to setup push:", err);
+      }
+    }
   };
 
   useEffect(() => {
