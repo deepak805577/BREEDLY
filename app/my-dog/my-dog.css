@@ -9,12 +9,14 @@
   --sage: #A3B18A;
   --white: #FAF7F2;
   --shadow-premium: 0 20px 50px rgba(100, 70, 40, 0.1);
-  
+
   background-color: var(--bg);
   min-height: 100vh;
   padding: 60px 5%;
   font-family: 'DM Sans', sans-serif;
   color: #3E3E3E;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Layout Structure */
@@ -23,7 +25,12 @@
   grid-template-columns: 280px 1fr;
   gap: 40px;
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
+}
+
+.dashboard-layout>* {
+  min-width: 0;
 }
 
 /* Sidebar Styling */
@@ -39,10 +46,14 @@
   border-radius: 16px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.dog-nav-item:active {
+  transform: scale(0.97);
 }
 
 .dog-nav-item:hover {
@@ -166,7 +177,7 @@
 
 .care-list li {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
   font-size: 0.9rem;
   display: flex;
   justify-content: space-between;
@@ -193,34 +204,122 @@
   gap: 8px;
 }
 
-.p-btn-main { background: var(--accent-dark); color: white; }
-.p-btn-outline { background: transparent; border: 1.5px solid var(--accent); color: var(--accent-dark); }
-.p-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(127, 85, 57, 0.2); }
+.p-btn-main {
+  background: var(--accent-dark);
+  color: white;
+}
+
+.p-btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  color: var(--accent-dark);
+}
+
+.p-btn-sm {
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  border-radius: 10px;
+}
+
+.p-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(127, 85, 57, 0.2);
+}
 
 @media (max-width: 1000px) {
-  .dashboard-layout { grid-template-columns: 1fr; }
-  .care-grid { grid-template-columns: 1fr; }
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .care-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Make sidebar horizontal on medium/small screens */
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 15px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Firefox */
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 0;
+    gap: 14px;
+  }
+
+  .sidebar-nav::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari/Edge */
+  }
+
+  .sidebar-nav>button {
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    border-radius: 18px;
+    padding: 0 24px;
+    box-shadow: 0 8px 20px rgba(127, 85, 57, 0.15);
+  }
+
+  .dog-nav-item {
+    flex-shrink: 0;
+    min-width: 220px;
+    scroll-snap-align: start;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  }
 }
 
 @media (max-width: 768px) {
   .my-dog-page {
-    padding: 30px 15px;
+    padding: 16px 12px;
+    background-color: #FAF7F2;
+    /* Lighter bg on mobile for cleaner look */
   }
+
   .profile-card {
-    padding: 25px 20px;
-    border-radius: 24px;
+    padding: 24px 20px;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(100, 70, 40, 0.08);
   }
+
+  .profile-header {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+  }
+
   .profile-header h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
+
   .info-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
+
   .info-tile {
-    padding: 15px;
+    padding: 18px 16px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
   }
-  input, select, textarea {
+
+  .info-tile strong {
+    font-size: 1.15rem;
+  }
+
+  input,
+  select,
+  textarea {
     font-size: 16px !important;
+    /* Prevents iOS auto-zoom */
   }
 }
 
@@ -228,15 +327,8 @@
   .info-grid {
     grid-template-columns: 1fr;
   }
+
   .profile-header {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .btn-group {
-    width: 100%;
-  }
-  .btn-group .p-btn {
-    flex: 1;
-    justify-content: center;
+    gap: 16px;
   }
 }

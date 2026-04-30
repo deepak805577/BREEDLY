@@ -146,9 +146,9 @@ useEffect(() => {
                     <h2>{activeDog.name}</h2>
                     <span style={{color: '#B08968', fontSize: '0.9rem'}}>{activeDog.breed}</span>
                   </div>
-                  <div className="btn-group" style={{marginTop: '0'}}>
-                    <button onClick={() => { setEditData(activeDog); setIsEditing(true); }} className="p-btn p-btn-outline">Edit</button>
-                    <button onClick={() => handleDelete(activeDog.id)} className="p-btn" style={{color: '#b85c5c'}}>Remove</button>
+                  <div className="btn-group" style={{marginTop: '0', gap: '8px'}}>
+                    <button onClick={() => { setEditData(activeDog); setIsEditing(true); }} className="p-btn p-btn-outline p-btn-sm" style={{borderColor: '#B0896888'}}>Edit</button>
+                    <button onClick={() => handleDelete(activeDog.id)} className="p-btn p-btn-sm" style={{color: '#b85c5c', background: '#FFF0F0', border: '1px solid #b85c5c22'}}>Remove</button>
                   </div>
                 </div>
                 <DogCareTabs

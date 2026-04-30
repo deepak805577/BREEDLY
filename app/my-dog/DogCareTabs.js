@@ -1008,7 +1008,14 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
 const STYLES = `
   .dct-wrapper { margin-top: 24px; font-family: 'DM Sans', sans-serif; }
 
-  .dct-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .dct-tabs { 
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; 
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 10px 0;
+    margin-top: -10px;
+  }
   .dct-tab {
     padding: 9px 18px; border-radius: 11px; font-size: 0.82rem; font-weight: 500;
     cursor: pointer; border: 1.5px solid transparent; background: #FAF7F2;
@@ -1120,27 +1127,36 @@ const STYLES = `
 
   /* vaccinations */
   .dct-vacc-summary {
-    background: #FFFFFF; border-radius: 12px; padding: 10px 16px;
-    font-size: 0.82rem; font-weight: 600; display: flex; gap: 16px;
-    flex-wrap: wrap; box-shadow: 0 2px 12px rgba(0,0,0,0.03); 
-    border: 1px solid rgba(0,0,0,0.04);
+    background: #FFFFFF; border-radius: 18px; padding: 14px 20px;
+    font-size: 0.88rem; font-weight: 600; display: flex; gap: 16px;
+    flex-wrap: wrap; box-shadow: 0 4px 20px rgba(0,0,0,0.04); 
+    border: 1px solid rgba(0,0,0,0.03);
+    margin-bottom: 20px;
   }
   .dct-vacc-card {
-    padding: 13px 18px; border-radius: 15px;
+    padding: 16px 20px; border-radius: 18px;
     display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; border: 1.5px solid;
+    gap: 12px; border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative; z-index: 2;
+  }
+  .dct-vacc-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
   }
   .dct-core-badge {
-    font-size: 0.64rem; background: #EEE; padding: 2px 7px;
-    border-radius: 5px; color: #888;
+    font-size: 0.65rem; background: rgba(0,0,0,0.06); padding: 3px 8px;
+    border-radius: 10px; color: #555; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
   }
   .dct-vacc-badge {
-    padding: 4px 11px; border-radius: 7px; font-size: 0.72rem;
-    font-weight: 600; white-space: nowrap;
+    padding: 6px 14px; border-radius: 20px; font-size: 0.72rem;
+    font-weight: 700; white-space: nowrap; letter-spacing: 0.5px; text-transform: uppercase;
   }
   .dct-vacc-form {
-    background: white; border: 1.5px solid #B08968; border-top: none;
-    border-radius: 0 0 14px 14px; padding: 14px 18px;
+    background: #FFFFFF; border: 1px solid rgba(0,0,0,0.05); border-top: none;
+    border-radius: 0 0 18px 18px; padding: 20px;
+    margin-top: -14px; padding-top: 30px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+    position: relative; z-index: 1;
   }
   .dct-vacc-form-grid {
     display: grid; grid-template-columns: 1fr 2fr auto;
@@ -1206,8 +1222,28 @@ const STYLES = `
 
   @media (max-width: 640px) {
     .dct-vacc-form-grid { grid-template-columns: 1fr !important; }
-    .dct-portion-hero   { flex-direction: column; }
-    .dct-dog-summary    { gap: 6px; }
+    .dct-portion-hero   { flex-direction: column; align-items: stretch; }
+    .dct-dog-summary    { grid-template-columns: 1fr 1fr; display: grid; gap: 10px; }
+    
+    /* Make tabs scroll horizontally */
+    .dct-tabs { 
+      flex-wrap: nowrap; 
+      overflow-x: auto; 
+      padding-bottom: 8px; 
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .dct-tabs::-webkit-scrollbar { display: none; }
+    .dct-tab { white-space: nowrap; flex-shrink: 0; }
+    
+    /* Meal cards responsiveness */
+    .dct-meal-card { padding: 14px 16px; gap: 8px; }
+    .dct-label-input { width: 100px; font-size: 0.9rem; }
+    .dct-time-input { font-size: 0.85rem; }
+    
+    /* Vaccinations */
+    .dct-vacc-card { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .dct-vacc-card > div:last-child { width: 100%; justify-content: flex-end; }
   }
 `;
 
