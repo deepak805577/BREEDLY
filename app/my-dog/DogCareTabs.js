@@ -257,11 +257,11 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
   const generateSchedule = async () => {
     setErrorMsg("");
     let newMeals = [];
-    
+
     // Determine age in months (defaulting to adult if missing)
     const ageYrs = dog.age != null ? dog.age : 3;
     const ageMonths = ageYrs * 12;
-    
+
     // Determine breed size modifiers
     const isToy = breedSize?.maxKg <= 5;
     const isLarge = breedSize?.maxKg >= 25;
@@ -396,9 +396,12 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
               : "Please enter your dog's weight in their profile to get an exact calculation."}
           </p>
           {dog.portion_override != null && (
-            <span className="dct-override-badge">✏️ Custom amount active</span>
+            <span className="dct-override-badge" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+              Custom amount active
+            </span>
           )}
-      
+
         </div>
 
         <div style={{ textAlign: "right", flexShrink: 0 }}>
@@ -462,7 +465,7 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {notifPerm === "default" && (
         <div className="dct-notif-banner dct-notif-cta">
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
             <span>Enable notifications to get meal-time reminders</span>
           </div>
           <button className="dct-btn-main" style={{ padding: "7px 14px", fontSize: "0.78rem" }} onClick={handleEnableNotif}>
@@ -473,7 +476,7 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {notifPerm === "denied" && (
         <div className="dct-notif-banner dct-notif-warn">
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><line x1="2" y1="2" x2="22" y2="22" /></svg>
             <span>Notifications blocked — allow them in browser settings</span>
           </div>
         </div>
@@ -481,14 +484,17 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {notifPerm === "granted" && meals.some(m => m.reminder) && (
         <div className="dct-notif-banner dct-notif-ok">
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
             <span>Reminders active — you'll be notified at meal times</span>
           </div>
         </div>
       )}
       {notifPerm === "unsupported" && (
         <div className="dct-notif-banner dct-notif-warn">
-          ⚠️ Your browser doesn't support push notifications
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+            Your browser doesn't support push notifications
+          </span>
         </div>
       )}
 
@@ -508,7 +514,7 @@ function FeedingTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {meals.length === 0 ? (
         <div className="dct-empty">
           <div style={{ marginBottom: 12 }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D3D3D3" strokeWidth="1.5"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D3D3D3" strokeWidth="1.5"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2" /><path d="M7 2v20" /><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></svg>
           </div>
           <p style={{ fontWeight: 600, color: "#888", margin: 0 }}>No meals set up yet</p>
           <p className="dct-sub" style={{ marginTop: 4 }}>
@@ -664,10 +670,10 @@ function VaccinationsTab({ dog, onUpdate }) {
 
       {/* Status strip */}
       <div className="dct-vacc-summary">
-        {overdueCnt > 0 && <span style={{ color: "#b85c5c", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>{overdueCnt} overdue</span>}
-        {dueSoonCnt > 0 && <span style={{ color: "#B08968", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{dueSoonCnt} due soon</span>}
+        {overdueCnt > 0 && <span style={{ color: "#b85c5c", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>{overdueCnt} overdue</span>}
+        {dueSoonCnt > 0 && <span style={{ color: "#B08968", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>{dueSoonCnt} due soon</span>}
         {overdueCnt === 0 && dueSoonCnt === 0 && (
-          <span style={{ color: "#587B45", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>All vaccinations up to date</span>
+          <span style={{ color: "#587B45", display: "flex", alignItems: "center", gap: 6 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>All vaccinations up to date</span>
         )}
       </div>
 
@@ -754,7 +760,7 @@ function VaccinationsTab({ dog, onUpdate }) {
                       </button>
                       {vacc.lastGiven && (
                         <button className="dct-ghost-btn" style={{ padding: "10px", color: "#b85c5c", background: "#FFF0F0", borderRadius: "12px" }} onClick={() => deleteVacc(v.id)} disabled={saving} title="Delete Record">
-                          🗑️
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
                         </button>
                       )}
                     </div>
@@ -790,7 +796,7 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
     setErrorMsg("");
     const energy = breedCard ? breedCard.energy.toLowerCase() : "moderate";
     const newRoutines = [];
-    
+
     if (energy === "high") {
       newRoutines.push({ id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(), label: "Morning Run", time: "06:30", reminder: false });
       newRoutines.push({ id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(), label: "Agility/Play Session", time: "14:00", reminder: false });
@@ -859,7 +865,7 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {notifPerm === "default" && (
         <div className="dct-notif-banner dct-notif-cta" style={{ marginBottom: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
             <span>Enable notifications for activity reminders</span>
           </div>
           <button className="dct-btn-main" style={{ padding: "7px 14px", fontSize: "0.78rem" }} onClick={handleEnableNotif}>
@@ -879,7 +885,7 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
       {routines.length === 0 ? (
         <div className="dct-empty" style={{ marginBottom: 24 }}>
           <div style={{ marginBottom: 12 }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D3D3D3" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D3D3D3" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
           </div>
           <p style={{ fontWeight: 600, color: "#888", margin: 0 }}>No daily routine set up yet</p>
           <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 12 }}>
@@ -927,9 +933,9 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
                     <span className="dct-toggle-track" />
                   </label>
                 </div>
-                <button 
-                  className="dct-ghost-btn" 
-                  style={{ padding: "4px", color: "#b85c5c", fontSize: "1.1rem" }} 
+                <button
+                  className="dct-ghost-btn"
+                  style={{ padding: "4px", color: "#b85c5c", fontSize: "1.1rem" }}
                   onClick={() => removeRoutine(i)}
                 >
                   ×
@@ -947,7 +953,7 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
             Care Checklist — {monthLabel()}
           </div>
           <span style={{ fontWeight: 700, fontSize: "0.88rem", color: pct === 100 ? "#587B45" : "#B08968" }}>
-            {pct === 100 ? "🎉 Done!" : `${done}/${total}`}
+            {pct === 100 ? "Done!" : `${done}/${total}`}
           </span>
         </div>
         <div className="dct-progress-track">
@@ -992,7 +998,9 @@ function ChecklistTab({ dog, onUpdate, notifPerm, handleEnableNotif }) {
 
       {pct === 100 && (
         <div className="dct-tip" style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "1.5rem", marginBottom: 4 }}>🐾</div>
+          <div style={{ color: '#B08968', marginBottom: 8, display: 'flex', justifyContent: 'center' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 5c2 0 4 2 4 5s-2 5-4 5-4-2-4-5 2-5 4-5z" /><circle cx="7" cy="8" r="2" /><circle cx="17" cy="8" r="2" /><circle cx="5" cy="14" r="2" /><circle cx="19" cy="14" r="2" /></svg>
+          </div>
           <p style={{ fontWeight: 600, color: "#7F5539", margin: 0 }}>
             {dog.name}'s care is complete for {monthLabel()}!
           </p>
@@ -1291,7 +1299,7 @@ export default function DogCareTabs({ dog, onUpdate }) {
     if (perm === "granted") {
       try {
         const registration = await navigator.serviceWorker.register('/sw.js');
-        
+
         // Base64 to Uint8Array helper
         const urlBase64ToUint8Array = (base64String) => {
           const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -1331,7 +1339,7 @@ export default function DogCareTabs({ dog, onUpdate }) {
   useEffect(() => {
     if (notifPerm !== "granted" || !dog) return;
     const map = {};
-    
+
     // Schedule Meals
     const meals = dog.meals || [];
     meals.forEach((m, i) => {
@@ -1358,12 +1366,12 @@ export default function DogCareTabs({ dog, onUpdate }) {
     const all = Object.values(CHECKLIST_ITEMS).flat();
     const makeKey = (str) => "chk_" + str.replace(/[^a-zA-Z0-9]/g, "").substring(0, 15);
     const unchecked = all.filter(item => !checks[makeKey(item)]);
-    
+
     if (unchecked.length > 0) {
-      const timerId = scheduleReminder({ 
-        label: `${unchecked.length} care tasks left (e.g., ${unchecked[0]})`, 
-        time: "20:00", 
-        id: "monthly_nag" 
+      const timerId = scheduleReminder({
+        label: `${unchecked.length} care tasks left (e.g., ${unchecked[0]})`,
+        time: "20:00",
+        id: "monthly_nag"
       }, `Care Reminder for ${dog.name}`);
       if (timerId != null) map["monthly_nag"] = timerId;
     }
