@@ -38,13 +38,21 @@ export default function LoginPage() {
 
       if (error) throw error;
 
-      // Ensure profile exists (safe upsert with all fields)
-      await supabase.from("profiles").upsert({
-        id:           data.user.id,
-        username:     data.user.user_metadata?.username || data.user.email.split("@")[0],
-        full_name:    data.user.user_metadata?.full_name || "",
-        avatar_url:   data.user.user_metadata?.avatar_url || "",
-      }, { onConflict: 'id' });                         // FIXED: added onConflict
+      // Ensure profile exists (only insert if it doesn't exist to avoid overwriting existing details)
+      const { data: existingProfile } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("id", data.user.id)
+        .maybeSingle();
+
+      if (!existingProfile) {
+        await supabase.from("profiles").insert({
+          id:           data.user.id,
+          username:     data.user.user_metadata?.username || data.user.email.split("@")[0],
+          full_name:    data.user.user_metadata?.full_name || "",
+          avatar_url:   data.user.user_metadata?.avatar_url || "",
+        });
+      }
 
       // Your existing localStorage logic — unchanged
       localStorage.setItem("token", data.session.access_token);

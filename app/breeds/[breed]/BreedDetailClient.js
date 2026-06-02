@@ -1,8 +1,5 @@
 "use client";
 // app/breeds/[breed]/BreedDetailClient.js
-// ✅ All hooks (useParams, useRouter, useState) live here safely
-// because this component is wrapped in <Suspense> by page.js
-
 import "./breed.css";
 import { useParams, useRouter } from "next/navigation";
 import { breeds } from "../../data/breeds";
@@ -17,30 +14,86 @@ const fmt = (key) =>
 
 const levelToNum = (val) => {
   if (!val) return 0;
-  const v = val.toString().toLowerCase();
-  if (v.includes("very high") || v.includes("excellent")) return 5;
-  if (v.includes("high"))   return 4;
-  if (v.includes("mod"))    return 3;
-  if (v.includes("low"))    return 2;
-  if (v.includes("very low") || v.includes("poor")) return 1;
+  const v = val.toString().toLowerCase().trim();
+
+  // 1. Excellent / Exceptional / Maximum / Extreme / Very High / Perfect / Quintessential
+  if (
+    v.includes("very high") ||
+    v.includes("excellent") ||
+    v.includes("exceptional") ||
+    v.includes("maximum") ||
+    v.includes("extreme") ||
+    v.includes("top-tier") ||
+    v.includes("perfect") ||
+    v.includes("quintessential")
+  ) {
+    return 5;
+  }
+
+  // 2. High / Great / Good / Yes
+  if (
+    v.includes("high") ||
+    v.includes("great") ||
+    v.includes("good") ||
+    v.includes("yes")
+  ) {
+    return 4;
+  }
+
+  // 3. Moderate / Medium / Med / Average / Fair / Possible / Size-dependent
+  if (
+    v.includes("mod") ||
+    v.includes("med") ||
+    v.includes("average") ||
+    v.includes("fair") ||
+    v.includes("possible") ||
+    v.includes("size-dependent") ||
+    v.includes("do well")
+  ) {
+    return 3;
+  }
+
+  // 4. Low / Easy
+  if (
+    v.includes("low") ||
+    v.includes("easy")
+  ) {
+    return 2;
+  }
+
+  // 5. Very Low / Poor / Zero / None / No / Unsuitable
+  if (
+    v.includes("very low") ||
+    v.includes("poor") ||
+    v.includes("zero") ||
+    v.includes("none") ||
+    v.includes("no") ||
+    v.includes("strictly unsuitable") ||
+    v.includes("unsuitable")
+  ) {
+    return 1;
+  }
+
   return 0;
 };
 
 function RatingBar({ label, value }) {
   const n = levelToNum(value);
   if (!n) return (
-    <li className="bd-trait-row">
+    <li className="bd-trait-row bd-trait-row--no-bar">
       <span className="bd-trait-label">{label}</span>
       <span className="bd-trait-val">{value || "N/A"}</span>
     </li>
   );
   return (
     <li className="bd-trait-row">
-      <span className="bd-trait-label">{label}</span>
+      <div className="bd-trait-header">
+        <span className="bd-trait-label">{label}</span>
+        <span className="bd-trait-val bd-trait-val--sm">{value}</span>
+      </div>
       <div className="bd-bar-wrap">
         <div className="bd-bar" style={{ width: `${n * 20}%`, "--bar-w": `${n * 20}%` }} />
       </div>
-      <span className="bd-trait-val bd-trait-val--sm">{value}</span>
     </li>
   );
 }
@@ -68,6 +121,13 @@ function Stat({ label, value }) {
   );
 }
 
+const DogIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M19 14c.5-1.5.5-3.5-.5-4.5s-2.5-1-3.5.5c-1 1.5-2 1-3-.5-1-1.5-2.5-2.5-4-2.5S5 8 5 9.5c0 1 0 2.5.5 3.5s2 1.5 2 2.5v1.5C7.5 18 8 18.5 9 18.5h4c1 0 1.5-.5 1.5-1.5v-1c0-1 2-1.5 2.5-2.5.3-.7 1-1 2-1V14z" />
+    <circle cx="7.5" cy="9.5" r="0.5" fill="currentColor" />
+  </svg>
+);
+
 /* ── Page ─────────────────────────────────────────────────── */
 export default function BreedDetailClient() {
   const params = useParams();
@@ -81,7 +141,7 @@ export default function BreedDetailClient() {
   if (!breed) {
     return (
       <div className="breed-info bd-not-found">
-        <div className="bd-nf-emoji">🐕</div>
+        <DogIcon style={{ width: 64, height: 64, color: 'var(--bd-text-light)' }} />
         <h1>Breed Not Found</h1>
         <p>We couldn't find that breed. Try going back and selecting again.</p>
         <button className="bd-btn" onClick={() => router.push("/breeds")}>
@@ -120,17 +180,17 @@ export default function BreedDetailClient() {
               {breed.basic_info?.one_sentence_summary || breed.basic_info?.ideal_home || ""}
             </p>
             <div className="bd-hero-chips">
-              {breed.basic_info?.size  && <span>📏 {breed.basic_info.size}</span>}
-              {ov.lifespan             && <span>⏳ {ov.lifespan}</span>}
-              {ov.energy_level         && <span>⚡ {ov.energy_level} energy</span>}
-              {ov.temperament          && <span>🌿 {ov.temperament}</span>}
+              {breed.basic_info?.size  && <span>{breed.basic_info.size}</span>}
+              {ov.lifespan             && <span>{ov.lifespan}</span>}
+              {ov.energy_level         && <span>{ov.energy_level} energy</span>}
+              {ov.temperament          && <span>{ov.temperament}</span>}
             </div>
           </div>
         </section>
 
         {/* ── BASIC INFO ── */}
         <section className="basic-info">
-          <h2>🐶 Basic Info</h2>
+          <h2>Basic Info</h2>
           <div className="bd-info-grid">
             <Stat label="Nicknames"      value={breed.basic_info?.nicknames?.join(", ")} />
             <Stat label="Origin"         value={breed.basic_info?.origin}                />
@@ -149,7 +209,7 @@ export default function BreedDetailClient() {
 
         {/* ── QUICK OVERVIEW ── */}
         <section className="quick-overview">
-          <h2>⚡ Quick Overview</h2>
+          <h2>Quick Overview</h2>
           <div className="bd-size-row">
             <div className="bd-size-box"><span>Weight — Male</span><strong>{ov.weight?.male || "N/A"}</strong></div>
             <div className="bd-size-box"><span>Weight — Female</span><strong>{ov.weight?.female || "N/A"}</strong></div>
@@ -164,7 +224,7 @@ export default function BreedDetailClient() {
 
         {/* ── PERSONALITY ── */}
         <section className="personality">
-          <h2>💛 Personality & Temperament</h2>
+          <h2>Personality & Temperament</h2>
           {breed.personality_and_temperament?.overview && <p>{breed.personality_and_temperament.overview}</p>}
 
           {breed.personality_and_temperament?.key_traits?.length > 0 && (
@@ -189,7 +249,7 @@ export default function BreedDetailClient() {
           )}
 
           {breed.personality_and_temperament?.quirky_habits?.length > 0 && (
-            <><h3>Quirky Habits 🐾</h3>
+            <><h3>Quirky Habits</h3>
             <ul>{breed.personality_and_temperament.quirky_habits.map((q, i) => <li key={i}>{q}</li>)}</ul></>
           )}
 
@@ -205,7 +265,7 @@ export default function BreedDetailClient() {
 
         {/* ── APPEARANCE ── */}
         <section className="appearance">
-          <h2>🎨 Appearance & Coat</h2>
+          <h2>Appearance & Coat</h2>
           {breed.appearance_and_coat?.general_look && <p>{breed.appearance_and_coat.general_look}</p>}
 
           {breed.appearance_and_coat?.coat_details && (
@@ -226,7 +286,6 @@ export default function BreedDetailClient() {
 
           {breed.appearance_and_coat?.climate_challenges && (
             <div className="bd-callout">
-              <span>🌡️</span>
               <p><strong>Climate Note:</strong> {breed.appearance_and_coat.climate_challenges}</p>
             </div>
           )}
@@ -234,10 +293,10 @@ export default function BreedDetailClient() {
 
         {/* ── EXERCISE ── */}
         <section className="exercise">
-          <h2>🏃‍♂️ Exercise & Activity</h2>
+          <h2>Exercise & Activity</h2>
           {breed.exercise_and_activity?.daily_requirement && (
-            <div className="bd-callout bd-callout--amber">
-              <span>⏱️</span><p>{breed.exercise_and_activity.daily_requirement}</p>
+            <div className="bd-callout">
+              <p>{breed.exercise_and_activity.daily_requirement}</p>
             </div>
           )}
           {breed.exercise_and_activity?.why_exercise_is_critical && <p>{breed.exercise_and_activity.why_exercise_is_critical}</p>}
@@ -252,10 +311,9 @@ export default function BreedDetailClient() {
 
         {/* ── TRAINING ── */}
         <section className="training">
-          <h2>🧠 Training & Intelligence</h2>
+          <h2>Training & Intelligence</h2>
           {(breed.training_and_intelligence?.intelligence_level || ov.trainability) && (
             <div className="bd-intelligence-badge">
-              <span>🏆</span>
               <div>
                 <strong>Intelligence Level</strong>
                 <p>{breed.training_and_intelligence?.intelligence_level || ov.trainability}</p>
@@ -281,11 +339,10 @@ export default function BreedDetailClient() {
 
         {/* ── GROOMING ── */}
         <section className="grooming">
-          <h2>🧹 Grooming & Maintenance</h2>
+          <h2>Grooming & Maintenance</h2>
           {breed.grooming_and_maintenance?.overall_effort && <p>{breed.grooming_and_maintenance.overall_effort}</p>}
           {breed.grooming_and_maintenance?.shedding_warning && (
-            <div className="bd-callout bd-callout--warn">
-              <span>⚠️</span>
+            <div className="bd-callout">
               <p><strong>Shedding Warning:</strong> {breed.grooming_and_maintenance.shedding_warning}</p>
             </div>
           )}
@@ -307,7 +364,6 @@ export default function BreedDetailClient() {
           )}
           {breed.grooming_and_maintenance?.professional_grooming && (
             <div className="bd-pro-grooming">
-              <span>✂️</span>
               <div>
                 <strong>Professional Grooming</strong>
                 <p>
@@ -322,7 +378,7 @@ export default function BreedDetailClient() {
 
         {/* ── LIFESTYLE ── */}
         <section className="lifestyle">
-          <h2>🏡 Living Requirements & Lifestyle</h2>
+          <h2>Living Requirements & Lifestyle</h2>
           {breed.living_requirements?.space && (
             <div className="bd-size-row bd-size-row--2">
               <div className="bd-size-box"><span>Minimum Space</span><strong>{breed.living_requirements.space.minimum || "N/A"}</strong></div>
@@ -348,13 +404,13 @@ export default function BreedDetailClient() {
           {breed.lifestyle_compatibility?.quick_decision_guide && (
             <div className="bd-decision-grid">
               <div className="bd-decision-yes">
-                <h3>✅ Get one if…</h3>
+                <h3>Get one if…</h3>
                 <ul>
                   {breed.lifestyle_compatibility.quick_decision_guide.get?.map((g, i) => <li key={i}>{g}</li>)}
                 </ul>
               </div>
               <div className="bd-decision-no">
-                <h3>❌ Skip if…</h3>
+                <h3>Skip if…</h3>
                 <ul>
                   {breed.lifestyle_compatibility.quick_decision_guide.skip?.map((s, i) => <li key={i}>{s}</li>)}
                 </ul>
@@ -365,7 +421,7 @@ export default function BreedDetailClient() {
 
         {/* ── HISTORY ── */}
         <section className="history">
-          <h2>📜 History & Origin</h2>
+          <h2>History & Origin</h2>
           <div className="bd-info-grid">
             <Stat label="Origin Country"   value={breed.history_origin?.origin_country}    />
             <Stat label="Developed In"     value={breed.history_origin?.developed_in}      />
@@ -391,7 +447,7 @@ export default function BreedDetailClient() {
         {/* ── FUN FACTS ── */}
         {breed.fun_facts?.length > 0 && (
           <section className="fun-facts">
-            <h2>🐾 Fun Facts</h2>
+            <h2>Fun Facts</h2>
             <ul className="bd-fun-list">
               {breed.fun_facts.map((f, i) => (
                 <li key={i}>
@@ -406,7 +462,7 @@ export default function BreedDetailClient() {
         {/* ── FAQs ── */}
         {breed.common_questions?.length > 0 && (
           <section className="faqs">
-            <h2>❓ Common Questions</h2>
+            <h2>Common Questions</h2>
             <div className="bd-faq-list">
               {breed.common_questions.map((q, i) => <FaqItem key={i} q={q} />)}
             </div>
@@ -416,23 +472,22 @@ export default function BreedDetailClient() {
         {/* ── OWNER REVIEWS ── */}
         {breed.real_owner_reviews && (
           <section className="owner-reviews">
-            <h2>📝 Real Owner Reviews</h2>
+            <h2>Real Owner Reviews</h2>
             {breed.real_owner_reviews?.overall_sentiment && (
               <div className="bd-sentiment">
-                <span>💬</span>
-                <p><strong>Overall:</strong> {breed.real_owner_reviews.overall_sentiment}</p>
+                <p><strong>Overall Sentiment:</strong> {breed.real_owner_reviews.overall_sentiment}</p>
               </div>
             )}
             <div className="bd-reviews-grid">
               {breed.real_owner_reviews?.positive?.length > 0 && (
                 <div className="bd-review-col bd-review-col--pos">
-                  <h3>👍 What owners love</h3>
+                  <h3>What owners love</h3>
                   <ul>{breed.real_owner_reviews.positive.map((r, i) => <li key={i}>{r}</li>)}</ul>
                 </div>
               )}
               {breed.real_owner_reviews?.challenges?.length > 0 && (
                 <div className="bd-review-col bd-review-col--neg">
-                  <h3>⚠️ Challenges noted</h3>
+                  <h3>Challenges noted</h3>
                   <ul>{breed.real_owner_reviews.challenges.map((c, i) => <li key={i}>{c}</li>)}</ul>
                 </div>
               )}
@@ -443,7 +498,7 @@ export default function BreedDetailClient() {
         {/* ── FINAL VERDICT ── */}
         {breed.final_verdict && (
           <section className="final-verdict">
-            <h2>🏅 Final Verdict</h2>
+            <h2>Final Verdict</h2>
             <p>{breed.final_verdict}</p>
           </section>
         )}
@@ -453,7 +508,7 @@ export default function BreedDetailClient() {
       {/* ── VIDEO ── */}
       {breed.video && !videoError && (
         <div className="video-section">
-          <h2>🎥 Watch this Breed in Action</h2>
+          <h2>Watch this Breed in Action</h2>
           <video controls playsInline onError={() => setVideoError(true)}>
             <source src={breed.video} type="video/mp4" />
           </video>
@@ -464,19 +519,19 @@ export default function BreedDetailClient() {
       <section className="next-steps">
         <div className="bd-next-inner">
           <div>
-            <h2>🐾 Ready for the Next Step?</h2>
+            <h2>Ready for the Next Step?</h2>
             <p>Choosing a dog is a long-term commitment. Let's help you decide responsibly.</p>
           </div>
           <div className="step-actions">
-            <button onClick={() => router.push("/adoption-guide")}>🏡 Adoption Checklist</button>
-            <button onClick={() => router.push("/breed-selector")}>🧠 Retake Quiz</button>
-            <button onClick={() => router.push("/breeds")}>🐕 Browse Breeds</button>
+            <button onClick={() => router.push("/adoption-guide")}>Adoption Checklist</button>
+            <button onClick={() => router.push("/breed-selector")}>Retake Quiz</button>
+            <button onClick={() => router.push("/breeds")}>Browse Breeds</button>
           </div>
         </div>
       </section>
 
       <div className="dog-quote-banner">
-        🐶 Every dog is a story waiting to be loved. 🐾
+        Every dog is a story waiting to be loved.
       </div>
     </div>
   );

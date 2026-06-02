@@ -4,7 +4,7 @@ const STORAGE_BUCKET = "community-posts";
 
 // ─── POSTS ────────────────────────────────────────────────────────────────────
 
-export async function fetchPosts({ page = 1, limit = 10, filter = "All Posts" } = {}) {
+export async function fetchPosts({ page = 1, limit = 10, filter = "All Posts", search = "" } = {}) {
   const { data: { user } } = await supabase.auth.getUser();
   const from = (page - 1) * limit;
   const to   = from + limit - 1;
@@ -21,6 +21,10 @@ export async function fetchPosts({ page = 1, limit = 10, filter = "All Posts" } 
 
   if (filter !== "All Posts") {
     query = query.contains("tags", [filter]);
+  }
+
+  if (search) {
+    query = query.or(`caption.ilike.%${search}%,breed.ilike.%${search}%`);
   }
 
   const { data, error } = await query;

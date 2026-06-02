@@ -62,21 +62,21 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
     width: "100%",
     border: "1.5px solid var(--border-strong)",
     borderRadius: "var(--radius-md)",
-    padding: "12px 14px",
+    padding: "12px 16px",
     fontFamily: "var(--font-body)",
     fontSize: 14,
-    fontWeight: 300,
+    fontWeight: 400,
     color: "var(--text-primary)",
     background: "var(--bg-soft)",
     outline: "none",
-    transition: "border-color 0.2s",
+    transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
     lineHeight: 1.5,
   };
 
   const labelStyle = {
     display: "block",
     fontSize: 11,
-    fontWeight: 500,
+    fontWeight: 600,
     color: "var(--text-light)",
     textTransform: "uppercase",
     letterSpacing: "0.09em",
@@ -86,26 +86,73 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
   return (
     <>
       <style>{`
-        @keyframes sheetUp {
-          from { transform: translateY(100%); opacity: 0; }
-          to   { transform: translateY(0);   opacity: 1; }
+        @keyframes fadeInBg {
+          from { background: rgba(50,35,20,0); backdrop-filter: blur(0px); }
+          to   { background: rgba(50,35,20,0.45); backdrop-filter: blur(6px); }
         }
-        .edit-modal-sheet { animation: sheetUp 0.32s cubic-bezier(0.34,1.15,0.64,1) forwards; }
-        .edit-input:focus { border-color: var(--accent-dark) !important; background: var(--soft-white) !important; }
+        @keyframes modalPopUp {
+          from { transform: scale(0.95) translateY(24px); opacity: 0; }
+          to   { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          75% { transform: translateX(4px); }
+        }
+        
+        .edit-modal-backdrop {
+          animation: fadeInBg 0.28s ease-out forwards;
+        }
+        
+        .edit-modal-sheet { 
+          animation: modalPopUp 0.35s cubic-bezier(0.34, 1.3, 0.64, 1) forwards; 
+        }
+        
+        .edit-input:focus { 
+          border-color: var(--accent) !important; 
+          background: var(--soft-white) !important; 
+          box-shadow: 0 0 0 3.5px rgba(176, 137, 104, 0.16);
+        }
         .edit-input::placeholder { color: var(--text-light); }
+        
+        .dog-photo-uploader {
+          transition: var(--transition);
+        }
+        .dog-photo-uploader:hover {
+          border-color: var(--accent) !important;
+          background: var(--card-lite) !important;
+          transform: scale(1.02);
+        }
+        
+        @media(max-width: 576px) {
+          .edit-modal-backdrop {
+            align-items: flex-end !important;
+          }
+          .edit-modal-sheet { 
+            animation: sheetSlideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+            max-height: 92vh !important;
+            margin: 0 !important;
+            padding: 16px 20px 32px !important;
+          }
+        }
+        @keyframes sheetSlideUp {
+          from { transform: translateY(100%); }
+          to   { transform: translateY(0); }
+        }
       `}</style>
 
       {/* Backdrop */}
       <div
+        className="edit-modal-backdrop"
         onClick={onClose}
         style={{
           position: "fixed", inset: 0,
-          background: "rgba(50,35,20,0.50)",
-          backdropFilter: "blur(5px)",
-          zIndex: 100,
+          zIndex: 1000,
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "center",
           justifyContent: "center",
+          padding: 16,
         }}
       >
         {/* Sheet */}
@@ -114,38 +161,46 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
           onClick={e => e.stopPropagation()}
           style={{
             background: "var(--soft-white)",
-            borderRadius: "var(--radius-xl) var(--radius-xl) 0 0",
-            padding: "0 24px 40px",
+            borderRadius: "var(--radius-xl)",
+            padding: "32px 32px 40px",
             width: "100%",
-            maxWidth: 520,
-            maxHeight: "92vh",
+            maxWidth: 500,
+            maxHeight: "90vh",
             overflowY: "auto",
             position: "relative",
-            boxShadow: "0 -24px 80px rgba(60,40,20,0.18)",
+            boxShadow: "0 24px 64px rgba(60,40,20,0.18)",
+            border: "1px solid var(--border)",
           }}
         >
-          {/* Drag handle */}
-          <div style={{
+          {/* Drag handle visible only on mobile */}
+          <div className="mobile-only-handle" style={{
             width: 36, height: 4,
             background: "var(--border-strong)",
             borderRadius: 2,
-            margin: "14px auto 20px",
+            margin: "0 auto 20px",
+            display: "none",
           }} />
+          <style>{`
+            @media (max-width: 576px) {
+              .mobile-only-handle { display: block !important; }
+            }
+          `}</style>
 
           {/* Close button */}
           <button
             onClick={onClose}
             style={{
-              position: "absolute", top: 14, right: 16,
+              position: "absolute", top: 20, right: 20,
               background: "var(--bg-soft)",
               border: "1px solid var(--border)",
               borderRadius: "50%",
-              width: 30, height: 30,
+              width: 32, height: 32,
               cursor: "pointer",
               color: "var(--text-light)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 13,
+              fontSize: 12,
               transition: "var(--transition)",
+              zIndex: 5,
             }}
             onMouseEnter={e => { e.currentTarget.style.background = "var(--card-bg)"; e.currentTarget.style.color = "var(--accent-dark)"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "var(--bg-soft)"; e.currentTarget.style.color = "var(--text-light)"; }}
@@ -154,9 +209,9 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
           {/* Title */}
           <div style={{
             fontFamily: "var(--font-display)",
-            fontSize: 24, fontWeight: 300,
+            fontSize: 26, fontWeight: 300,
             color: "var(--accent-dark)",
-            marginBottom: 22,
+            marginBottom: 24,
             lineHeight: 1.2,
           }}>Edit Profile</div>
 
@@ -175,7 +230,7 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
                 onClick={() => setSection(s.key)}
                 style={{
                   flex: 1,
-                  padding: "10px 0",
+                  padding: "11px 0",
                   borderRadius: "var(--radius-sm)",
                   border: "none",
                   fontFamily: "var(--font-body)",
@@ -184,7 +239,7 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
                   transition: "var(--transition)",
                   background: section === s.key ? "var(--soft-white)" : "transparent",
                   color: section === s.key ? "var(--accent-dark)" : "var(--text-light)",
-                  boxShadow: section === s.key ? "0 2px 8px rgba(127,85,57,0.10)" : "none",
+                  boxShadow: section === s.key ? "0 2px 8px rgba(127,85,57,0.08)" : "none",
                 }}
               >
                 {s.label}
@@ -210,14 +265,15 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
                 <label style={labelStyle}>Username</label>
                 <div style={{ position: "relative" }}>
                   <span style={{
-                    position: "absolute", left: 14, top: "50%",
+                    position: "absolute", left: 16, top: "50%",
                     transform: "translateY(-50%)",
                     color: "var(--text-light)",
                     fontSize: 14, pointerEvents: "none",
+                    fontWeight: 500,
                   }}>@</span>
                   <input
                     className="edit-input"
-                    style={{ ...inputStyle, paddingLeft: 30 }}
+                    style={{ ...inputStyle, paddingLeft: 32 }}
                     value={form.username}
                     onChange={set("username")}
                     placeholder="username"
@@ -239,8 +295,9 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
                 <div style={{
                   textAlign: "right",
                   fontSize: 11,
-                  color: form.bio.length > 130 ? "#c0635a" : "var(--text-light)",
-                  marginTop: 5,
+                  color: form.bio.length > 130 ? "var(--danger)" : "var(--text-light)",
+                  marginTop: 6,
+                  fontWeight: 500,
                 }}>
                   {form.bio.length}/150
                 </div>
@@ -253,11 +310,12 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
               {/* Dog photo */}
               <div>
                 <label style={labelStyle}>Dog Photo</label>
-                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                   <div
                     onClick={() => dogRef.current?.click()}
+                    className="dog-photo-uploader"
                     style={{
-                      width: 82, height: 82,
+                      width: 86, height: 86,
                       borderRadius: "var(--radius-md)",
                       background: "var(--bg-soft)",
                       border: `2px dashed ${dogPreview ? "var(--accent)" : "var(--border-strong)"}`,
@@ -265,14 +323,11 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
                       cursor: "pointer",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0,
-                      transition: "var(--transition)",
                     }}
-                    onMouseEnter={e => e.currentTarget.style.borderColor = "var(--accent-dark)"}
-                    onMouseLeave={e => e.currentTarget.style.borderColor = dogPreview ? "var(--accent)" : "var(--border-strong)"}
                   >
                     {dogPreview
-                      ? <img src={dogPreview} alt="Dog" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      : <span style={{ fontSize: 30 }}>🐶</span>
+                      ? <img src={dogPreview} alt="Dog preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      : <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.0" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--accent)" }}><path d="M12 5c-1.5 0-3 1-3.5 2.5a3 3 0 0 0-4.5 3c0 2 1.5 3.5 3 4v1c0 2 1.5 3 3.5 3s3.5-1 3.5-3v-1c1.5-.5 3-2 3-4a3 3 0 0 0-4.5-3C15 6 13.5 5 12 5z" /><circle cx="10" cy="10" r="1" fill="currentColor"/><circle cx="14" cy="10" r="1" fill="currentColor"/><path d="M11 13a1 1 0 0 1 2 0"/></svg>
                     }
                   </div>
 
@@ -343,19 +398,24 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
             </div>
           )}
 
-          {/* Error message */}
+          {/* Error message alert box */}
           {error && (
             <div style={{
               marginTop: 16,
-              background: "#fdf0ef",
-              border: "1px solid #f5c8c4",
+              background: "rgba(192, 99, 90, 0.06)",
+              border: "1.5px solid rgba(192, 99, 90, 0.2)",
               borderRadius: "var(--radius-md)",
-              padding: "11px 15px",
+              padding: "12px 16px",
               fontSize: 13,
-              color: "#c0635a",
+              color: "var(--danger)",
               lineHeight: 1.5,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              animation: "shake 0.4s ease",
             }}>
-              {error}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>{error}</span>
             </div>
           )}
 
@@ -373,12 +433,13 @@ export default function ProfileEditModal({ profile, onClose, onSave }) {
               borderRadius: "var(--radius-pill)",
               fontFamily: "var(--font-display)",
               fontSize: 16,
-              fontWeight: 300,
+              fontWeight: 400,
               cursor: saving ? "default" : "pointer",
               transition: "var(--transition)",
               letterSpacing: "0.04em",
+              boxShadow: saving ? "none" : "0 4px 14px rgba(127, 85, 57, 0.2)",
             }}
-            onMouseEnter={e => !saving && (e.currentTarget.style.opacity = "0.88")}
+            onMouseEnter={e => !saving && (e.currentTarget.style.opacity = "0.92")}
             onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
           >
             {saving ? "Saving…" : "Save Changes"}

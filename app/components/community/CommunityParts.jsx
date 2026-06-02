@@ -4,67 +4,238 @@ import { useState } from "react";
 import UserMenu from "../auth/UserMenu";
 
 // ── TopBar (desktop) ──────────────────────────────────────────────────────────
-export function TopBar({ breed }) {
+export function TopBar({ breed, searchQuery, onSearchChange, onPost }) {
   return (
-    <div style={{
-      background: "var(--surface)", borderBottom: "1px solid var(--border)",
-      padding: "0 28px", height: 60,
-      display: "flex", alignItems: "center", gap: 16,
-    }}
-      className="bc-topbar"
-    >
+    <div className="bc-topbar-wrapper">
       <style>{`
-        .bc-topbar { display:flex; }
-        @media(max-width:768px){ .bc-topbar{ display:none !important; } }
+        .bc-topbar-wrapper {
+          display: flex;
+          background: rgba(250, 247, 242, 0.80);
+          backdrop-filter: blur(16px) saturate(180%);
+          border: 1px solid rgba(176, 137, 104, 0.16);
+          border-radius: var(--radius-lg);
+          margin: 16px 24px 8px;
+          padding: 0 24px;
+          height: 60px;
+          align-items: center;
+          gap: 20px;
+          position: sticky;
+          top: 16px;
+          z-index: 100;
+          box-shadow: 0 8px 30px rgba(100, 70, 40, 0.04);
+          transition: var(--transition);
+        }
+        .bc-topbar-wrapper:hover {
+          box-shadow: 0 12px 36px rgba(100, 70, 40, 0.08);
+          border-color: rgba(176, 137, 104, 0.28);
+        }
+        .bc-brand-path {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-family: var(--font-body);
+          font-size: 12px;
+          color: var(--text-light);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          font-weight: 600;
+        }
+        .bc-brand-title {
+          font-family: var(--font-display);
+          font-size: 20px;
+          font-weight: 400;
+          color: var(--accent-dark);
+          letter-spacing: 0.01em;
+          margin-left: 2px;
+        }
+        .bc-search-container {
+          position: relative;
+          flex: 1;
+          max-width: 280px;
+          transition: var(--transition);
+        }
+        .bc-search-input {
+          width: 100%;
+          padding: 9px 36px 9px 36px;
+          border: 1.5px solid var(--border-strong);
+          border-radius: var(--radius-pill);
+          background: var(--bg-soft);
+          font-family: var(--font-body);
+          font-size: 13px;
+          color: var(--text-primary);
+          outline: none;
+          transition: all 0.25s ease;
+        }
+        .bc-search-input:focus {
+          border-color: var(--accent) !important;
+          background: var(--soft-white);
+          box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
+          max-width: 320px;
+        }
+        .bc-search-input::placeholder {
+          color: var(--text-light);
+        }
+        .bc-search-kbd {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 10px;
+          font-weight: 700;
+          color: var(--text-light);
+          background: var(--bg-soft);
+          border: 1px solid var(--border-strong);
+          border-radius: 4px;
+          padding: 1px 5px;
+          pointer-events: none;
+          font-family: var(--font-body);
+        }
+        .bc-btn-share {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 18px;
+          background: var(--accent-dark);
+          color: var(--soft-white);
+          border: none;
+          border-radius: var(--radius-pill);
+          font-family: var(--font-body);
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: var(--transition);
+          box-shadow: 0 4px 10px rgba(127, 85, 57, 0.15);
+        }
+        .bc-btn-share:hover {
+          background: var(--accent);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(127, 85, 57, 0.22);
+        }
+        @media(max-width: 768px) {
+          .bc-topbar-wrapper {
+            display: none !important;
+          }
+        }
       `}</style>
 
-      <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 500, color: "var(--primary-dark)", flex: 1 }}>
-        Community Feed
+      {/* Brand Indicator / Title */}
+      <div style={{ display: "flex", flexDirection: "column", flex: 1, alignItems: "flex-start" }}>
+        <div className="bc-brand-path">
+          <span>BreedLy</span>
+          <span style={{ fontSize: 9, opacity: 0.6 }}>🐾</span>
+          <span style={{ color: "var(--accent)" }}>Feed</span>
+        </div>
+        <h1 className="bc-brand-title">Community</h1>
       </div>
 
       {/* Search */}
-      <div style={{ position: "relative", flex: 1, maxWidth: 300 }}>
-        <svg style={{ position:"absolute", left:12, top
-          :"50%", transform:"translateY(-50%)", opacity:0.4 }} width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#8b7a6a" strokeWidth="1.8"><circle cx="9" cy="9" r="6"/><path d="M15 15l3 3"/></svg>
+      <div className="bc-search-container">
+        <svg 
+          style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", opacity: 0.5, color: "var(--accent-dark)" }} 
+          width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
+        >
+          <circle cx="9" cy="9" r="6" />
+          <path d="M15 15l3 3" />
+        </svg>
         <input
-          placeholder="Search posts, breeds, tags..."
-          style={{
-            width: "100%", padding: "9px 14px 9px 36px",
-            border: "1.5px solid var(--border)", borderRadius: "var(--radius-pill)",
-            background: "var(--bg)", fontFamily: "var(--font-body)",
-            fontSize: 13, color: "var(--text)", outline: "none", transition: "border-color 0.15s",
-          }}
-          onFocus={e => e.target.style.borderColor = "var(--primary-dark)"}
-          onBlur={e  => e.target.style.borderColor = "var(--border)"}
+          value={searchQuery || ""}
+          onChange={e => onSearchChange && onSearchChange(e.target.value)}
+          placeholder="Search pack..."
+          className="bc-search-input"
         />
+        <span className="bc-search-kbd">/</span>
       </div>
 
-      <UserMenu />
+      {/* Actions */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        {onPost && (
+          <button className="bc-btn-share" onClick={onPost}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Share Post
+          </button>
+        )}
+        <NotifBtn />
+        <UserMenu />
+      </div>
     </div>
   );
 }
 
 // ── MobileTopBar ──────────────────────────────────────────────────────────────
 export function MobileTopBar({ onPost }) {
+  const toggleDrawer = () => {
+    const sidebar = document.querySelector(".bc-sidebar");
+    const overlay = document.querySelector(".bc-overlay");
+    if (sidebar && overlay) {
+      sidebar.classList.add("open");
+      overlay.classList.add("show");
+    }
+  };
+
   return (
-    <div style={{
-      display: "none", background: "var(--surface)",
-      borderBottom: "1px solid var(--border)",
-      padding: "14px 18px",
-      alignItems: "center", justifyContent: "space-between",
-    }}
-      className="bc-mobile-top"
-    >
+    <div className="bc-mobile-top-wrapper">
       <style>{`
-        .bc-mobile-top { display:none !important; }
-        @media(max-width:768px){ .bc-mobile-top{ display:flex !important; } }
+        .bc-mobile-top-wrapper {
+          display: none;
+          background: rgba(250, 247, 242, 0.82);
+          backdrop-filter: blur(14px) saturate(180%);
+          border: 1px solid rgba(176, 137, 104, 0.16);
+          border-radius: var(--radius-lg);
+          margin: 10px 12px 6px;
+          padding: 0 16px;
+          height: 56px;
+          align-items: center;
+          justify-content: space-between;
+          position: sticky;
+          top: 10px;
+          z-index: 100;
+          box-shadow: 0 6px 20px rgba(100, 70, 40, 0.03);
+          transition: var(--transition);
+        }
+        .bc-drawer-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 6px;
+          color: var(--accent-dark);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: var(--radius-sm);
+          transition: all 0.2s ease;
+        }
+        .bc-drawer-btn:active {
+          background: var(--bg-soft);
+          transform: scale(0.92);
+        }
+        .bc-mobile-logo {
+          font-family: var(--font-display);
+          font-size: 20px;
+          color: var(--accent-dark);
+          fontWeight: 400;
+          letter-spacing: 0.2px;
+        }
+        @media(max-width: 768px) {
+          .bc-mobile-top-wrapper {
+            display: flex !important;
+          }
+        }
       `}</style>
-      <div style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--primary-dark)", fontWeight: 600 }}>
-        BreedLy
+      
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <button className="bc-drawer-btn" onClick={toggleDrawer} aria-label="Open navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="16" y2="12" />
+            <line x1="4" y1="18" x2="20" y2="18" />
+          </svg>
+        </button>
+        <span className="bc-mobile-logo">BreedLy</span>
       </div>
+      
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
         <NotifBtn />
-        <UserMenu compact />
+        <UserMenu />
       </div>
     </div>
   );
@@ -72,52 +243,119 @@ export function MobileTopBar({ onPost }) {
 
 function NotifBtn() {
   return (
-    <button style={{
-      width: 36, height: 36, borderRadius: "50%",
-      background: "var(--bg)", border: "1.5px solid var(--border)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      cursor: "pointer", transition: "background 0.15s",
-    }}
-      onMouseEnter={e => e.currentTarget.style.background = "var(--primary-soft)"}
-      onMouseLeave={e => e.currentTarget.style.background = "var(--bg)"}
+    <button 
+      style={{
+        width: 36, height: 36,
+        borderRadius: "50%",
+        background: "var(--bg-soft)",
+        border: "1.5px solid var(--border-strong)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        color: "var(--text-secondary)",
+        position: "relative",
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.background = "var(--card-lite)";
+        e.currentTarget.style.color = "var(--accent-dark)";
+        e.currentTarget.style.transform = "scale(1.05)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = "var(--bg-soft)";
+        e.currentTarget.style.color = "var(--text-secondary)";
+        e.currentTarget.style.transform = "scale(1)";
+      }}
     >
-      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#8b7a6a" strokeWidth="1.8"><path d="M10 2a6 6 0 00-6 6v3l-1.5 2.5h15L16 11V8a6 6 0 00-6-6z"/><path d="M8.5 17a1.5 1.5 0 003 0"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M10 2a6 6 0 00-6 6v3l-1.5 2.5h15L16 11V8a6 6 0 00-6-6z" />
+        <path d="M8.5 17a1.5 1.5 0 003 0" />
+      </svg>
+      {/* Pulse notification badge */}
+      <span style={{
+        position: "absolute",
+        top: 3, right: 3,
+        width: 8, height: 8,
+        borderRadius: "50%",
+        background: "var(--danger)",
+        border: "1.5px solid var(--soft-white)",
+        display: "block",
+        boxShadow: "0 0 0 rgba(192, 99, 90, 0.4)",
+        animation: "pulseDot 1.6s infinite",
+      }} />
+      <style>{`
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0px rgba(192, 99, 90, 0.7); }
+          100% { box-shadow: 0 0 0 8px rgba(192, 99, 90, 0); }
+        }
+      `}</style>
     </button>
   );
 }
-
-// ── FilterBar ─────────────────────────────────────────────────────────────────
 export function FilterBar({ filters = [], active, onChange }) {
   return (
-    <div style={{
-      display: "flex", gap: 8, padding: "14px 28px",
-      overflowX: "auto", scrollbarWidth: "none",
-      background: "var(--surface)", borderBottom: "1px solid var(--border)",
-    }}>
+    <div className="bc-filter-wrapper">
       <style>{`
-        .bc-filter-row::-webkit-scrollbar{display:none}
-        @media(max-width:768px){.bc-filter-row{padding:12px 16px !important}}
+        .bc-filter-wrapper {
+          position: relative;
+          background: var(--surface);
+          border-bottom: 1px solid var(--border);
+          padding: 10px 24px;
+        }
+        .bc-filter-scroll-container {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          scrollbar-width: none;
+          padding: 4px 0;
+          mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, rgba(0,0,0,0) 100%);
+          -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, rgba(0,0,0,0) 100%);
+        }
+        .bc-filter-scroll-container::-webkit-scrollbar {
+          display: none;
+        }
+        .bc-filter-pill {
+          flex-shrink: 0;
+          padding: 8px 18px;
+          border-radius: var(--radius-pill);
+          font-family: var(--font-body);
+          font-size: 13px;
+          font-weight: 500;
+          border: 1.5px solid var(--border-strong);
+          background: var(--bg-soft);
+          color: var(--text-secondary);
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .bc-filter-pill.active {
+          background: var(--accent-dark);
+          border-color: var(--accent-dark);
+          color: var(--soft-white);
+          box-shadow: 0 4px 12px rgba(127, 85, 57, 0.2);
+          transform: translateY(-1px);
+        }
+        .bc-filter-pill:hover:not(.active) {
+          background: var(--card-lite);
+          border-color: var(--accent);
+          color: var(--accent-dark);
+          transform: translateY(-1px);
+        }
+        @media(max-width: 768px) {
+          .bc-filter-wrapper {
+            padding: 8px 16px;
+          }
+        }
       `}</style>
-      {filters.map(f => (
-        <button
-          key={f}
-          onClick={() => onChange(f)}
-          style={{
-            flexShrink: 0, padding: "7px 18px",
-            borderRadius: "var(--radius-pill)",
-            fontSize: 13, fontWeight: 500,
-            fontFamily: "var(--font-body)",
-            border: `1.5px solid ${active === f ? "var(--primary-dark)" : "var(--border)"}`,
-            background: active === f ? "var(--primary-dark)" : "transparent",
-            color: active === f ? "#fff" : "var(--text)",
-            cursor: "pointer", transition: "all 0.15s",
-          }}
-          onMouseEnter={e => { if (active !== f) { e.currentTarget.style.background="var(--primary-soft)"; e.currentTarget.style.borderColor="var(--primary)"; e.currentTarget.style.color="var(--primary-dark)"; } }}
-          onMouseLeave={e => { if (active !== f) { e.currentTarget.style.background="transparent"; e.currentTarget.style.borderColor="var(--border)"; e.currentTarget.style.color="var(--text)"; } }}
-        >
-          {f}
-        </button>
-      ))}
+      <div className="bc-filter-scroll-container">
+        {filters.map(f => (
+          <button
+            key={f}
+            onClick={() => onChange(f)}
+            className={`bc-filter-pill ${active === f ? "active" : ""}`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -150,7 +388,7 @@ export function ComposeBanner({ onOpen, currentUser }) {
     : currentUser?.initials ?? "?"
   }
 </div>
-      <div style={{ flex: 1, fontSize: 14, color: "var(--border)", fontFamily: "var(--font-body)" }}>
+      <div style={{ flex: 1, fontSize: 14, color: "var(--text-light)", fontFamily: "var(--font-body)" }}>
         Share something with the pack...
       </div>
       <div style={{ display: "flex", gap: 8 }}>

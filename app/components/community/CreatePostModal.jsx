@@ -27,6 +27,9 @@ export default function CreatePostModal({ onClose, onSubmit, isLoading }) {
       <style>{`
         @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
         .modal-sheet{animation:sheetUp 0.3s cubic-bezier(0.34,1.2,0.64,1) forwards}
+        @media(max-width:480px) {
+          .modal-sheet { padding: 0 16px 24px !important; }
+        }
       `}</style>
 
       <div onClick={onClose} style={{ position:"fixed", inset:0, background:"rgba(60,45,30,0.45)", zIndex:100, display:"flex", alignItems:"flex-end", justifyContent:"center" }}>
@@ -36,7 +39,7 @@ export default function CreatePostModal({ onClose, onSubmit, isLoading }) {
 
           <button onClick={onClose} style={{ position:"absolute", top:14, right:16, background:"var(--bg)", border:"1px solid var(--border)", borderRadius:"50%", width:30, height:30, fontSize:15, cursor:"pointer", color:"var(--muted)", display:"flex", alignItems:"center", justifyContent:"center" }}>✕</button>
 
-          <div style={{ fontFamily:"var(--font-display)", fontSize:22, color:"var(--primary-dark)", marginBottom:20 }}>
+          <div style={{ fontFamily:"var(--font-display)", fontSize:22, fontWeight:400, color:"var(--accent-dark)", marginBottom:20 }}>
             Share with the pack
           </div>
 
@@ -50,7 +53,9 @@ export default function CreatePostModal({ onClose, onSubmit, isLoading }) {
             {preview
               ? <img src={preview} alt="Preview" style={{ width:"100%", maxHeight:220, objectFit:"cover", borderRadius:10 }} />
               : <>
-                  <div style={{ fontSize:32, marginBottom:8 }}>📷</div>
+                  <div style={{ marginBottom:8, color: "var(--muted)", display: "flex", justifyContent: "center" }}>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
+                  </div>
                   <div style={{ fontSize:14, fontWeight:500, color:"var(--muted)" }}>Tap to add a photo</div>
                   <div style={{ fontSize:12, color:"var(--border)", marginTop:4 }}>JPG, PNG or MP4 · max 20MB</div>
                 </>
@@ -88,7 +93,7 @@ export default function CreatePostModal({ onClose, onSubmit, isLoading }) {
           <button
             onClick={() => caption.trim() && onSubmit({ caption, tags: selTags, file })}
             disabled={isLoading || !caption.trim()}
-            style={{ width:"100%", padding:"14px", background:caption.trim()?"var(--primary-dark)":"var(--border)", color:"#fff", border:"none", borderRadius:"var(--radius-lg)", fontFamily:"var(--font-display)", fontSize:18, cursor:caption.trim()?"pointer":"default", letterSpacing:"0.3px", transition:"opacity 0.15s, transform 0.1s", opacity:isLoading?0.7:1 }}
+            style={{ width:"100%", padding:"14px", background:caption.trim()?"var(--accent-dark)":"var(--border)", color:"#fff", border:"none", borderRadius:"var(--radius-pill)", fontFamily:"var(--font-body)", fontSize:15, fontWeight:500, cursor:caption.trim()?"pointer":"default", letterSpacing:"0.03em", transition:"opacity 0.15s, transform 0.1s", opacity:isLoading?0.7:1 }}
             onMouseEnter={e => caption.trim() && (e.currentTarget.style.transform="scale(1.02)")}
             onMouseLeave={e => e.currentTarget.style.transform="scale(1)"}
           >

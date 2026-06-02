@@ -26,46 +26,49 @@ export default function ChatLandingPage() {
   return (
     <div className="cp-page">
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="cp-hero">
         <div className="cp-hero-glow" />
-        <span className="cp-eyebrow">Paw Assistant</span>
+        
+        <div className="cp-hero-content">
+          <span className="cp-eyebrow">AI Canine Assistant</span>
+          
+          <h1 className="cp-hero-title">
+            Ask anything about<br />
+            <em>your companion.</em>
+          </h1>
 
-        <h1 className="cp-hero-title">
-          Ask anything about<br />
-          <em>your dog.</em>
-        </h1>
+          <p className="cp-hero-sub">
+            Breed-aware, veterinary-aligned intelligence. Instantly get tailored guidance on nutrition, wellness, behaviors, and grooming.
+          </p>
 
-        <p className="cp-hero-sub">
-          Breed-aware AI advice on food, health, training, and grooming —
-          calm, practical answers whenever you need them.
-        </p>
+          <div className="cp-hero-chips">
+            <span className="chip-badge">Nutrition</span>
+            <span className="chip-badge">Wellness</span>
+            <span className="chip-badge">Training</span>
+            <span className="chip-badge">Grooming</span>
+            <span className="chip-badge">Breed Science</span>
+          </div>
 
-        <div className="cp-hero-chips">
-          <span>🥗 Nutrition</span>
-          <span>🩺 Health</span>
-          <span>🐕 Training</span>
-          <span>✂️ Grooming</span>
-          <span>🧬 Breed info</span>
+          <button
+            className="cp-hero-cta"
+            onClick={() => handleNavigation("/chat/main")}
+          >
+            Start Conversation
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 8 }}><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
         </div>
-
-        <button
-          className="cp-hero-cta"
-          onClick={() => handleNavigation("/chat/main")}
-        >
-          Start chatting →
-        </button>
       </section>
 
-      {/* SAMPLE QUESTIONS */}
+      {/* SAMPLE QUESTIONS SECTION */}
       <section className="cp-samples">
         <div className="cp-samples-inner">
           <span className="cp-eyebrow" style={{ textAlign: "center", display: "block" }}>
-            Try asking
+            Popular Queries
           </span>
 
           <h2 className="cp-section-title">
-            Questions dog owners ask every day.
+            What dog owners ask every day.
           </h2>
 
           <div className="cp-sample-grid">
@@ -77,30 +80,42 @@ export default function ChatLandingPage() {
               >
                 <span className="cp-sample-icon">{icon}</span>
                 <span className="cp-sample-text">{q}</span>
-                <span className="cp-sample-arrow">→</span>
+                <span className="cp-sample-arrow">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* TRUST */}
+      {/* TRUST SECTION */}
       <section className="cp-trust">
-        <span className="cp-eyebrow" style={{ color: "#B08968" }}>
-          Responsible by design
-        </span>
+        <div className="cp-trust-inner">
+          <span className="cp-eyebrow">
+            Safety & vet alignment
+          </span>
 
-        <h2>Built for thoughtful dog care.</h2>
+          <h2>Responsible AI for thoughtful dog care.</h2>
 
-        <p>
-          Paw Assistant gives you a starting point — not a replacement for your vet.
-          Every answer encourages responsible, dog-first decisions.
-        </p>
+          <p>
+            Our assistant delivers personalized, breed-specific context derived from evidence-backed veterinary references. It serves as a helpful educational reference, not a replacement for professional clinic diagnostics.
+          </p>
 
-        <div className="cp-trust-pills">
-          <span>✔ Breed-specific advice</span>
-          <span>✔ Evidence-informed</span>
-          <span>✔ Always vet-recommended</span>
+          <div className="cp-trust-pills">
+            <span className="trust-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ marginRight: 6 }}><path d="M20 6L9 17l-5-5"/></svg>
+              Breed-Specific Algorithms
+            </span>
+            <span className="trust-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ marginRight: 6 }}><path d="M20 6L9 17l-5-5"/></svg>
+              Evidence-Informed Advice
+            </span>
+            <span className="trust-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ marginRight: 6 }}><path d="M20 6L9 17l-5-5"/></svg>
+              Always Vet-First Decisions
+            </span>
+          </div>
         </div>
       </section>
 

@@ -16,7 +16,9 @@ export default function ProfilePostsGrid({ posts = [] }) {
         padding: "64px 24px",
         fontFamily: "var(--font-body)",
       }}>
-        <div style={{ fontSize: 46, marginBottom: 14 }}>🐾</div>
+        <div style={{ marginBottom: 14, color: "var(--accent-dark)", display: "flex", justifyContent: "center" }}>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.8 }}><path d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 3.5s3-1.5 3-3.5c0-1.66-1.34-3-3-3zm-5.5-5c-1.1 0-2 .9-2 2s1.5 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm11 0c-1.1 0-2 .9-2 2s.9 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm-8.25-3.5c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75zm5.5 0c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75z"/></svg>
+        </div>
         <div style={{
           fontFamily: "var(--font-display)",
           fontSize: 20, fontWeight: 300,
@@ -71,7 +73,9 @@ export default function ProfilePostsGrid({ posts = [] }) {
                 alignItems: "center", justifyContent: "center",
                 padding: 8, gap: 5,
               }}>
-                <div style={{ fontSize: 22 }}>🐾</div>
+                <div style={{ color: "var(--accent)", opacity: 0.5, display: "flex", justifyContent: "center" }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 3.5s3-1.5 3-3.5c0-1.66-1.34-3-3-3zm-5.5-5c-1.1 0-2 .9-2 2s1.5 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm11 0c-1.1 0-2 .9-2 2s.9 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm-8.25-3.5c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75zm5.5 0c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75z"/></svg>
+                </div>
                 <div style={{
                   fontSize: 10,
                   color: "var(--text-secondary)",

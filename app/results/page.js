@@ -5,6 +5,84 @@ import { useRouter } from 'next/navigation';
 import { breeds } from '../data/breeds';
 import { createClient } from '@supabase/supabase-js';
 
+const PawIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M12 14c-1.66 0-3 1.34-3 3 0 2 2 3.5 3 3.5s3-1.5 3-3.5c0-1.66-1.34-3-3-3zm-5.5-5c-1.1 0-2 .9-2 2s1.5 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm11 0c-1.1 0-2 .9-2 2s.9 2.5 2 2.5 2-1.4 2-2.5-.9-2-2-2zm-8.25-3.5c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75zm5.5 0c-.97 0-1.75.78-1.75 1.75s.78 1.75 1.75 1.75 1.75-.78 1.75-1.75-.78-1.75-1.75-1.75z"/>
+  </svg>
+);
+
+const TipIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+    <line x1="9" y1="18" x2="15" y2="18"/>
+    <line x1="10" y1="22" x2="14" y2="22"/>
+  </svg>
+);
+
+const DogIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M19 14c.5-1.5.5-3.5-.5-4.5s-2.5-1-3.5.5c-1 1.5-2 1-3-.5-1-1.5-2.5-2.5-4-2.5S5 8 5 9.5c0 1 0 2.5.5 3.5s2 1.5 2 2.5v1.5C7.5 18 8 18.5 9 18.5h4c1 0 1.5-.5 1.5-1.5v-1c0-1 2-1.5 2.5-2.5.3-.7 1-1 2-1V14z" />
+    <circle cx="7.5" cy="9.5" r="0.5" fill="currentColor" />
+  </svg>
+);
+
+const GoldMedal = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <circle cx="12" cy="12" r="10" fill="#FBBF24" stroke="#D97706" strokeWidth="1.5"/>
+    <path d="M12 7V17M8 12H16" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="12" cy="12" r="6" fill="#FFF" opacity="0.3"/>
+  </svg>
+);
+
+const SilverMedal = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <circle cx="12" cy="12" r="10" fill="#E2E8F0" stroke="#94A3B8" strokeWidth="1.5"/>
+    <path d="M12 7V17M8 12H16" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="12" cy="12" r="6" fill="#FFF" opacity="0.4"/>
+  </svg>
+);
+
+const BronzeMedal = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <circle cx="12" cy="12" r="10" fill="#FDBA74" stroke="#C2410C" strokeWidth="1.5"/>
+    <path d="M12 7V17M8 12H16" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="12" cy="12" r="6" fill="#FFF" opacity="0.3"/>
+  </svg>
+);
+
+const HeartFilled = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="#EF4444" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+);
+
+const HeartOutline = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+);
+
+const CheckIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', width: 14, height: 14, marginRight: 6, ...style }} {...props}>
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+
+const WarningIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', width: 14, height: 14, marginRight: 6, ...style }} {...props}>
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+);
+
+const GroomIcon = ({ style, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', width: 14, height: 14, marginRight: 6, ...style }} {...props}>
+    <rect x="6" y="9" width="12" height="13" rx="2" ry="2"/>
+    <path d="M9 9V5a3 3 0 1 1 6 0v4"/>
+  </svg>
+);
+
 /* ─── breed profiles (unchanged) ─────────────────────────── */
 const breedProfiles = {
   "Labrador Retriever": { traits: ["House","Spacious","Large yard","Yes","Ages 6–12","Yes","No","No","3+ hours","1–2 hours","< 2 hrs","Yes","Very active","Very playful","Friendly","Some barking","Just the basics","No","Large (23–50kg)","Weekly","Somewhat"], image: "/assets/Dogs/Labrador Retriever.jpg", desc: "Friendly, playful, and always ready for family fun." },
@@ -18,7 +96,7 @@ const breedProfiles = {
   "Indian Spitz":       { traits: ["2-3BHK","Moderate","Small yard","No","0–5","Yes","Yes","No","1–2 hours","1–2 hours","2–5 hrs","Yes","Moderate","Moderately playful","Friendly","Some barking","Just the basics","No","Medium (7–14kg)","Weekly","Somewhat"], image: "/assets/Dogs/Indian Spitz.jpg", desc: "Lively and intelligent — perfect family companion for Indian homes." },
   "Dachshund":          { traits: ["Apartment","Very little","None","No","0–5","No","Yes","No","< 1 hour","< 30 mins","2–5 hrs","Yes","Low","Moderately playful","Friendly","Some barking","Just the basics","No","Small (7kg & under)","Weekly","Very important"], image: "/assets/Dogs/Dachshund.jpg", desc: "Bold and curious — tiny but full of personality." },
   "Cocker Spaniel":     { traits: ["2-3BHK","Moderate","Moderate yard","Yes","Ages 6–12","Yes","No","No","1–2 hours","1–2 hours","2–5 hrs","Yes","Moderate","Very playful","Friendly","Some barking","Just the basics","No","Medium (7–14kg)","Weekly","Somewhat"], image: "/assets/Dogs/Cocker Spaniel.jpg", desc: "Sweet-natured, loves cuddles and playtime." },
-  "Boxer":              { traits: ["House","Spacious","Large yard","Yes","Teenagers 13+","Yes","No","No","2–3 hours","1–2 hours","2–5 hrs","Yes","Very active","Very playful","Friendly","Some barking","Just the basics","No","Large (23–50kg)","Weekly","Somewhat"], image: "/assets/Dogs/Boxer.jpg", desc: "Energetic, fun-loving, and protective family clown." },
+  "Boxer":              { traits: ["House","Spacious","Large yard","Yes","Teenagers 13+","Yes","No","No","2–3 hours","1–2 hours","2–5 hrs","Yes","Very active","Very playful","Friendly","Some barking","Just the basics","No","Large (23–50kg)","Weekly","Somewhat"], fill: "#FFF", image: "/assets/Dogs/Boxer.jpg", desc: "Energetic, fun-loving, and protective family clown." },
   "Doberman Pinscher":  { traits: ["House","Spacious","Large yard","Yes","Teenagers 13+","Yes","No","No","3+ hours","1–2 hours","< 2 hrs","Yes","Very active","Moderately playful","Protective","Some barking","Just the basics","No","Large (23–50kg)","Weekly","Not important"], image: "/assets/Dogs/Doberman Pinscher.jpg", desc: "Alert, loyal, and brave — needs structure and exercise." },
   "Rottweiler":         { traits: ["House","Spacious","Large yard","Yes","Teenagers 13+","Yes","No","No","2–3 hours","1–2 hours","< 2 hrs","Yes","Moderate","Moderately playful","Protective","Some barking","Just the basics","No","Large (23–50kg)","Weekly","Not important"], image: "/assets/Dogs/Rottweiler.jpg", desc: "Confident and strong — devoted guardian for experienced owners." },
   "Great Dane":         { traits: ["House","Spacious","Open yard","Yes","Ages 6–12","Yes","No","No","2–3 hours","1–2 hours","< 2 hrs","Yes","Moderate","Low energy","Calm","Some barking","Just the basics","No","Very Large (50kg+)","Weekly","Somewhat"], image: "/assets/Dogs/Great Dane.jpg", desc: "Gentle giant — affectionate and easy-going." },
@@ -70,9 +148,9 @@ function buildWhyMatch(answers = []) {
 }
 
 const RANK_LABELS = [
-  { label: "Best Match",       medal: "🥇", cls: "rp-gold"   },
-  { label: "Great Match",      medal: "🥈", cls: "rp-silver" },
-  { label: "Good Alternative", medal: "🥉", cls: "rp-bronze" },
+  { label: "Best Match",       MedalIcon: GoldMedal,   cls: "rp-gold"   },
+  { label: "Great Match",      MedalIcon: SilverMedal, cls: "rp-silver" },
+  { label: "Good Alternative", MedalIcon: BronzeMedal, cls: "rp-bronze" },
 ];
 
 export default function ResultsPage() {
@@ -147,7 +225,7 @@ export default function ResultsPage() {
     }).filter(b => b.score > 0).sort((a, b) => b.percent - a.percent || b.score - a.score);
 
     if (!scored.length) {
-      setFallbackText('😔 No matches found. Try adjusting your answers and retake the quiz.');
+      setFallbackText('No matches found. Try adjusting your answers and retake the quiz.');
       setLoading(false);
       return;
     }
@@ -205,10 +283,16 @@ export default function ResultsPage() {
       {/* WHY MATCH */}
       {answers.length > 0 && (
         <section className="rp-why">
-          <h2>💡 Why these breeds fit you</h2>
+          <h2>
+            <TipIcon style={{ width: 22, height: 22, marginRight: 8, color: 'var(--rp-accent-dark)' }} />
+            Why these breeds fit you
+          </h2>
           <ul>
             {buildWhyMatch(answers).map((text, i) => (
-              <li key={i}><span>🐾</span>{text}</li>
+              <li key={i}>
+                <PawIcon style={{ width: 14, height: 14, marginRight: 8, color: 'var(--rp-accent-dark)' }} />
+                {text}
+              </li>
             ))}
           </ul>
         </section>
@@ -223,7 +307,7 @@ export default function ResultsPage() {
           </div>
         ) : matches.length === 0 ? (
           <div className="rp-fallback">
-            <span>🐕</span>
+            <DogIcon style={{ width: 64, height: 64, color: 'var(--rp-text-light)', marginBottom: 16 }} />
             <p>{fallbackText}</p>
             <button onClick={restartQuiz} className="rp-btn-primary">Retake Quiz</button>
           </div>
@@ -234,7 +318,11 @@ export default function ResultsPage() {
 
                 {/* rank badge */}
                 <div className={`rp-rank-badge ${RANK_LABELS[i].cls}`}>
-                  {RANK_LABELS[i].medal} {RANK_LABELS[i].label}
+                  {(() => {
+                    const Medal = RANK_LABELS[i].MedalIcon;
+                    return <Medal style={{ width: 18, height: 18, marginRight: 5, verticalAlign: 'middle' }} />;
+                  })()}
+                  {RANK_LABELS[i].label}
                 </div>
 
                 {/* fav button */}
@@ -243,7 +331,11 @@ export default function ResultsPage() {
                   onClick={() => toggleFavorite(breed.name)}
                   aria-label="Toggle favourite"
                 >
-                  {favorites.includes(breed.name) ? "❤️" : "🤍"}
+                  {favorites.includes(breed.name) ? (
+                    <HeartFilled style={{ width: 22, height: 22 }} />
+                  ) : (
+                    <HeartOutline style={{ width: 22, height: 22 }} />
+                  )}
                 </button>
 
                 {/* image */}
@@ -270,22 +362,42 @@ export default function ResultsPage() {
 
                   {breed.pros?.length > 0 && (
                     <ul className="rp-list rp-list--pros">
-                      {breed.pros.slice(0, 3).map((p, j) => <li key={j}>✅ {p}</li>)}
+                      {breed.pros.slice(0, 3).map((p, j) => (
+                        <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <CheckIcon style={{ flexShrink: 0 }} />
+                          {p}
+                        </li>
+                      ))}
                     </ul>
                   )}
                   {breed.cons?.length > 0 && (
                     <ul className="rp-list rp-list--cons">
-                      {breed.cons.slice(0, 3).map((c, j) => <li key={j}>⚠️ {c}</li>)}
+                      {breed.cons.slice(0, 3).map((c, j) => (
+                        <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <WarningIcon style={{ flexShrink: 0 }} />
+                          {c}
+                        </li>
+                      ))}
                     </ul>
                   )}
                   {breed.grooming?.length > 0 && (
                     <ul className="rp-list rp-list--groom">
-                      {breed.grooming.slice(0, 2).map((g, j) => <li key={j}>🧴 {g}</li>)}
+                      {breed.grooming.slice(0, 2).map((g, j) => (
+                        <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <GroomIcon style={{ flexShrink: 0 }} />
+                          {g}
+                        </li>
+                      ))}
                     </ul>
                   )}
                   {breed.notes?.length > 0 && (
                     <ul className="rp-list">
-                      {breed.notes.slice(0, 2).map((n, j) => <li key={j}>{n}</li>)}
+                      {breed.notes.slice(0, 2).map((n, j) => (
+                        <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <PawIcon style={{ width: 14, height: 14, color: 'var(--rp-accent)', flexShrink: 0 }} />
+                          {n}
+                        </li>
+                      ))}
                     </ul>
                   )}
 

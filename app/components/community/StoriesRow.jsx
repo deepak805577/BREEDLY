@@ -2,12 +2,12 @@ export default function StoriesRow({ stories = [], onAddStory }) {
   return (
     <div style={{
       display: "flex",
-      gap: 12,
-      padding: "12px 14px",
+      gap: 14,
+      padding: "14px 16px",
       overflowX: "auto",
       scrollbarWidth: "none",
-      background: "#fff",
-      borderBottom: "1.5px solid #F0E0EC",
+      background: "var(--soft-white)",
+      borderBottom: "1px solid var(--border)",
     }}>
       {/* Add Story button */}
       <StoryItem
@@ -28,8 +28,8 @@ export default function StoriesRow({ stories = [], onAddStory }) {
       <style>{`
         .breedly-community ::-webkit-scrollbar { display: none; }
         @keyframes storyPulse {
-          0%, 100% { border-color: #FFD54F; }
-          50%       { border-color: #3B4FC8; }
+          0%, 100% { border-color: var(--accent); }
+          50%       { border-color: var(--accent-dark); }
         }
         .story-unseen { animation: storyPulse 2.5s ease-in-out infinite; }
       `}</style>
@@ -46,30 +46,31 @@ function StoryItem({ emoji, label, unseen, isAdd, onClick }) {
       <div
         className={unseen ? "story-unseen" : ""}
         style={{
-          width: 56, height: 56,
+          width: 58, height: 58,
           borderRadius: "50%",
-          border: isAdd ? "2.5px dashed #C5B0DF" : `2.5px solid ${unseen ? "#FFD54F" : "#C5B0DF"}`,
+          border: isAdd ? "2.5px dashed var(--border-strong)" : `2.5px solid ${unseen ? "var(--accent)" : "var(--border)"}`,
           padding: 2,
           display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "transform 0.15s",
+          transition: "transform 0.15s, border-color 0.2s",
         }}
       >
         <div style={{
           width: "100%", height: "100%",
           borderRadius: "50%",
-          background: isAdd ? "#F3EAF6" : "#F5EEF9",
+          background: isAdd ? "var(--bg-soft)" : "var(--primary-soft)",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: isAdd ? 22 : 24,
-          color: isAdd ? "#3B4FC8" : "inherit",
+          color: isAdd ? "var(--accent-dark)" : "inherit",
           fontWeight: isAdd ? 700 : 400,
         }}>
           {emoji}
         </div>
       </div>
       <div style={{
-        fontSize: 11, fontWeight: 700,
-        color: "#9B8AAB",
-        maxWidth: 58,
+        fontSize: 11, fontWeight: 500,
+        color: "var(--text-secondary)",
+        fontFamily: "var(--font-body)",
+        maxWidth: 60,
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
