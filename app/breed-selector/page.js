@@ -588,6 +588,18 @@ export default function BreedSelector() {
   const [finished, setFinished] = useState(false);
   const [progressWidth, setProgressWidth] = useState(0);
   const [isBouncing, setIsBouncing] = useState(false);
+  const [statusText, setStatusText] = useState("Analyzing your space & schedule...");
+
+  // Cycle status texts during loading redirection
+  useEffect(() => {
+    if (!finished) return;
+    const t1 = setTimeout(() => setStatusText("Calculating activity compatibility..."), 700);
+    const t2 = setTimeout(() => setStatusText("Matching your ideal dog breeds..."), 1400);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [finished]);
 
   useEffect(() => {
     const pct = ((currentQuestion + 1) / questions.length) * 100;
@@ -638,15 +650,19 @@ export default function BreedSelector() {
     return (
       <ProtectedRoute>
         <div className="qs-page">
-          <Confetti recycle={false} numberOfPieces={260} colors={["#B08968", "#E8D8C4", "#7F5539", "#FAF7F2", "#D4A97A"]} />
           <div className="qs-done">
-            <div className="qs-done-emoji" style={{ color: 'var(--qs-accent-dark)' }}>
-              <PawIcon style={{ width: 80, height: 80 }} />
+            <div className="qs-done-icon-wrap">
+              <div className="qs-done-ring"></div>
+              <div className="qs-done-paw">
+                <PawIcon style={{ width: 56, height: 56 }} />
+              </div>
             </div>
-            <h2>All done!</h2>
-            <p>Finding your perfect match…</p>
-            <div className="qs-done-dots">
-              <span /><span /><span />
+            
+            <h2>Analyzing matches</h2>
+            <p className="qs-done-status">{statusText}</p>
+            
+            <div className="qs-done-progress">
+              <div className="qs-done-progress-fill"></div>
             </div>
           </div>
         </div>

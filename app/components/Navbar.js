@@ -211,23 +211,23 @@ export default function Navbar() {
           <li><Link href="/community">Paw community</Link></li>
 
           {/* AI DROPDOWN */}
-          <li
+          {/* <li
             className="nav-dropdown"
             onMouseEnter={() => setAIOpen(true)}
             onMouseLeave={() => setAIOpen(false)}
           >
-            <span className="dropdown-title">
-              PupAI Hub <span className="arrow">▾</span>
-            </span>
+            <span className="dropdown-title"> */}
+              {/* PupAI Hub <span className="arrow">▾</span>
+            </span> */}
 
-            {AIOpen && (
+            {/* {AIOpen && (
               <div className="dropdown-menu">
                 <Link href="/detect-dog">Breed Identify</Link>
-                <Link href="/bark-analyzer">PupTone Analyzer</Link>
-                <Link href="/pet-services">Nearby pet care</Link>
-              </div>
+                {/* <Link href="/bark-analyzer">PupTone Analyzer</Link>
+                <Link href="/pet-services">Nearby pet care</Link> */}
+              {/* </div>
             )}
-          </li>
+          </li> */}
 
           {/* GUIDE DROPDOWN */}
           <li
@@ -266,7 +266,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="nav-right">
-            <Link href="/login" className="btn-primary">
+            <Link href="/profile" className="btn-primary">
               Login
             </Link>
           </div>
@@ -331,7 +331,7 @@ export default function Navbar() {
             {NAV_SVGS.paw({ style: { width: 16, height: 16, color: "var(--accent-dark)" } })}
             PupAI Hub
           </h3>
-
+{/* 
           <Link href="/detect-dog" onClick={() => setMobileAIOpen(false)} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             {NAV_SVGS.camera({ style: { width: 18, height: 18 } })}
             <span>Breed Identify</span>
@@ -345,7 +345,7 @@ export default function Navbar() {
           <Link href="/pet-services" onClick={() => setMobileAIOpen(false)} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             {NAV_SVGS.map({ style: { width: 18, height: 18 } })}
             <span>Nearby Pet Care</span>
-          </Link>
+          </Link> */}
 
           <Link href="/chat" onClick={() => setMobileAIOpen(false)} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             {NAV_SVGS.chat({ style: { width: 18, height: 18 } })}

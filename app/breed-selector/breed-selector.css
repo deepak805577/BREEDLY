@@ -512,49 +512,80 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
   min-height: 60vh;
   text-align: center;
   animation: qsFadeIn 0.5s ease forwards;
 }
 
-.qs-done-emoji {
-  font-size: 5rem;
-  animation: qsPawBounce 1s ease infinite;
+.qs-done-icon-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.qs-done-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px dashed rgba(176, 137, 104, 0.4);
+  border-radius: 50%;
+  animation: qsSpin 12s linear infinite;
+}
+
+.qs-done-paw {
+  color: var(--qs-accent-dark);
+  animation: qsPawPulse 1.2s infinite alternate ease-in-out;
 }
 
 .qs-done h2 {
   font-family: 'Fraunces', serif;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 300;
   color: var(--qs-accent-dark);
+  margin: 0;
 }
 
 .qs-done p {
-  font-size: 1rem;
+  font-size: 0.92rem;
   color: var(--qs-text-mid);
+  margin: 0;
+  min-height: 24px;
 }
 
-.qs-done-dots {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
+.qs-done-progress {
+  width: 120px;
+  height: 3px;
+  background: rgba(176, 137, 104, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-.qs-done-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--qs-accent);
-  animation: qsDotPulse 1.2s ease-in-out infinite;
+.qs-done-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--qs-accent-dark);
+  border-radius: 99px;
+  animation: qsFillDoneProgress 2.2s linear forwards;
 }
 
-.qs-done-dots span:nth-child(2) {
-  animation-delay: 0.2s;
+@keyframes qsSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.qs-done-dots span:nth-child(3) {
-  animation-delay: 0.4s;
+@keyframes qsPawPulse {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.08); }
+}
+
+@keyframes qsFillDoneProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
 }
 
 /* ══════════════════════════════════════════════════════════

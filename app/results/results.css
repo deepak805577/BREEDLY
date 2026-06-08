@@ -53,7 +53,7 @@
 
 /* ══════════════════════════════════════════════════════════
    HEADER
-══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 .rp-header {
   text-align: center;
   max-width: 640px;
@@ -92,7 +92,7 @@
 
 /* ══════════════════════════════════════════════════════════
    WHY MATCH
-══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 .rp-why {
   width: 100%;
   max-width: 680px;
@@ -138,7 +138,7 @@
 
 /* ══════════════════════════════════════════════════════════
    LOADING / FALLBACK
-══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 .rp-loading {
   display: flex;
   flex-direction: column;
@@ -177,7 +177,7 @@
 
 /* ══════════════════════════════════════════════════════════
    CARDS
-══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 .rp-cards-wrap {
   width: 100%;
   max-width: 1100px;
@@ -229,28 +229,7 @@
 .rp-silver { background: rgba(250,247,242,0.92); color: #5F6B7A; border: 1px solid #C4CDD6; }
 .rp-bronze { background: rgba(250,247,242,0.92); color: #8B4513; border: 1px solid #D2A679; }
 
-/* fav button */
-.rp-fav-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(250,247,242,0.92);
-  backdrop-filter: blur(6px);
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-  transition: var(--rp-ease);
-  z-index: 2;
-}
-.rp-fav-btn:hover { transform: scale(1.15); }
-.rp-fav-active    { background: #FFE6EA; }
+
 
 /* image */
 .rp-card-img-wrap {
@@ -358,15 +337,71 @@
 .rp-view-btn:hover { color: var(--rp-accent); padding-left: 4px; }
 
 /* ══════════════════════════════════════════════════════════
-   ACTIONS
-══════════════════════════════════════════════════════════ */
-.rp-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
+   RETAKE QUIZ CTA SECTION
+   ══════════════════════════════════════════════════════════ */
+.rp-retake-section {
+  width: 100%;
+  max-width: 680px;
+  animation: rpFadeUp 0.5s ease 0.3s both;
 }
 
+.rp-retake-card {
+  background: var(--rp-cream);
+  border: 1px solid var(--rp-border);
+  border-radius: var(--rp-radius-lg);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: var(--rp-shadow);
+}
+
+.rp-retake-content {
+  text-align: left;
+  flex: 1;
+}
+
+.rp-retake-content h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--rp-text);
+  margin-bottom: 8px;
+}
+
+.rp-retake-content p {
+  font-size: 0.9rem;
+  color: var(--rp-text-mid);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.rp-retake-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  background: var(--rp-accent-dark);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--rp-ease);
+  box-shadow: 0 4px 14px rgba(127, 85, 57, 0.15);
+}
+
+.rp-retake-btn:hover {
+  background: var(--rp-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(127, 85, 57, 0.25);
+}
+
+/* Fallback/Generic Primary Button */
 .rp-btn-primary {
   display: inline-flex;
   align-items: center;
@@ -389,73 +424,18 @@
 }
 .rp-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.rp-btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--rp-accent-dark);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 0.92rem;
-  border: 1.5px solid var(--rp-accent);
-  cursor: pointer;
-  transition: var(--rp-ease);
-}
-.rp-btn-outline:hover {
-  background: var(--rp-card);
-  transform: translateY(-2px);
-}
-
-/* ══════════════════════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════════════════════ */
-.rp-footer {
-  position: relative;
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-
-.rp-restart-btn {
-  padding: 12px 32px;
-  border-radius: 999px;
-  background: var(--rp-bg-soft);
-  border: 1.5px solid var(--rp-border);
-  color: var(--rp-text-mid);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--rp-ease);
-}
-.rp-restart-btn:hover {
-  border-color: var(--rp-accent);
-  color: var(--rp-accent-dark);
-  background: var(--rp-card);
-}
-
-.rp-footer-note {
-  font-size: 0.78rem;
-  color: var(--rp-text-light);
-  text-align: center;
-}
 
 /* ══════════════════════════════════════════════════════════
    RESPONSIVE
-══════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .rp-page    { padding: 36px 14px 80px; gap: 32px; }
-  .rp-cards   { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-  .rp-why     { padding: 22px 20px; }
-  .rp-actions { flex-direction: column; align-items: stretch; }
-  .rp-btn-primary,
-  .rp-btn-outline { justify-content: center; }
+  .rp-page          { padding: 36px 14px 80px; gap: 32px; }
+  .rp-cards         { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+  .rp-why           { padding: 22px 20px; }
+  .rp-retake-card   { flex-direction: column; text-align: center; padding: 24px 20px; gap: 20px; }
+  .rp-retake-content{ text-align: center; }
+  .rp-retake-btn    { width: 100%; justify-content: center; }
+  .rp-btn-primary   { width: 100%; justify-content: center; }
 }
 
 @media (max-width: 480px) {

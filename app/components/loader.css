@@ -1,36 +1,65 @@
 #dog-loader {
   position: fixed;
   inset: 0;
-  background: #A67B5B;
+  background: radial-gradient(circle at center, #ba8e66 0%, #8e6540 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 999999; /* 👈 highest layer */
-  transition: opacity 0.6s ease;
+  z-index: 999999;
+  /* 👈 highest layer */
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 #dog-loader.fade-out {
   opacity: 0;
-  pointer-events: none; /* 👈 prevents blocking after fade */
+  pointer-events: none;
+  /* 👈 prevents blocking after fade */
 }
 
 .loader-title {
   font-family: "Fredoka", sans-serif;
   font-weight: 700;
-  font-size: 2.9rem;
+  font-size: 3.5rem;
   color: white;
-  margin-bottom: 20px;
-  animation: pop 0.6s ease;
+  margin-bottom: 24px;
+  letter-spacing: 1.5px;
+  animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: relative;
-  z-index: 1000000; /* 👈 content above loader bg */
+  z-index: 1000000;
+  /* 👈 content above loader bg */
 }
 
 .loader-icon {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
-  animation: bounce 0.6s infinite alternate ease-in-out;
+  animation: bounce 0.5s infinite alternate ease-in-out;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
   position: relative;
-  z-index: 1000000; /* 👈 makes icon visible above bg */
+  z-index: 1000000;
+  /* 👈 makes icon visible above bg */
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0) scale(0.95);
+  }
+
+  100% {
+    transform: translateY(-12px) scale(1.05);
+  }
 }

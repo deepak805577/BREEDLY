@@ -50,17 +50,7 @@ const BronzeMedal = ({ style, ...props }) => (
   </svg>
 );
 
-const HeartFilled = ({ style, ...props }) => (
-  <svg viewBox="0 0 24 24" fill="#EF4444" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-  </svg>
-);
 
-const HeartOutline = ({ style, ...props }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', ...style }} {...props}>
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-  </svg>
-);
 
 const CheckIcon = ({ style, ...props }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', width: 14, height: 14, marginRight: 6, ...style }} {...props}>
@@ -160,28 +150,7 @@ export default function ResultsPage() {
   const [fallbackText, setFallbackText] = useState('');
   const [animated,     setAnimated]     = useState(false);
   const [answers,      setAnswers]       = useState([]);
-  const [favorites,    setFavorites]    = useState([]);
-  const [saveStatus,   setSaveStatus]   = useState('idle'); // idle | saving | done | error
-  const [copied,       setCopied]       = useState(false);
 
-  /* load favorites */
-  useEffect(() => {
-    supabase.from('user_pets').select('breed_id').then(({ data }) => {
-      const saved = data?.map(p => Object.keys(breedProfiles)[p.breed_id - 1]) || [];
-      setFavorites(saved);
-    });
-  }, []);
-
-  const toggleFavorite = async (breedName) => {
-    const breedId = Object.keys(breedProfiles).indexOf(breedName) + 1;
-    if (favorites.includes(breedName)) {
-      setFavorites(f => f.filter(b => b !== breedName));
-      await supabase.from('user_pets').delete().eq('breed_id', breedId);
-    } else {
-      setFavorites(f => [...f, breedName]);
-      await supabase.from('user_pets').insert({ breed_id: breedId });
-    }
-  };
 
   /* load + score quiz answers */
   useEffect(() => {
@@ -247,28 +216,6 @@ export default function ResultsPage() {
   const openBreed = (name) =>
     window.open(`/breeds/${encodeURIComponent(name)}`, '_blank', 'noopener,noreferrer');
 
-  const saveMatches = async () => {
-    setSaveStatus('saving');
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { router.push('/login'); return; }
-      for (const breed of matches) {
-        await supabase.from('user_favorites').upsert({ user_email: user.email, breed_name: breed.name });
-      }
-      setSaveStatus('done');
-      setTimeout(() => setSaveStatus('idle'), 2500);
-    } catch {
-      setSaveStatus('error');
-      setTimeout(() => setSaveStatus('idle'), 2500);
-    }
-  };
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   /* ── render ── */
   return (
     <main className="rp-page">
@@ -314,7 +261,12 @@ export default function ResultsPage() {
         ) : (
           <div className="rp-cards">
             {matches.map((breed, i) => (
-              <article className="rp-card" key={breed.name}>
+              <article
+                className="rp-card"
+                key={breed.name}
+                onClick={() => openBreed(breed.name)}
+                style={{ cursor: 'pointer' }}
+              >
 
                 {/* rank badge */}
                 <div className={`rp-rank-badge ${RANK_LABELS[i].cls}`}>
@@ -324,19 +276,6 @@ export default function ResultsPage() {
                   })()}
                   {RANK_LABELS[i].label}
                 </div>
-
-                {/* fav button */}
-                <button
-                  className={`rp-fav-btn${favorites.includes(breed.name) ? " rp-fav-active" : ""}`}
-                  onClick={() => toggleFavorite(breed.name)}
-                  aria-label="Toggle favourite"
-                >
-                  {favorites.includes(breed.name) ? (
-                    <HeartFilled style={{ width: 22, height: 22 }} />
-                  ) : (
-                    <HeartOutline style={{ width: 22, height: 22 }} />
-                  )}
-                </button>
 
                 {/* image */}
                 <div className="rp-card-img-wrap">
@@ -401,7 +340,13 @@ export default function ResultsPage() {
                     </ul>
                   )}
 
-                  <button className="rp-view-btn" onClick={() => openBreed(breed.name)}>
+                  <button
+                    className="rp-view-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openBreed(breed.name);
+                    }}
+                  >
                     View Full Info →
                   </button>
                 </div>
@@ -411,25 +356,20 @@ export default function ResultsPage() {
         )}
       </section>
 
-      {/* ACTIONS */}
+      {/* RETAKE QUIZ CTA SECTION */}
       {!loading && matches.length > 0 && (
-        <div className="rp-actions">
-          <button className="rp-btn-primary" onClick={saveMatches} disabled={saveStatus === 'saving'}>
-            {saveStatus === 'saving' ? '⏳ Saving…' : saveStatus === 'done' ? '✅ Saved!' : saveStatus === 'error' ? '❌ Error' : '💾 Save My Matches'}
-          </button>
-          <button className="rp-btn-outline" onClick={copyLink}>
-            {copied ? '✅ Copied!' : '📤 Share Results'}
-          </button>
-        </div>
+        <section className="rp-retake-section">
+          <div className="rp-retake-card">
+            <div className="rp-retake-content">
+              <h2>Not quite the right match?</h2>
+              <p>Your lifestyle and preferences are unique. Try taking the quiz again with different choices to see other wonderful breeds that might fit your home.</p>
+            </div>
+            <button className="rp-retake-btn" onClick={restartQuiz}>
+              Retake the Quiz
+            </button>
+          </div>
+        </section>
       )}
-
-      {/* FOOTER */}
-      <footer className="rp-footer">
-        <button className="rp-restart-btn" onClick={restartQuiz}>🔁 Retake the Quiz</button>
-        <p className="rp-footer-note">
-          ✔ Trusted by responsible dog lovers &nbsp;•&nbsp; ✔ Adoption-first approach
-        </p>
-      </footer>
 
     </main>
   );
