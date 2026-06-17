@@ -1,176 +1,187 @@
-  .health-guide-page {
-      font-family: 'Fredoka', sans-serif;
-      margin: 0;
-      background: #fff9f2;
-      color: #333;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
 
-.health-header {
-      background: linear-gradient(135deg, #ffe4c4, #ffccb3);
-      border-bottom-left-radius: 60px;
-      border-bottom-right-radius: 60px;
-      box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
-      position: relative;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-
-
-.health-header-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  max-width: 1000px;
-  margin: 0 auto;
+:root {
+  --bg-main:       #F5EFE6;
+  --bg-soft:       #EFE7DB;
+  --card-bg:       #E8D8C4;
+  --card-lite:     #F0E6D8;
+  --accent:        #B08968;
+  --accent-dark:   #7F5539;
+  --soft-white:    #FAF7F2;
+  --text-primary:  #3E3E3E;
+  --text-secondary:#6F6F6F;
+  --text-light:    #9A9A9A;
+  --border:        rgba(176,137,104,0.20);
+  --border-strong: rgba(176,137,104,0.32);
+  --radius-xl:     24px;
+  --radius-lg:     16px;
+  --radius-md:     12px;
+  --radius-pill:   999px;
+  --shadow-soft:   0 8px 30px rgba(100,70,40,0.06);
+  --shadow-hover:  0 16px 48px rgba(100,70,40,0.12);
+  --transition:    all 0.28s cubic-bezier(0.4,0,0.2,1);
 }
 
-.puppy-left-img {
-  width: 160px;
-  height: auto;
-  transform: scaleX(-1); /* optional: flip to face text */
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
 }
 
-.health-text {
-  text-align: center;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card-bg);
+  border-radius: var(--radius-pill);
 }
 
-.health-text h1 {
-  font-size: 2.8rem;
-  color: #4e148c;
-  margin-bottom: 10px;
-  font-family: 'Fredoka', sans-serif;
+/* Fade up animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fg-fade {
+  animation: fadeUp 0.5s ease both;
 }
 
-.health-text p {
-  font-size: 1.15rem;
-  color: #5a4c4c;
-  font-weight: 500;
-  font-family: 'Segoe UI', sans-serif;
+/* Main Container */
+.hg-main-container {
+  background: var(--bg-main);
+  min-height: 100vh;
 }
 
-/* Optional paw background */
-.health-header::after {
-  content: "";
+/* ── HERO HEADER ── */
+.hg-hero-header {
+  background: linear-gradient(to bottom, #F0E6D8 0%, #E8D8C4 60%, var(--bg-main) 100%);
+  border-bottom: none;
+  padding: 64px 32px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hg-dot-texture {
   position: absolute;
-  background: url('/assets/paws.svg') no-repeat center;
-  opacity: 0.03;
-  background-size: contain;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
+  opacity: 0.14;
   pointer-events: none;
 }
 
-    .slogan {
-  animation: fadeInUp 1.2s ease-in-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-
-    .health-section {
-      max-width: 1100px;
-      margin: 0px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-    }
-.health-card {
-  position: relative;
-  border-radius: 20px 20px 20px 0;
-  box-shadow: 10px 15px 9px rgba(0, 0, 0, 0.15);
-}
-.health-card::after {
-  content: "🐾";
+.hg-hero-radial-glow {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  font-size: 1.2rem;
-  opacity: 0.3;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(176,137,104,0.16) 0%, transparent 65%);
+  pointer-events: none;
 }
 
-    .health-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      padding: 24px;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .health-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .health-card h3 {
-      font-size: 1.2rem;
-      color: #ff7a00;
-      margin: 10px 0;
-    }
-
-    .health-card p {
-      font-size: 0.95rem;
-      color: #444;
-    }
-
-    .health-card .icon {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-.health-warning {
-  background: #fff3cd;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  margin-bottom: 15px;
-}
-
-    .footer-note {
-      text-align: center;
-      padding: 40px 20px;
-      color: #888;
-       border-style: none;
-        background: transparent;
-      font-size: 0.9rem;
-    }
-    
-    .breed-health-search {
-      text-align: center;
-      padding: 40px 20px;
-      background: #fffaf3;
-    }
-
-    #breedSearch {
-      padding: 12px;
-      width: 80%;
-      max-width: 300px;
-      border-radius: 10px;
-      border: 2px solid #ff9f4d;
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
-.breed-result-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 700px;
+.hg-hero-content-wrapper {
+  max-width: 1000px;
   margin: 0 auto;
-  text-align: center;
-  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* Peeking Puppy Image */
+.hg-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 52px;
+}
+
+.hg-hero-image {
+  width: 200px;
+  height: auto;
+  filter: drop-shadow(0 12px 28px rgba(100,70,40,0.14));
+  flex-shrink: 0;
+}
+
+.hg-hero-text-block {
+  /* removed flex: 1 to enable centering */
+}
+
+.hg-hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 300;
+  color: var(--accent-dark);
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+
+.hg-hero-title-italic {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.hg-hero-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 420px;
+}
+
+/* ── SEARCH SECTION ── */
+.hg-search-section {
+  padding: 64px 24px;
+  background: var(--bg-main);
+}
+
+.hg-search-container {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.hg-search-bar-section {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hg-search-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 300;
+  color: var(--accent-dark);
+  margin-bottom: 36px;
+  margin-top: 8px;
+}
+
+.hg-search-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.hg-search-input-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  pointer-events: none;
+}
+
 .puppy-top {
   width: 190px;
   position: absolute;
@@ -179,251 +190,687 @@
   transform: translateX(-50%);
   z-index: 10;
   pointer-events: none;
+  transition: var(--transition);
 }
 
-/* Result Box */
-.health-result-box {
-  background: #f9f6ec;
-  border-radius: 20px;
-  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px;
-  max-height: 500px;
-  overflow-y: auto;
-  font-family: 'Segoe UI', sans-serif;
-  position: relative;
-  margin-top: 40px; /* gives space for the puppy image above */
+.hg-input {
+  width: 100%;
+  padding: 14px 18px 14px 46px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--soft-white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+  display: block;
+  box-shadow: var(--shadow-soft);
 }
 
+.hg-input:focus {
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 4px rgba(127,85,57,0.12), var(--shadow-soft);
+  background: #ffffff;
+}
 
-/* Add soft paw icon watermark */
-.health-result-box::before {
-  content: "🐾";
+.hg-input::placeholder {
+  color: var(--text-light);
+}
+
+/* Suggestion Box */
+.hg-suggest-box {
   position: absolute;
-  font-size: 4rem;
-  opacity: 0.06;
-  top: 10px;
-  right: 20px;
-  transform: rotate(-10deg);
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 380px;
+  background: var(--soft-white);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hover);
+  overflow: hidden;
+  z-index: 20;
 }
 
-/* Breed name */
-.health-result-box h3 {
-  font-size: 2rem;
-  color: #4e148c;
-  margin-bottom: 10px;
+.hg-suggest-item {
+  padding: 12px 18px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
 }
 
-/* Subheadings */
-.health-result-box h4 {
-  font-size: 1.3rem;
-  color: #ff7a00;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  border-bottom: 2px dashed #ffe1c4;
-  padding-bottom: 4px;
+.hg-suggest-item:hover {
+  background: var(--bg-soft);
+  color: var(--accent-dark);
 }
 
-/* Paragraphs */
-.health-result-box p {
-  font-size: 1rem;
-  color: #5a4c4c;
-  margin: 8px 0;
+.hg-suggest-icon {
+  color: var(--accent);
 }
 
-/* Lists */
-.health-result-box ul {
-  padding-left: 1.2rem;
+/* ── RESULT CARD ── */
+.hg-result-card-container {
+  background: var(--soft-white);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  min-height: 140px;
+  transition: var(--transition);
 }
 
-.health-result-box li {
-  margin-bottom: 10px;
-  font-size: 0.95rem;
+/* Empty state */
+.hg-empty-state {
+  padding: 56px 24px;
+  text-align: center;
 }
 
-/* Tags like Nature traits */
-.health-result-box p strong + span,
-.health-result-box .tags {
-  display: inline-block;
-  background: #ffe7c4;
-  border-radius: 15px;
-  padding: 5px 10px;
-  margin: 4px 4px 4px 0;
-  font-size: 0.85rem;
-  color: #4e2a1e;
+.hg-empty-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(176,137,104,0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.hg-empty-icon {
+  color: var(--accent);
+}
+
+.hg-empty-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+
+.hg-empty-desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 290px;
+  margin: 0 auto;
+}
+
+/* Result header */
+.hg-result-header {
+  background: linear-gradient(135deg, #F0E6D8 0%, #E8D8C4 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hg-result-header > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.hg-result-breed-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+
+.hg-tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.hg-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
   font-weight: 500;
+  background: var(--card-bg);
+  color: var(--accent-dark);
+  border: 1px solid var(--border-strong);
+  letter-spacing: 0.02em;
 }
 
-/* Breed image */
-.health-result-box img {
-  border-radius: 16px;
-  max-width: 50%;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+.hg-tag-icon {
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+
+.hg-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1.2px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.hg-clear-btn:hover {
+  background: var(--card-lite);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.hg-clear-icon {
+  color: var(--text-secondary);
+}
+
+/* Result body */
+.hg-result-body {
+  padding: 32px;
+}
+
+/* Banners (Disclaimers & Warnings) */
+.hg-allergy-banner {
+  background: #FDF3DC;
+  border: 1px solid #F0C060;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  color: #7A5200;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.hg-allergy-icon {
+  color: #E68A00;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.hg-warning-banner {
+  background: #FFF4E5;
+  border: 1px solid #FFD591;
+  color: #874D00;
   margin: 20px 0;
 }
 
-/* Blockquote */
-.health-result-box blockquote {
-  margin-top: 30px;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: #6d4c41;
-  background: #fff4ea;
-  padding: 15px 20px;
-  border-left: 5px solid #ff9f4d;
-  border-radius: 10px;
+.hg-warning-icon {
+  color: #E08500;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
-    #backButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #ff9f4d;
-  color: #fff;
+.hg-warning-list {
+  padding-left: 0;
+  margin-top: 8px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Stats Group */
+.hg-stats-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.hg-stat-card {
+  flex: 1;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+
+.hg-stat-val {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--accent-dark);
+}
+
+.hg-stat-lbl {
+  font-size: 11px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* General Layout Elements inside results */
+.hg-card-panel {
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hg-portion-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+.hg-h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--accent-dark);
+  margin: 32px 0 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  line-height: 1.35;
+}
+
+.hg-h4 {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+
+.hg-li {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+.hg-li-strong {
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+/* Accordion block */
+.hg-accordion-block {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: var(--transition);
+}
+
+.hg-accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: transparent;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  text-align: left;
+  outline: none;
 }
 
-#backButton:hover {
-  background: #ff7a00;
+.hg-accordion-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.cute img{
-  width: 200px;
+
+.hg-accordion-icon {
+  color: var(--accent);
 }
-@media screen and (max-width: 768px) {
-  .health-header-content {
+
+.hg-accordion-chevron {
+  color: var(--text-light);
+  transition: transform 0.25s ease;
+}
+
+.hg-accordion-chevron.open {
+  transform: rotate(180deg);
+}
+
+.hg-accordion-content {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--soft-white);
+}
+
+.hg-accordion-p {
+  margin-top: 12px;
+}
+
+.hg-prevention-tip {
+  font-size: 12.5px;
+  color: var(--accent);
+  font-style: italic;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hg-tip-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.hg-accordion-sub {
+  margin-top: 12px;
+}
+
+/* Wellbeing notes list */
+.hg-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Golden Rule Box */
+.hg-golden-rule-box {
+  background: var(--bg-soft);
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-top: 4px;
+}
+
+.hg-golden-rule-text {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--accent-dark);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* Disclaimer text */
+.hg-disclaimer-text {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 24px;
+  font-style: italic;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.hg-disclaimer-icon {
+  color: var(--text-light);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Section Pill */
+.hg-section-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(127,85,57,0.10);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  margin-bottom: 12px;
+}
+
+.hg-pill-icon {
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+
+.hg-pill-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-dark);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ── GENERAL HEALTH SECTION ── */
+.hg-general-health-section {
+  padding: 80px 24px;
+  background: var(--bg-soft);
+}
+
+.hg-general-health-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hg-general-health-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hg-general-health-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 300;
+  color: var(--accent-dark);
+  margin-top: 8px;
+}
+
+/* Basics Grid */
+.hg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.hg-health-card {
+  background: var(--soft-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+}
+
+.hg-health-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+}
+
+.hg-health-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(176,137,104,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: var(--accent-dark);
+}
+
+.hg-health-icon {
+  color: var(--accent-dark);
+}
+
+.hg-health-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--accent-dark);
+  margin-bottom: 10px;
+}
+
+.hg-health-desc {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .hg-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hg-hero-header {
+    padding: 32px 24px 28px;
+  }
+
+  .hg-hero-inner {
+    gap: 24px;
+  }
+
+  .hg-hero-image {
+    width: 130px;
+  }
+
+  .hg-search-section {
+    padding: 48px 16px;
+  }
+
+  .hg-search-bar-section {
+    margin-bottom: 36px;
+  }
+
+  .hg-result-card-container {
+    border-radius: var(--radius-lg);
+  }
+
+  .hg-result-header {
+    padding: 20px 20px;
+  }
+
+  .hg-result-body {
+    padding: 24px;
+  }
+
+  .hg-general-health-section {
+    padding: 56px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hg-hero-inner {
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+    text-align: center;
+    gap: 12px;
   }
 
-  .puppy-left-img {
-    width: 120px;
+  .hg-hero-image {
+    width: 90px;
   }
 
-  .health-text h1 {
-    font-size: 2rem;
+  .hg-hero-subtitle {
+    margin: 0 auto;
   }
 
-  .health-text p {
-    font-size: 1rem;
-  }
-
-  .health-section {
-    grid-template-columns: 1fr; /* single column on smaller screens */
-    padding: 20px 10px;
-    gap: 20px;
-  }
-
-  .health-card {
+  .hg-result-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
     padding: 16px;
   }
 
-  .health-card h3 {
-    font-size: 1.1rem;
+  .hg-result-header > div {
+    flex: 1;
+    min-width: 0;
   }
 
-  .health-card p {
-    font-size: 0.9rem;
+  .hg-clear-btn {
+    width: auto;
+    padding: 5px 10px;
+    font-size: 11px;
+    flex-shrink: 0;
   }
 
-  .breed-health-search {
-    padding: 20px 10px;
+  .hg-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  #breedSearch {
-    width: 90%;
-    font-size: 0.95rem;
+  .hg-health-card {
+    padding: 24px 20px;
   }
 
   .puppy-top {
     width: 140px;
-    top: -20px;
-  }
-
-  .health-result-box {
-    padding: 20px;
-    margin-top: 50px;
-  }
-
-  .health-result-box h3 {
-    font-size: 1.6rem;
-  }
-
-  .health-result-box h4 {
-    font-size: 1.1rem;
-  }
-
-  .health-result-box p,
-  .health-result-box li {
-    font-size: 0.95rem;
-  }
-
-  blockquote {
-    font-size: 1rem;
-  }
-
-  #backButton {
-    width: 100%;
-    font-size: 0.95rem;
-  }
-
-  .cute img {
-    width: 140px;
+    top: -26px;
   }
 }
 
-@media screen and (max-width: 400px) {
-  .health-text h1 {
-    font-size: 1.5rem;
+@media (max-width: 400px) {
+  .hg-hero-header {
+    padding: 16px 16px 12px;
   }
 
-  .health-text p {
-    font-size: 0.9rem;
+  .hg-result-body {
+    padding: 16px;
   }
 
-  .health-result-box h3 {
-    font-size: 1.4rem;
+  .hg-stats-group {
+    gap: 8px;
   }
 
-  .health-result-box h4 {
-    font-size: 1rem;
+  .hg-stat-card {
+    padding: 12px;
   }
 
-  .health-result-box p,
-  .health-result-box li {
-    font-size: 0.85rem;
+  .hg-stat-val {
+    font-size: 16px;
   }
 
-  .health-card .icon {
-    font-size: 1.8rem;
+  .hg-card-panel {
+    padding: 14px;
   }
 
-  .health-card h3 {
-    font-size: 1rem;
+  .hg-accordion-toggle {
+    padding: 12px 14px;
   }
 
-  .health-card p {
-    font-size: 0.85rem;
+  .hg-accordion-content {
+    padding: 0 14px 14px;
   }
 
-  blockquote {
-    font-size: 0.95rem;
-    padding: 10px;
-  }
-
-  #breedSearch {
-    max-width: 250px;
-    font-size: 0.9rem;
-  }
-
-  .puppy-top {
-    width: 110px;
-    top: -15px;
-  }
-
-  .cute img {
-    width: 110px;
+  .hg-empty-state {
+    padding: 40px 16px;
   }
 }
-

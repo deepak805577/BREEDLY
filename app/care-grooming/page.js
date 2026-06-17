@@ -3,88 +3,75 @@
 import { useEffect, useState } from "react";
 import { breedGroomingAndCare } from "../data/care";
 import { supabase } from "@/lib/supabase";
+import {
+  Scissors,
+  Search,
+  X,
+  ChevronDown,
+  BookOpen,
+  Heart,
+  Sparkles,
+  Activity,
+  Scale,
+  DollarSign,
+  Info,
+  ShieldAlert,
+  Wrench,
+  Calendar,
+  Lightbulb,
+  Sun,
+  Bath
+} from "lucide-react";
+import "./care-grooming.css";
+
+// Icon mapping for grooming basics cards
+const careIconMap = {
+  bathing: Bath,
+  brushing: Sparkles,
+  trimming: Scissors,
+  dental: Heart,
+  paw: Sparkles,
+  ears: Activity,
+};
 
 // ─── Section Pill ─────────────────────────────────────────────────────────────
-function SectionPill({ icon, label }) {
+function SectionPill({ icon: Icon, label }) {
   return (
-    <div style={{
-      display: "inline-flex", alignItems: "center", gap: 6,
-      background: "rgba(127,85,57,0.10)",
-      borderRadius: 999, padding: "4px 14px", marginBottom: 12,
-    }}>
-      <span style={{ fontSize: 13 }}>{icon}</span>
-      <span style={{
-        fontFamily: "'DM Sans', sans-serif",
-        fontSize: 11, fontWeight: 500,
-        color: "var(--accent-dark)",
-        letterSpacing: "0.09em", textTransform: "uppercase",
-      }}>{label}</span>
+    <div className="cg-section-pill">
+      {Icon && <Icon size={12} className="cg-pill-icon" />}
+      <span className="cg-pill-label">{label}</span>
     </div>
   );
 }
 
-// ─── Care Info Card (mirrors NutriCard) ───────────────────────────────────────
-function CareCard({ icon, title, desc }) {
-  const [hovered, setHovered] = useState(false);
+// ─── Care Info Card ───────────────────────────────────────────────────────────
+function CareCard({ iconKey, title, desc }) {
+  const IconComponent = careIconMap[iconKey];
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: "var(--soft-white)",
-        borderRadius: "var(--radius-lg)",
-        border: "1px solid var(--border)",
-        padding: "24px 20px",
-        boxShadow: hovered ? "var(--shadow-hover)" : "var(--shadow-soft)",
-        transform: hovered ? "translateY(-5px)" : "none",
-        transition: "var(--transition)",
-      }}
-    >
-      <div style={{ fontSize: 30, marginBottom: 12 }}>{icon}</div>
-      <h3 style={{
-        fontFamily: "'Fraunces', serif",
-        fontSize: 17, fontWeight: 400,
-        color: "var(--accent-dark)", marginBottom: 8,
-      }}>{title}</h3>
-      <p style={{ fontSize: 13, lineHeight: 1.75, color: "var(--text-secondary)", fontWeight: 300 }}>
-        {desc}
-      </p>
+    <div className="cg-care-card">
+      <div className="cg-care-icon-container">
+        {IconComponent && <IconComponent size={24} className="cg-care-icon" />}
+      </div>
+      <h3 className="cg-care-title">{title}</h3>
+      <p className="cg-care-desc">{desc}</p>
     </div>
   );
 }
 
-// ─── Collapsible Accordion (mirrors RecipeBlock) ──────────────────────────────
-function AccordionBlock({ icon = "✂️", title, children }) {
+// ─── Collapsible Accordion ────────────────────────────────────────────────────
+function AccordionBlock({ icon: Icon, title, children }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{
-      background: "var(--bg-soft)",
-      border: "1px solid var(--border)",
-      borderRadius: "var(--radius-md)",
-      overflow: "hidden", marginBottom: 8,
-    }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{
-          width: "100%", display: "flex", alignItems: "center",
-          justifyContent: "space-between",
-          padding: "13px 16px",
-          background: "none", border: "none", cursor: "pointer",
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: 14, fontWeight: 500,
-          color: "var(--accent-dark)", textAlign: "left",
-        }}
-      >
-        <span>{icon} {title}</span>
-        <span style={{
-          fontSize: 10, color: "var(--text-light)",
-          display: "inline-block",
-          transform: open ? "rotate(180deg)" : "none",
-          transition: "transform 0.2s",
-        }}>▼</span>
+    <div className="cg-accordion-block">
+      <button onClick={() => setOpen(o => !o)} className="cg-accordion-toggle">
+        <span className="cg-accordion-toggle-left">
+          {Icon && <Icon size={16} className="cg-accordion-icon" />}
+          {title}
+        </span>
+        <ChevronDown size={14} className={`cg-accordion-chevron ${open ? "open" : ""}`} />
       </button>
       {open && (
-        <div style={{ padding: "0 16px 16px", borderTop: "1px solid var(--border)" }}>
+        <div className="cg-accordion-content">
           {children}
         </div>
       )}
@@ -94,20 +81,18 @@ function AccordionBlock({ icon = "✂️", title, children }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function CareGroomingGuidePage() {
-  const [searchTerm, setSearchTerm]   = useState("");
-  const [autoLoaded, setAutoLoaded]   = useState(false);
-  const [ageGroup,   setAgeGroup]     = useState(null);
-  const [dogWeight,  setDogWeight]    = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [autoLoaded, setAutoLoaded] = useState(false);
+  const [ageGroup, setAgeGroup] = useState(null);
+  const [dogWeight, setDogWeight] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const loadDogFromSupabase = async () => {
       try {
-        // Get current user
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
-        // Fetch user's dogs
         const { data: dogs, error } = await supabase
           .from("dogs")
           .select("*")
@@ -137,322 +122,164 @@ export default function CareGroomingGuidePage() {
   const breedData = matchedBreed ? breedGroomingAndCare[matchedBreed] : null;
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap');
+    <div className="cg-main-container">
+      {/* ── HERO ── */}
+      <header className="cg-hero-header">
+        <svg className="cg-dot-texture">
+          <defs>
+            <pattern id="dots-cg" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.3" fill="#7F5539" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots-cg)" />
+        </svg>
+        <div className="cg-hero-radial-glow" />
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-          --bg-main:        #F5EFE6;
-          --bg-soft:        #EFE7DB;
-          --card-bg:        #E8D8C4;
-          --card-lite:      #F0E6D8;
-          --accent:         #B08968;
-          --accent-dark:    #7F5539;
-          --soft-white:     #FAF7F2;
-          --text-primary:   #3E3E3E;
-          --text-secondary: #6F6F6F;
-          --text-light:     #9A9A9A;
-          --border:         rgba(176,137,104,0.20);
-          --border-strong:  rgba(176,137,104,0.32);
-          --radius-xl:      24px;
-          --radius-lg:      16px;
-          --radius-md:      12px;
-          --radius-pill:    999px;
-          --shadow-soft:    0 8px 30px rgba(100,70,40,0.06);
-          --shadow-hover:   0 16px 48px rgba(100,70,40,0.12);
-          --transition:     all 0.28s cubic-bezier(0.4,0,0.2,1);
-        }
-
-        body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg-main); color: var(--text-primary); }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--card-bg); border-radius: 3px; }
-
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .fg-fade { animation: fadeUp 0.5s ease both; }
-
-        .fg-input {
-          width: 100%; max-width: 380px;
-          padding: 13px 18px 13px 46px;
-          border: 1.5px solid var(--border-strong);
-          border-radius: var(--radius-pill);
-          background: var(--soft-white);
-          font-family: 'DM Sans', sans-serif;
-          font-size: 14px; font-weight: 400;
-          color: var(--text-primary);
-          outline: none; transition: var(--transition);
-          display: block; margin: 0 auto;
-        }
-        .fg-input:focus {
-          border-color: var(--accent-dark);
-          box-shadow: 0 0 0 3px rgba(127,85,57,0.10);
-        }
-        .fg-input::placeholder { color: var(--text-light); }
-
-        .suggest-box {
-          position: absolute; top: calc(100% + 6px); left: 50%;
-          transform: translateX(-50%);
-          width: 100%; max-width: 380px;
-          background: var(--soft-white);
-          border: 1px solid var(--border-strong);
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-hover);
-          overflow: hidden; z-index: 20;
-        }
-        .suggest-item {
-          padding: 11px 18px; margin: 0; cursor: pointer;
-          font-size: 14px; color: var(--text-secondary);
-          transition: var(--transition);
-        }
-        .suggest-item:hover { background: var(--bg-soft); color: var(--accent-dark); }
-
-        .fg-h3 {
-          font-family: 'Fraunces', serif;
-          font-size: 17px; font-weight: 400;
-          color: var(--accent-dark);
-          margin: 24px 0 10px;
-          padding-left: 12px;
-          border-left: 3px solid var(--accent);
-          line-height: 1.3;
-        }
-        .fg-h4 {
-          font-size: 11px; font-weight: 500;
-          color: var(--text-light);
-          letter-spacing: 0.08em; text-transform: uppercase;
-          margin: 14px 0 6px;
-        }
-        .fg-li {
-          font-size: 13.5px; color: var(--text-secondary);
-          line-height: 1.75; font-weight: 300; margin-bottom: 3px;
-        }
-        .fg-tag {
-          display: inline-flex; padding: 3px 11px;
-          border-radius: var(--radius-pill);
-          font-size: 12px; font-weight: 500;
-          background: var(--card-bg); color: var(--accent-dark);
-          border: 1px solid var(--border-strong);
-          letter-spacing: 0.02em;
-        }
-
-        .fg-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 18px;
-        }
-
-        .puppy-top {
-          width: 190px; position: absolute;
-          top: -35px; left: 50%;
-          transform: translateX(-50%);
-          z-index: 10; pointer-events: none;
-        }
-
-        @media (max-width: 860px) { .fg-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 520px) {
-          .fg-grid { grid-template-columns: 1fr !important; }
-          .fg-hero-inner { flex-direction: column !important; text-align: center !important; align-items: center !important; }
-        }
-      `}</style>
-
-      <div style={{ background: "var(--bg-main)", minHeight: "100vh" }}>
-
-        {/* ── HERO ── */}
-        <header style={{
-          background: "linear-gradient(135deg, #F0E6D8 0%, #E8D8C4 50%, #DFC9AE 100%)",
-          borderBottom: "1px solid var(--border)",
-          padding: "56px 28px 48px",
-          position: "relative", overflow: "hidden",
-        }}>
-          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.14, pointerEvents: "none" }}>
-            <defs>
-              <pattern id="dots-cg" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1.3" fill="#7F5539" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#dots-cg)" />
-          </svg>
-          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 70% 50%, rgba(176,137,104,0.16) 0%, transparent 65%)", pointerEvents: "none" }} />
-
-          <div className="fg-fade" style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
-            <div className="fg-hero-inner" style={{ display: "flex", alignItems: "center", gap: 52, flexWrap: "wrap" }}>
-                 <img
-                src="/assets/puppy.png"
-                alt="Puppy"
-                style={{ width: 200, height: "auto", filter: "drop-shadow(0 12px 28px rgba(100,70,40,0.14))", flexShrink: 0 }}
-              />
-              
-              <div>
-                <SectionPill icon="✂️" label="Care & Grooming Guide" />
-                <h1 style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontSize: "clamp(30px, 4.5vw, 50px)",
-                  fontWeight: 300, color: "var(--accent-dark)",
-                  lineHeight: 1.2, marginBottom: 14,
-                }}>
-                  Groom your dog<br />
-                  <em style={{ color: "var(--accent)", fontStyle: "italic" }}>the right way.</em>
-                </h1>
-                <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, fontWeight: 300, maxWidth: 380 }}>
-                  Healthy coat, clean paws & a happy pup. Search your breed for a personalised grooming routine.
-                </p>
-              </div>
+        <div className="fg-fade cg-hero-content-wrapper">
+          <div className="cg-hero-inner">
+            <img
+              src="/assets/puppy.png"
+              alt="Puppy"
+              className="cg-hero-image"
+            />
+            <div className="cg-hero-text-block">
+              <SectionPill icon={Scissors} label="Care & Grooming Guide" />
+              <h1 className="cg-hero-title">
+                Groom your dog<br />
+                <span className="cg-hero-title-italic">the right way.</span>
+              </h1>
+              <p className="cg-hero-subtitle">
+                Healthy coat, clean paws & a happy pup. Search your breed for a personalised grooming routine.
+              </p>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* ── SEARCH SECTION ── */}
-        <section style={{ padding: "60px 24px", background: "var(--bg-main)" }}>
-          <div style={{ maxWidth: 780, margin: "0 auto" }}>
+      {/* ── SEARCH SECTION ── */}
+      <section className="cg-search-section">
+        <div className="cg-search-container">
 
-            <div className="fg-fade" style={{ textAlign: "center", marginBottom: 40 }}>
-              <SectionPill icon="🔍" label="Breed Search" />
-              <h2 style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: "clamp(20px, 3vw, 30px)",
-                fontWeight: 300, color: "var(--accent-dark)", marginBottom: 30,
-              }}>
-                Find grooming tips by breed
-              </h2>
-              <div style={{ position: "relative", display: "inline-block", width: "100%", maxWidth: 380 }}>
-                <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", fontSize: 15, pointerEvents: "none" }}>🐾</span>
-                <img src="/assets/download-removebg-preview.png" alt="Peeking Puppies" className="puppy-top" />
-                <input
-                  className="fg-input"
-                  type="text"
-                  placeholder="e.g. Golden Retriever, Beagle…"
-                  value={searchTerm}
-                  onChange={e => {
-                    const val = e.target.value;
-                    setSearchTerm(val);
-                    setAutoLoaded(false);
-                    const m = breeds.filter(b => b.toLowerCase().includes(val.toLowerCase()));
-                    setSuggestions(val && m.length > 1 ? m.slice(0, 4) : []);
-                  }}
-                />
-                {suggestions.length > 0 && (
-                  <div className="suggest-box">
-                    {suggestions.map((name, i) => (
-                      <p key={i} className="suggest-item" onClick={() => { setSearchTerm(name); setSuggestions([]); }}>
-                        🐾 {name}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* ── RESULT CARD ── */}
-            <div style={{
-              background: "var(--soft-white)",
-              borderRadius: "var(--radius-xl)",
-              border: "1px solid var(--border)",
-              boxShadow: "var(--shadow-soft)",
-              overflow: "hidden", minHeight: 140,
-            }}>
-              {!matchedBreed ? (
-                <div style={{ padding: "52px 24px", textAlign: "center" }}>
-                  <div style={{ fontSize: 44, marginBottom: 14 }}>✂️</div>
-                  <div style={{ fontFamily: "'Fraunces',serif", fontSize: 20, fontWeight: 300, color: "var(--accent-dark)", marginBottom: 8 }}>
-                    {searchTerm ? "No breed matched" : "Start searching"}
-                  </div>
-                  <p style={{ fontSize: 13, color: "var(--text-light)", lineHeight: 1.65 }}>
-                    {searchTerm
-                      ? `No results for "${searchTerm}". Try a different spelling.`
-                      : "Type a breed name above to see their personalised grooming guide."}
-                  </p>
-                </div>
-              ) : (
-                <div className="fg-fade">
-
-                  {/* Result header */}
-                  <div style={{
-                    background: "linear-gradient(135deg, #F0E6D8 0%, #E8D8C4 100%)",
-                    borderBottom: "1px solid var(--border)",
-                    padding: "20px 24px",
-                    display: "flex", flexWrap: "wrap",
-                    alignItems: "center", justifyContent: "space-between", gap: 12,
-                  }}>
-                    <div>
-                      <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: 22, fontWeight: 400, color: "var(--accent-dark)", marginBottom: 6 }}>
-                        {matchedBreed}
-                      </h2>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                        {autoLoaded  && <span className="fg-tag">🐶 Your dog</span>}
-                        {ageGroup    && <span className="fg-tag">{ageGroup === "puppy" ? "🐶 Puppy" : "🐕 Adult"}</span>}
-                        {dogWeight   && <span className="fg-tag">⚖️ {dogWeight} kg</span>}
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => { setSearchTerm(""); setAutoLoaded(false); setSuggestions([]); }}
-                      style={{
-                        padding: "7px 16px", background: "none",
-                        border: "1.5px solid var(--border-strong)",
-                        borderRadius: "var(--radius-pill)",
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 12, fontWeight: 500,
-                        color: "var(--text-secondary)", cursor: "pointer",
-                        transition: "var(--transition)",
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "var(--card-lite)"; e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.color = "var(--accent-dark)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.borderColor = "var(--border-strong)"; e.currentTarget.style.color = "var(--text-secondary)"; }}
-                    >
-                      ✕ Clear
-                    </button>
-                  </div>
-
-                  {/* Result body */}
-                  <div style={{ padding: "24px 24px 32px" }}>
-                    <BreedCareCard data={breedData} ageGroup={ageGroup} />
-                  </div>
+          <div className="fg-fade cg-search-bar-section">
+            <SectionPill icon={Search} label="Breed Search" />
+            <h2 className="cg-search-title">
+              Find grooming tips by breed
+            </h2>
+            <div className="cg-search-input-wrapper">
+              <Search size={16} className="cg-search-input-icon" />
+              <img src="/assets/download-removebg-preview.png" alt="Peeking Puppies" className="puppy-top" />
+              <input
+                className="cg-input"
+                type="text"
+                placeholder="e.g. Golden Retriever, Beagle…"
+                value={searchTerm}
+                onChange={e => {
+                  const val = e.target.value;
+                  setSearchTerm(val);
+                  setAutoLoaded(false);
+                  const m = breeds.filter(b => b.toLowerCase().includes(val.toLowerCase()));
+                  setSuggestions(val && m.length > 1 ? m.slice(0, 4) : []);
+                }}
+              />
+              {suggestions.length > 0 && (
+                <div className="cg-suggest-box">
+                  {suggestions.map((name, i) => (
+                    <p key={i} className="cg-suggest-item" onClick={() => { setSearchTerm(name); setSuggestions([]); }}>
+                      <Search size={12} className="cg-suggest-icon" /> {name}
+                    </p>
+                  ))}
                 </div>
               )}
             </div>
           </div>
-        </section>
 
-        {/* ── QUICK CARE CARDS ── */}
-        <section style={{ padding: "0 24px 80px", background: "var(--bg-soft)" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 60 }}>
-            <div className="fg-fade" style={{ textAlign: "center", marginBottom: 40 }}>
-              <SectionPill icon="🧼" label="Grooming Basics" />
-              <h2 style={{ fontFamily: "'Fraunces',serif", fontSize: "clamp(20px,3vw,30px)", fontWeight: 300, color: "var(--accent-dark)" }}>
-                What every dog owner should know
-              </h2>
-            </div>
-            <div className="fg-grid">
-              {[
-                { icon: "🛁", title: "Bathing",      desc: "Use dog-safe shampoo. Avoid overbathing — it strips natural oils. Most breeds need a bath every 4–6 weeks." },
-                { icon: "🪮", title: "Brushing",     desc: "Regular brushing reduces shedding, prevents matting, and keeps the coat shiny and healthy all year round." },
-                { icon: "✂️", title: "Trimming",     desc: "Keep paw fur, face hair, and ear fringes neat and hygienic. Use rounded-tip scissors for safety around sensitive areas." },
-                { icon: "🦷", title: "Dental Care",  desc: "Brush your dog's teeth 2–3 times a week to prevent gum disease, tooth decay and bad breath." },
-                { icon: "🐾", title: "Paw Care",     desc: "Inspect and moisturise paw pads regularly. Protect from extreme heat, cold and rough surfaces on walks." },
-                { icon: "🧼", title: "Clean Ears",   desc: "Check and gently clean ears weekly. Build-up of wax and moisture can lead to painful infections." },
-              ].map(c => <CareCard key={c.title} {...c} />)}
-            </div>
-          </div>
-        </section>
+          {/* ── RESULT CARD ── */}
+          <div className="cg-result-card-container">
+            {!matchedBreed ? (
+              <div className="cg-empty-state">
+                <div className="cg-empty-icon-wrapper">
+                  <Scissors size={32} className="cg-empty-icon" />
+                </div>
+                <h3 className="cg-empty-title">
+                  {searchTerm ? "No breed matched" : "Start searching"}
+                </h3>
+                <p className="cg-empty-desc">
+                  {searchTerm
+                    ? `No results for "${searchTerm}". Try a different spelling.`
+                    : "Type a breed name above to see their personalised grooming guide."}
+                </p>
+              </div>
+            ) : (
+              <div className="fg-fade">
+                {/* Result header */}
+                <div className="cg-result-header">
+                  <div>
+                    <h2 className="cg-result-breed-title">
+                      {matchedBreed}
+                    </h2>
+                    <div className="cg-tag-group">
+                      {autoLoaded && (
+                        <span className="cg-tag">
+                          <Heart size={12} className="cg-tag-icon" /> Your dog
+                        </span>
+                      )}
+                      {ageGroup && (
+                        <span className="cg-tag">
+                          {ageGroup === "puppy" ? (
+                            <Sparkles size={12} className="cg-tag-icon" />
+                          ) : (
+                            <Activity size={12} className="cg-tag-icon" />
+                          )}
+                          {ageGroup === "puppy" ? "Puppy" : "Adult"}
+                        </span>
+                      )}
+                      {dogWeight && (
+                        <span className="cg-tag">
+                          <Scale size={12} className="cg-tag-icon" /> {dogWeight} kg
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => { setSearchTerm(""); setAutoLoaded(false); setSuggestions([]); }}
+                    className="cg-clear-btn"
+                  >
+                    <X size={12} className="cg-clear-icon" /> Clear
+                  </button>
+                </div>
 
-        {/* ── FOOTER ── */}
-        <footer style={{
-          background: "var(--bg-main)",
-          borderTop: "1px solid var(--border)",
-          padding: "34px 24px", textAlign: "center",
-        }}>
-          <div style={{ fontFamily: "'Fraunces',serif", fontSize: 16, fontWeight: 300, color: "var(--accent-dark)", marginBottom: 5 }}>
-            Breedly
+                {/* Result body */}
+                <div className="cg-result-body">
+                  <BreedCareCard data={breedData} ageGroup={ageGroup} />
+                </div>
+              </div>
+            )}
           </div>
-          <p style={{ fontSize: 12, color: "var(--text-light)" }}>
-            Clean coats, happy paws 🐾 · © 2025
-          </p>
-        </footer>
-      </div>
-    </>
+        </div>
+      </section>
+
+      {/* ── QUICK CARE CARDS ── */}
+      <section className="cg-quick-care-section">
+        <div className="cg-quick-care-container">
+          <div className="fg-fade cg-quick-care-header">
+            <SectionPill icon={Sparkles} label="Grooming Basics" />
+            <h2 className="cg-quick-care-title">
+              What every dog owner should know
+            </h2>
+          </div>
+          <div className="cg-grid">
+            {[
+              { iconKey: "bathing", title: "Bathing", desc: "Use dog-safe shampoo. Avoid overbathing — it strips natural oils. Most breeds need a bath every 4–6 weeks." },
+              { iconKey: "brushing", title: "Brushing", desc: "Regular brushing reduces shedding, prevents matting, and keeps the coat shiny and healthy all year round." },
+              { iconKey: "trimming", title: "Trimming", desc: "Keep paw fur, face hair, and ear fringes neat and hygienic. Use rounded-tip scissors for safety around sensitive areas." },
+              { iconKey: "dental", title: "Dental Care", desc: "Brush your dog's teeth 2–3 times a week to prevent gum disease, tooth decay and bad breath." },
+              { iconKey: "paw", title: "Paw Care", desc: "Inspect and moisturise paw pads regularly. Protect from extreme heat, cold and rough surfaces on walks." },
+              { iconKey: "ears", title: "Clean Ears", desc: "Check and gently clean ears weekly. Build-up of wax and moisture can lead to painful infections." },
+            ].map(c => <CareCard key={c.title} {...c} />)}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 
@@ -462,15 +289,14 @@ function BreedCareCard({ data, ageGroup }) {
 
   return (
     <div>
-
       {/* Overview */}
       {data.overview && (
         <>
-          <p className="fg-h3">Overview</p>
-          <div style={{ background: "var(--bg-soft)", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", padding: "16px" }}>
+          <p className="cg-h3">Overview</p>
+          <div className="cg-card-panel">
             {Object.entries(data.overview).map(([key, value]) => (
-              <p key={key} className="fg-li">
-                <strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>{key.replace(/_/g, " ")}:</strong> {value}
+              <p key={key} className="cg-li">
+                <strong className="cg-li-strong">{key.replace(/_/g, " ")}:</strong> {value}
               </p>
             ))}
           </div>
@@ -480,10 +306,10 @@ function BreedCareCard({ data, ageGroup }) {
       {/* Grooming */}
       {data.grooming && (
         <>
-          <p className="fg-h3">Grooming</p>
+          <p className="cg-h3">Grooming</p>
           {Object.entries(data.grooming).map(([key, value]) => (
-            <AccordionBlock key={key} icon="🛁" title={key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}>
-              <p className="fg-li" style={{ marginTop: 12 }}>
+            <AccordionBlock key={key} icon={Bath} title={key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}>
+              <p className="cg-li cg-accordion-p">
                 {typeof value === "object"
                   ? `${value.frequency || ""} ${value.purpose || value.notes || value.tips || ""}`.trim()
                   : value}
@@ -493,10 +319,12 @@ function BreedCareCard({ data, ageGroup }) {
 
           {data.grooming_tools && (
             <>
-              <p className="fg-h3">Grooming Tools</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <p className="cg-h3">Grooming Tools</p>
+              <div className="cg-tag-group">
                 {data.grooming_tools.map((tool, i) => (
-                  <span key={i} className="fg-tag">🧰 {tool}</span>
+                  <span key={i} className="cg-tag">
+                    <Wrench size={12} className="cg-tag-icon" /> {tool}
+                  </span>
                 ))}
               </div>
             </>
@@ -507,28 +335,28 @@ function BreedCareCard({ data, ageGroup }) {
       {/* Routine Care */}
       {data.routine_care && (
         <>
-          <p className="fg-h3">Routine Care</p>
-          <div style={{ background: "var(--bg-soft)", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", padding: "16px", marginBottom: 8 }}>
-            <p className="fg-li"><strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>Exercise:</strong> {data.routine_care.exercise}</p>
-            <p className="fg-li"><strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>Grooming Time:</strong> {data.routine_care.grooming_time}</p>
-            <p className="fg-li"><strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>Professional Grooming:</strong> {data.routine_care.professional_grooming}</p>
+          <p className="cg-h3">Routine Care</p>
+          <div className="cg-card-panel">
+            <p className="cg-li"><strong className="cg-li-strong">Exercise:</strong> {data.routine_care.exercise}</p>
+            <p className="cg-li"><strong className="cg-li-strong">Grooming Time:</strong> {data.routine_care.grooming_time}</p>
+            <p className="cg-li"><strong className="cg-li-strong">Professional Grooming:</strong> {data.routine_care.professional_grooming}</p>
           </div>
 
           {data.routine_care.daily_upkeep && (
-            <AccordionBlock icon="🗓️" title="Daily Upkeep">
-              <ul style={{ paddingLeft: 18, marginTop: 12 }}>
+            <AccordionBlock icon={Calendar} title="Daily Upkeep">
+              <ul className="cg-accordion-list">
                 {data.routine_care.daily_upkeep.map((item, i) => (
-                  <li key={i} className="fg-li">{item}</li>
+                  <li key={i} className="cg-li">• {item}</li>
                 ))}
               </ul>
             </AccordionBlock>
           )}
 
           {data.routine_care.tips && (
-            <AccordionBlock icon="💡" title="Tips">
-              <ul style={{ paddingLeft: 18, marginTop: 12 }}>
+            <AccordionBlock icon={Lightbulb} title="Tips">
+              <ul className="cg-accordion-list">
                 {data.routine_care.tips.map((tip, i) => (
-                  <li key={i} className="fg-li">{tip}</li>
+                  <li key={i} className="cg-li">• {tip}</li>
                 ))}
               </ul>
             </AccordionBlock>
@@ -539,12 +367,12 @@ function BreedCareCard({ data, ageGroup }) {
       {/* Seasonal Care */}
       {data.seasonal_care && (
         <>
-          <p className="fg-h3">Seasonal Care</p>
+          <p className="cg-h3">Seasonal Care</p>
           {Object.entries(data.seasonal_care).map(([season, tips]) => (
-            <AccordionBlock key={season} icon="🌦️" title={season.charAt(0).toUpperCase() + season.slice(1)}>
-              <ul style={{ paddingLeft: 18, marginTop: 12 }}>
+            <AccordionBlock key={season} icon={Sun} title={season.charAt(0).toUpperCase() + season.slice(1)}>
+              <ul className="cg-accordion-list">
                 {tips.map((tip, i) => (
-                  <li key={i} className="fg-li">{tip}</li>
+                  <li key={i} className="cg-li">• {tip}</li>
                 ))}
               </ul>
             </AccordionBlock>
@@ -555,22 +383,20 @@ function BreedCareCard({ data, ageGroup }) {
       {/* Cost Estimate */}
       {data.cost_estimate && (
         <>
-          <p className="fg-h3">Grooming Cost Estimate</p>
-          <div style={{
-            background: "var(--bg-soft)", border: "1.5px dashed var(--border-strong)",
-            borderRadius: "var(--radius-md)", padding: "16px",
-          }}>
-            <p style={{ fontFamily: "'Fraunces',serif", fontSize: 16, fontWeight: 400, color: "var(--accent-dark)", marginBottom: 10 }}>
-              💸 Monthly & Yearly Breakdown
+          <p className="cg-h3">Grooming Cost Estimate</p>
+          <div className="cg-cost-estimate-box">
+            <p className="cg-cost-title">
+              <DollarSign size={16} className="cg-cost-icon" />
+              Monthly & Yearly Breakdown
             </p>
-            <p className="fg-li"><strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>Monthly:</strong> {data.cost_estimate.monthly}</p>
-            <p className="fg-li"><strong style={{ fontWeight: 500, color: "var(--accent-dark)" }}>Yearly:</strong> {data.cost_estimate.yearly}</p>
+            <p className="cg-li"><strong className="cg-li-strong">Monthly:</strong> {data.cost_estimate.monthly}</p>
+            <p className="cg-li"><strong className="cg-li-strong">Yearly:</strong> {data.cost_estimate.yearly}</p>
             {data.cost_estimate.includes && (
               <>
-                <p className="fg-h4" style={{ marginTop: 10 }}>Includes</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                <p className="cg-h4">Includes</p>
+                <div className="cg-tag-group">
                   {data.cost_estimate.includes.map((item, i) => (
-                    <span key={i} className="fg-tag">{item}</span>
+                    <span key={i} className="cg-tag">{item}</span>
                   ))}
                 </div>
               </>
@@ -579,8 +405,8 @@ function BreedCareCard({ data, ageGroup }) {
         </>
       )}
 
-      <p style={{ fontSize: 12, color: "var(--text-light)", marginTop: 22, fontStyle: "italic", lineHeight: 1.6 }}>
-        ⚠️ Costs are approximate. Always consult a professional groomer for breed-specific advice.
+      <p className="cg-disclaimer-text">
+        <ShieldAlert size={12} className="cg-disclaimer-icon" /> Costs are approximate. Always consult a professional groomer for breed-specific advice.
       </p>
     </div>
   );

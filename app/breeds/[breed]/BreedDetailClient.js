@@ -135,8 +135,8 @@ export default function BreedDetailClient() {
   const [videoError, setVideoError] = useState(false);
 
   const breedName = normalize(decodeURIComponent(params.breed).replace(/-/g, " "));
-  const breedKey  = Object.keys(breeds).find((b) => normalize(b) === breedName);
-  const breed     = breeds[breedKey];
+  const breedKey = Object.keys(breeds).find((b) => normalize(b) === breedName);
+  const breed = breeds[breedKey];
 
   if (!breed) {
     return (
@@ -153,12 +153,12 @@ export default function BreedDetailClient() {
 
   const ov = breed.quick_overview || {};
   const RATINGS = [
-    { label: "Energy Level",       value: ov.energy_level              },
-    { label: "Maintenance",        value: ov.maintenance_level         },
-    { label: "Shedding",           value: ov.shedding_level            },
-    { label: "Trainability",       value: ov.trainability              },
-    { label: "Apartment Friendly", value: ov.apartment_friendly        },
-    { label: "First-time Owner",   value: ov.first_time_owner_friendly },
+    { label: "Energy Level", value: ov.energy_level },
+    { label: "Maintenance", value: ov.maintenance_level },
+    { label: "Shedding", value: ov.shedding_level },
+    { label: "Trainability", value: ov.trainability },
+    { label: "Apartment Friendly", value: ov.apartment_friendly },
+    { label: "First-time Owner", value: ov.first_time_owner_friendly },
   ];
 
   return (
@@ -180,10 +180,10 @@ export default function BreedDetailClient() {
               {breed.basic_info?.one_sentence_summary || breed.basic_info?.ideal_home || ""}
             </p>
             <div className="bd-hero-chips">
-              {breed.basic_info?.size  && <span>{breed.basic_info.size}</span>}
-              {ov.lifespan             && <span>{ov.lifespan}</span>}
-              {ov.energy_level         && <span>{ov.energy_level} energy</span>}
-              {ov.temperament          && <span>{ov.temperament}</span>}
+              {breed.basic_info?.size && <span>{breed.basic_info.size}</span>}
+              {ov.lifespan && <span>{ov.lifespan}</span>}
+              {ov.energy_level && <span>{ov.energy_level} energy</span>}
+              {ov.temperament && <span>{ov.temperament}</span>}
             </div>
           </div>
         </section>
@@ -192,13 +192,13 @@ export default function BreedDetailClient() {
         <section className="basic-info">
           <h2>Basic Info</h2>
           <div className="bd-info-grid">
-            <Stat label="Nicknames"      value={breed.basic_info?.nicknames?.join(", ")} />
-            <Stat label="Origin"         value={breed.basic_info?.origin}                />
-            <Stat label="Breed Group"    value={breed.basic_info?.breed_group}           />
-            <Stat label="Size"           value={breed.basic_info?.size}                  />
-            <Stat label="Popularity"     value={breed.basic_info?.popularity}            />
-            <Stat label="Best Known For" value={breed.basic_info?.best_known_for}        />
-            <Stat label="Climate Note"   value={breed.basic_info?.climate_note}          />
+            <Stat label="Nicknames" value={breed.basic_info?.nicknames?.join(", ")} />
+            <Stat label="Origin" value={breed.basic_info?.origin} />
+            <Stat label="Breed Group" value={breed.basic_info?.breed_group} />
+            <Stat label="Size" value={breed.basic_info?.size} />
+            <Stat label="Popularity" value={breed.basic_info?.popularity} />
+            <Stat label="Best Known For" value={breed.basic_info?.best_known_for} />
+            <Stat label="Climate Note" value={breed.basic_info?.climate_note} />
           </div>
           {breed.basic_info?.one_sentence_summary && (
             <p className="bd-summary-note">
@@ -229,37 +229,37 @@ export default function BreedDetailClient() {
 
           {breed.personality_and_temperament?.key_traits?.length > 0 && (
             <><h3>Key Traits</h3>
-            <div className="bd-trait-chips">
-              {breed.personality_and_temperament.key_traits.map((t, i) => <span key={i} className="bd-chip">{t}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.personality_and_temperament.key_traits.map((t, i) => <span key={i} className="bd-chip">{t}</span>)}
+              </div></>
           )}
 
           {breed.personality_and_temperament?.social_behavior && (
             <><h3>Social Behaviour</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.personality_and_temperament.social_behavior).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.personality_and_temperament.social_behavior).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
 
           {breed.personality_and_temperament?.personality_highlights?.length > 0 && (
             <><h3>Personality Highlights</h3>
-            <ul>{breed.personality_and_temperament.personality_highlights.map((p, i) => <li key={i}>{p}</li>)}</ul></>
+              <ul>{breed.personality_and_temperament.personality_highlights.map((p, i) => <li key={i}>{p}</li>)}</ul></>
           )}
 
           {breed.personality_and_temperament?.quirky_habits?.length > 0 && (
             <><h3>Quirky Habits</h3>
-            <ul>{breed.personality_and_temperament.quirky_habits.map((q, i) => <li key={i}>{q}</li>)}</ul></>
+              <ul>{breed.personality_and_temperament.quirky_habits.map((q, i) => <li key={i}>{q}</li>)}</ul></>
           )}
 
           {breed.personality_and_temperament?.behavioral_traits && (
             <><h3>Behavioural Traits</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.personality_and_temperament.behavioral_traits).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.personality_and_temperament.behavioral_traits).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
         </section>
 
@@ -270,18 +270,18 @@ export default function BreedDetailClient() {
 
           {breed.appearance_and_coat?.coat_details && (
             <><h3>Coat Details</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.appearance_and_coat.coat_details).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {Array.isArray(v) ? v.join(", ") : v.toString()}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.appearance_and_coat.coat_details).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {Array.isArray(v) ? v.join(", ") : v.toString()}</li>
+                ))}
+              </ul></>
           )}
 
           {breed.appearance_and_coat?.distinct_features?.length > 0 && (
             <><h3>Distinct Features</h3>
-            <div className="bd-trait-chips">
-              {breed.appearance_and_coat.distinct_features.map((f, i) => <span key={i} className="bd-chip bd-chip--sage">{f}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.appearance_and_coat.distinct_features.map((f, i) => <span key={i} className="bd-chip bd-chip--sage">{f}</span>)}
+              </div></>
           )}
 
           {breed.appearance_and_coat?.climate_challenges && (
@@ -302,9 +302,9 @@ export default function BreedDetailClient() {
           {breed.exercise_and_activity?.why_exercise_is_critical && <p>{breed.exercise_and_activity.why_exercise_is_critical}</p>}
           {breed.exercise_and_activity?.recommended_activities?.length > 0 && (
             <><h3>Recommended Activities</h3>
-            <div className="bd-trait-chips">
-              {breed.exercise_and_activity.recommended_activities.map((a, i) => <span key={i} className="bd-chip bd-chip--teal">{a}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.exercise_and_activity.recommended_activities.map((a, i) => <span key={i} className="bd-chip bd-chip--teal">{a}</span>)}
+              </div></>
           )}
           {breed.exercise_and_activity?.energy_note && <p className="bd-note">{breed.exercise_and_activity.energy_note}</p>}
         </section>
@@ -323,17 +323,17 @@ export default function BreedDetailClient() {
           {breed.training_and_intelligence?.training_experience && <p>{breed.training_and_intelligence.training_experience}</p>}
           {breed.training_and_intelligence?.learning_ability && (
             <><h3>Learning Ability</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.training_and_intelligence.learning_ability).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.training_and_intelligence.learning_ability).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
           {breed.training_and_intelligence?.common_roles?.length > 0 && (
             <><h3>Common Roles</h3>
-            <div className="bd-trait-chips">
-              {breed.training_and_intelligence.common_roles.map((r, i) => <span key={i} className="bd-chip bd-chip--teal">{r}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.training_and_intelligence.common_roles.map((r, i) => <span key={i} className="bd-chip bd-chip--teal">{r}</span>)}
+              </div></>
           )}
         </section>
 
@@ -348,19 +348,19 @@ export default function BreedDetailClient() {
           )}
           {breed.grooming_and_maintenance?.grooming_needs && (
             <><h3>Grooming Needs</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.grooming_and_maintenance.grooming_needs).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.grooming_and_maintenance.grooming_needs).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
           {breed.grooming_and_maintenance?.seasonal_notes && (
             <><h3>Seasonal Notes</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.grooming_and_maintenance.seasonal_notes).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.grooming_and_maintenance.seasonal_notes).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
           {breed.grooming_and_maintenance?.professional_grooming && (
             <div className="bd-pro-grooming">
@@ -387,19 +387,19 @@ export default function BreedDetailClient() {
           )}
           {breed.living_requirements?.home_lifestyle && (
             <><h3>Home Lifestyle</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.living_requirements.home_lifestyle).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.living_requirements.home_lifestyle).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {v}</li>
+                ))}
+              </ul></>
           )}
           {breed.living_requirements?.climate && (
             <><h3>Climate Compatibility</h3>
-            <ul className="bd-kv-list">
-              {Object.entries(breed.living_requirements.climate).map(([k, v], i) => (
-                <li key={i}><strong>{fmt(k)}:</strong> {Array.isArray(v) ? v.join(", ") : v.toString()}</li>
-              ))}
-            </ul></>
+              <ul className="bd-kv-list">
+                {Object.entries(breed.living_requirements.climate).map(([k, v], i) => (
+                  <li key={i}><strong>{fmt(k)}:</strong> {Array.isArray(v) ? v.join(", ") : v.toString()}</li>
+                ))}
+              </ul></>
           )}
           {breed.lifestyle_compatibility?.quick_decision_guide && (
             <div className="bd-decision-grid">
@@ -423,24 +423,24 @@ export default function BreedDetailClient() {
         <section className="history">
           <h2>History & Origin</h2>
           <div className="bd-info-grid">
-            <Stat label="Origin Country"   value={breed.history_origin?.origin_country}    />
-            <Stat label="Developed In"     value={breed.history_origin?.developed_in}      />
-            <Stat label="Developed By"     value={breed.history_origin?.developed_by}      />
-            <Stat label="Original Purpose" value={breed.history_origin?.original_purpose}  />
-            <Stat label="AKC Recognition"  value={breed.history_origin?.recognition?.us}   />
-            <Stat label="KC Recognition"   value={breed.history_origin?.recognition?.uk}   />
+            <Stat label="Origin Country" value={breed.history_origin?.origin_country} />
+            <Stat label="Developed In" value={breed.history_origin?.developed_in} />
+            <Stat label="Developed By" value={breed.history_origin?.developed_by} />
+            <Stat label="Original Purpose" value={breed.history_origin?.original_purpose} />
+            <Stat label="AKC Recognition" value={breed.history_origin?.recognition?.us} />
+            <Stat label="KC Recognition" value={breed.history_origin?.recognition?.uk} />
           </div>
           {breed.history_origin?.key_traits_developed_for?.length > 0 && (
             <><h3>Key Traits Developed For</h3>
-            <div className="bd-trait-chips">
-              {breed.history_origin.key_traits_developed_for.map((t, i) => <span key={i} className="bd-chip">{t}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.history_origin.key_traits_developed_for.map((t, i) => <span key={i} className="bd-chip">{t}</span>)}
+              </div></>
           )}
           {breed.history_origin?.modern_roles?.length > 0 && (
             <><h3>Modern Roles</h3>
-            <div className="bd-trait-chips">
-              {breed.history_origin.modern_roles.map((r, i) => <span key={i} className="bd-chip bd-chip--sage">{r}</span>)}
-            </div></>
+              <div className="bd-trait-chips">
+                {breed.history_origin.modern_roles.map((r, i) => <span key={i} className="bd-chip bd-chip--sage">{r}</span>)}
+              </div></>
           )}
         </section>
 

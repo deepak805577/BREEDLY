@@ -419,7 +419,7 @@ export default function DailyDashboard({ dog, onUpdate }) {
         {upcomingVaccs.length > 0 && (
           <div className="dd-vacc-alert">
             <span className="dd-vacc-alert-icon" style={{ color: '#b85c5c' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.4 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 2 4 4" /><path d="m17 7 3-3" /><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.4 0-3.4L15 5" /><path d="m9 11 4 4" /><path d="m5 19-3 3" /><path d="m14 4 6 6" /></svg>
             </span>
             <span className="dd-vacc-alert-text">
               {upcomingVaccs.length === 1
@@ -435,9 +435,9 @@ export default function DailyDashboard({ dog, onUpdate }) {
         <span className="dd-streak-fire" style={{ display: 'flex', alignItems: 'center', color: streak > 0 ? '#d97706' : '#9ca3af' }}>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             {streak > 0 ? (
-              <path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/>
+              <path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z" />
             ) : (
-              <path d="M12 2v20M2 12h20M19 5l-14 14M5 5l14 14M16.5 7.5l-9 9M7.5 7.5l9 9"/>
+              <path d="M12 2v20M2 12h20M19 5l-14 14M5 5l14 14M16.5 7.5l-9 9M7.5 7.5l9 9" />
             )}
           </svg>
         </span>
@@ -485,7 +485,7 @@ export default function DailyDashboard({ dog, onUpdate }) {
         {getWeekSuggestions().map((sug, i) => (
           <div key={i} className="dd-report-suggestion">
             <span style={{ flexShrink: 0, color: '#A3B18A' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
             </span>
             <span>{sug}</span>
           </div>

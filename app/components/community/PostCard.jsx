@@ -15,6 +15,7 @@ export default function PostCard({ post, onLike, onSave, onDelete, currentUserId
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const cmtRef = useRef(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const isOwner = currentUserId && post.userId === currentUserId;
 
@@ -75,16 +76,31 @@ export default function PostCard({ post, onLike, onSave, onDelete, currentUserId
       {/* IMAGE + OVERLAY UI */}
       <div style={{ position: "relative" }}>
         {post.imageUrl ? (
-          <img
-            src={post.imageUrl}
-            alt={post.caption}
-            style={{
-              width: "100%",
-              height: 400,
-              objectFit: "cover",
-              display: "block",
-            }}
-          />
+          <div style={{ position: "relative", width: "100%", height: 400, background: "var(--bg-soft)" }}>
+            {!imgLoaded && (
+              <div
+                className="shimmer"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: 0,
+                }}
+              />
+            )}
+            <img
+              src={post.imageUrl}
+              alt={post.caption}
+              onLoad={() => setImgLoaded(true)}
+              style={{
+                width: "100%",
+                height: 400,
+                objectFit: "cover",
+                display: "block",
+                opacity: imgLoaded ? 1 : 0,
+                transition: "opacity 0.3s ease-in-out",
+              }}
+            />
+          </div>
         ) : (
           <div style={{
             width: "100%",

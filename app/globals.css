@@ -315,109 +315,110 @@ body {
   font-size: 14px;
 }
 
-/* OVERLAY */
-.guide-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
 
-  z-index: 998;
-}
-
-/* BOTTOM SHEET */
+/* ─── PREMIUM MOBILE BOTTOM SHEET ─── */
 .mobile-guide-sheet {
   position: fixed;
-
-
   bottom: 0;
   left: 0;
   right: 0;
-  background: #ffffff;
-  border-radius: 20px 20px 0 0;
-  padding: 14px 20px 26px;
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+  background: #faf8f5; /* Premium soft warm cream */
+  border-radius: 28px 28px 0 0;
+  padding: 16px 24px 34px;
+  box-shadow: 0 -10px 40px rgba(80, 50, 20, 0.08), 0 -2px 10px rgba(80, 50, 20, 0.03);
   transform: translateY(100%);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 999;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2000;
+  border-top: 1px solid rgba(176, 137, 104, 0.15);
+  max-width: 576px; /* Bound it on larger viewports */
+  margin: 0 auto;
 }
 
-/* OPEN STATE */
 .mobile-guide-sheet.open {
   transform: translateY(0);
 }
 
 /* DRAG HANDLE */
 .sheet-handle {
-  width: 42px;
+  width: 44px;
   height: 5px;
-  background: #ccc;
+  background: #e3dcd2;
   border-radius: 10px;
-  margin: 6px auto 14px;
+  margin: 4px auto 18px;
 }
 
-/* TITLE */
+/* SECTION TITLE */
 .sheet-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
-  color: #9d6550;
-  margin-bottom: 16px;
+  font-family: 'Fraunces', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #b08968;
+  margin: 14px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* LINKS */
 .mobile-guide-sheet a {
-  display: block;
-  padding: 14px 12px;
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  font-size: 0.94rem;
   font-weight: 500;
-  color: #9a4a1c;
-  border-radius: 12px;
+  color: #5c4e43; /* Rich dark warm text */
+  background: #ffffff;
+  border: 1px solid rgba(176, 137, 104, 0.08);
+  border-radius: 16px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(100, 70, 40, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mobile-guide-sheet a:hover {
-  background: #f3ecfa;
+.mobile-guide-sheet a svg {
+  color: #b08968; /* Default icon color */
+  transition: color 0.2s ease;
+  flex-shrink: 0;
 }
 
-/* SHEET */
-.mobile-guide-sheet {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border-radius: 20px 20px 0 0;
-  padding: 20px;
-  transition: 0.3s ease;
-  z-index: 2000;
+.mobile-guide-sheet a:hover,
+.mobile-guide-sheet a:active {
+  background: #efe7db;
+  color: #7f5539;
+  border-color: rgba(176, 137, 104, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(100, 70, 40, 0.06);
 }
 
-.mobile-guide-sheet.open {
-  bottom: 0;
+.mobile-guide-sheet a:hover svg,
+.mobile-guide-sheet a:active svg {
+  color: #7f5539;
 }
 
-.sheet-title {
-  font-weight: 700;
-  margin: 10px 0;
-}
-
-.sheet-handle {
-  width: 40px;
-  height: 4px;
-  background: #ccc;
-  margin: 0 auto 10px;
-  border-radius: 10px;
+/* Dividers & Overlays */
+.mobile-guide-sheet hr {
+  border: 0;
+  height: 1px;
+  background: rgba(176, 137, 104, 0.12);
+  margin: 18px 0;
 }
 
 .guide-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1500;
+  inset: 0;
+  background: rgba(46, 37, 29, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1999;
+  animation: overlayFadeIn 0.35s ease forwards;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* HOME */

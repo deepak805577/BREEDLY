@@ -1,5 +1,25 @@
 'use client';
 import { useState } from 'react';
+import {
+  GraduationCap,
+  Brain,
+  Sparkles,
+  Ban,
+  Calendar,
+  Compass,
+  Users,
+  Award,
+  AlertTriangle,
+  Wrench,
+  RotateCcw,
+  Clock,
+  X,
+  Heart,
+  Scale,
+  ArrowUp,
+  Activity,
+  BookOpen
+} from 'lucide-react';
 import './training.css';
 
 export default function TrainingPage() {
@@ -18,14 +38,16 @@ export default function TrainingPage() {
         <div className="main-overlay">
           <div className="main-inner">
             <div className="section-pill" style={{ background: 'rgba(255, 255, 255, 0.15)', borderColor: 'rgba(255, 255, 255, 0.25)' }}>
-              <span className="section-pill-icon" style={{ color: '#FAF7F2' }}>🎓</span>
+              <span className="section-pill-icon" style={{ color: '#FAF7F2', display: 'flex', alignItems: 'center' }}>
+                <GraduationCap size={14} />
+              </span>
               <span className="section-pill-text" style={{ color: '#FAF7F2' }}>BreedLy Academy</span>
             </div>
             <h1>Train with Love, Lead with Trust</h1>
             <p>Your journey to a well-behaved, joyful dog starts here.</p>
             <blockquote>
               “A well-trained dog isn’t just obedient — it’s deeply connected to you.”
-              <span>– BreedLy Wisdom 🐾</span>
+              <span>– BreedLy Wisdom</span>
             </blockquote>
             <a href="#topics" className="main-btn">Start Learning</a>
           </div>
@@ -36,7 +58,9 @@ export default function TrainingPage() {
       <section className="card-sections" id="topics">
         <div className="section-header-block">
           <div className="section-pill">
-            <span className="section-pill-icon">🐾</span>
+            <span className="section-pill-icon" style={{ display: 'flex', alignItems: 'center' }}>
+              <BookOpen size={14} />
+            </span>
             <span className="section-pill-text">Curriculum</span>
           </div>
           <h2>Training Topics Overview</h2>
@@ -44,52 +68,68 @@ export default function TrainingPage() {
         
         <div className="topics-grid">
           {[
-            { id: 'modal-foundation', icon: 'fas fa-brain', title: 'Understanding Dog Behavior', desc: 'Learn how dogs think and build trust through psychology.' },
-            { id: 'modal-commands', icon: 'fas fa-dog', title: 'Basic Commands', desc: 'Teach sit, stay, come, and more.' },
-            { id: 'modal-behavior', icon: 'fas fa-ban', title: 'Behavior Training', desc: 'Correct unwanted behaviors with compassion.' },
-            { id: 'modal-potty', icon: 'fas fa-toilet-paper', title: 'Potty Training', desc: 'Build solid habits and routines.' },
-            { id: 'modal-leash', icon: 'fas fa-walking', title: 'Leash Training', desc: 'Walks without pulling or chaos.' },
-            { id: 'modal-social', icon: 'fas fa-users', title: 'Socialization', desc: 'Positive exposure to people, places, and pets.' },
-            { id: 'modal-advanced', icon: 'fas fa-award', title: 'Advanced Training', desc: 'Master complex behaviors like heel and recall.' },
-            { id: 'modal-mistakes', icon: 'fas fa-exclamation-triangle', title: 'Common Mistakes', desc: 'Avoid errors that slow progress or harm trust.' },
-            { id: 'modal-tools', icon: 'fas fa-box-open', title: 'Tools & Enrichment', desc: 'Use smart tools to help your pup succeed.' },
-          ].map(topic => (
-            <div key={topic.id} className="topic-card" onClick={() => openModal(topic.id)}>
-              <div className="topic-card-icon-wrapper">
-                <i className={topic.icon}></i>
+            { id: 'modal-foundation', icon: Brain, title: 'Understanding Dog Behavior', desc: 'Learn how dogs think and build trust through psychology.' },
+            { id: 'modal-commands', icon: Sparkles, title: 'Basic Commands', desc: 'Teach sit, stay, come, and more.' },
+            { id: 'modal-behavior', icon: Ban, title: 'Behavior Training', desc: 'Correct unwanted behaviors with compassion.' },
+            { id: 'modal-potty', icon: Calendar, title: 'Potty Training', desc: 'Build solid habits and routines.' },
+            { id: 'modal-leash', icon: Compass, title: 'Leash Training', desc: 'Walks without pulling or chaos.' },
+            { id: 'modal-social', icon: Users, title: 'Socialization', desc: 'Positive exposure to people, places, and pets.' },
+            { id: 'modal-advanced', icon: Award, title: 'Advanced Training', desc: 'Master complex behaviors like heel and recall.' },
+            { id: 'modal-mistakes', icon: AlertTriangle, title: 'Common Mistakes', desc: 'Avoid errors that slow progress or harm trust.' },
+            { id: 'modal-tools', icon: Wrench, title: 'Tools & Enrichment', desc: 'Use smart tools to help your pup succeed.' },
+          ].map(topic => {
+            const TopicIcon = topic.icon;
+            return (
+              <div key={topic.id} className="topic-card" onClick={() => openModal(topic.id)}>
+                <div className="topic-card-icon-wrapper">
+                  <TopicIcon size={24} className="topic-card-icon" />
+                </div>
+                <h3>{topic.title}</h3>
+                <p>{topic.desc}</p>
               </div>
-              <h3>{topic.title}</h3>
-              <p>{topic.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* 🧠 MODALS WITH FULL DETAILS */}
+      {/* MODALS WITH FULL DETAILS */}
       {openModalId && (
         <>
           {/* Understanding Dog Behavior */}
           {openModalId === 'modal-foundation' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-brain"></i> Understanding Dog Behavior</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Brain className="modal-title-icon" size={28} />
+                  <span>Understanding Dog Behavior</span>
+                </h2>
                 
                 <div className="bullet-list">
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🔁</span>
+                    <span className="bullet-card-icon">
+                      <RotateCcw size={18} />
+                    </span>
                     <p className="bullet-card-text">Dogs learn by forming associations — routines matter.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🍖</span>
+                    <span className="bullet-card-icon">
+                      <Sparkles size={18} />
+                    </span>
                     <p className="bullet-card-text">Reinforce good behavior with rewards, not punishment.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🐾</span>
+                    <span className="bullet-card-icon">
+                      <Heart size={18} />
+                    </span>
                     <p className="bullet-card-text">Body language matters — observe tail, ears, eyes.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">⌛</span>
+                    <span className="bullet-card-icon">
+                      <Clock size={18} />
+                    </span>
                     <p className="bullet-card-text">Be patient; dogs don’t misbehave out of malice.</p>
                   </div>
                 </div>
@@ -103,11 +143,16 @@ export default function TrainingPage() {
           {openModalId === 'modal-commands' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-dog"></i> Basic Commands</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Sparkles className="modal-title-icon" size={28} />
+                  <span>Basic Commands</span>
+                </h2>
 
                 {/* Sit */}
-                <h3>🐾 Sit</h3>
+                <h3>Sit</h3>
                 <p><strong>Purpose:</strong> The “Sit” command is a foundational obedience cue. It helps calm your dog, build impulse control, and is a gateway for teaching other behaviors.</p>
                 <p><strong>When to Use:</strong> Before meals, during leash clipping, at doors, or when guests arrive.</p>
                 
@@ -145,7 +190,7 @@ export default function TrainingPage() {
                 </div>
 
                 {/* Stay */}
-                <h3>✋ Stay</h3>
+                <h3>Stay</h3>
                 <p><strong>Purpose:</strong> “Stay” teaches your dog to remain in position. It’s critical for safety and self-control.</p>
                 <p><strong>When to Use:</strong> At crosswalks, during grooming, or when you need to pause interaction.</p>
                 
@@ -183,7 +228,7 @@ export default function TrainingPage() {
                 </div>
 
                 {/* Down */}
-                <h3>🐕 Down</h3>
+                <h3>Down</h3>
                 <p><strong>Purpose:</strong> “Down” asks your dog to lie down completely. It’s used to calm your dog or keep them relaxed in high-energy places.</p>
                 <p><strong>When to Use:</strong> At cafés, during long waits, or for calm behavior at home.</p>
                 
@@ -223,12 +268,17 @@ export default function TrainingPage() {
           {openModalId === 'modal-behavior' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-ban"></i> Behavior Training</h2>
-                <p><strong>Purpose:</strong> Behavior training addresses unwanted actions like jumping, barking, chewing, or nipping — not through punishment, but through redirection and reinforcement of calm behavior.</p>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Ban className="modal-title-icon" size={28} />
+                  <span>Behavior Training</span>
+                </h2>
+                <p><strong>Purpose:</strong> Behavior training addresses unwanted actions like jumping, barking, chewing, or nipping — not through redirection and reinforcement of calm behavior.</p>
 
                 {/* Jumping */}
-                <h3>🐾 Jumping on People</h3>
+                <h3>Jumping on People</h3>
                 <ol className="step-list">
                   <li className="step-card">
                     <div className="step-number-badge">1</div>
@@ -258,7 +308,7 @@ export default function TrainingPage() {
                 </div>
 
                 {/* Barking */}
-                <h3>🔊 Excessive Barking</h3>
+                <h3>Excessive Barking</h3>
                 <ol className="step-list">
                   <li className="step-card">
                     <div className="step-number-badge">1</div>
@@ -288,7 +338,7 @@ export default function TrainingPage() {
                 </div>
 
                 {/* Chewing */}
-                <h3>🦷 Destructive Chewing</h3>
+                <h3>Destructive Chewing</h3>
                 <ol className="step-list">
                   <li className="step-card">
                     <div className="step-number-badge">1</div>
@@ -320,42 +370,47 @@ export default function TrainingPage() {
           {openModalId === 'modal-potty' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-toilet-paper"></i> Potty Training</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Calendar className="modal-title-icon" size={28} />
+                  <span>Potty Training</span>
+                </h2>
                 <p><strong>Purpose:</strong> Potty training teaches your dog where and when it’s appropriate to relieve themselves. Early consistency prevents accidents and confusion.</p>
                 <p><strong>When to Start:</strong> From the day you bring your puppy or dog home. Begin immediately.</p>
 
-                <h3>🚪 Step-by-Step Indoor/Outdoor Training</h3>
+                <h3>Step-by-Step Indoor/Outdoor Training</h3>
                 <ol className="step-list">
                   <li className="step-card">
                     <div className="step-number-badge">1</div>
-                    <p className="step-text">🕒 Take your dog outside first thing in the morning, after naps, meals, and playtime.</p>
+                    <p className="step-text">Take your dog outside first thing in the morning, after naps, meals, and playtime.</p>
                   </li>
                   <li className="step-card">
                     <div className="step-number-badge">2</div>
-                    <p className="step-text">📍 Always go to the same potty spot to create habit.</p>
+                    <p className="step-text">Always go to the same potty spot to create habit.</p>
                   </li>
                   <li className="step-card">
                     <div className="step-number-badge">3</div>
-                    <p className="step-text">🎯 Use a command like “Go potty” and wait silently.</p>
+                    <p className="step-text">Use a command like “Go potty” and wait silently.</p>
                   </li>
                   <li className="step-card">
                     <div className="step-number-badge">4</div>
-                    <p className="step-text">✅ Immediately praise and give a treat after they finish.</p>
+                    <p className="step-text">Immediately praise and give a treat after they finish.</p>
                   </li>
                   <li className="step-card">
                     <div className="step-number-badge">5</div>
-                    <p className="step-text">📅 Keep a potty schedule to prevent indoor accidents.</p>
+                    <p className="step-text">Keep a potty schedule to prevent indoor accidents.</p>
                   </li>
                   <li className="step-card">
                     <div className="step-number-badge">6</div>
-                    <p className="step-text">🧽 Clean any mess indoors with enzymatic cleaner — don’t punish.</p>
+                    <p className="step-text">Clean any mess indoors with enzymatic cleaner — don’t punish.</p>
                   </li>
                 </ol>
 
                 <img src="/assets/potty.jpg" className="img-center" alt="Puppy potty training outside" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
                 
-                <h3>🚨 Accident Handling</h3>
+                <h3>Accident Handling</h3>
                 <p>Never scold. Dogs won’t understand after the fact. Instead, interrupt gently and lead them outside if caught mid-act.</p>
                 
                 <div className="video-wrapper" style={{ marginTop: '1.5rem' }}>
@@ -367,16 +422,63 @@ export default function TrainingPage() {
             </div>
           )}
 
+          {/* Leash Training */}
+          {openModalId === 'modal-leash' && (
+            <div className="modal" onClick={closeModal}>
+              <div className="modal-content" onClick={stopPropagation}>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Compass className="modal-title-icon" size={28} />
+                  <span>Leash Training</span>
+                </h2>
+                <p><strong>Purpose:</strong> Leash training teaches your dog to walk calmly by your side on a loose leash. It reduces stress, prevents pulling, and makes walks an enjoyable bonding activity.</p>
+
+                <h3>Step-by-Step Loose Leash Walk</h3>
+                <ol className="step-list">
+                  <li className="step-card">
+                    <div className="step-number-badge">1</div>
+                    <p className="step-text">Reward your dog for simply standing next to you while on the leash.</p>
+                  </li>
+                  <li className="step-card">
+                    <div className="step-number-badge">2</div>
+                    <p className="step-text">Take a few steps forward. If the leash remains loose, reward with a treat.</p>
+                  </li>
+                  <li className="step-card">
+                    <div className="step-number-badge">3</div>
+                    <p className="step-text">If the dog pulls, stop immediately. Do not yank the leash — just be a "tree".</p>
+                  </li>
+                  <li className="step-card">
+                    <div className="step-number-badge">4</div>
+                    <p className="step-text">Wait for the dog to return to your side or turn to look at you, then reward.</p>
+                  </li>
+                  <li className="step-card">
+                    <div className="step-number-badge">5</div>
+                    <p className="step-text">Walk forward again, rewarding loose leash positioning frequently.</p>
+                  </li>
+                </ol>
+
+                <img src="/assets/leash.jpg" className="img-center" alt="Dog loose leash walking outside" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
+              </div>
+            </div>
+          )}
+
           {/* Socialization Modal */}
           {openModalId === 'modal-social' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-users"></i> Socialization</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Users className="modal-title-icon" size={28} />
+                  <span>Socialization</span>
+                </h2>
 
                 <p><strong>Purpose:</strong> Socialization exposes your dog to people, environments, animals, and sounds to reduce fear, anxiety, or aggression later in life.</p>
 
-                <h3>🎉 Step-by-Step Social Plan</h3>
+                <h3>Step-by-Step Social Plan</h3>
                 <ol className="step-list">
                   <li className="step-card">
                     <div className="step-number-badge">1</div>
@@ -402,7 +504,7 @@ export default function TrainingPage() {
 
                 <img src="/assets/meet.jpg" className="img-center" alt="Dog meeting new people" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
 
-                <h3>🎓 Golden Rule</h3>
+                <h3>Golden Rule</h3>
                 <p>Never force — all interactions must be voluntary. Let your dog observe at a distance first if unsure.</p>
 
                 <div className="media">
@@ -422,10 +524,15 @@ export default function TrainingPage() {
           {openModalId === 'modal-advanced' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-award"></i> Advanced Training</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Award className="modal-title-icon" size={28} />
+                  <span>Advanced Training</span>
+                </h2>
 
-                <h3>🚶 Heel Command</h3>
+                <h3>Heel Command</h3>
                 <p><strong>Purpose:</strong> Walks calmly next to you, matching pace, ignoring distractions.</p>
                 
                 <ol className="step-list">
@@ -452,7 +559,7 @@ export default function TrainingPage() {
                   </div>
                 </div>
 
-                <h3>🌀 Recall (Come When Called)</h3>
+                <h3>Recall (Come When Called)</h3>
                 <p>Build rock-solid recall by practicing daily.</p>
                 
                 <ol className="step-list">
@@ -490,14 +597,21 @@ export default function TrainingPage() {
           {openModalId === 'modal-mistakes' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-exclamation-triangle"></i> Common Mistakes</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <AlertTriangle className="modal-title-icon" size={28} />
+                  <span>Common Mistakes</span>
+                </h2>
 
                 <p><strong>Purpose:</strong> Understanding what not to do in training can often be more important than knowing what to do. These mistakes often delay progress or damage your dog’s trust.</p>
 
                 <div className="bullet-list">
                   <div className="bullet-card" style={{ alignItems: 'flex-start' }}>
-                    <span className="bullet-card-emoji" style={{ marginTop: '2px' }}>❌</span>
+                    <span className="bullet-card-icon" style={{ marginTop: '2px' }}>
+                      <X size={18} />
+                    </span>
                     <div>
                       <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: '400', color: 'var(--accent-dark)', marginBottom: '4px' }}>Repeating Commands</h4>
                       <p className="bullet-card-text" style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>Don’t say “Sit sit sit sit…” — it weakens the cue. Say it once, then wait or gently reset.</p>
@@ -505,7 +619,9 @@ export default function TrainingPage() {
                   </div>
                   
                   <div className="bullet-card" style={{ alignItems: 'flex-start' }}>
-                    <span className="bullet-card-emoji" style={{ marginTop: '2px' }}>😠</span>
+                    <span className="bullet-card-icon" style={{ marginTop: '2px' }}>
+                      <AlertTriangle size={18} />
+                    </span>
                     <div>
                       <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: '400', color: 'var(--accent-dark)', marginBottom: '4px' }}>Training When Angry</h4>
                       <p className="bullet-card-text" style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>Dogs sense frustration. Never train if you’re tired, frustrated, or angry — it’ll confuse or scare your dog.</p>
@@ -513,7 +629,9 @@ export default function TrainingPage() {
                   </div>
 
                   <div className="bullet-card" style={{ alignItems: 'flex-start' }}>
-                    <span className="bullet-card-emoji" style={{ marginTop: '2px' }}>❌</span>
+                    <span className="bullet-card-icon" style={{ marginTop: '2px' }}>
+                      <Ban size={18} />
+                    </span>
                     <div>
                       <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: '400', color: 'var(--accent-dark)', marginBottom: '4px' }}>Punishing After the Fact</h4>
                       <p className="bullet-card-text" style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>Dogs don’t link punishment to earlier behavior. If your dog peed 5 minutes ago, correcting them now won’t teach anything.</p>
@@ -521,7 +639,9 @@ export default function TrainingPage() {
                   </div>
 
                   <div className="bullet-card" style={{ alignItems: 'flex-start' }}>
-                    <span className="bullet-card-emoji" style={{ marginTop: '2px' }}>📏</span>
+                    <span className="bullet-card-icon" style={{ marginTop: '2px' }}>
+                      <Scale size={18} />
+                    </span>
                     <div>
                       <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.1rem', fontWeight: '400', color: 'var(--accent-dark)', marginBottom: '4px' }}>Inconsistent Rules</h4>
                       <p className="bullet-card-text" style={{ fontSize: '0.92rem', color: 'var(--text-secondary)' }}>If one person allows couch access and another punishes it — your dog won’t know what’s right. Make household rules clear and consistent.</p>
@@ -536,44 +656,59 @@ export default function TrainingPage() {
           {openModalId === 'modal-tools' && (
             <div className="modal" onClick={closeModal}>
               <div className="modal-content" onClick={stopPropagation}>
-                <span className="close" onClick={closeModal}>&times;</span>
-                <h2><i className="fas fa-box-open"></i> Tools & Enrichment</h2>
+                <button className="close" onClick={closeModal} aria-label="Close modal">
+                  <X size={18} />
+                </button>
+                <h2>
+                  <Wrench className="modal-title-icon" size={28} />
+                  <span>Tools & Enrichment</span>
+                </h2>
 
                 <p><strong>Purpose:</strong> Mental stimulation and proper tools help prevent boredom and enhance training results.</p>
 
-                <h3>🧩 Enrichment Tools</h3>
+                <h3>Enrichment Tools</h3>
                 <div className="bullet-list">
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🧩</span>
+                    <span className="bullet-card-icon">
+                      <Sparkles size={18} />
+                    </span>
                     <p className="bullet-card-text">Snuffle mats — let your dog forage for food.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">❄️</span>
+                    <span className="bullet-card-icon">
+                      <Heart size={18} />
+                    </span>
                     <p className="bullet-card-text">KONG toys — stuff with frozen treats.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🥣</span>
+                    <span className="bullet-card-icon">
+                      <Clock size={18} />
+                    </span>
                     <p className="bullet-card-text">Puzzle bowls — slow down fast eaters.</p>
                   </div>
                 </div>
                 
                 <img src="/assets/en.jpg" className="img-center" alt="Enrichment tools" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
 
-                <h3>🎾 Play & Chew</h3>
+                <h3>Play & Chew</h3>
                 <div className="bullet-list">
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🦴</span>
+                    <span className="bullet-card-icon">
+                      <Activity size={18} />
+                    </span>
                     <p className="bullet-card-text">Use rope toys and fetch balls daily.</p>
                   </div>
                   <div className="bullet-card">
-                    <span className="bullet-card-emoji">🔄</span>
+                    <span className="bullet-card-icon">
+                      <RotateCcw size={18} />
+                    </span>
                     <p className="bullet-card-text">Rotate toys weekly to renew interest.</p>
                   </div>
                 </div>
                 
                 <img src="/assets/play.jpg" className="img-center" alt="Dog playing with toys" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
 
-                <h3>🚫 Tools to Avoid</h3>
+                <h3>Tools to Avoid</h3>
                 <p>Prong collars, electric shock collars, and choke chains are harmful. Stick to humane, positive training aids.</p>
                 
                 <img src="/assets/bite.jpg" className="img-center" alt="Avoid harmful tools" style={{ width: '100%', height: '300px', objectFit: 'cover', margin: '2rem 0 !important' }} />
@@ -589,13 +724,13 @@ export default function TrainingPage() {
         className="back-to-top-btn"
         aria-label="Back to top"
       >
-        <i className="fas fa-arrow-up"></i>
+        <ArrowUp size={18} />
       </button>
 
       {/* Branded Premium Footer */}
       <footer className="training-footer">
         <p>
-          🐾 Built with love by <strong>BreedLy</strong> – “Because every good dog deserves a good life.”
+          Built with love by <strong>BreedLy</strong> – “Because every good dog deserves a good life.”
         </p>
       </footer>
     </div>

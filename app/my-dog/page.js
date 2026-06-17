@@ -77,7 +77,7 @@ export default function MyDogPage() {
               <h3 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.3rem', color: '#7F5539', margin: 0 }}>The Pack</h3>
               <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#A3B18A', background: '#F0F5EC', padding: '3px 10px', borderRadius: '12px' }}>{dogs.length}</span>
             </div>
-            
+
             {/* Nav area that becomes horizontal on mobile via CSS */}
             <div className="sidebar-nav">
               {dogs.map(dog => {
@@ -99,10 +99,10 @@ export default function MyDogPage() {
                       flexShrink: 0, minWidth: '220px', scrollSnapAlign: 'start'
                     }}
                   >
-                    <div style={{ 
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                    <div style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                       width: '42px', height: '42px', borderRadius: '50%', flexShrink: 0,
-                      background: isActive ? 'rgba(255,255,255,0.15)' : '#FFF6ED', 
+                      background: isActive ? 'rgba(255,255,255,0.15)' : '#FFF6ED',
                       color: isActive ? '#FFFFFF' : '#B08968',
                       fontFamily: 'Fraunces, serif', fontSize: '1.2rem', fontWeight: 600,
                       backdropFilter: isActive ? 'blur(10px)' : 'none',
@@ -125,10 +125,10 @@ export default function MyDogPage() {
                 color: '#B08968', fontSize: '0.9rem', fontWeight: 600, textDecoration: 'none',
                 transition: 'all 0.2s', flexShrink: 0, scrollSnapAlign: 'start'
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(176,137,104,0.05)'; e.currentTarget.style.borderColor = 'rgba(176,137,104,0.5)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(176,137,104,0.3)'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(176,137,104,0.05)'; e.currentTarget.style.borderColor = 'rgba(176,137,104,0.5)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(176,137,104,0.3)'; }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14" /></svg>
                 Add Member
               </Link>
             </div>
@@ -138,9 +138,9 @@ export default function MyDogPage() {
           <section className="profile-container">
             {!activeDog ? (
               <div className="profile-card" style={{ textAlign: 'center', padding: '60px 30px' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🐾</div>
+                <div style={{ fontSize: '3rem', marginBottom: '16px' }}></div>
                 <h2 style={{ fontFamily: 'Fraunces', fontSize: '1.6rem', color: '#7F5539', marginBottom: '8px' }}>Start your journey</h2>
-                <p style={{ color: '#999', fontSize: '0.9rem', maxWidth: '320px', margin: '0 auto 24px' }}>Add your first dog to unlock personalized health tracking, smart insights, and daily care tools.</p>
+                <p style={{ fontStyle: 'italic', color: '#999', fontSize: '0.9rem', maxWidth: '320px', margin: '0 auto 24px' }}>Add your first dog to unlock personalized health tracking, smart insights, and daily care tools.</p>
                 <Link href="/my-dog/add" className="p-btn p-btn-main" style={{ padding: '14px 32px' }}>Add My Dog</Link>
               </div>
             ) : isEditing ? (
@@ -198,7 +198,7 @@ export default function MyDogPage() {
                     </div>
                     <div className="btn-group" style={{ marginTop: '0', gap: '8px' }}>
                       <button onClick={() => { setEditData(activeDog); setIsEditing(true); }} className="p-btn p-btn-outline p-btn-sm" style={{ borderColor: '#B0896844', background: 'rgba(176,137,104,0.04)' }}>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
                         Edit
                       </button>
                       <button onClick={() => handleDelete(activeDog.id)} className="p-btn p-btn-sm" style={{ color: '#b85c5c', background: '#FFF0F0', border: '1px solid #b85c5c15' }}>
@@ -227,7 +227,7 @@ export default function MyDogPage() {
                     ))}
                   </div>
                 </div>
-                    {/* ─── 2. CARE TABS ─── */}
+                {/* ─── 2. CARE TABS ─── */}
                 <div className="profile-card" style={{ marginBottom: '20px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                     <div>
@@ -241,18 +241,18 @@ export default function MyDogPage() {
                 {/* ─── 1. DAILY DASHBOARD ─── */}
                 <DailyDashboard dog={activeDog} onUpdate={handleUpdate} />
 
-            
-            
-                    {/* ─── 3. SMART INSIGHTS ─── */}
+
+
+                {/* ─── 3. SMART INSIGHTS ─── */}
                 <SmartInsights dog={activeDog} />
                 {/* ─── 4. QUICK ACTIONS ─── */}
                 <div style={{ marginTop: '32px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                     <h3 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.3rem', color: '#7F5539', margin: 0 }}>Quick Actions</h3>
                   </div>
-                  
+
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
-                    
+
                     {/* Food Plan - Hero Card */}
                     <Link href={`/food-guide?dogId=${activeDog.id}`} style={{
                       background: 'linear-gradient(135deg, #7F5539 0%, #5D3A22 100%)',
@@ -260,15 +260,15 @@ export default function MyDogPage() {
                       display: 'flex', flexDirection: 'column', gap: '20px',
                       boxShadow: '0 10px 30px rgba(127, 85, 57, 0.2)', transition: 'transform 0.25s, box-shadow 0.25s',
                       position: 'relative', overflow: 'hidden'
-                    }} 
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 14px 40px rgba(127, 85, 57, 0.3)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(127, 85, 57, 0.2)'; }}
+                    }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 14px 40px rgba(127, 85, 57, 0.3)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(127, 85, 57, 0.2)'; }}
                     >
                       <div style={{ position: 'absolute', right: '-15px', top: '-15px', opacity: 0.08, transform: 'scale(2.5)' }}>
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2" /><path d="M7 2v20" /><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></svg>
                       </div>
                       <div style={{ background: 'rgba(255,255,255,0.15)', width: '52px', height: '52px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)' }}>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 2v7c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4V2" /><path d="M7 2v20" /><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></svg>
                       </div>
                       <div style={{ zIndex: 1 }}>
                         <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.25rem', margin: '0 0 4px 0', fontWeight: 600 }}>Food Plan</h4>
@@ -283,11 +283,11 @@ export default function MyDogPage() {
                       display: 'flex', flexDirection: 'column', gap: '20px',
                       boxShadow: '0 8px 24px rgba(0,0,0,0.02)', transition: 'all 0.25s'
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
                     >
                       <div style={{ background: '#FFF6ED', width: '52px', height: '52px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#B08968' }}>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" /></svg>
                       </div>
                       <div>
                         <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.25rem', margin: '0 0 4px 0', fontWeight: 600 }}>Health Guide</h4>
@@ -302,11 +302,11 @@ export default function MyDogPage() {
                       display: 'flex', flexDirection: 'column', gap: '20px',
                       boxShadow: '0 8px 24px rgba(0,0,0,0.02)', transition: 'all 0.25s'
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
                     >
                       <div style={{ background: '#F0F5EC', width: '52px', height: '52px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#587B45' }}>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"/><path d="M6 9v12"/><path d="M13 6h3a2 2 0 0 1 2 2v3"/><path d="M18 15v6"/><path d="M15 18h6"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3" /><path d="M6 9v12" /><path d="M13 6h3a2 2 0 0 1 2 2v3" /><path d="M18 15v6" /><path d="M15 18h6" /></svg>
                       </div>
                       <div>
                         <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.25rem', margin: '0 0 4px 0', fontWeight: 600 }}>Grooming</h4>
@@ -321,11 +321,11 @@ export default function MyDogPage() {
                       display: 'flex', flexDirection: 'column', gap: '20px',
                       boxShadow: '0 8px 24px rgba(0,0,0,0.02)', transition: 'all 0.25s'
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.05)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.02)'; }}
                     >
                       <div style={{ background: '#F4F4F9', width: '52px', height: '52px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6A6C8A' }}>
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
                       </div>
                       <div>
                         <h4 style={{ fontFamily: 'Fraunces, serif', fontSize: '1.25rem', margin: '0 0 4px 0', fontWeight: 600 }}>Find Vets</h4>

@@ -42,7 +42,7 @@ export default function AddDogPage() {
       console.log("Authenticated user:", { id: user.id, email: user.email });
 
       // 2. Insert dog
- const insertPayload = {
+      const insertPayload = {
         user_id: user.id,
         name: form.name,
         breed: form.breed,
@@ -53,31 +53,31 @@ export default function AddDogPage() {
         created_at: new Date(),
         last_fed_at: null,
       };
-      
+
       console.log("Inserting with payload:", insertPayload);
-      
+
       const { data, error } = await supabase
-  .from("dogs")
-  .insert([insertPayload])
-  .select();
+        .from("dogs")
+        .insert([insertPayload])
+        .select();
 
-console.log("INSERT RESPONSE:", { data, error });
+      console.log("INSERT RESPONSE:", { data, error });
 
-if (error) {
-  console.error("INSERT FAILED - Error Object:", JSON.stringify(error, null, 2));
-  alert(`Insert failed: ${error.message || JSON.stringify(error)}`);
-  setLoading(false);
-  return;
-}
+      if (error) {
+        console.error("INSERT FAILED - Error Object:", JSON.stringify(error, null, 2));
+        alert(`Insert failed: ${error.message || JSON.stringify(error)}`);
+        setLoading(false);
+        return;
+      }
 
-if (!data || data.length === 0) {
-  console.error("INSERT FAILED - No data returned");
-  alert("Insert failed: No data returned from database");
-  setLoading(false);
-  return;
-}
+      if (!data || data.length === 0) {
+        console.error("INSERT FAILED - No data returned");
+        alert("Insert failed: No data returned from database");
+        setLoading(false);
+        return;
+      }
 
-const insertedDog = data[0];
+      const insertedDog = data[0];
       // 3. Create initial streak
       await supabase.from("streaks").insert([
         {
@@ -101,9 +101,9 @@ const insertedDog = data[0];
       router.push("/my-dog");
 
     } catch (err) {
-  console.error("FULL ERROR:", JSON.stringify(err, null, 2));
-  alert(err?.message || "Something went wrong!");
-} finally {
+      console.error("FULL ERROR:", JSON.stringify(err, null, 2));
+      alert(err?.message || "Something went wrong!");
+    } finally {
       setLoading(false);
     }
   };
@@ -111,7 +111,7 @@ const insertedDog = data[0];
   return (
     <main className="add-dog-page">
       <header style={{ textAlign: "center" }}>
-        <h1>Welcome to Your Dog’s Journey 🐾</h1>
+        <h1>Welcome to Your Dog’s<br /><em>Journey.</em></h1>
         <p className="subtitle">
           Every dog is unique. Tell us about your companion to generate a custom
           health and nutrition dashboard.
@@ -119,18 +119,18 @@ const insertedDog = data[0];
       </header>
 
       <form className="dog-form" onSubmit={handleSubmit}>
-        
+
         {/* BASICS */}
         <div className="form-group">
           <h3 className="form-group-title">The Basics</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            
+
             <label>
               Dog Name
               <input
                 type="text"
                 name="name"
-                placeholder="e.g. Bruno 🐶"
+                placeholder="e.g. Bruno "
                 required
                 value={form.name}
                 onChange={handleChange}
@@ -154,7 +154,7 @@ const insertedDog = data[0];
         <div className="form-group">
           <h3 className="form-group-title">Vitals</h3>
           <div className="row">
-            
+
             <label>
               Age (Years)
               <input
@@ -188,7 +188,7 @@ const insertedDog = data[0];
         <div className="form-group">
           <h3 className="form-group-title">Lifestyle</h3>
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            
+
             <label>
               Allergies & Sensitivities
               <input

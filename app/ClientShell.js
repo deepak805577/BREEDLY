@@ -15,7 +15,9 @@ export default function ClientShell({ children }) {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return <Loader />;
+  }
 
   return (
     <>

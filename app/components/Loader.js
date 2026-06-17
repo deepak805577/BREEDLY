@@ -1,36 +1,44 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import "./loader.css";
 
-export default function Loader() {
-  const icons = [
-    "/assets/loader/face.png",
-    "/assets/loader/bowl.png",
-    "/assets/loader/quiz.png",
-    "/assets/loader/guide.png",
-    "/assets/loader/training.png",
-    "/assets/loader/care.png",
-    "/assets/loader/home.png",
-    "/assets/loader/medi.png",
-    "/assets/loader/paws.png",
-  ];
+const ICONS = [
+  "/assets/loader/face.png",
+  "/assets/loader/bowl.png",
+  "/assets/loader/quiz.png",
+  "/assets/loader/guide.png",
+  "/assets/loader/training.png",
+  "/assets/loader/care.png",
+  "/assets/loader/home.png",
+  "/assets/loader/medi.png",
+  "/assets/loader/paws.png",
+];
 
+export default function Loader() {
   const [loading, setLoading] = useState(true);
   const [exiting, setExiting] = useState(false);
   const [currentIcon, setCurrentIcon] = useState(0);
 
-  // Cycle through icons
   useEffect(() => {
-    const iconTimer = setInterval(() => {
-      setCurrentIcon((prev) => (prev + 1) % icons.length);
-    }, 250); // Change every 250ms for smooth animation
-    return () => clearInterval(iconTimer);
-  }, [icons.length]);
+    ICONS.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
 
-  // Fade out and unmount transitions
   useEffect(() => {
-    const fadeTimer = setTimeout(() => setExiting(true), 2000); // Start fade after 2s
-    const removeTimer = setTimeout(() => setLoading(false), 4000); // Remove after fade completes
+    const interval = setInterval(() => {
+      setCurrentIcon((prev) => (prev + 1) % ICONS.length);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => setExiting(true), 2000);
+    const removeTimer = setTimeout(() => setLoading(false), 2800);
 
     return () => {
       clearTimeout(fadeTimer);
@@ -42,20 +50,18 @@ export default function Loader() {
 
   return (
     <div id="dog-loader" className={exiting ? "fade-out" : ""}>
-      <h1 className="loader-title">BreedLy</h1>
+      <h1 className="loader-title">
+        BreedLy
+      </h1>
 
-      <img
-        src={icons[currentIcon]}
+      <Image
+        src={ICONS[currentIcon]}
         alt="Loading"
+        width={90}
+        height={90}
+        priority
         className="loader-icon"
       />
-
-      {/* Hidden container to preload images and prevent flickering during transitions */}
-      <div style={{ display: "none" }} aria-hidden="true">
-        {icons.map((src) => (
-          <img key={src} src={src} alt="" />
-        ))}
-      </div>
     </div>
   );
 }

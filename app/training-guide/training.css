@@ -55,6 +55,8 @@
 
 .section-pill-icon {
   font-size: 13px;
+  display: flex;
+  align-items: center;
 }
 
 .section-pill-text {
@@ -79,7 +81,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: left;
+  text-align: center;
+}
+
+/* Blend the bottom of the header background with the section below */
+.new-main::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--bg-main));
+  z-index: 2;
+  pointer-events: none;
 }
 
 .main-img {
@@ -91,7 +106,7 @@
   object-fit: cover;
   object-position: center;
   z-index: 0;
-  filter: brightness(0.95);
+  filter: brightness(0.85);
   transition: transform 6s ease;
 }
 
@@ -101,12 +116,12 @@
 
 .main-overlay {
   position: relative;
-  background: linear-gradient(135deg, rgba(62, 45, 30, 0.45) 0%, rgba(62, 45, 30, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(62, 45, 30, 0.5) 0%, rgba(62, 45, 30, 0.8) 100%);
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 3rem;
   z-index: 1;
   box-sizing: border-box;
@@ -123,6 +138,9 @@
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
   animation: heroInnerFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @keyframes heroInnerFadeIn {
@@ -141,7 +159,7 @@
   font-size: clamp(2.2rem, 4vw, 3.2rem);
   font-weight: 300;
   color: var(--soft-white);
-  margin-bottom: 1rem;
+  margin: 10px 0;
   line-height: 1.15;
 }
 
@@ -158,9 +176,12 @@
   font-style: italic;
   color: var(--card-lite);
   font-size: 1.05rem;
-  margin-bottom: 2rem;
-  border-left: 3px solid var(--accent);
-  padding-left: 14px;
+  margin: 1.5rem 0 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 14px 0;
+  width: 100%;
+  max-width: 550px;
 }
 
 .main-inner span {
@@ -278,13 +299,12 @@
   background: var(--accent-dark);
 }
 
-.topic-card-icon-wrapper i {
-  font-size: 1.4rem;
+.topic-card-icon-wrapper .topic-card-icon {
   color: var(--accent-dark);
   transition: var(--transition);
 }
 
-.topic-card:hover .topic-card-icon-wrapper i {
+.topic-card:hover .topic-card-icon-wrapper .topic-card-icon {
   color: var(--soft-white);
   transform: scale(1.1);
 }
@@ -376,13 +396,14 @@
   background: var(--bg-soft);
   border: 1px solid var(--border);
   color: var(--accent-dark);
-  font-size: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
   transition: var(--transition);
+  padding: 0;
+  outline: none;
 }
 
 .close:hover {
@@ -409,7 +430,7 @@
   padding-bottom: 1.25rem;
 }
 
-.modal-content h2 i {
+.modal-content h2 .modal-title-icon {
   color: var(--accent);
 }
 
@@ -517,8 +538,15 @@
   transform: translateX(4px);
 }
 
-.bullet-card-emoji {
-  font-size: 1.25rem;
+.bullet-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(127, 85, 57, 0.08);
+  color: var(--accent-dark);
   flex-shrink: 0;
 }
 
@@ -531,6 +559,10 @@
   margin: 0 !important;
 }
 
+.bullet-card .sad-icon {
+  transform: rotate(180deg);
+}
+
 /* Premium Media Layout */
 .media {
   display: grid;
@@ -538,6 +570,10 @@
   gap: 24px;
   margin: 2rem 0;
   align-items: stretch;
+}
+
+.media-single {
+  margin: 2rem 0;
 }
 
 .img-center {
@@ -596,7 +632,6 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  font-size: 1.1rem;
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(127, 85, 57, 0.2);
   display: flex;
@@ -604,6 +639,8 @@
   justify-content: center;
   z-index: 1000;
   transition: var(--transition);
+  padding: 0;
+  outline: none;
 }
 
 .back-to-top-btn:hover {
@@ -649,14 +686,34 @@
 @media (max-width: 768px) {
   .new-main {
     height: auto;
-    min-height: auto;
+    min-height: 280px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    margin-bottom: 1.5rem;
   }
   .main-overlay {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
   }
   .main-inner {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     border-radius: var(--radius-lg);
+  }
+  .main-inner h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .main-inner p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .main-inner blockquote {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    padding: 10px 0;
+  }
+  .main-btn {
+    padding: 8px 20px;
+    font-size: 0.8rem;
   }
   .media {
     grid-template-columns: 1fr;
@@ -699,6 +756,7 @@
     font-size: 1.5rem;
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
+    gap: 8px;
   }
   .modal-content h3 {
     font-size: 1.2rem;
@@ -722,6 +780,5 @@
     right: 1rem;
     width: 32px;
     height: 32px;
-    font-size: 1.15rem;
   }
 }
