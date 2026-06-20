@@ -361,6 +361,32 @@ export default function HomePage() {
   const [done, setDone] = useState(false);
   const [tipIdx, setTipIdx] = useState(0);
   const [tipOpacity, setTipOpacity] = useState(1);
+  const [email, setEmail] = useState("");
+  const [subscribeStatus, setSubscribeStatus] = useState("idle");
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubscribeStatus("loading");
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/breedly.in@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email, _subject: "New Newsletter Subscription from Breedly" })
+      });
+      if (response.ok) {
+        setSubscribeStatus("success");
+        setEmail("");
+      } else {
+        setSubscribeStatus("error");
+      }
+    } catch (error) {
+      setSubscribeStatus("error");
+    }
+  };
 
   /* ─── EFFECTS ───────────────────────────────────────────────────────────── */
   // Typewriter for floating questions
@@ -563,7 +589,7 @@ export default function HomePage() {
           ))}
         </div>
         <div className={styles.sectionCta}>
-          <Link href="/care" className={styles.btnOutline}></Link>
+          {/* <Link href="/care" className={styles.btnOutline}></Link> */}
         </div>
       </section>
 
@@ -581,7 +607,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PUPHUB AI ── */}
-      <section className={`${styles.section} ${styles.fadeIn}`}>
+      {/* <section className={`${styles.section} ${styles.fadeIn}`}>
         <div className={styles.puphubHeader}>
           <div>
             <p className={styles.eyebrow}>PupHub AI</p>
@@ -613,7 +639,7 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── AI ASSISTANT TEASER ── */}
       <section className={`${styles.aiSection} ${styles.fadeIn}`}>
@@ -626,7 +652,7 @@ export default function HomePage() {
               <span>Try the AI Assistant</span>
               {SVG_ICONS.sparkles({ style: { width: 14, height: 14, color: "#fff" } })}
             </Link>
-            <p className={styles.microLight}>Powered by Claude · Always free</p>
+            <p className={styles.microLight}> </p>
           </div>
           <div className={styles.aiRight}>
             <div className={styles.aiVisual}>
@@ -641,7 +667,7 @@ export default function HomePage() {
               <div className={styles.aiMainCard}>
                 <div className={styles.aiHeader}>
                   <span className={styles.aiLive}></span>
-                  Breedly AI is thinking...
+                  Breedly is thinking...
                 </div>
 
                 <div className={styles.aiContent}>
@@ -829,10 +855,29 @@ export default function HomePage() {
         <p className={styles.eyebrow}>Stay Connected</p>
         <h2>Get occasional breed insights<br />and care tips.</h2>
         <p>Simple guidance — not overwhelming newsletters.</p>
-        <div className={styles.emailForm}>
-          <input type="email" placeholder="Enter your email" className={styles.emailInput} />
-          <button className={styles.btnPrimary}>Join</button>
-        </div>
+        <form className={styles.emailForm} onSubmit={handleSubscribe}>
+          <input 
+            type="email" 
+            name="email"
+            placeholder="Enter your email" 
+            className={styles.emailInput} 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required 
+            disabled={subscribeStatus === "loading" || subscribeStatus === "success"}
+          />
+          {/* Honeypot to prevent spam */}
+          <input type="text" name="_honey" style={{ display: "none" }} />
+          <button 
+            type="submit" 
+            className={styles.btnPrimary} 
+            disabled={subscribeStatus === "loading" || subscribeStatus === "success"}
+          >
+            {subscribeStatus === "loading" ? "Joining..." : subscribeStatus === "success" ? "Joined!" : "Join"}
+          </button>
+        </form>
+        {subscribeStatus === "success" && <p style={{ color: "var(--accent-dark)", marginTop: "10px", fontSize: "0.9rem", textAlign: "center" }}>Thanks for subscribing! Please check your email.</p>}
+        {subscribeStatus === "error" && <p style={{ color: "red", marginTop: "10px", fontSize: "0.9rem", textAlign: "center" }}>Oops, something went wrong. Please try again.</p>}
       </section>
 
       {/* ── FINAL CTA ── */}

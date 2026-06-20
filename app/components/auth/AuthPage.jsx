@@ -130,6 +130,23 @@ export default function LoginPage() {
     }
   };
 
+  /* ---------------- GOOGLE LOGIN ---------------- */
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Google Login failed");
+    }
+  };
+
   return (
     <div className={`login-page ${isRegister ? "active" : ""}`}>
       <div className={`container ${isRegister ? "active" : ""}`}>
@@ -138,7 +155,7 @@ export default function LoginPage() {
         <div className="form-box login">
           <form onSubmit={handleLogin}>
             <h1>Welcome Back</h1>
-            <p>Login to reconnect with the pack</p>
+            <p>Log in to access your tailored dog care guides</p>
             
             <div className="input-box">
               <input
@@ -178,15 +195,10 @@ export default function LoginPage() {
             <div className="social-title">or connect with</div>
             
             <div className="social-icons">
-              <a href="#" aria-label="Login with Google">
+              <a href="#" aria-label="Login with Google" onClick={handleGoogleLogin}>
                 <GoogleIcon />
               </a>
-              <a href="#" aria-label="Login with Facebook">
-                <FacebookIcon />
-              </a>
-              <a href="#" aria-label="Login with Github">
-                <GithubIcon />
-              </a>
+            
             </div>
           </form>
         </div>
@@ -194,8 +206,8 @@ export default function LoginPage() {
         {/* REGISTER FORM */}
         <div className="form-box register">
           <form onSubmit={handleRegister}>
-            <h1>Join the Pack</h1>
-            <p>Create an account to start your journey</p>
+            <h1>Join Breedly</h1>
+            <p>Create an account for thoughtful dog care</p>
             
             <div className="input-box">
               <input
@@ -242,15 +254,10 @@ export default function LoginPage() {
             <div className="social-title">or register with</div>
             
             <div className="social-icons">
-              <a href="#" aria-label="Register with Google">
+              <a href="#" aria-label="Register with Google" onClick={handleGoogleLogin}>
                 <GoogleIcon />
               </a>
-              <a href="#" aria-label="Register with Facebook">
-                <FacebookIcon />
-              </a>
-              <a href="#" aria-label="Register with Github">
-                <GithubIcon />
-              </a>
+            
             </div>
           </form>
         </div>
@@ -258,15 +265,15 @@ export default function LoginPage() {
         {/* TOGGLE PANEL */}
         <div className="toggle-box">
           <div className="toggle-panel toggle-left">
-            <h1>Hello, Friend!</h1>
-            <p>Ready to start your canine adventure? Join us today.</p>
+            <h1>New to Breedly?</h1>
+            <p>Discover breed insights and personalized care for your future companion.</p>
             <button className="btn ghost" onClick={() => handleToggle("register")}>
               Register
             </button>
           </div>
           <div className="toggle-panel toggle-right">
             <h1>Welcome Back!</h1>
-            <p>Log in with your credentials to return to your dashboard.</p>
+            <p>Log in with your credentials to return to your personalized dog care guides.</p>
             <button className="btn ghost" onClick={() => handleToggle("login")}>
               Login
             </button>

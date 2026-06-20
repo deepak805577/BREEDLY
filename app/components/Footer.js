@@ -43,15 +43,15 @@ export default function Footer() {
               Your thoughtful, AI-powered companion to understanding dog breeds, personalized care schedules, and dog behavioral analysis.
             </p>
             <div className="footer-social-links">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/breedly.in/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              {/* <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <i className="fa-brands fa-twitter"></i>
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <i className="fa-brands fa-facebook-f"></i>
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export default function Footer() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/breeds">Breeds</Link></li>
               <li><Link href="/breed-selector">Breed Quiz</Link></li>
-              <li><Link href="/puphub">PupHub AI Tools</Link></li>
+          
             </ul>
           </div>
 
@@ -82,8 +82,8 @@ export default function Footer() {
             <h3>Get in Touch</h3>
             <ul className="footer-col-links">
               <li><Link href="/community">Community Stories</Link></li>
-              <li><Link href="/contact">Support / Contact</Link></li>
-              <li className="footer-contact-info">📧 hello@breedly.com</li>
+              <li><Link href="/">Support / Contact</Link></li>
+              <li className="footer-contact-info">📧 breedly.in@gmail.com</li>
             </ul>
           </div>
 

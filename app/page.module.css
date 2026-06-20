@@ -134,10 +134,37 @@
     color: var(--cream);
 
 }
-.btnOutline{
-    font-size: 1.1rem;
+.btnOutline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--accent-dark);
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 500;
-    color: var(--accent);
+    font-size: 0.95rem;
+    border: 1.5px solid var(--accent);
+    transition: var(--transition);
+    text-decoration: none;
+    gap: 5px;
+}
+
+.btnOutline:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(127, 85, 57, 0.15);
+}
+
+.sectionCta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 48px;
+    width: 100%;
 }
 
 /* ─── HERO ─── */
