@@ -6,7 +6,7 @@ import ClientShell from "./ClientShell";
 import { AuthProvider } from "./context/AuthContext";
 export const metadata = {
   title: "BreedLy – Find the Perfect Dog Breed for Your Lifestyle",
-  icons: { icon: "./Dog face.png" },
+  icons: { icon: "/Breedly%20logo.png" },
   description:
     "BreedLy helps you discover the best dog breed for your lifestyle with expert guides on health, food, training, and responsible adoption.",
   keywords: [
@@ -20,13 +20,13 @@ export const metadata = {
     title: "BreedLy – Know About Paws",
     description:
       "Discover dog breeds, care guides, and find your perfect canine companion.",
-    icons: { icon: "./Dog face.png" }
+    images: ["/Breedly%20logo.png"]
   }
 };
 export const viewport = {
   width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
+  initialScale: 5,
+  maximumScale: 5,
   userScalable: false,
 };
 export default function RootLayout({ children }) {

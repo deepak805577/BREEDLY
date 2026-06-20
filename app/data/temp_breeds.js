@@ -1,7 +1,7 @@
 // app/data/breeds.js
 // Detailed breed profiles generated dynamically. Preserves existing 163 hand-crafted profiles intact.
 
-export const breeds = {
+const breeds = {
   "Affenpinscher": {
     "image": "/assets/Dogs/Affenpinscher.jpg",
     "video": "/assets/videos/Affenpinscher.mp4",
@@ -7885,7 +7885,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Prince of the Desert. An elegant, high-speed guardian for those who value loyalty over social butterfly behavior. 🇳🇪🏜️"
   },
   "Bakharwal Dog": {
-    "image": "/assets/Dogs/Bakharwal Dog.jpg",
+    "image": "/assets/Dogs/Bakharwal.jpg",
     "video": "/assets/videos/Bakharwal.mp4",
     "basic_info": {
       "name": "Bakharwal Dog",
@@ -10058,7 +10058,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Merry Hound. A world-class nose attached to a heart of gold. 🇬🇧👃🎶"
   },
   "Beagle-Harrier": {
-    "image": "/assets/Dogs/Beagle-Harrier.jpg",
+    "image": "/assets/Dogs/Beagle Harrier.jpg",
     "video": "/assets/videos/Beagle Harrier.mp4",
     "basic_info": {
       "name": "Beagle-Harrier",
@@ -10327,7 +10327,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The French Marathoner. An athletic and harmonious soul that thrives on miles of trails and the scent of the wild. 🇫🇷🏃‍♂️🐕"
   },
   "Beagador": {
-    "image": "/assets/Dogs/Beagador (Labbe).jpg",
+    "image": "/assets/Dogs/Beagador.jpg",
     "video": "/assets/videos/Beagador.mp4",
     "basic_info": {
       "name": "Beagador",
@@ -13583,7 +13583,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Happy Powder-Puff. A social, smart, and non-shedding joy that turns every home into a circus of happiness. 🇫🇷🐩✨"
   },
   "Billy": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Billy.jpg",
     "video": "/assets/videos/Billy.mp4",
     "basic_info": {
       "name": "Billy",
@@ -20885,7 +20885,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Sensible Scamp. A versatile and deeply devoted companion that offers the intelligence of a herder and the sturdiness of a much larger breed. 🏴󠁧󠁢󠁷󠁬󠁳󠁿🦊🐾"
   },
   "Catahoula Leopard Dog": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Catahoula Leopard Dog.jpg",
     "video": "/assets/videos/Catahoula Leopard Dog.mp4",
     "basic_info": {
       "name": "Catahoula Leopard Dog",
@@ -24396,7 +24396,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Mellow Majesty. A heavy-set, gentle, and dignified spaniel that offers a quiet, loving presence for the right family. 🇬🇧🛋️🐾"
   },
   "Cocker Spaniel (American)": {
-    "image": "/assets/Dogs/Cocker Spaniel (American).jpg",
+    "image": "/assets/Dogs/Cocker Spaniel American.jpg",
     "video": "/assets/videos/Cocker Spaniel American.mp4",
     "basic_info": {
       "name": "Cocker Spaniel (American)",
@@ -24666,7 +24666,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Merry Soul. An iconic, affectionate, and visually stunning companion that is the ultimate choice for a family willing to put in the work to keep them looking and feeling their best. 🇺🇸✨🐕"
   },
   "Collie": {
-    "image": "/assets/Dogs/Bearded Collie.jpg",
+    "image": "/assets/Dogs/Collie.jpg",
     "video": "/assets/videos/Collie.mp4",
     "basic_info": {
       "name": "Collie",
@@ -25209,7 +25209,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Happy Cloud. A charming, robust, and long-lived companion that brings Madagascar's royal sweetness into the modern home. 🇲🇬☁️✨"
   },
   "Curly-Coated Retriever": {
-    "image": "/assets/Dogs/Curly-Coated Retriever.jpg",
+    "image": "/assets/Dogs/Curly Coated Retriever.jpg",
     "video": "/assets/videos/Curly Coated Retriever.mp4",
     "basic_info": {
       "name": "Curly-Coated Retriever",
@@ -25477,7 +25477,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Independent Athlete. A unique, curly-coated marvel that offers a sophisticated and capable alternative to the more common retriever breeds. 🇬🇧🛡️✨"
   },
   "Czechoslovakian Vlcak": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Czechoslovakian_Vlcak.jpg",
     "video": "/assets/videos/Czechoslovakian_Vlcak.mp4",
     "basic_info": {
       "name": "Czechoslovakian Vlcak",
@@ -26020,7 +26020,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Fearless Friend. A quirky, loyal, and iconic companion that fills a home with laughter, as long as you're prepared for a little stubbornness and a lot of personality. 🇩🇪✨🐾"
   },
   "Dalmadoodle": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Dalmadoodle.jpg",
     "video": "/assets/videos/Dalmadoodle.mp4",
     "basic_info": {
       "name": "Dalmadoodle",
@@ -26561,7 +26561,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The High-Speed Heart. A breed of unmatched endurance and striking beauty that requires an equally energetic owner to truly thrive. 🇭🇷✨🏃"
   },
   "Dandie Dinmont Terrier": {
-    "image": "/assets/Dogs/Dandie Dinmont Terrier.jpg",
+    "image": "/assets/Dogs/Dandie_Dinmont_Terrier.jpg",
     "video": "/assets/videos/Dandie_Dinmont_Terrier.mp4",
     "basic_info": {
       "name": "Dandie Dinmont Terrier",
@@ -26828,7 +26828,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Gentlemen's Terrier. A rare, calm, and visually striking companion that offers all the heart of a big dog in a manageable, long-slung package. 🏴󠁧󠁢󠁳󠁣󠁴󠁿🛋️🎩"
   },
   "Doberman Pinscher": {
-    "image": "/assets/Dogs/Doberman Pinscher.jpg",
+    "image": "/assets/Dogs/Doberman_Pinscher.jpg",
     "video": "/assets/videos/Doberman_Pinscher.mp4",
     "basic_info": {
       "name": "Doberman Pinscher",
@@ -27099,7 +27099,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Guardian of Hearts. A magnificent blend of power and sensitivity that is the ultimate choice for a dedicated owner seeking a lifelong protector and friend. 🇩🇪✨🐾"
   },
   "Dogo Argentino": {
-    "image": "/assets/Dogs/Dogo Argentino.jpg",
+    "image": "/assets/Dogs/Dogo_Argentino.jpg",
     "video": "/assets/videos/Dogo_Argentino.mp4",
     "basic_info": {
       "name": "Dogo Argentino",
@@ -27368,7 +27368,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Fearless Heart. A masterpiece of Argentine breeding that offers unparalleled protection and devotion to those who respect its power and needs. 🇦🇷✨🐾"
   },
   "Dogue de Bordeaux": {
-    "image": "/assets/Dogs/Dogue de Bordeaux.jpg",
+    "image": "/assets/Dogs/Dogue_de_Bordeaux.jpg",
     "video": "/assets/videos/Dogue_de_Bordeaux.mp4",
     "basic_info": {
       "name": "Dogue de Bordeaux",
@@ -27636,7 +27636,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Gentle Gladiator. A massive, wrinkled masterpiece of a dog that offers total devotion and quiet protection to the family lucky enough to house them. 🇫🇷🛡️❤️"
   },
   "Drever": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Drever.jpg",
     "video": "/assets/videos/Drever.mp4",
     "basic_info": {
       "name": "Drever",
@@ -27902,7 +27902,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Scandinavian Specialist. A small but mighty hound that combines the heart of a marathon runner with a steady, dependable temperament. 🇸🇪🛡️🦌"
   },
   "Dutch Shepherd": {
-    "image": "/assets/Dogs/Dutch Shepherd.jpg",
+    "image": "/assets/Dogs/Dutch_Shepherd.jpg",
     "video": "/assets/videos/Dutch_Shepherd.mp4",
     "basic_info": {
       "name": "Dutch Shepherd",
@@ -28169,7 +28169,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Master of Versatility. A striking, high-intelligence working breed that offers unmatched loyalty and capability to those who can lead them. 🇳🇱✨🛡️"
   },
   "East Siberian Laika": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/East_Siberian_Laika.jpg",
     "video": "/assets/videos/East_Siberian_Laika.mp4",
     "basic_info": {
       "name": "East Siberian Laika",
@@ -28438,11 +28438,10 @@ export const breeds = {
       ],
       "overall_sentiment": "A noble, primitive, and fearless companion for those who live where the wild things are! 🇷🇺🌲❄️"
     },
-    "clean_verdict": "⭐⭐⭐⭐⭐ The Siberian Sentinel. A rugged and independent hunting partner that offers absolute loyalty to the right wilderness-dwelling owner. 🇷🇺✨🐺",
-    "final_verdict": "⭐⭐⭐⭐ A rugged and fiercely loyal companion suited for experienced owners with active, outdoor lifestyles in cooler climates. Requires significant exercise and firm, consistent training."
+    "clean_verdict": "⭐⭐⭐⭐⭐ The Siberian Sentinel. A rugged and independent hunting partner that offers absolute loyalty to the right wilderness-dwelling owner. 🇷🇺✨🐺"
   },
   "English Cocker Spaniel": {
-    "image": "/assets/Dogs/Cocker Spaniel.jpg",
+    "image": "/assets/Dogs/English_Cocker_Spaniel.jpg",
     "video": "/assets/videos/English_Cocker_Spaniel.mp4",
     "basic_info": {
       "name": "English Cocker Spaniel",
@@ -28715,7 +28714,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Heart of the Home. A quintessential family dog that brings joy, energy, and a lot of wagging tails to every household. 🇬🇧❤️🐾"
   },
   "English Foxhound": {
-    "image": "/assets/Dogs/English Foxhound.jpg",
+    "image": "/assets/Dogs/English_Foxhound.jpg",
     "video": "/assets/videos/English_Foxhound.mp4",
     "basic_info": {
       "name": "English Foxhound",
@@ -28981,7 +28980,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Marathon Maestro. A specialized, high-stamina breed that is the perfect fit for an active, multi-dog rural home. 🇬🇧🌲🏃"
   },
   "English Setter": {
-    "image": "/assets/Dogs/English Setter.jpg",
+    "image": "/assets/Dogs/English_Setter.jpg",
     "video": "/assets/videos/English_Setter.mp4",
     "basic_info": {
       "name": "English Setter",
@@ -29254,7 +29253,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Sophisticated Soul. A perfect blend of athletic prowess and domestic gentleness, ideal for the active family who loves to cuddle. 🇬🇧🛋️🕊️"
   },
   "English Shepherd": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/English_Shepherd.jpg",
     "video": "/assets/videos/English_Shepherd.mp4",
     "basic_info": {
       "name": "English Shepherd",
@@ -29524,7 +29523,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Homestead Hero. A profoundly intelligent and devoted partner that brings order and safety to any active household. 🇺🇸✨🛡️"
   },
   "English Springer Spaniel": {
-    "image": "/assets/Dogs/English Springer Spaniel.jpg",
+    "image": "/assets/Dogs/English_Springer_Spaniel.jpg",
     "video": "/assets/videos/English_Springer_Spaniel.mp4",
     "basic_info": {
       "name": "English Springer Spaniel",
@@ -29797,7 +29796,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Heart of the Field. A versatile and exceptionally friendly breed that brings life and laughter to any home ready to keep up with them. 🇬🇧🌲❤️"
   },
   "English Toy Spaniel": {
-    "image": "/assets/Dogs/English Toy Spaniel.jpg",
+    "image": "/assets/Dogs/English_Toy_Spaniel.jpg",
     "video": "/assets/videos/English_Toy_Spaniel.mp4",
     "basic_info": {
       "name": "English Toy Spaniel",
@@ -30064,25 +30063,10 @@ export const breeds = {
         "overall_sentiment": "An elegant, quiet, and deeply loving companion for a peaceful life. 🇬🇧🛋️👑"
       },
       "final_verdict": "⭐⭐⭐⭐⭐ The Royal Lap-Warmer. A dignified and sensitive little dog that provides endless affection to those who live life at a slower pace. 🇬🇧✨🛌"
-    },
-    "history_origin": {
-      "origin_country": "England",
-      "developed_in": "15th-16th Century",
-      "original_purpose": "Companion to royalty",
-      "key_traits_developed_for": [
-        "Affectionate nature",
-        "Small size",
-        "Lap dog characteristics"
-      ],
-      "modern_roles": [
-        "Companion",
-        "Show dog"
-      ]
-    },
-    "final_verdict": "⭐⭐⭐⭐ The English Toy Spaniel is a charming, quiet, and deeply affectionate companion. Ideal for apartment living and families seeking a gentle, low-energy lap dog."
+    }
   },
   "Entlebucher Mountain Dog": {
-    "image": "/assets/Dogs/Entlebucher Mountain Dog.jpg",
+    "image": "/assets/Dogs/Entlebucher_Mountain_Dog.jpg",
     "video": "/assets/videos/Entlebucher_Mountain_Dog.mp4",
     "basic_info": {
       "name": "Entlebucher Mountain Dog",
@@ -30350,7 +30334,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Swiss Dynamo. A powerful blend of intelligence and athleticism, perfect for those who want a 'big' dog experience in a medium, agile package. 🇨🇭🏔️🏃"
   },
   "Estrela Mountain Dog": {
-    "image": "/assets/Dogs/Estrela Mountain Dog.jpg",
+    "image": "/assets/Dogs/Estrela_Mountain_Dog.jpg",
     "video": "/assets/videos/Estrela_Mountain_Dog.mp4",
     "basic_info": {
       "name": "Estrela Mountain Dog",
@@ -30888,7 +30872,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Sensitive Soul. A masterpiece of dog breeding that offers unmatched companionship for a family that values a calm, indoor life. 🇩🇪🛋️❤️"
   },
   "Field Spaniel": {
-    "image": "/assets/Dogs/Field Spaniel.jpg",
+    "image": "/assets/Dogs/Field_Spaniel.jpg",
     "video": "/assets/videos/Field_Spaniel.mp4",
     "basic_info": {
       "name": "Field Spaniel",
@@ -31160,7 +31144,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Soulful Secret. A rare and wonderful blend of working stamina and domestic tranquility, perfect for a gentle home. 🇬🇧❤️🛋️"
   },
   "Fila Brasileiro": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Fila_Brasileiro.jpg",
     "video": "/assets/videos/Fila_Brasileiro.mp4",
     "basic_info": {
       "name": "Fila Brasileiro",
@@ -31426,7 +31410,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Fearless Faithful. A giant of unmatched loyalty and protective power, suited only for the most dedicated and experienced of owners. 🇧🇷🛡️🏠"
   },
   "Finnish Lapphund": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Finnish_Lapphund.jpg",
     "video": "/assets/videos/Finnish_Lapphund.mp4",
     "basic_info": {
       "name": "Finnish Lapphund",
@@ -31694,7 +31678,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Arctic Sweetheart. A perfect blend of working intelligence and family devotion, ideal for anyone who loves the outdoors and doesn't mind a bit of noise. 🇫🇮🏔️✨"
   },
   "Finnish Spitz": {
-    "image": "/assets/Dogs/Finnish Spitz.jpg",
+    "image": "/assets/Dogs/Finnish_Spitz.jpg",
     "video": "/assets/videos/Finnish_Spitz.mp4",
     "basic_info": {
       "name": "Finnish Spitz",
@@ -31961,7 +31945,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Golden Barker. A stunning and loyal family dog for those who can embrace the noise and appreciate the independent spirit of the north. 🇫🇮🌲🦊"
   },
   "Flat-Coated Retriever": {
-    "image": "/assets/Dogs/Flat-Coated Retriever.jpg",
+    "image": "/assets/Dogs/Flat_Coated_Retriever.jpg",
     "video": "/assets/videos/Flat_Coated_Retriever.mp4",
     "basic_info": {
       "name": "Flat-Coated Retriever",
@@ -32232,7 +32216,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Heart of Gold in a Black Coat. A tireless, happy, and devoted companion for the truly active family who values spirit over serenity. 🇬🇧🌲🖤"
   },
   "French Bulldog": {
-    "image": "/assets/Dogs/Bulldog.jpg",
+    "image": "/assets/Dogs/French_Bulldog.jpg",
     "video": "/assets/videos/French_Bulldog.mp4",
     "basic_info": {
       "name": "French Bulldog",
@@ -32499,7 +32483,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Urban Comedian. A top-tier companion for modern life, provided you are prepared for their specific health needs and desire for constant company. 🇫🇷👂🤡"
   },
   "Galgo Español": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Galgo_Espanol.jpg",
     "video": "/assets/videos/Galgo_Espanol.mp4",
     "basic_info": {
       "name": "Galgo Español",
@@ -32765,7 +32749,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Spanish Soul. A magnificent sighthound that brings grace and tranquility to any home lucky enough to have one. 🇪🇸🛋️✨"
   },
   "Gaddi Kutta": {
-    "image": "/assets/Dogs/Gaddi Kutta (Himalayan Mastiff).jpg",
+    "image": "/assets/Dogs/Gaddi_Kutta.jpg",
     "video": "/assets/videos/Gaddi_Kutta.mp4",
     "basic_info": {
       "name": "Gaddi Kutta",
@@ -33035,7 +33019,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Guardian of the Peaks. A fierce, ancient protector suited for the most rugged environments and the most experienced owners. 🇮🇳🏔️🐾"
   },
   "Gascon Saintongeois": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Gascon_Saintongeois.jpg",
     "video": "/assets/videos/Gascon_Saintongeois.mp4",
     "basic_info": {
       "name": "Gascon Saintongeois",
@@ -33302,7 +33286,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Aristocratic Tracker. A specialized, serene, and stunning breed for those who live life through their nose and enjoy the call of the wild. 🇫🇷🐾🌿"
   },
   "Georgian Shepherd": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Georgian_Shepherd.jpg",
     "video": "/assets/videos/Georgian_Shepherd.mp4",
     "basic_info": {
       "name": "Georgian Shepherd",
@@ -33569,7 +33553,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Caucasian Colossus. A dog of extreme power and loyalty, perfect for the wilderness but a challenge for the modern city. 🇬🇪🏰❄️"
   },
   "German Longhaired Pointer": {
-    "image": "/assets/Dogs/German Longhaired Pointer.jpg",
+    "image": "/assets/Dogs/German_Longhaired_Pointer.jpg",
     "video": "/assets/videos/German_Longhaired_Pointer.mp4",
     "basic_info": {
       "name": "German Longhaired Pointer",
@@ -33841,7 +33825,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Gentleman Hunter. An exceptional choice for active families who want a smart, athletic, and gentle companion that thrives in the great outdoors. 🇩🇪🌲🎾"
   },
   "German Pinscher": {
-    "image": "/assets/Dogs/German Pinscher.jpg",
+    "image": "/assets/Dogs/German_Pinscher.jpg",
     "video": "/assets/videos/German_Pinscher.mp4",
     "basic_info": {
       "name": "German Pinscher",
@@ -34110,7 +34094,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Sleek Centurion. A powerhouse of intelligence and guarding instinct in a medium-sized package—best for those who enjoy a dog with an active mind and a bold spirit. 🇩🇪🛡️✨"
   },
   "German Shepherd Dog": {
-    "image": "/assets/Dogs/German Shepherd Dog.jpg",
+    "image": "/assets/Dogs/German_Shepherd.jpg",
     "video": "/assets/videos/German_Shepherd.mp4",
     "basic_info": {
       "name": "German Shepherd Dog",
@@ -34381,7 +34365,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The King of K9s. An unparalleled partner for those who can give them the time, training, and exercise they deserve. 🇩🇪🐕🌟"
   },
   "German Shorthaired Pointer": {
-    "image": "/assets/Dogs/German Shorthaired Pointer.jpg",
+    "image": "/assets/Dogs/German_Shorthaired_Pointer.jpg",
     "video": "/assets/videos/German_Shorthaired_Pointer.mp4",
     "basic_info": {
       "name": "German Shorthaired Pointer",
@@ -34653,7 +34637,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Ultimate Outdoor Partner. An amazing breed for those who treat life as an endurance sport and want a loyal, speckled friend by their side. 🇩🇪🛶🌲"
   },
   "German Wirehaired Pointer": {
-    "image": "/assets/Dogs/German Wirehaired Pointer.jpg",
+    "image": "/assets/Dogs/German_Wirehaired_Pointer.jpg",
     "video": "/assets/videos/German_Wirehaired_Pointer.mp4",
     "basic_info": {
       "name": "German Wirehaired Pointer",
@@ -34927,7 +34911,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Rugged Professional. A top-tier breed for those who live for the wilderness and need a dog that is as tough as the terrain. 🇩🇪❄️🌲"
   },
   "Giant Schnauzer": {
-    "image": "/assets/Dogs/Giant Schnauzer.jpg",
+    "image": "/assets/Dogs/Giant_Schnauzer.jpg",
     "video": "/assets/videos/Giant_Schnauzer.mp4",
     "basic_info": {
       "name": "Giant Schnauzer",
@@ -35196,7 +35180,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Black Knight. A formidable, intelligent, and deeply devoted partner for those who can match their intensity and provide the leadership they crave. 🇩🇪🏰⚡"
   },
   "Glen of Imaal Terrier": {
-    "image": "/assets/Dogs/Glen of Imaal Terrie.jpg",
+    "image": "/assets/Dogs/Glen_of_Imaal_Terrier.jpg",
     "video": "/assets/videos/Glen_of_Imaal_Terrier.mp4",
     "basic_info": {
       "name": "Glen of Imaal Terrier",
@@ -35464,7 +35448,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Shaggy Strongman. A perfect blend of terrier grit and house-dog calm—an ideal companion for those who appreciate the 'quietly brave' types. 🇮🇪🥘🛡️"
   },
   "Goldador": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Goldador.jpg",
     "video": "/assets/videos/Goldador.mp4",
     "basic_info": {
       "name": "Goldador",
@@ -36334,7 +36318,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Modern Classic. If you can commit to the grooming and the time they need, you won't find a more loving or intuitive family member. 🐩💛🧸"
   },
   "Gordon Setter": {
-    "image": "/assets/Dogs/Gordon Setter.jpg",
+    "image": "/assets/Dogs/Gordon_Setter.jpg",
     "video": "/assets/videos/Gordon_Setter.mp4",
     "basic_info": {
       "name": "Gordon Setter",
@@ -36600,7 +36584,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Highland Guardian. A striking and devoted companion for those who love the great outdoors and want a dog that will be their shadow. 🏴󠁧󠁢󠁳󠁣󠁴󠁿🏰🐾"
   },
   "Grand Basset Griffon Vendéen": {
-    "image": "/assets/Dogs/Grand Basset Griffon Vendéen.jpg",
+    "image": "/assets/Dogs/Grand_Basset_Griffon_Vendeen.jpg",
     "video": "/assets/videos/Grand_Basset_Griffon_Vendeen.mp4",
     "basic_info": {
       "name": "Grand Basset Griffon Vendéen",
@@ -36867,7 +36851,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Happy Wanderer. A wonderful, spirited choice for those who don't mind a bit of noise and want a dog that finds joy in every single scent. 🇫🇷👃✨"
   },
   "Great Dane": {
-    "image": "/assets/Dogs/Great Dane.jpg",
+    "image": "/assets/Dogs/Great_Dane.jpg",
     "video": "/assets/videos/Great_Dane.mp4",
     "basic_info": {
       "name": "Great Dane",
@@ -37140,7 +37124,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The King of Companions. If you have the space in your home and your heart for a short but beautiful journey, the Great Dane is unparalleled. 🇩🇪🏰🐕"
   },
   "Great Pyrenees": {
-    "image": "/assets/Dogs/Great Pyrenees.jpg",
+    "image": "/assets/Dogs/Great_Pyrenees.jpg",
     "video": "/assets/videos/Great_Pyrenees.mp4",
     "basic_info": {
       "name": "Great Pyrenees",
@@ -37408,7 +37392,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Serene Sentinel. A breathtakingly beautiful and loyal guardian, perfect for those with the space, the vacuum, and the respect for their independent spirit. 🇫🇷🐑🏰"
   },
   "Greater Swiss Mountain Dog": {
-    "image": "/assets/Dogs/Greater Swiss Mountain Dog.jpg",
+    "image": "/assets/Dogs/Greater_Swiss_Mountain_Dog.jpg",
     "video": "/assets/videos/Greater_Swiss_Mountain_Dog.mp4",
     "basic_info": {
       "name": "Greater Swiss Mountain Dog",
@@ -37938,7 +37922,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Noodle Horse. An absolute gem of a companion for anyone who values a quiet, affectionate, and low-maintenance lifestyle. 🏎️🐕✨"
   },
   "Hamiltonstovare": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Hamiltonstovare.jpg",
     "video": "/assets/videos/Hamiltonstovare.mp4",
     "basic_info": {
       "name": "Hamiltonstovare",
@@ -38731,7 +38715,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Perfect Companion. If you want a small dog with a big personality that will be your constant shadow, the Havanese is hard to beat. 🇨🇺✨🧸"
   },
   "Hokkaido": {
-    "image": "/assets/Dogs/Hokkaido Inu.jpg",
+    "image": "/assets/Dogs/Hokkaido.jpg",
     "video": "/assets/videos/Hokkaido.mp4",
     "basic_info": {
       "name": "Hokkaido",
@@ -39273,7 +39257,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Intelligent Guardian. A magnificent choice for an active, experienced owner who wants a versatile partner for work, play, and protection. 🇩🇪🏔️🐕"
   },
   "Ibizan Hound": {
-    "image": "/assets/Dogs/Ibizan Hound.jpg",
+    "image": "/assets/Dogs/Ibizan_Hound.jpg",
     "video": "/assets/videos/Ibizan_Hound.mp4",
     "basic_info": {
       "name": "Ibizan Hound",
@@ -39536,7 +39520,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Flying Hound. A breathtakingly beautiful and spirited companion for the active owner who respects their independent, hunter's heart. 🇪🇸🏜️🐕"
   },
   "Icelandic Sheepdog": {
-    "image": "/assets/Dogs/Icelandic Sheepdog.jpg",
+    "image": "/assets/Dogs/Icelandic_Sheepdog.jpg",
     "video": "/assets/videos/Icelandic_Sheepdog.mp4",
     "basic_info": {
       "name": "Icelandic Sheepdog",
@@ -39801,7 +39785,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Happy Herder. An incredible choice for anyone who wants a small-to-medium dog with a massive heart, provided you don't mind a bit of noise and a lot of fluff. 🇮🇸⛰️🐕"
   },
   "Irish Red and White Setter": {
-    "image": "/assets/Dogs/Irish Red and White Setter.jpg",
+    "image": "/assets/Dogs/Irish_Red_and_White_Setter.jpg",
     "video": "/assets/videos/Irish_Red_and_White_Setter.mp4",
     "basic_info": {
       "name": "Irish Red and White Setter",
@@ -40066,7 +40050,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Spirited Soul of Ireland. A magnificent and rewarding breed for those who can match their high energy and soft-hearted nature. 🇮🇪🐾🏃‍♂️"
   },
   "Irish Terrier": {
-    "image": "/assets/Dogs/Irish Terrier.jpg",
+    "image": "/assets/Dogs/Irish_Terrier.jpg",
     "video": "/assets/videos/Irish_Terrier.mp4",
     "basic_info": {
       "name": "Irish Terrier",
@@ -40330,7 +40314,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Red-Headed Braveheart. An extraordinary companion for the owner who can match their spirit and provide the firm guidance they need. 🇮🇪🛡️✨"
   },
   "Irish Water Spaniel": {
-    "image": "/assets/Dogs/Irish Water Spaniel.jpg",
+    "image": "/assets/Dogs/Irish_Water_Spaniel.jpg",
     "video": "/assets/videos/Irish_Water_Spaniel.mp4",
     "basic_info": {
       "name": "Irish Water Spaniel",
@@ -40596,7 +40580,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Intelligent Athlete. A unique and rare treasure for the active family that wants a hypoallergenic partner for life's adventures. 🇮🇪🌊🎭"
   },
   "Irish Wolfhound": {
-    "image": "/assets/Dogs/Irish Wolfhound.jpg",
+    "image": "/assets/Dogs/Irish_Wolfhound.jpg",
     "video": "/assets/videos/Irish_Wolfhound.mp4",
     "basic_info": {
       "name": "Irish Wolfhound",
@@ -40858,7 +40842,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The King of Dogs. Owning an Irish Wolfhound is a lifestyle choice that requires a big house, a big budget, and a big heart. 🇮🇪🏰🐾"
   },
   "Italian Greyhound": {
-    "image": "/assets/Dogs/Greyhound.jpg",
+    "image": "/assets/Dogs/Italian_Greyhound.jpg",
     "video": "/assets/videos/Italian_Greyhound.mp4",
     "basic_info": {
       "name": "Italian Greyhound",
@@ -41119,7 +41103,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Elegant Shadow. A perfect match for someone who wants a devoted, clean, and dainty companion to share their sofa (and their bed). 🇮🇹✨🐕"
   },
   "Jack Russell Terrier": {
-    "image": "/assets/Dogs/Russell Terrier.jpg",
+    "image": "/assets/Dogs/Jack_Russell_Terrier.jpg",
     "video": "/assets/videos/Jack_Russell_Terrier.mp4",
     "basic_info": {
       "name": "Jack Russell Terrier",
@@ -41383,7 +41367,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Dynamite Dog. A Jack Russell will either be the best dog you've ever had or your biggest challenge, depending entirely on how much activity you can provide. 🏴󠁧󠁢󠁥󠁮󠁧󠁿👟🎾"
   },
   "Japanese Chin": {
-    "image": "/assets/Dogs/Japanese Chin.jpg",
+    "image": "/assets/Dogs/Japanese_Chin.jpg",
     "video": "/assets/videos/Japanese_Chin.mp4",
     "basic_info": {
       "name": "Japanese Chin",
@@ -41647,7 +41631,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Imperial Lapdog. A refined and charming choice for anyone who wants a low-energy, feline-like partner for a peaceful home. 🇯🇵🐈🐾"
   },
   "Japanese Spitz": {
-    "image": "/assets/Dogs/Japanese Spitz.jpg",
+    "image": "/assets/Dogs/Japanese_Spitz.jpg",
     "video": "/assets/videos/Japanese_Spitz.mp4",
     "basic_info": {
       "name": "Japanese Spitz",
@@ -41909,7 +41893,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Perfect Companion. A beautiful, smart, and friendly dog that fits perfectly into almost any home, provided you have a good vacuum! 🇯🇵🐾✨"
   },
   "Kai Ken": {
-    "image": "/assets/Dogs/Kai Ken.jpg",
+    "image": "/assets/Dogs/Kai_Ken.jpg",
     "video": "/assets/videos/Kai_Ken.mp4",
     "basic_info": {
       "name": "Kai Ken",
@@ -42173,7 +42157,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Loyal Tiger. A rare and magnificent breed for the dedicated adventurer who wants a bond that is as deep as it is ancient. 🇯🇵🧗‍♂️🐾"
   },
   "Karelo-Finnish Laika": {
-    "image": "/assets/Dogs/placeholder.jpg",
+    "image": "/assets/Dogs/Karelo_Finnish_Laika.jpg",
     "video": "/assets/videos/Karelo_Finnish_Laika.mp4",
     "basic_info": {
       "name": "Karelo-Finnish Laika",
@@ -42438,7 +42422,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐ The Little Red Firecracker. A brilliant choice for active, cold-climate families who can manage a vocal and independent hunting spirit. 🇷🇺🇫🇮❄️"
   },
   "Karelian Bear Dog": {
-    "image": "/assets/Dogs/Karelian Bear Dog.jpg",
+    "image": "/assets/Dogs/Karelian_Bear_Dog.jpg",
     "video": "/assets/videos/Karelian_Bear_Dog.mp4",
     "basic_info": {
       "name": "Karelian Bear Dog",
@@ -42970,7 +42954,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Social Spitz. A perfect choice for a family looking for a smart, affectionate, and beautiful companion that truly loves being part of the pack. 🇳🇱🐾✨"
   },
   "Kerry Blue Terrier": {
-    "image": "/assets/Dogs/Kerry Blue Terrier.jpg",
+    "image": "/assets/Dogs/Kerry_Blue_Terrier.jpg",
     "video": "/assets/videos/Kerry_Blue_Terrier.mp4",
     "basic_info": {
       "name": "Kerry Blue Terrier",
@@ -43234,7 +43218,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Blue Jewel of Ireland. A perfect match for an experienced owner who wants a sharp-minded, athletic, and hypoallergenic partner for life. 🇮🇪✨🐾"
   },
   "King Charles Spaniel": {
-    "image": "/assets/Dogs/Cavalier King Charles Spaniel.jpg",
+    "image": "/assets/Dogs/King_Charles_Spaniel.jpg",
     "video": "/assets/videos/King_Charles_Spaniel.mp4",
     "basic_info": {
       "name": "King Charles Spaniel",
@@ -43500,7 +43484,7 @@ export const breeds = {
     "final_verdict": "⭐⭐⭐⭐⭐ The Aristocratic Lapdog. A superb choice for those who can offer a lifetime of lap-time and gentle care. 🇬🇧🐾✨"
   },
   "Kishu Ken": {
-    "image": "/assets/Dogs/Kishu Ken.jpg",
+    "image": "/assets/Dogs/Kishu_Ken.jpg",
     "video": "/assets/videos/Kishu_Ken.mp4",
     "basic_info": {
       "name": "Kishu Ken",

@@ -1,42 +1,42 @@
 "use client";
 import "./success.css";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
+import { Ribbon, ArrowRight } from "lucide-react";
 
 export default function AdoptionSuccess() {
   const router = useRouter();
 
-  useEffect(() => {
-    // optional confetti later
-  }, []);
-
   return (
-    <div className="adoption-success-page">
-      {/* Background */}
-      <div className="success-bg" />
+    <main className="adoption-success-page">
+      <div className="success-container">
+        
+        <div className="success-icon-badge">
+          <Ribbon size={32} strokeWidth={1.5} className="ribbon-icon" />
+        </div>
 
-      {/* Content */}
-      <div className="success-card">
-        <div className="success-icon">🐾</div>
-
-        <h1>Congratulations!</h1>
+        <span className="eyebrow">Milestone Reached</span>
+        <h1>Congratulations</h1>
+        
         <p className="subtitle">
-          You’ve taken a beautiful step toward giving a dog a loving home.
+          You have taken a beautiful step toward giving a dog a loving home. Your journey as a dedicated pet parent begins now.
         </p>
 
-        <p className="message">
-          Adoption is not just a choice — it’s a commitment.  
-          BreedLy will guide you every step of the way 💛
-        </p>
+        <div className="success-actions">
+          <button
+            className="btn-primary"
+            onClick={() => router.push("/my-dog/add")}
+          >
+            Start Care Journey <ArrowRight size={16} style={{marginLeft: "8px"}} />
+          </button>
+          <button
+            className="btn-secondary"
+            onClick={() => router.push("/")}
+          >
+            Return Home
+          </button>
+        </div>
 
-        <button
-          className="primary-btn"
-          onClick={() => router.push("/care-plan")}
-        >
-          Start Care Journey →
-        </button>
       </div>
-    </div>
+    </main>
   );
 }

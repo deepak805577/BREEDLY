@@ -1,101 +1,142 @@
-'use client';
-import { useState } from 'react';
-import './adoption.css';
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Check, ArrowRight } from "lucide-react";
+import "./adoption.css";
 
 export default function AdoptionGuide() {
-const checklist = [
-  {
-    title: "I have enough time daily",
-    desc: "Dogs need walks, play, feeding, and attention every day"
-  },
-  {
-    title: "I can afford vet & food costs",
-    desc: "Vaccines, grooming, emergencies are part of adoption"
-  },
-  {
-    title: "My family agrees with adoption",
-    desc: "Everyone in the house should be comfortable"
-  },
-  {
-    title: "I understand the breed’s needs",
-    desc: "Energy, grooming, training differ by breed"
-  }
-];
-
-
+  const router = useRouter();
   const [checked, setChecked] = useState([]);
+  const [mounted, setMounted] = useState(false);
 
-  const toggle = (i) => {
-    setChecked(prev =>
-      prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const checklist = [
+    {
+      id: "time",
+      title: "Daily Time Commitment",
+      desc: "Dogs require walks, play, feeding, and attention every single day, not just on weekends. I am prepared to dedicate the necessary time."
+    },
+    {
+      id: "finance",
+      title: "Financial Responsibility",
+      desc: "Vaccines, high-quality nutrition, grooming, and unforeseen emergency veterinary bills are accepted as part of the adoption."
+    },
+    {
+      id: "family",
+      title: "Household Agreement",
+      desc: "Everyone in the household has been consulted and is fully prepared to welcome and care for a new family member."
+    },
+    {
+      id: "knowledge",
+      title: "Breed Understanding",
+      desc: "I have researched and understand the specific energy levels, grooming demands, and training requirements of the dog."
+    },
+    {
+      id: "commitment",
+      title: "Long-term Dedication",
+      desc: "I am fully prepared to care for my dog through all life stages, committing to a potential 10-15 year relationship."
+    },
+    {
+      id: "love",
+      title: "Patience and Compassion",
+      desc: "I understand that transition takes time. I am ready to train with positive reinforcement and endless patience."
+    }
+  ];
+
+  const toggle = (id) => {
+    setChecked((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
   };
 
   const progress = Math.round((checked.length / checklist.length) * 100);
+  const isComplete = progress === 100;
 
-
-  return (
-    <main className="adoption-page">
-      <header className="adoption-header">
-        <h1>🏡 Adoption Readiness Checklist</h1>
-        <p>Adopting a dog is a lifetime promise. Let’s make sure you’re ready.</p>
-      </header>
-
-      <section className="progress-box">
-        <div className="progress-bar">
-          <div className="fill" style={{ width: `${progress}%` }} />
-        </div>
-        <p>{progress}% ready</p>
-      </section>
-
-  <section className="check-section">
-  <h3>🐾 Adoption Readiness Checklist</h3>
-
-  <ul className="checklist">
-    {checklist.map((item, i) => (
-      <li
-        key={i}
-        className={`check-item ${checked.includes(i) ? 'checked' : ''}`}
-        style={{ animationDelay: `${i * 60}ms` }}
-      >
-        <input
-          type="checkbox"
-          checked={checked.includes(i)}
-          onChange={() => toggle(i)}
-        />
-
-        <div className="check-content">
-          <strong>{item.title}</strong>
-          <span>{item.desc}</span>
-        </div>
-      </li>
-    ))}
-  </ul>
-</section>
-
-  <p className={`result-text ${progress >= 80 ? 'good' : 'warn'}`}>
-  {progress >= 80
-    ? "✅ You’re ready to adopt responsibly!"
-    : "⚠️ Please review responsibilities before adopting"}
-</p>
-<button
-  className="continue-btn"
-  disabled={progress < 100}
-  onClick={() => {
+  const handleContinue = () => {
     localStorage.setItem(
       "adoptionReadiness",
       JSON.stringify({
         completed: true,
         date: new Date().toISOString(),
       })
-      
     );
-    window.location.href = "/adoption-success";
-  }}
->
-  Continue to Adoption 🎉
-</button>
+    router.push("/adoption-success");
+  };
 
+  if (!mounted) return null;
+
+  return (
+    <main className="adoption-page">
+      <div className="adoption-container">
+        
+        <header className="adoption-header">
+          <span className="eyebrow">Preparation</span>
+          <h1>Adoption Readiness</h1>
+          <p>Adopting a dog is a lifetime promise. Please review and acknowledge these commitments to ensure you are fully prepared for the journey ahead.</p>
+        </header>
+
+        <section className="progress-section">
+          <div className="progress-header">
+            <span>Readiness Score</span>
+            <span className="progress-pct">{progress}%</span>
+          </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${progress}%` }} 
+            />
+          </div>
+        </section>
+
+        <section className="checklist-container">
+          {checklist.map((item, index) => {
+            const isChecked = checked.includes(item.id);
+            return (
+              <label
+                key={item.id}
+                className={`check-item ${isChecked ? "checked" : ""}`}
+              >
+                <div className="check-number">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className="check-content">
+                  <strong>{item.title}</strong>
+                  <span>{item.desc}</span>
+                </div>
+                <div className={`custom-checkbox ${isChecked ? "active" : ""}`}>
+                  {isChecked && <Check size={16} strokeWidth={3} className="check-icon" />}
+                </div>
+                <input
+                  type="checkbox"
+                  className="hidden-checkbox"
+                  checked={isChecked}
+                  onChange={() => toggle(item.id)}
+                />
+              </label>
+            );
+          })}
+        </section>
+
+        <div className="adoption-footer">
+          <div className="footer-content">
+            <p className={`status-text ${isComplete ? "success" : ""}`}>
+              {isComplete
+                ? "You are fully ready to adopt responsibly."
+                : "Acknowledge all commitments to proceed."}
+            </p>
+            <button
+              className="btn-primary continue-btn"
+              disabled={!isComplete}
+              onClick={handleContinue}
+            >
+              Continue to Adoption <ArrowRight size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
