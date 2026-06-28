@@ -286,20 +286,30 @@ export default function BreedSelector() {
   const [answers, setAnswers] = useState([]);
   const [slideAnim, setSlideAnim] = useState("qs-slide-left-in");
   const [finished, setFinished] = useState(false);
+  const [loadPct, setLoadPct] = useState(0);
   const [progressWidth, setProgressWidth] = useState(0);
   const [isBouncing, setIsBouncing] = useState(false);
   const [showWhy, setShowWhy] = useState(false);
   const [statusText, setStatusText] = useState("🐾 Finding your perfect match...");
 
-  // Cycle status texts during loading redirection
+  // Smooth percentage counter for the loader
   useEffect(() => {
     if (!finished) return;
-    const t1 = setTimeout(() => setStatusText("Comparing 250+ breeds..."), 900);
-    const t2 = setTimeout(() => setStatusText("Almost there..."), 1800);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    const duration = 3000;
+    const interval = 30;
+    const step = 100 / (duration / interval);
+    
+    const timer = setInterval(() => {
+      setLoadPct(prev => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          return 100;
+        }
+        return prev + step;
+      });
+    }, interval);
+    
+    return () => clearInterval(timer);
   }, [finished]);
 
   useEffect(() => {
@@ -364,18 +374,69 @@ export default function BreedSelector() {
   if (finished) {
     return (
       <ProtectedRoute>
-        <div className="qs-page">
-          <div className="qs-done">
-            <div className="qs-done-icon-wrap">
-              <div className="qs-done-ring"></div>
-              <div className="qs-done-paw">
-                <PawIcon style={{ width: 56, height: 56 }} />
+        <div className="qs-page" style={{ background: '#FBF7F2', padding: 0, justifyContent: 'center' }}>
+          
+          <div className="qs-premium-loader">
+            {/* Background Decorative Landscape */}
+            <div className="qs-loader-bg">
+              <svg className="qs-wave qs-wave-1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#F2EBE1" fillOpacity="0.5" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+              </svg>
+              <svg className="qs-wave qs-wave-2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#EAE0D3" fillOpacity="0.4" d="M0,256L60,245.3C120,235,240,213,360,213.3C480,213,600,235,720,240C840,245,960,235,1080,208C1200,181,1320,139,1380,117.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+              </svg>
+              
+              <div className="qs-bg-dog-left">
+                <Dog strokeWidth={1} style={{ width: 48, height: 48, color: '#8B5E3C' }} />
+              </div>
+              <div className="qs-bg-dog-right">
+                <PawPrint strokeWidth={1} style={{ width: 32, height: 32, color: '#8B5E3C' }} />
               </div>
             </div>
-            <h2>Analyzing matches</h2>
-            <p className="qs-done-status">{statusText}</p>
-            <div className="qs-done-progress">
-              <div className="qs-done-progress-fill"></div>
+
+            <div className="qs-loader-content">
+              {/* Circular Indicator */}
+              <div className="qs-circle-wrap">
+                <svg className="qs-circle-svg" viewBox="0 0 100 100">
+                  <circle className="qs-circle-track" cx="50" cy="50" r="46" />
+                  <circle 
+                    className="qs-circle-fill" 
+                    cx="50" cy="50" r="46" 
+                    style={{ strokeDashoffset: 289 - (289 * loadPct) / 100 }} 
+                  />
+                </svg>
+                <div 
+                  className="qs-circle-dot" 
+                  style={{ transform: `rotate(${loadPct * 3.6}deg)` }}
+                />
+                <div className="qs-circle-inner-paw">
+                  <PawIcon style={{ width: 28, height: 28, color: '#8B5E3C' }} />
+                </div>
+              </div>
+
+              {/* Text */}
+              <h1 className="qs-loader-title">Finding your perfect match</h1>
+              <p className="qs-loader-desc">
+                Analyzing your answers and matching you with the best dog breeds.
+              </p>
+
+              {/* Horizontal Progress */}
+              <div className="qs-loader-progress-wrap">
+                <div className="qs-loader-progress-track">
+                  <div className="qs-loader-progress-fill" style={{ width: `${loadPct}%` }}>
+                    <div className="qs-loader-thumb">
+                      <PawIcon style={{ width: 10, height: 10, color: '#8B5E3C' }} />
+                    </div>
+                  </div>
+                </div>
+                <div className="qs-loader-pct">{Math.round(loadPct)}%</div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="qs-loader-footer">
+              <Shield style={{ width: 14, height: 14, color: '#A3A3A3' }} />
+              <span>Your answers are safe</span>
             </div>
           </div>
         </div>
@@ -413,7 +474,7 @@ export default function BreedSelector() {
 
           <div className="qs-question-wrap">
             {currentQuestion === questions.length - 2 && (
-              <span className="qs-almost">🎉 Almost there! Just one more question.</span>
+              <span className="qs-almost"> Almost there! Just one more question.</span>
             )}
             <span className="qs-q-num">Step {currentQuestion + 1} of {questions.length}</span>
             <h2 className="qs-question">{q.question}</h2>
