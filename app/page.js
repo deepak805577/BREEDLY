@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { useCMS } from "./hooks/useCMS";
 
 /* ─── PREMIUM SVG ICON SYSTEM ────────────────────────────────────────────── */
 const SVG_ICONS = {
@@ -446,8 +447,11 @@ export default function HomePage() {
     { text: QUESTIONS[(index + 2) % QUESTIONS.length] },
   ];
 
+  /* ─── CMS HOOK ───────────────────────────────────────────────────────── */
+  const { get, loading: cmsLoading } = useCMS();
+
   return (
-    <div className={styles.home}>
+    <div className={styles.home} style={{ opacity: cmsLoading ? 0.7 : 1, transition: 'opacity 0.3s' }}>
 
       {/* ── HERO ── */}
       <section className={styles.hero}>
@@ -455,15 +459,13 @@ export default function HomePage() {
           <div className={`${styles.heroContent} ${styles.fadeIn}`}>
             <span className={styles.heroBadge}>
               {SVG_ICONS.paw({ style: { width: 13, height: 13, color: "var(--accent-dark)", display: "inline-block", verticalAlign: "middle", marginRight: 6 } })}
-              Thoughtful breed guidance
+              {get("home_hero_badge", "Thoughtful breed guidance")}
             </span>
             <h1 className={styles.heroHeadline}>
-              Find a companion<br />
-              <em>that truly fits</em><br />
-              your life.
+              <div dangerouslySetInnerHTML={{ __html: get("home_hero_title", "Find a companion<br /><em>that truly fits</em><br />your life.") }} />
             </h1>
             <p className={styles.heroSub}>
-              Thoughtful breed recommendations, real-life insights, and a calmer way to choose your dog.
+              {get("home_hero_subtitle", "Thoughtful breed recommendations, real-life insights, and a calmer way to choose your dog.")}
             </p>
             <div className={styles.heroActions}>
               <Link href="/breed-selector" className={styles.btnPrimary}>Find My Match</Link>
@@ -473,7 +475,7 @@ export default function HomePage() {
           </div>
           <div className={`${styles.heroImageWrap} ${styles.fadeIn}`}>
             <div className={styles.heroBlobBg} />
-            <img src="/assets/result (2).png" alt="Happy dog" className={styles.heroImg} />
+            <img src={get("home_hero_image", "/assets/result (2).png")} alt="Happy dog" className={styles.heroImg} />
             <div className={styles.floatCard1}>
               {SVG_ICONS.home({ style: { width: 14, height: 14, color: "var(--accent-dark)" } })}
               <span>Perfect match found</span>

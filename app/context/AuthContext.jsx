@@ -29,11 +29,26 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function loadProfile(userId) {
-    const { data, error } = await supabase
-      .from("profiles").select("id, full_name, initials, avatar_url, avatar_color, primary_breed, bio, username, dog_name, dog_age, dog_photo_url")
-      .eq("id", userId)
-      .single();
-    if (!error && data) setProfile(data);
+    try {
+      const { data, error } = await supabase
+        .from("profiles").select("id, full_name, initials, avatar_url, avatar_color, primary_breed, bio, username, dog_name, dog_age, dog_photo_url, role")
+        .eq("id", userId)
+        .single();
+      
+      if (error) {
+        console.error("Error loading profile:", error.message);
+        // Fallback: If 'role' column doesn't exist, the query will fail.
+        // We set an empty profile object so it's not null, preventing infinite loading.
+        setProfile({ id: userId, role: "user" }); 
+      } else if (data) {
+        setProfile(data);
+      } else {
+        setProfile({ id: userId, role: "user" });
+      }
+    } catch (e) {
+      console.error("Unexpected error in loadProfile:", e);
+      setProfile({ id: userId, role: "user" });
+    }
   }
 
   async function signUp({ email, password, fullName }) {

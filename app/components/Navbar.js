@@ -170,7 +170,8 @@ export default function Navbar() {
     pathname.startsWith("/chat") ||
     pathname.startsWith("/community") ||
     pathname.startsWith("/profile") ||
-    pathname.startsWith("/onboarding");
+    pathname.startsWith("/onboarding")||
+    pathname.startsWith("/admin");
 
   useEffect(() => {
     setMobileAIOpen(false);

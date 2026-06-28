@@ -229,11 +229,6 @@ export default function BreedsPage() {
               >
                 <div className="bp-card-img-wrap">
                   <img src={breed.image} alt={breed.name} loading="lazy" />
-                  {breed.energy && breed.energy.toLowerCase() !== "high" && breed.energy.toLowerCase() !== "moderate" && (
-                    <span className={`bp-energy-badge ${energyClass(breed.energy)}`}>
-                      <Zap size={11} className="bp-badge-icon" /> {breed.energy}
-                    </span>
-                  )}
                 </div>
 
                 <div className="bp-card-body">
@@ -246,11 +241,6 @@ export default function BreedsPage() {
                     {breed.size && (
                       <span>
                         <Ruler size={11} className="bp-tag-icon" /> {breed.size}
-                      </span>
-                    )}
-                    {breed.grooming && !["high", "moderate", "busy"].includes(breed.grooming.toLowerCase()) && (
-                      <span>
-                        <Scissors size={11} className="bp-tag-icon" /> {breed.grooming}
                       </span>
                     )}
                   </div>

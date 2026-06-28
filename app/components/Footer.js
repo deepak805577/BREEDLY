@@ -23,7 +23,8 @@ export default function Footer() {
     pathname.startsWith("/detect-dog")||
     pathname.startsWith("/chat")||
     pathname.startsWith("/community")||
-    pathname.startsWith("/profile");
+    pathname.startsWith("/profile")||
+    pathname.startsWith("/admin");
 
   if (hideFooter) return null;
 
