@@ -136,6 +136,23 @@ const breedProfiles = {
   "Bull Terrier": { traits: ["House", "Moderate", "Moderate yard", "Yes", "Teenagers 13+", "No", "No", "No", "1–2 hours", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Bull Terrier.jpg", desc: "Bold and fun-loving — always ready to play." },
   "Chinese Shar-Pei": { traits: ["House", "Moderate", "Small yard", "No", "0–5", "No", "No", "No", "< 1 hour", "< 2 hrs", "2–5 hrs", "No", "Low", "Calm", "Protective", "Prefer quiet", "Just the basics", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Shar Pei.jpg", desc: "Loyal and calm — famous for unique wrinkles." },
   "Dogo Argentino": { traits: ["House", "Spacious", "Large yard", "Yes", "Teenagers 13+", "No", "No", "No", "3+ hours", "< 2 hrs", "2–5 hrs", "Yes", "Very active", "Protective", "Protective", "Some barking", "A lot — I enjoy it", "No", "Very Large (50kg+)", "Weekly", "Not important"], image: "/assets/Dogs/Dogo Argentino.jpg", desc: "Powerful and loyal — needs experienced owners and open space." },
+  "Pembroke Welsh Corgi": { traits: ["House", "Moderate", "Moderate yard", "No", "Ages 6–12", "Yes", "No", "No", "1–2 hours", "1–2 hours", "2–5 hrs", "No", "Moderate", "Very playful", "Friendly", "Some barking", "Just the basics", "Yes", "Medium (7–14kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Pembroke Welsh Corgi.jpg", desc: "Smart, affectionate, and alert with a big personality in a small body." },
+  "Shiba Inu": { traits: ["Apartment", "Moderate", "Small yard", "No", "Teenagers 13+", "No", "No", "No", "1–2 hours", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Moderately playful", "Independent", "Prefer quiet", "Just the basics", "No", "Medium (7–14kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Shiba Inu.jpg", desc: "Spirited, bold, and independent with a fox-like appearance." },
+  "Akita": { traits: ["House", "Spacious", "Large yard", "No", "Teenagers 13+", "No", "No", "No", "2–3 hours", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Calm", "Protective", "Prefer quiet", "Just the basics", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Akita.jpg", desc: "Loyal, courageous, and profoundly devoted to their family." },
+  "Cane Corso": { traits: ["House", "Spacious", "Large yard", "No", "Teenagers 13+", "No", "No", "No", "2–3 hours", "2+ hours", "< 2 hrs", "Yes", "Very active", "Moderately playful", "Protective", "Prefer quiet", "A lot — I enjoy it", "No", "Very Large (50kg+)", "Weekly", "Somewhat"], image: "/assets/Dogs/Cane Corso.jpg", desc: "Powerful, intelligent, and fiercely loyal guardian." },
+  "Jack Russell Terrier": { traits: ["House", "Moderate", "Small yard", "No", "Ages 6–12", "Yes", "No", "No", "2–3 hours", "1–2 hours", "2–5 hrs", "Yes", "Very active", "Very playful", "Friendly", "Loud & frequent", "A lot — I enjoy it", "No", "Small (7kg & under)", "Weekly", "Somewhat"], image: "/assets/Dogs/Jack Russell Terrier.jpg", desc: "Upbeat, lively, inquisitive, and extremely energetic." },
+  "Miniature Schnauzer": { traits: ["Apartment", "Very little", "None", "No", "Ages 6–12", "Yes", "Yes", "No", "1–2 hours", "30–60 mins", "2–5 hrs", "No", "Moderate", "Very playful", "Friendly", "Loud & frequent", "Just the basics", "No", "Small (7kg & under)", "Weekly", "Very important"], image: "/assets/Dogs/Miniature Schnauzer.jpg", desc: "Friendly, smart, obedient, and practically non-shedding." },
+  "Cavalier King Charles Spaniel": { traits: ["Apartment", "Very little", "None", "No", "0–5", "Yes", "No", "No", "< 1 hour", "< 30 mins", "< 2 hrs", "No", "Low", "Calm", "Friendly", "Prefer quiet", "Just the basics", "Yes", "Small (7kg & under)", "Weekly", "Somewhat"], image: "/assets/Dogs/Cavalier King Charles Spaniel.jpg", desc: "Affectionate, gentle, and graceful, an ideal lap dog." },
+  "Australian Shepherd": { traits: ["House", "Spacious", "Open field", "No", "Ages 6–12", "Yes", "No", "No", "3+ hours", "2+ hours", "2–5 hrs", "Yes", "Very active", "Very playful", "Friendly", "Some barking", "A lot — I enjoy it", "No", "Medium-Large (14–23kg)", "Weekly", "Not important"], image: "/assets/Dogs/Australian Shepherd.jpg", desc: "Smart, work-oriented, exuberant, and needs lots of activity." },
+  "Australian Cattle Dog": { traits: ["House", "Spacious", "Open field", "No", "Teenagers 13+", "No", "No", "No", "3+ hours", "2+ hours", "2–5 hrs", "Yes", "Very active", "Very playful", "Protective", "Some barking", "A lot — I enjoy it", "No", "Medium-Large (14–23kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Australian Cattle Dog.jpg", desc: "Alert, immensely workable, intelligent, and loyal." },
+  "German Shorthaired Pointer": { traits: ["House", "Spacious", "Large yard", "No", "Ages 6–12", "Yes", "No", "No", "3+ hours", "2+ hours", "2–5 hrs", "Yes", "Very active", "Very playful", "Friendly", "Some barking", "A lot — I enjoy it", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/German Shorthaired Pointer.jpg", desc: "Friendly, smart, willing to please, and heavily energetic." },
+  "Vizsla": { traits: ["House", "Spacious", "Large yard", "No", "Ages 6–12", "Yes", "No", "No", "3+ hours", "2+ hours", "< 2 hrs", "Yes", "Very active", "Very playful", "Friendly", "Some barking", "A lot — I enjoy it", "No", "Medium-Large (14–23kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Vizsla.jpg", desc: "Affectionate, energetic, and forms a tight bond with their family." },
+  "Greyhound": { traits: ["Apartment", "Moderate", "Small yard", "No", "Teenagers 13+", "No", "No", "No", "1–2 hours", "30–60 mins", "2–5 hrs", "Yes", "Low", "Calm", "Independent", "Prefer quiet", "Just the basics", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Greyhound.jpg", desc: "Independent, gentle, noble, and surprisingly couch potatoes." },
+  "Whippet": { traits: ["Apartment", "Moderate", "Small yard", "No", "Ages 6–12", "Yes", "No", "No", "1–2 hours", "30–60 mins", "2–5 hrs", "No", "Moderate", "Calm", "Friendly", "Prefer quiet", "Just the basics", "No", "Medium (7–14kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Whippet.jpg", desc: "Playful, affectionate, and relaxed indoors but fast outdoors." },
+  "Irish Wolfhound": { traits: ["House", "Spacious", "Large yard", "No", "Ages 6–12", "Yes", "No", "No", "1–2 hours", "1–2 hours", "2–5 hrs", "Yes", "Moderate", "Calm", "Friendly", "Prefer quiet", "Just the basics", "Yes", "Very Large (50kg+)", "Weekly", "Somewhat"], image: "/assets/Dogs/Irish Wolfhound.jpg", desc: "Gentle giant, calm, intelligent, and extremely dignified." },
+  "Rhodesian Ridgeback": { traits: ["House", "Spacious", "Large yard", "No", "Teenagers 13+", "No", "No", "No", "2–3 hours", "1–2 hours", "2–5 hrs", "Yes", "Very active", "Moderately playful", "Protective", "Prefer quiet", "A lot — I enjoy it", "No", "Large (23–50kg)", "Weekly", "Somewhat"], image: "/assets/Dogs/Rhodesian Ridgeback.jpg", desc: "Even-tempered, dignified, affectionate, and fiercely protective." },
+  "Papillon": { traits: ["Apartment", "Very little", "None", "No", "Ages 6–12", "Yes", "No", "No", "1–2 hours", "30–60 mins", "2–5 hrs", "No", "Moderate", "Very playful", "Friendly", "Some barking", "A lot — I enjoy it", "No", "Small (7kg & under)", "Weekly", "Somewhat"], image: "/assets/Dogs/Papillon.jpg", desc: "Happy, alert, friendly, and highly trainable small dog." },
+  "Bernese Mountain Dog": { traits: ["House", "Spacious", "Large yard", "Yes", "Ages 0–5", "Yes", "No", "No", "1–2 hours", "1–2 hours", "2–5 hrs", "No", "Moderate", "Calm", "Friendly", "Some barking", "Just the basics", "Yes", "Very Large (50kg+)", "Weekly", "Not important"], image: "/assets/Dogs/Bernese Mountain Dog.jpg", desc: "Good-natured, calm, and strong, thrives in cold weather." },
 };
 
 /* ──────────────────────────────────────────────────────────
@@ -222,6 +239,90 @@ function getWhyReasons(breed, answers) {
     reasons.push('Your overall lifestyle profile aligns naturally with this breed\'s temperament and needs.');
 
   return reasons.slice(0, 3);
+}
+
+/* ──────────────────────────────────────────────────────────
+   SCORING ENGINE
+   ────────────────────────────────────────────────────────── */
+function scoreMatch(ans, profile) {
+  let score = 0;
+  let maxScore = 0;
+  const traits = profile.traits || [];
+  const add = (points, max = 1) => { score += points; maxScore += max; };
+
+  const hU = {'1BHK': 1, 'Apartment': 1, '2-3BHK': 2, 'House': 3, 'Bungalow': 4}[ans[0]] || 0;
+  const hT = {'1BHK': 1, 'Apartment': 1, '2-3BHK': 2, 'House': 3, 'Bungalow': 4}[traits[0]] || 0;
+  if (hU >= hT) add(1); else if (hT - hU === 1) add(0.5); else add(0);
+
+  const iU = {'Very little': 1, 'Moderate': 2, 'Spacious': 3}[ans[1]] || 0;
+  const iT = {'Very little': 1, 'Moderate': 2, 'Spacious': 3}[traits[1]] || 0;
+  if (iU >= iT) add(1); else if (iT - iU === 1) add(0.5); else add(0);
+
+  const oU = {'None': 1, 'Small yard': 2, 'Moderate yard': 3, 'Large yard': 4, 'Open yard': 5, 'Open field': 5}[ans[2]] || 0;
+  const oT = {'None': 1, 'Small yard': 2, 'Moderate yard': 3, 'Large yard': 4, 'Open yard': 5, 'Open field': 5}[traits[2]] || 0;
+  if (oU >= oT) add(1); else if (oT - oU === 1) add(0.5); else add(0);
+
+  if (traits[3] === 'No') add(1); else if (traits[3] === 'Yes' && ans[3] === 'Yes') add(1); else add(0);
+
+  const cU = {'Ages 0–5': 1, '0–5': 1, 'Ages 6–12': 2, 'Teenagers 13+': 3, 'No children': 4}[ans[4]] || 0;
+  const cT = {'Ages 0–5': 1, '0–5': 1, 'Ages 6–12': 2, 'Teenagers 13+': 3, 'No children': 4}[traits[4]] || 0;
+  if (cU === 4) add(1); else if (cU >= cT) add(1); else add(0);
+
+  if (ans[5] === 'Yes' && traits[5] === 'No') add(0); else add(1);
+  
+  if (ans[6] === 'Yes') { if (traits[6] === 'Yes') add(1); else add(0); } else add(1);
+
+  add(1); // 7: Other pets trait is missing from dataset mostly, skipped
+
+  const tU = {'< 1 hour': 1, '1–2 hours': 2, '2–3 hours': 3, '3+ hours': 4}[ans[8]] || 0;
+  const tT = {'< 1 hour': 1, '1–2 hours': 2, '2–3 hours': 3, '3+ hours': 4}[traits[8]] || 0;
+  if (tU >= tT) add(1); else if (tT - tU === 1) add(0.5); else add(0);
+
+  const eU = {'< 30 mins': 1, '30–60 mins': 2, '< 2 hrs': 2, '1–2 hours': 3, '2+ hours': 4}[ans[9]] || 0;
+  const eT = {'< 30 mins': 1, '30–60 mins': 2, '< 2 hrs': 2, '1–2 hours': 3, '2+ hours': 4}[traits[9]] || 0;
+  if (eU >= eT) add(1); else if (eT - eU === 1) add(0.5); else add(0);
+
+  const alU = {'< 2 hrs': 4, '2–5 hrs': 3, '5–8 hrs': 2, '8+ hrs': 1}[ans[10]] || 0;
+  const alT = {'< 2 hrs': 4, '2–5 hrs': 3, '5–8 hrs': 2, '8+ hrs': 1}[traits[10]] || 0;
+  if (alU >= alT) add(1); else if (alT - alU === 1) add(0.5); else add(0);
+
+  if (ans[11] === 'Yes') add(1); else if (ans[11] === 'No' && traits[11] === 'No') add(1); else add(0);
+
+  const acU = {'Low': 1, 'Moderate': 2, 'Very active': 3}[ans[12]] || 0;
+  const acT = {'Low': 1, 'Moderate': 2, 'Very active': 3}[traits[12]] || 0;
+  if (acU === acT) add(1); else if (Math.abs(acU - acT) === 1) add(0.5); else add(0);
+
+  const pU = {'Low energy': 1, 'Calm': 1, 'Moderately playful': 2, 'Protective': 2, 'Very playful': 3}[ans[13]] || 0;
+  const pT = {'Low energy': 1, 'Calm': 1, 'Moderately playful': 2, 'Protective': 2, 'Very playful': 3}[traits[13]] || 0;
+  if (pU === pT) add(1); else if (Math.abs(pU - pT) === 1) add(0.5); else add(0);
+
+  if (ans[14] === traits[14]) add(1); else add(0.5);
+
+  const bkU = {'Prefer quiet': 1, 'Some barking': 2, 'Loud & frequent': 3}[ans[15]] || 0;
+  const bkT = {'Prefer quiet': 1, 'Some barking': 2, 'Loud & frequent': 3}[traits[15]] || 0;
+  if (bkU >= bkT) add(1); else if (bkT - bkU === 1) add(0.5); else add(0);
+
+  const trU = {'Just the basics': 1, 'Already trained': 1, 'A lot': 2, 'A lot — I enjoy it': 2}[ans[16]] || 0;
+  const trT = {'Just the basics': 1, 'Already trained': 1, 'A lot': 2, 'A lot — I enjoy it': 2}[traits[16]] || 0;
+  if (trU >= trT) add(1); else add(0.5);
+
+  if (ans[17] === 'No' && traits[17] === 'Yes') add(0); else add(1);
+
+  if (ans[18] === 'No preference') add(1); else {
+    const sU = {'Small': 1, 'Small (7kg & under)': 1, 'Medium': 2, 'Medium (7–14kg)': 2, 'Medium-Large': 3, 'Medium-Large (14–23kg)': 3, 'Large': 4, 'Large (23–50kg)': 4, 'Very Large': 5, 'Very Large (50kg+)': 5}[ans[18]] || 0;
+    const sT = {'Small': 1, 'Small (7kg & under)': 1, 'Medium': 2, 'Medium (7–14kg)': 2, 'Medium-Large': 3, 'Medium-Large (14–23kg)': 3, 'Large': 4, 'Large (23–50kg)': 4, 'Very Large': 5, 'Very Large (50kg+)': 5}[traits[18]] || 0;
+    if (sU === sT) add(1); else if (Math.abs(sU - sT) === 1) add(0.8); else if (Math.abs(sU - sT) === 2) add(0.5); else add(0);
+  }
+
+  const gU = {'Minimal Care': 4, 'Occasional': 3, 'Weekly': 2, 'Daily': 1}[ans[19]] || 0;
+  const gT = {'Minimal Care': 4, 'Occasional': 3, 'Weekly': 2, 'Daily': 1}[traits[19]] || 0;
+  if (gU <= gT) add(1); else if (gU - gT === 1) add(0.5); else add(0);
+
+  const shU = {'Not important': 1, 'Somewhat': 2, 'Very important': 3}[ans[20]] || 0;
+  const shT = {'Not important': 1, 'Somewhat': 2, 'Very important': 3}[traits[20]] || 0;
+  if (shU <= shT) add(1); else if (shU - shT === 1) add(0.5); else add(0);
+
+  return { score, percent: Math.round((score / maxScore) * 100) };
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -354,11 +455,10 @@ export default function ResultsPage() {
     }
 
     const scored = Object.entries(breedProfiles).map(([name, profile]) => {
-      const score = profile.traits?.filter(t => ans.includes(t)).length || 0;
-      const percent = Math.round((score / (profile.traits?.length || 1)) * 100);
+      const matchResult = scoreMatch(ans, profile);
       const found = Array.isArray(breeds) ? breeds.find(b => b.name === name) : undefined;
       return {
-        name, score, percent,
+        name, score: matchResult.score, percent: matchResult.percent,
         image: found?.image || profile.image,
         description: found?.description || profile.desc || '',
         pros: found?.pros || [],
@@ -367,7 +467,7 @@ export default function ResultsPage() {
         notes: found?.notes || [],
       };
     })
-      .filter(b => b.score > 0)
+      .filter(b => b.percent >= 40) // only show if at least 40% match
       .sort((a, b) => b.percent - a.percent || b.score - a.score);
 
     if (!scored.length) {
