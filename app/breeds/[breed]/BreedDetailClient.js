@@ -129,6 +129,63 @@ const DogIcon = ({ style, ...props }) => (
 );
 
 /* ── Page ─────────────────────────────────────────────────── */
+const COUNTRY_FLAGS = {
+  "United States": "🇺🇸",
+  "USA": "🇺🇸",
+  "Germany": "🇩🇪",
+  "United Kingdom": "🇬🇧",
+  "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "Scotland": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  "Wales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+  "France": "🇫🇷",
+  "China": "🇨🇳",
+  "Japan": "🇯🇵",
+  "Russia": "🇷🇺",
+  "Mexico": "🇲🇽",
+  "Italy": "🇮🇹",
+  "Spain": "🇪🇸",
+  "Australia": "🇦🇺",
+  "Switzerland": "🇨🇭",
+  "Belgium": "🇧🇪",
+  "Ireland": "🇮🇪",
+  "Canada": "🇨🇦",
+  "Netherlands": "🇳🇱",
+  "Madagascar": "🇲🇬",
+  "Cuba": "🇨🇺",
+  "Afghanistan": "🇦🇫",
+  "Mali": "🇲🇱",
+  "Tibet": "🇨🇳",
+  "Croatia": "🇭🇷",
+  "Turkey": "🇹🇷",
+  "Hungary": "🇭🇺",
+  "Portugal": "🇵🇹",
+  "Sweden": "🇸🇪",
+  "Norway": "🇳🇴",
+  "Finland": "🇫🇮",
+  "Denmark": "🇩🇰",
+  "South Africa": "🇿🇦",
+  "Egypt": "🇪🇬"
+};
+
+function getOriginText(originVal) {
+  if (!originVal) return "Dog Breed";
+  
+  // Convert to string in case it's an array
+  let originStr = Array.isArray(originVal) ? originVal.join(", ") : String(originVal);
+  
+  // Remove any existing emojis so we don't double up
+  let cleanName = originStr.replace(/[\u1F1E6-\u1F1FF]{2}/g, "").trim();
+  cleanName = cleanName.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, "").trim();
+  
+  for (const [country, flag] of Object.entries(COUNTRY_FLAGS)) {
+    if (cleanName.toLowerCase().includes(country.toLowerCase())) {
+      return `${flag} ${cleanName}`;
+    }
+  }
+  
+  return originStr;
+}
+
 export default function BreedDetailClient() {
   const params = useParams();
   const router = useRouter();
@@ -174,7 +231,7 @@ export default function BreedDetailClient() {
             )}
           </div>
           <div className="bd-hero-text">
-            <span className="bd-eyebrow">{breed.basic_info?.origin || "Dog Breed"}</span>
+            <span className="bd-eyebrow">{getOriginText(breed.basic_info?.origin)}</span>
             <h1>{breed.basic_info?.name || breedKey}</h1>
             <p className="bd-tagline">
               {breed.basic_info?.one_sentence_summary || breed.basic_info?.ideal_home || ""}

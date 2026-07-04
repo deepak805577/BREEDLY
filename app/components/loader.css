@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Atteron";
   src: url("/fonts/Atteron.ttf") format("truetype");
-  font-display: swap; /* Prevents font loading delay */
+  font-display: block; /* Prevents FOUT (flashing a fallback font) */
 }
 
 #dog-loader {

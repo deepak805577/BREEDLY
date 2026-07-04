@@ -86,8 +86,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 72px 24px 100px;
-  gap: 64px;
+  padding: 32px 24px 60px;
+  gap: 44px;
   box-sizing: border-box;
 }
 
@@ -247,6 +247,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  align-items: center;
   /* Prevents flex blowout */
 }
 
@@ -324,8 +325,9 @@
    ══════════════════════════════════════════════════════════ */
 .rp-hero-card {
   position: relative;
+  max-width: 500px;
   width: 100%;
-  min-height: 660px;
+  min-height: 550px;
   border-radius: var(--rp-radius-xl);
   overflow: hidden;
   cursor: pointer;
@@ -371,7 +373,7 @@
   padding: 52px 48px 48px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 10px;
 }
 
 .rp-hero-badge {
@@ -379,7 +381,7 @@
   align-items: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -409,7 +411,7 @@
 
 .rp-hero-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-size: clamp(1.8rem, 5vw, 3.0rem);
   font-weight: 300;
   color: #FFFFFF;
   margin: 0;
@@ -419,7 +421,7 @@
 
 .rp-hero-desc {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
+  font-size: .8rem;
   color: rgba(255, 255, 255, 0.68);
   line-height: 1.65;
   font-style: italic;
@@ -440,7 +442,7 @@
   backdrop-filter: blur(10px);
   color: #FFFFFF;
   font-family: 'Inter', sans-serif;
-  font-size: 0.87rem;
+  font-size: 0.7rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -472,13 +474,13 @@
 }
 
 .rp-ring-wrap--sm {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
 }
 
 .rp-ring-wrap--lg {
-  width: 140px;
-  height: 140px;
+  width: 130px;
+  height: 130px;
 }
 
 /* SVG rings */
@@ -555,7 +557,7 @@
   display: inline-block;
   padding: 5px 14px;
   border-radius: 999px;
-  font-size: 0.77rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   background: rgba(255, 255, 255, 0.12);
@@ -876,7 +878,7 @@
 
   .rp-hero-layout {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 35px;
     max-width: 600px;
   }
 
@@ -940,28 +942,30 @@
   }
 
   .rp-title {
-    font-size: 2.3rem;
+    font-size: 2.0rem;
   }
-
+  .rp-subtitle{
+    font-size: 1.1rem;
+  }
   .rp-hero-card {
     min-height: 440px;
   }
 
   .rp-hero-content {
-    padding: 28px 20px 24px;
+    padding: 20px 18px 18px;
   }
 
   .rp-hero-name {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .rp-hero-desc {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   .rp-explore-btn {
-    padding: 12px 24px;
-    font-size: 0.84rem;
+    padding: 10px 20px;
+    font-size: 0.8rem;
   }
 
   .rp-alt-img-wrap {

@@ -1171,7 +1171,7 @@ footer {
 
   /* -------- BOTTOM NAV -------- */
   .bottom-nav {
-    height: 55px;
+    height: 50px;
     display: flex;
     position: fixed;
     bottom: 10;
@@ -1195,14 +1195,14 @@ footer {
   /* From Uiverse.io by eslam-hany */
   .button-container {
     display: flex;
-    bottom: 16px;
+    bottom: 10px;
     width: 90%;
     max-width: 480px;
     z-index: 999;
     background-color: rgba(108, 80, 59, 0.88);
     backdrop-filter: blur(12px) saturate(160%);
     -webkit-backdrop-filter: blur(12px) saturate(160%);
-    height: 60px;
+    height: 44px;
     position: fixed;
     align-items: center;
     justify-content: space-around;
@@ -1221,8 +1221,8 @@ footer {
   .button {
     outline: 0 !important;
     border: 0 !important;
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background-color: transparent;
     display: flex;
@@ -1263,8 +1263,8 @@ footer {
   }
 
   .icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     transition: transform 0.3s ease;
   }
 

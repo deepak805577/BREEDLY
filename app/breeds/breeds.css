@@ -638,6 +638,48 @@
 }
 
 /* ══════════════════════════════════════════════════════════
+   PAGINATION
+══════════════════════════════════════════════════════════ */
+.bp-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  padding-bottom: 24px;
+}
+
+.bp-page-btn {
+  padding: 10px 20px;
+  background: var(--bp-cream);
+  border: 1px solid var(--bp-border);
+  border-radius: 999px;
+  color: var(--bp-accent-dark);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--bp-ease);
+}
+
+.bp-page-btn:hover:not(:disabled) {
+  background: var(--bp-accent-dark);
+  color: #fff;
+  border-color: var(--bp-accent-dark);
+}
+
+.bp-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bp-page-info {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--bp-text-mid);
+}
+
+/* ══════════════════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {

@@ -35,11 +35,18 @@ export default function BreedsPage() {
   const [temperamentFilter, setTemperamentFilter] = useState("");
   const [loading, setLoading] = useState(true);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 24;
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 700);
     return () => clearTimeout(t);
   }, []);
+
+  // Reset page to 1 whenever filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter]);
 
   const filteredBreeds = useMemo(() => {
     return breedCards.filter((breed) => {
@@ -57,6 +64,12 @@ export default function BreedsPage() {
       );
     });
   }, [searchTerm, sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter]);
+
+  const totalPages = Math.ceil(filteredBreeds.length / ITEMS_PER_PAGE);
+  const paginatedBreeds = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredBreeds.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredBreeds, currentPage]);
 
   const activeCount = [sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter].filter(Boolean).length;
 
@@ -220,7 +233,7 @@ export default function BreedsPage() {
               <button onClick={clearFilters}>Reset Filters</button>
             </div>
           ) : (
-            filteredBreeds.map((breed, i) => (
+            paginatedBreeds.map((breed, i) => (
               <Link
                 key={breed.name}
                 href={`/breeds/${encodeURIComponent(breed.name)}`}
@@ -262,6 +275,35 @@ export default function BreedsPage() {
             ))
           )}
         </div>
+
+        {/* PAGINATION */}
+        {!loading && totalPages > 1 && (
+          <div className="bp-pagination">
+            <button
+              className="bp-page-btn"
+              disabled={currentPage === 1}
+              onClick={() => {
+                setCurrentPage((p) => Math.max(1, p - 1));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              Previous
+            </button>
+            <span className="bp-page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="bp-page-btn"
+              disabled={currentPage === totalPages}
+              onClick={() => {
+                setCurrentPage((p) => Math.min(totalPages, p + 1));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              Next
+            </button>
+          </div>
+        )}
 
       </div>
     </ProtectedRoute>
