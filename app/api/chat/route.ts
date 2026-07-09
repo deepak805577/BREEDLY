@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { ChatRequest } from "../../types/chat";
 
-export const runtime = "edge";
+
 
 const SYSTEM_PROMPT = (breed: string, age: string, name?: string) => `
 You are BreedLy's expert Dog Care Assistant — warm, knowledgeable, and concise.

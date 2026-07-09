@@ -6,6 +6,10 @@
 import { Suspense } from "react";
 import BreedDetailClient from "./BreedDetailClient";
 
+export function generateStaticParams() {
+  return [];
+}
+
 export default function BreedPage() {
   return (
     <Suspense
