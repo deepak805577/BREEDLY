@@ -16,6 +16,8 @@ import {
   fetchPosts, fetchStories, createPost,
   toggleLike, toggleSave, subscribeToNewPosts, deletePost,
 } from "../../services/communityApi";
+import { Capacitor } from '@capacitor/core';
+import AndroidCommunityFeed from '../mobile/community/AndroidCommunityFeed';
 
 const FILTERS = ["All Posts", "Training", "Health", "Food & Treats", "Grooming", "Puppy Life", "Adoption"];
 
@@ -32,6 +34,15 @@ export default function CommunityFeed() {
 
   const [searchQuery,     setSearchQuery]     = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== 'undefined' && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
+      setIsMobileApp(true);
+    }
+  }, []);
 
   const currentUser = {
     name:      profile?.full_name     ?? "Dog Lover",
@@ -106,6 +117,20 @@ export default function CommunityFeed() {
       alert("Failed to post. Please try again.");
     } finally { setIsLoading(false); }
   }, []);
+
+  if (isHydrated && isMobileApp) {
+    return (
+      <>
+        <AndroidCommunityFeed 
+          posts={posts} 
+          currentUser={currentUser} 
+          handleLike={handleLike} 
+          setShowModal={setShowModal} 
+        />
+        {showModal && <CreatePostModal onClose={() => setShowModal(false)} onSubmit={handleNewPost} isLoading={isLoading} />}
+      </>
+    );
+  }
 
   return (
     <>

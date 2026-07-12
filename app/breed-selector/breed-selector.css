@@ -922,4 +922,140 @@
     width: 80px;
     text-align: right;
   }
+  }
+
+/* --- MOBILE APP OVERRIDES --- */
+.mobile-qs-page {
+  background-color: var(--qs-cream);
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-qs-top {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: transparent;
+}
+
+.mobile-qs-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #5C3D28;
+  margin: 0;
+  flex: 2;
+  text-align: center;
+}
+
+.mobile-qs-close {
+  display: flex;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.mobile-qs-page .qs-card {
+  margin: 0 20px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.mobile-qs-page .qs-question-wrap {
+  margin-bottom: 24px;
+}
+
+.mobile-qs-page .qs-question {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #5C3D28;
+  margin: 8px 0 16px 0;
+}
+
+.mobile-qs-page .qs-q-num {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--qs-accent-dark);
+}
+
+.mobile-qs-page .qs-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.mobile-qs-page .qs-option {
+  border-radius: 32px;
+  background: #ffffff;
+  border: 2px solid transparent;
+  padding: 32px 16px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(100, 70, 40, 0.04);
+}
+
+.mobile-qs-page .qs-option--selected {
+  background: #F8F3ED;
+  border-color: #5C3D28;
+}
+
+.mobile-qs-page .qs-opt-icon svg {
+  width: 48px;
+  height: 48px;
+  color: #5C3D28;
+}
+
+.mobile-qs-page .qs-opt-text {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5C3D28;
+}
+
+.mobile-qs-page .qs-opt-sub {
+  display: none; /* Hide subtitle for cleaner grid */
+}
+
+.mobile-qs-page .qs-progress-wrap {
+  margin-bottom: 32px;
+}
+
+.mobile-qs-page .qs-paw-icon {
+  display: none; /* Strip paw icon for minimal progress bar */
+}
+
+.mobile-qs-page .qs-progress-track {
+  height: 6px;
+  background: #EAE0D3;
+}
+
+.mobile-qs-page .qs-progress-fill {
+  background: #5C3D28;
+}
+
+.mobile-qs-page .qs-nav {
+  margin-top: auto;
+  padding: 24px 20px;
+  background: transparent;
+  border-top: none;
+}
+
+.mobile-qs-page .qs-next-btn {
+  background: #745137;
+  color: #fff;
+  border-radius: 32px;
+  padding: 16px 32px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
 }

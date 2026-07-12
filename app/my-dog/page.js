@@ -8,14 +8,22 @@ import SmartInsights from "./SmartInsights";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { breedCards } from "@/app/data/breed";
 import { supabase } from "@/lib/supabase";
+import { Capacitor } from '@capacitor/core';
+import AndroidMyDog from "../components/mobile/my-dog/AndroidMyDog";
 
 export default function MyDogPage() {
   const [dogs, setDogs] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== 'undefined' && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
+      setIsMobileApp(true);
+    }
     const fetchDogs = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -64,6 +72,14 @@ export default function MyDogPage() {
   };
 
   const handleUpdate = (updated) => setDogs(dogs.map(d => d.id === updated.id ? updated : d));
+
+  if (isHydrated && isMobileApp) {
+    return (
+      <ProtectedRoute>
+        <AndroidMyDog dogs={dogs} activeId={activeId} />
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <ProtectedRoute>

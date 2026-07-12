@@ -178,7 +178,7 @@ export default function Navbar() {
     setMobileGuideOpen(false);
   }, [pathname]);
 
-  if (hideNavbar || loading) return null;
+  if (loading) return null;
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -188,6 +188,7 @@ export default function Navbar() {
   return (
     <>
       {/* TOP NAV */}
+      {!hideNavbar && (
       <nav className="navbar">
         <div className="nav-left">
           <img
@@ -273,6 +274,7 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+      )}
 
       {/* AVATAR MODAL */}
       <ProfileAvatarModal
@@ -282,34 +284,46 @@ export default function Navbar() {
       />
 
       {/* MOBILE BOTTOM NAV */}
-      <div className={`bottom-navbar ${hideNavbar ? "nav-hidden" : ""}`}>
+      <div className="bottom-navbar">
         <div className="button-container">
           <Link href="/" className={`button ${pathname === "/" ? "active" : ""}`} title="Home">
             {NAV_SVGS.home()}
+            <span className="navText">Home</span>
+            {pathname === "/" && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </Link>
 
           <Link href="/breed-selector" className={`button ${pathname === "/breed-selector" ? "active" : ""}`} title="Quiz">
             {NAV_SVGS.quiz()}
+            <span className="navText">Quiz</span>
+            {pathname === "/breed-selector" && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </Link>
 
           <Link href="/breeds" className={`button ${(pathname === "/breeds" || pathname.startsWith("/breeds/")) ? "active" : ""}`} title="Breeds">
             {NAV_SVGS.breeds()}
+            <span className="navText">Breeds</span>
+            {(pathname === "/breeds" || pathname.startsWith("/breeds/")) && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </Link>
 
           <button
-            className={`button highlight ${mobileAIOpen ? "active" : ""}`}
+            className={`button ${mobileAIOpen ? "active" : ""}`}
             onClick={() => setMobileAIOpen(!mobileAIOpen)}
             title="PupAI Hub & Guides"
           >
             {NAV_SVGS.aiBot()}
+            <span className="navText">Hub</span>
+            {mobileAIOpen && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </button>
 
           <Link href="/community" className={`button ${pathname === "/community" ? "active" : ""}`} title="Community">
             {NAV_SVGS.community()}
+            <span className="navText">Community</span>
+            {pathname === "/community" && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </Link>
 
           <Link href="/my-dog" className={`button ${(pathname === "/my-dog" || pathname.startsWith("/my-dog/")) ? "active" : ""}`} title="My Dog">
             {NAV_SVGS.paw()}
+            <span className="navText">My Dog</span>
+            {(pathname === "/my-dog" || pathname.startsWith("/my-dog/")) && NAV_SVGS.paw({ className: "pawIndicator", style: { width: 10, height: 10 } })}
           </Link>
         </div>
 

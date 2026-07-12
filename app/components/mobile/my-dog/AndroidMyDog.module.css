@@ -1,0 +1,288 @@
+.container {
+  padding: 0 0 100px 0;
+  background-color: var(--bg, #f3f0e6);
+  min-height: 100vh;
+  font-family: 'Fredoka', sans-serif;
+  overflow-x: hidden;
+  color: var(--text, #8b7a6a);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.iconBtn {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #e5e7eb);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6D4C33;
+  box-shadow: 0 4px 12px rgba(139, 122, 106, 0.05);
+}
+
+.headerTitle {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #5C3D28;
+}
+
+.addBtn {
+  background: #745137;
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(116, 81, 55, 0.2);
+}
+
+/* Profile Card */
+.profileCardWrapper {
+  padding: 0 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.profileCard {
+  background: var(--primary, #e8c8a6);
+  border-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(139, 122, 106, 0.15);
+}
+
+.dogImageWrapper {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  background: #d4b595;
+}
+
+.dogImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.pawIconWrapper {
+  position: absolute;
+  left: 20px;
+  bottom: -20px;
+  width: 50px;
+  height: 50px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(139, 122, 106, 0.1);
+  color: var(--primary, #e8c8a6);
+}
+
+.infoSheet {
+  background: var(--bg, #f3f0e6);
+  padding: 24px 20px;
+  border-top-left-radius: 30px;
+  position: relative;
+  margin-top: -30px;
+  z-index: 1;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.nameRow h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem;
+  color: #5C3D28;
+  margin: 0;
+  font-weight: 600;
+}
+
+.editIcon {
+  color: var(--muted, #A67B5B);
+}
+
+.breedName {
+  font-size: 0.95rem;
+  color: var(--text, #8b7a6a);
+  margin: 0 0 16px 0;
+  font-weight: 500;
+}
+
+.tagsRow {
+  display: flex;
+  gap: 12px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface, #ffffff);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5C3D28;
+  box-shadow: 0 2px 8px rgba(139, 122, 106, 0.05);
+  border: 1px solid var(--border, #e5e7eb);
+}
+
+/* Today's Overview */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.sectionHeader h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  color: #5C3D28;
+  margin: 0;
+}
+
+.dateText {
+  font-size: 0.85rem;
+  color: var(--muted, #A67B5B);
+  font-weight: 500;
+}
+
+.overviewLayout {
+  display: flex;
+  gap: 20px;
+  padding: 0 20px;
+  margin-bottom: 32px;
+}
+
+.progressCircleWrapper {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--surface, #ffffff);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(139, 122, 106, 0.08);
+  flex-shrink: 0;
+}
+
+.progressText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progressText h4 {
+  font-size: 2rem;
+  font-family: 'Fraunces', serif;
+  color: #5C3D28;
+  margin: 0;
+  line-height: 1;
+}
+
+.progressText span {
+  font-size: 0.75rem;
+  color: var(--muted, #A67B5B);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.checklist {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+.checkItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #5C3D28;
+  font-weight: 600;
+}
+
+.checkIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--surface, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(139, 122, 106, 0.05);
+}
+
+.checkRight {
+  font-size: 0.8rem;
+  color: var(--muted, #A67B5B);
+  font-weight: 500;
+}
+
+/* Quick Actions */
+.quickActionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0 20px;
+}
+
+.actionButton {
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 24px;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 16px rgba(139, 122, 106, 0.04);
+  color: var(--text, #8b7a6a);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.actionButton:active {
+  transform: scale(0.95);
+}
+
+.actionButton svg {
+  color: #5C3D28;
+}
+
+.actionButton span {
+  font-size: 0.8rem;
+  font-weight: 600;
+}

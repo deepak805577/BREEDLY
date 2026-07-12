@@ -18,7 +18,7 @@ export default function ClientShell({ children }) {
 
   useEffect(() => {
     setMounted(true);
-    if (Capacitor.isNativePlatform()) {
+    if (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.location.search.includes('app=true'))) {
       setIsNative(true);
     }
     
@@ -55,7 +55,7 @@ export default function ClientShell({ children }) {
     <>
       <Loader />
       {!isNative && <Navbar key={`nav-${pathname}`} />}
-      <main className="page-content" key={pathname} style={isNative ? { paddingBottom: '80px' } : {}}>
+      <main className={`page-content ${isNative ? 'is-native-app' : ''}`} key={pathname} style={isNative ? { paddingBottom: '80px' } : {}}>
         {children}
       </main>
       {!isNative && <Footer />}

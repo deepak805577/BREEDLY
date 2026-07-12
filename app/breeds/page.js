@@ -4,6 +4,8 @@ import "./breeds.css";
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { breedCards } from "../data/breed";
+import { Capacitor } from '@capacitor/core';
+import AndroidDiscover from '../components/mobile/discover/AndroidDiscover';
 import { 
   Search, 
   SlidersHorizontal, 
@@ -37,8 +39,14 @@ export default function BreedsPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 24;
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== 'undefined' && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
+      setIsMobileApp(true);
+    }
     const t = setTimeout(() => setLoading(false), 700);
     return () => clearTimeout(t);
   }, []);
@@ -66,8 +74,8 @@ export default function BreedsPage() {
   }, [searchTerm, sizeFilter, energyFilter, groomingFilter, expenseFilter, groupFilter, idealOwnerFilter, temperamentFilter]);
 
   const totalPages = Math.ceil(filteredBreeds.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedBreeds = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredBreeds.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredBreeds, currentPage]);
 
@@ -85,6 +93,14 @@ export default function BreedsPage() {
     if (v === "moderate") return "bp-badge--mod";
     return "bp-badge--low";
   };
+
+  if (isHydrated && isMobileApp) {
+    return (
+      <ProtectedRoute>
+        <AndroidDiscover />
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <ProtectedRoute>

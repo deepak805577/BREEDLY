@@ -907,7 +907,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setIsHydrated(true);
-    if (typeof window !== "undefined" && Capacitor.isNativePlatform()) {
+    if (typeof window !== "undefined" && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
       setIsMobileApp(true);
     }
   }, []);

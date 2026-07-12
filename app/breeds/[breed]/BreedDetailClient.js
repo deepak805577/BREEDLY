@@ -3,7 +3,7 @@
 import "./breed.css";
 import { useParams, useRouter } from "next/navigation";
 import { breeds } from "../../data/breeds";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /* ── helpers ─────────────────────────────────────────────── */
 const normalize = (str) =>
@@ -186,14 +186,30 @@ function getOriginText(originVal) {
   return originStr;
 }
 
+import { Capacitor } from '@capacitor/core';
+import AndroidBreedDetails from '../../components/mobile/breeds/AndroidBreedDetails';
+
 export default function BreedDetailClient() {
   const params = useParams();
   const router = useRouter();
   const [videoError, setVideoError] = useState(false);
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== 'undefined' && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
+      setIsMobileApp(true);
+    }
+  }, []);
 
   const breedName = normalize(decodeURIComponent(params.breed).replace(/-/g, " "));
   const breedKey = Object.keys(breeds).find((b) => normalize(b) === breedName);
   const breed = breeds[breedKey];
+
+  if (isHydrated && isMobileApp && breed) {
+    return <AndroidBreedDetails breed={breed} />;
+  }
 
   if (!breed) {
     return (

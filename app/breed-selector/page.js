@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import ProtectedRoute from "../components/ProtectedRoute";
 import { useRouter } from "next/navigation";
 import Confetti from 'react-confetti';
+import { Capacitor } from '@capacitor/core';
+import Link from 'next/link';
 import {
   Building2, Home, Box, LayoutGrid, Maximize,
   Sprout, Trees, Mountain, Wind, Flame, Baby, Smile,
@@ -281,15 +283,28 @@ const SECTIONS = [
 
 export default function BreedSelector() {
   const router = useRouter();
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [slideAnim, setSlideAnim] = useState("qs-slide-left-in");
-  const [finished, setFinished] = useState(false);
-  const [loadPct, setLoadPct] = useState(0);
-  const [progressWidth, setProgressWidth] = useState(0);
   const [isBouncing, setIsBouncing] = useState(false);
   const [showWhy, setShowWhy] = useState(false);
+  
+  // Loading & Result States
+  const [isEvaluating, setIsEvaluating] = useState(false);
+  const [loadPct, setLoadPct] = useState(0);
+  const [results, setResults] = useState([]);
+  
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== 'undefined' && (Capacitor.isNativePlatform() || window.location.search.includes('app=true'))) {
+      setIsMobileApp(true);
+    }
+  }, []);
+  const [slideAnim, setSlideAnim] = useState("qs-slide-left-in");
+  const [finished, setFinished] = useState(false);
+  const [progressWidth, setProgressWidth] = useState(0);
   const [statusText, setStatusText] = useState("🐾 Finding your perfect match...");
 
   // Smooth percentage counter for the loader
@@ -446,29 +461,41 @@ export default function BreedSelector() {
 
   return (
     <ProtectedRoute>
-      <div className="qs-page">
+      <div className={`qs-page ${isMobileApp ? 'mobile-qs-page' : ''}`}>
 
-        <div className="qs-top">
-          <div className="qs-brand">
-            <PawIcon style={{ width: 22, height: 22, color: 'var(--qs-accent-dark)' }} /> BreedLy
+        {isMobileApp ? (
+          <div className="mobile-qs-top">
+            <span style={{ flex: 1 }}></span>
+            <h1 className="mobile-qs-title">BreedLy Quiz</h1>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              <Link href="/" className="mobile-qs-close"><XCircle size={24} color="#5C3D28" /></Link>
+            </div>
           </div>
-          <p className="qs-tagline">Find your perfect pup match</p>
-        </div>
+        ) : (
+          <div className="qs-top">
+            <div className="qs-brand">
+              <PawIcon style={{ width: 22, height: 22, color: 'var(--qs-accent-dark)' }} /> BreedLy
+            </div>
+            <p className="qs-tagline">Find your perfect pup match</p>
+          </div>
+        )}
 
-        <div className="qs-sections">
-          {SECTIONS.map((s, i) => {
-            const SectionIcon = s.icon;
-            return (
-              <div
-                key={s.label}
-                className={`qs-section-dot${i < currentSection ? " qs-section-done" : ""}${i === currentSection ? " qs-section-active" : ""}`}
-              >
-                <span><SectionIcon /></span>
-                <p>{s.label}</p>
-              </div>
-            );
-          })}
-        </div>
+        {!isMobileApp && (
+          <div className="qs-sections">
+            {SECTIONS.map((s, i) => {
+              const SectionIcon = s.icon;
+              return (
+                <div
+                  key={s.label}
+                  className={`qs-section-dot${i < currentSection ? " qs-section-done" : ""}${i === currentSection ? " qs-section-active" : ""}`}
+                >
+                  <span><SectionIcon /></span>
+                  <p>{s.label}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         <section className={`qs-card ${slideAnim}`}>
 
