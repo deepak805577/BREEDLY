@@ -4,17 +4,23 @@ export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import BottomNav from "./components/mobile/home/BottomNav";
 
 export default function ClientShell({ children }) {
   const [mounted, setMounted] = useState(false);
+  const [isNative, setIsNative] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
+    if (Capacitor.isNativePlatform()) {
+      setIsNative(true);
+    }
     
     let backListener = null;
     
@@ -48,11 +54,12 @@ export default function ClientShell({ children }) {
   return (
     <>
       <Loader />
-      <Navbar key={`nav-${pathname}`} />
-      <main className="page-content" key={pathname}>
+      {!isNative && <Navbar key={`nav-${pathname}`} />}
+      <main className="page-content" key={pathname} style={isNative ? { paddingBottom: '80px' } : {}}>
         {children}
       </main>
-      <Footer />
+      {!isNative && <Footer />}
+      {isNative && <BottomNav />}
     </>
   );
 }

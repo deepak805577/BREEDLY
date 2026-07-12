@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { useCMS } from "./hooks/useCMS";
+import { Capacitor } from "@capacitor/core";
+import AndroidHome from "./components/mobile/home/AndroidHome";
 
 /* ─── PREMIUM SVG ICON SYSTEM ────────────────────────────────────────────── */
 const SVG_ICONS = {
@@ -245,7 +247,7 @@ const SVG_ICONS = {
   ),
 };
 
-export default function HomePage() {
+function WebsiteHomePage() {
   /* ─── Static premium data ───────────────────────────────────────────────── */
   const BREED_PREVIEWS = [
     { name: "Golden Retriever", energy: "High", size: "Large", grooming: "Medium", match: 94, icon: "golden" },
@@ -897,4 +899,22 @@ export default function HomePage() {
 
     </div>
   );
+}
+
+export default function HomePage() {
+  const [isMobileApp, setIsMobileApp] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+    if (typeof window !== "undefined" && Capacitor.isNativePlatform()) {
+      setIsMobileApp(true);
+    }
+  }, []);
+
+  if (isHydrated && isMobileApp) {
+    return <AndroidHome />;
+  }
+
+  return <WebsiteHomePage />;
 }
