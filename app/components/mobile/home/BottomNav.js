@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./BottomNav.module.css";
-import { Home, Compass, MessageCircle, Heart, User } from "lucide-react";
+import { Home, Compass, MessageCircle, BookOpen, User } from "lucide-react";
 
 export default function BottomNav() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export default function BottomNav() {
     { name: "Home", href: "/", icon: <Home size={24} /> },
     { name: "Discover", href: "/breeds", icon: <Compass size={24} /> },
     { name: "Community", href: "/community", icon: <MessageCircle size={24} /> },
-    { name: "Saved", href: "/saved", icon: <Heart size={24} /> },
+    { name: "Guides", href: "/food-guide", icon: <BookOpen size={24} /> },
     { name: "Profile", href: "/profile", icon: <User size={24} /> },
   ];
 

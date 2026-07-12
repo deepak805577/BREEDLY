@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./AndroidHome.module.css";
-import { Search, Mic, Bell, Play, ChevronRight, Lightbulb, Heart, BookOpen, Compass, Dog } from "lucide-react";
+import { Search, Mic, Bell, Play, ChevronRight, Compass, Dog, BookOpen, MessageCircle } from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
+import { breeds } from "@/app/data/breeds";
 
 export default function AndroidHome() {
   const { user } = useAuth();
@@ -23,24 +24,25 @@ export default function AndroidHome() {
   if (!mounted) return null;
 
   const quickActions = [
-    { name: "Resume Quiz", icon: <Play color="#cc6b49" size={24} />, bg: "#fceee9", link: "/breed-selector" },
-    { name: "Browse", icon: <Compass color="#2e7d32" size={24} />, bg: "#e8f5e9", link: "/breeds" },
-    { name: "Saved", icon: <Heart color="#c62828" size={24} />, bg: "#ffebee", link: "/saved" },
-    { name: "My Dogs", icon: <Dog color="#1565c0" size={24} />, bg: "#e3f2fd", link: "/my-dog" },
+    { name: "Quiz", icon: <Play color="#b9854a" size={24} />, bg: "var(--primary-soft)", link: "/breed-selector" },
+    { name: "Browse", icon: <Compass color="#A67B5B" size={24} />, bg: "var(--surface)", link: "/breeds" },
+    { name: "My Dogs", icon: <Dog color="#b9854a" size={24} />, bg: "var(--primary-soft)", link: "/my-dog" },
+    { name: "Guides", icon: <BookOpen color="#A67B5B" size={24} />, bg: "var(--surface)", link: "/food-guide" },
+    { name: "Community", icon: <MessageCircle color="#b9854a" size={24} />, bg: "var(--primary-soft)", link: "/community" },
   ];
 
-  const recommended = [
-    { id: 1, name: "Golden Retriever", score: "98%", img: "/golden.jpg", tags: ["Family", "Active"] },
-    { id: 2, name: "French Bulldog", score: "94%", img: "/frenchie.jpg", tags: ["Apartment", "Low Maintenance"] },
-    { id: 3, name: "Poodle", score: "91%", img: "/poodle.jpg", tags: ["Hypoallergenic", "Smart"] }
-  ];
+  // Get specific breeds from real data for demo
+  const recommendedKeys = ["Golden Retriever", "French Bulldog", "Poodle"];
+  const popularKeys = ["Labrador Retriever", "German Shepherd Dog", "Beagle"];
+
+  const getBreedData = (keys) => {
+    return keys.map(key => breeds[key]).filter(Boolean);
+  };
+
+  const recommended = getBreedData(recommendedKeys);
+  const popular = getBreedData(popularKeys);
 
   const categories = ["Apartment Friendly", "Family Friendly", "First Time Owner", "Large Dogs", "Small Dogs", "Hypoallergenic"];
-
-  const popular = [
-    { id: 4, name: "Labrador Retriever", desc: "Friendly, active and outgoing", img: "/lab.jpg" },
-    { id: 5, name: "German Shepherd", desc: "Confident, courageous, and smart", img: "/gsd.jpg" }
-  ];
 
   const firstName = user?.user_metadata?.first_name || user?.email?.split('@')[0] || "Guest";
 
@@ -54,11 +56,11 @@ export default function AndroidHome() {
         </div>
         <div className={styles.headerIcons}>
           <button className={styles.iconBtn}>
-            <Bell size={20} color="#333" />
+            <Bell size={20} color="var(--muted)" />
             <span className={styles.badge}></span>
           </button>
           <Link href="/profile">
-            <div className={styles.avatar} style={{ background: '#ddd', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className={styles.avatar} style={{ background: 'var(--primary)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                <Dog size={24} color="#fff" />
             </div>
           </Link>
@@ -82,10 +84,10 @@ export default function AndroidHome() {
       <Link href="/breed-selector" className={styles.continueCard}>
         <div className={styles.continueInfo}>
           <h3>Continue Quiz</h3>
-          <p>You're 3 questions away from your match!</p>
+          <p>Find your perfect match!</p>
         </div>
         <div className={styles.continueIcon}>
-          <ChevronRight size={24} color="white" />
+          <ChevronRight size={24} />
         </div>
       </Link>
 
@@ -104,26 +106,35 @@ export default function AndroidHome() {
       {/* Recommended Breeds */}
       <div className={styles.sectionTitle}>
         <span>Recommended for You</span>
-        <Link href="/results" className={styles.seeAll}>See All</Link>
+        <Link href="/breeds" className={styles.seeAll}>See All</Link>
       </div>
       <div className={styles.carousel}>
-        {recommended.map(breed => (
-          <Link key={breed.id} href={`/breeds/${breed.id}`} className={styles.breedCard}>
-            <div style={{ position: 'relative' }}>
-               {/* Using fallback div for image if the image doesn't exist locally */}
-               <div className={styles.breedImage} style={{ background: 'var(--accent-light)' }}></div>
-               <span className={styles.scoreBadge}>{breed.score} Match</span>
-            </div>
-            <div className={styles.breedInfo}>
-              <h3>{breed.name}</h3>
-              <div className={styles.breedTags}>
-                {breed.tags.map(tag => (
-                  <span key={tag} className={styles.breedTag}>{tag}</span>
-                ))}
+        {recommended.map(breed => {
+           const slug = breed.basic_info.name.toLowerCase().replace(/ /g, '-');
+           const tags = [breed.basic_info.size, breed.quick_overview.energy_level.split(' ')[0]];
+           return (
+            <Link key={breed.basic_info.name} href={`/breeds/${slug}`} className={styles.breedCard}>
+              <div style={{ position: 'relative', width: '100%', height: '180px' }}>
+                <Image 
+                  src={breed.image} 
+                  alt={breed.basic_info.name} 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, 300px"
+                />
+                <span className={styles.scoreBadge}>98% Match</span>
               </div>
-            </div>
-          </Link>
-        ))}
+              <div className={styles.breedInfo}>
+                <h3>{breed.basic_info.name}</h3>
+                <div className={styles.breedTags}>
+                  {tags.map(tag => (
+                    <span key={tag} className={styles.breedTag}>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          )
+        })}
       </div>
 
       {/* Categories */}
@@ -140,27 +151,27 @@ export default function AndroidHome() {
         <span>Popular Breeds</span>
       </div>
       <div className={styles.popularGrid}>
-        {popular.map(breed => (
-          <Link key={breed.id} href={`/breeds/${breed.id}`} className={styles.popularCard}>
-            <div className={styles.popularImg} style={{ background: '#eee' }}></div>
-            <div className={styles.popularInfo}>
-              <h4>{breed.name}</h4>
-              <p>{breed.desc}</p>
-            </div>
-            <ChevronRight size={20} className={styles.chevron} />
-          </Link>
-        ))}
-      </div>
-
-      {/* Daily Dog Tip */}
-      <div className={styles.tipCard}>
-        <div className={styles.tipHeader}>
-          <div className={styles.tipIcon}>
-            <Lightbulb size={24} />
-          </div>
-          <h4>Daily Dog Tip</h4>
-        </div>
-        <p>A tired dog is a good dog. Engage your pup with puzzle toys to mentally exhaust them, which is often more effective than a long walk!</p>
+        {popular.map(breed => {
+          const slug = breed.basic_info.name.toLowerCase().replace(/ /g, '-');
+          return (
+            <Link key={breed.basic_info.name} href={`/breeds/${slug}`} className={styles.popularCard}>
+              <div style={{ position: 'relative', width: '75px', height: '75px', borderRadius: '16px', overflow: 'hidden', flexShrink: 0 }}>
+                <Image 
+                  src={breed.image} 
+                  alt={breed.basic_info.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="75px"
+                />
+              </div>
+              <div className={styles.popularInfo}>
+                <h4>{breed.basic_info.name}</h4>
+                <p>{breed.basic_info.one_sentence_summary}</p>
+              </div>
+              <ChevronRight size={20} className={styles.chevron} />
+            </Link>
+          );
+        })}
       </div>
 
       {/* Community Preview */}
@@ -170,7 +181,7 @@ export default function AndroidHome() {
       </div>
       <div className={styles.communityCard}>
         <div className={styles.communityHeader}>
-          <div className={styles.communityAvatar} style={{ background: '#ff9800' }}>S</div>
+          <div className={styles.communityAvatar}>S</div>
           <div className={styles.communityName}>
             <strong>Sarah & Max</strong>
             <span>First time owner</span>

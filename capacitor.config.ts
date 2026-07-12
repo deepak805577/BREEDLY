@@ -5,13 +5,13 @@ const config: CapacitorConfig = {
   appName: 'BreedLy',
   webDir: 'public',
   server: {
-    url: 'https://breedlyy.vercel.app/',
+    url: process.env.CAP_SERVER_URL || 'https://breedlyy.vercel.app/',
     cleartext: true
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 1500,
-      launchFadeOutDuration: 500,
+      launchShowDuration: 0,
+      launchFadeOutDuration: 0,
       backgroundColor: "#FFFDD0",
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
